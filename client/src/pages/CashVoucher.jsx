@@ -8,36 +8,36 @@ function CashVoucher() {
   };
 
   return (
-    <div className="bg-gray-100 flex justify-between h-[620px] box-border ">
-      <div className="flex-1 mx-2 bg-gray-100 p-3 box-border rounded-lg flex flex-col items-center">
-        <div className="border-2 border-black p-4 rounded-lg bg-white font-bold w-full max-w-lg text-center text-xl mb-8">
+    <div className="bg-gray-100 flex justify-between  box-border ">
+      <div className="flex-1 mx-2 bg-gray-100 p-3  h-full  rounded-lg flex flex-col items-center">
+        <div className="border p-4 rounded-lg border-gray-300 font-bold w-full max-w-lg text-center text-4xl mb-8">
           Cash Voucher
         </div>
         <form onSubmit={handleSubmit} className="w-full max-w-lg">
-          <fieldset className="border border-gray-300 rounded-lg p-6 box-border mb-8">
-            <legend className="font-bold mb-4">Day Detail</legend>
+          <fieldset className="border border-gray-300 rounded-lg p-2 h-28 box-border mb-3">
+            <legend className="font-normal mb-4">Day Detail</legend>
             <div className="flex items-center mb-4">
-              <label className="mr-4 font-bold whitespace-nowrap min-w-[120px]">
+              <label className="mr-4 font-normal whitespace-nowrap min-w-[120px]">
                 Date:
               </label>
               <input 
                 type="date" 
                 required 
-                className="flex-1 p-2 rounded-md w-full border border-gray-300 box-border" 
+                className="flex-1 p-2 rounded-md w-full border h-8 border-gray-300 box-border" 
                 min={new Date().toISOString().split('T')[0]} 
               />
             </div>
           </fieldset>
           <fieldset className="border border-gray-300 rounded-lg p-6 box-border mb-8">
-            <legend className="font-bold mb-4">Voucher Details</legend>
-            <div className="flex items-center mb-4">
-              <label className="mr-4 font-bold whitespace-nowrap min-w-[120px]">
+            <legend className="font-normal mb-4">Voucher Details</legend>
+            <div className="flex items-center mb-2">
+              <label className="mr-4 font-normal whitespace-nowrap min-w-[120px]">
                 Party Name:
               </label>
               <div className="relative flex-1">
                 <select 
                   required 
-                  className="appearance-none p-2 rounded-md w-full border border-gray-300 box-border cursor-pointer">
+                  className="appearance-none p-1 rounded-md w-full h-8 border border-gray-300 box-border cursor-pointer">
                   <option value="">Select Party</option>
                   <option value="party1">Party 1</option>
                   <option value="party2">Party 2</option>
@@ -50,35 +50,35 @@ function CashVoucher() {
                 </span>
               </div>
             </div>
-            <div className="flex items-center mb-4">
-              <label className="mr-4 font-bold whitespace-nowrap min-w-[120px]">
+            <div className="flex items-center mb-2">
+              <label className="mr-4 font-normal whitespace-nowrap min-w-[120px]">
                 Amount:
               </label>
               <input 
                 type="number" 
                 required 
-                className="flex-1 p-2 rounded-md w-full border border-gray-300 box-border" 
+                className="flex-1 p-2 rounded-md h-8 w-full border border-gray-300 box-border" 
                 min="0" 
               />
             </div>
-            <div className="flex items-center mb-4">
-              <label className="mr-4 font-bold whitespace-nowrap min-w-[120px]">
+            <div className="flex items-center mb-2">
+              <label className="mr-4 font-normal whitespace-nowrap min-w-[120px]">
                 Remarks:
               </label>
               <input 
                 type="text" 
                 required 
-                className="flex-1 p-2 rounded-md w-full border border-gray-300 box-border" 
+                className="flex-1 p-2 rounded-md w-full h-8 border border-gray-300 box-border" 
                 pattern=".{3,}" 
                 title="Remarks should be at least 3 characters long" 
               />
             </div>
           </fieldset>
           <div className="flex justify-between w-full">
-            <button type="submit" className="px-6 py-2 rounded-md border-none bg-gray-300 font-bold cursor-pointer">
+            <button type="submit" className="px-6 py-1 h-8 rounded-md border-none bg-gray-300 font-bold cursor-pointer">
               Add
             </button>
-            <button type="button" className="px-6 py-2 rounded-md border-none bg-gray-300 font-bold cursor-pointer">
+            <button type="button" className="px-6 py-1 h-8 rounded-md border-none bg-gray-300 font-bold cursor-pointer">
               Delete
             </button>
           </div>
@@ -94,7 +94,7 @@ function CashVoucher() {
         <div className="w-full">
           <h7 className="text-left">Day Cash Details</h7>
         </div>
-        <div className="w-full h-[450px] bg-gray-200 rounded-lg box-border p-2 mt-4 overflow-auto">
+        <div className="w-full h-[438px] bg-gray-200 rounded-lg box-border p-2 mt-4 overflow-auto">
           {/* Add content here */}
         </div>
       </div>

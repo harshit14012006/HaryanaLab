@@ -93,14 +93,14 @@ const cityPopup = () => {
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'City', 
+    title: 'AddCity', 
   });
 
   // Load the Customer Form page
   popupWindow.loadURL('http://localhost:3000/master-city');
 
   popupWindow.webContents.on('did-finish-load', () => {
-    popupWindow.setTitle("City");
+    popupWindow.setTitle("AddCity");
   });
 
   // Optional: Open the DevTools automatically (for development only)
@@ -145,14 +145,14 @@ const updateReportsAnalysisWindow = () => {
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Update Analysis',
+    title: 'Single Report Update',
   });
 
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL('http://localhost:3000/update-analysis');
 
   reportsAnalysisWindow.webContents.on('did-finish-load', () => {
-    reportsAnalysisWindow.setTitle("Update Analysis");
+    reportsAnalysisWindow.setTitle("Single Report Update");
   });
 
   // Optional: Open the DevTools automatically (for development only)
@@ -185,7 +185,137 @@ const ledgerentryPopup = () => {
   // reportsAnalysisWindow.webContents.openDevTools();
 };
 
-const partyprintPopup = () => {
+const ledgerreortPopup = () => {
+  const reportsAnalysisWindow = new BrowserWindow({
+    width: 950,
+    height: 600,
+    parent: mainWindow, 
+    modal: true, 
+    webPreferences: {
+      enableRemoteModule: true,
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+    title: 'Ledger Report',
+  });
+
+  // Load the Reports Analysis page
+  reportsAnalysisWindow.loadURL('http://localhost:3000/ledger-report');
+
+  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+    reportsAnalysisWindow.setTitle("Ledger Report");
+  });
+
+  // Optional: Open the DevTools automatically (for development only)
+  // reportsAnalysisWindow.webContents.openDevTools();
+};  
+
+const cashvoucherPopup = () => {
+  const reportsAnalysisWindow = new BrowserWindow({
+    width: 950,
+    height: 600,
+    parent: mainWindow, 
+    modal: true, 
+    webPreferences: {
+      enableRemoteModule: true,
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+    title: 'Cash Voucher',
+  });
+
+  // Load the Reports Analysis page
+  reportsAnalysisWindow.loadURL('http://localhost:3000/cash-voucher');
+
+  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+    reportsAnalysisWindow.setTitle("Cash Voucher");
+  });
+
+  // Optional: Open the DevTools automatically (for development only)
+  // reportsAnalysisWindow.webContents.openDevTools();
+};
+
+const singlereportreprintPopup = () => {
+  const reportsAnalysisWindow = new BrowserWindow({
+    width: 950,
+    height: 600,
+    parent: mainWindow, 
+    modal: true, 
+    webPreferences: {
+      enableRemoteModule: true,
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+    title: 'Reprint',
+  });
+
+  // Load the Reports Analysis page
+  reportsAnalysisWindow.loadURL('http://localhost:3000/single-report-reprint');
+
+  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+    reportsAnalysisWindow.setTitle("Reprint");
+  });
+
+  // Optional: Open the DevTools automatically (for development only)
+  // reportsAnalysisWindow.webContents.openDevTools();
+};
+
+const printmultireportPopup = () => {
+  const reportsAnalysisWindow = new BrowserWindow({
+    width: 950,
+    height: 600,
+    parent: mainWindow, 
+    modal: true, 
+    webPreferences: {
+      enableRemoteModule: true,
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+    title: 'Print Multi Report',
+  });
+
+  // Load the Reports Analysis page
+  reportsAnalysisWindow.loadURL('http://localhost:3000/print-multi-report');
+
+  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+    reportsAnalysisWindow.setTitle("Print Multi Report");
+  });
+
+  // Optional: Open the DevTools automatically (for development only)
+  // reportsAnalysisWindow.webContents.openDevTools();
+};
+
+const recordreportPopup = () => {
+  const reportsAnalysisWindow = new BrowserWindow({
+    width: 950,
+    height: 600,
+    parent: mainWindow, 
+    modal: true, 
+    webPreferences: {
+      enableRemoteModule: true,
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+    title: 'Record Report',
+  });
+
+  // Load the Reports Analysis page
+  reportsAnalysisWindow.loadURL('http://localhost:3000/record-report');
+
+  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+    reportsAnalysisWindow.setTitle("Record Report");
+  });
+
+  // Optional: Open the DevTools automatically (for development only)
+  // reportsAnalysisWindow.webContents.openDevTools();
+};
+
+const partydetailprintPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
@@ -205,6 +335,32 @@ const partyprintPopup = () => {
 
   reportsAnalysisWindow.webContents.on('did-finish-load', () => {
     reportsAnalysisWindow.setTitle("Party Detail Print");
+  });
+
+  // Optional: Open the DevTools automatically (for development only)
+  // reportsAnalysisWindow.webContents.openDevTools();
+};
+
+const recordreportwihtoutsamplePopup = () => {
+  const reportsAnalysisWindow = new BrowserWindow({
+    width: 950,
+    height: 600,
+    parent: mainWindow, 
+    modal: true, 
+    webPreferences: {
+      enableRemoteModule: true,
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+    title: 'Record Report Without Sample',
+  });
+
+  // Load the Reports Analysis page
+  reportsAnalysisWindow.loadURL('http://localhost:3000/record-report-without-sample');
+
+  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+    reportsAnalysisWindow.setTitle("Record Report Without Sample");
   });
 
   // Optional: Open the DevTools automatically (for development only)
@@ -260,18 +416,19 @@ app.whenReady().then(() => {
     {
       label: 'Ledger',
       submenu: [
-        { label: 'View Ledger', click: () => { ledgerentryPopup() } },
-        { label: 'Update Ledger', click: () => { /* Handle ledger update */ } },
+        { label: 'Entry', click: () => { ledgerentryPopup() } },
+        { label: 'Report', click: () => { ledgerreortPopup() } },
+        { label: 'Cash Voucher', click: () => {cashvoucherPopup() } },
       ],
     },
     {
       label: 'Reports',
       submenu: [
-        { label: 'Reprint Single Report', click: () => {  } },
-        { label: 'Print Multiple Report', click: () => {  } },
-        { label: 'Record Report', click: () => {  } },
-        { label: 'Party Detail Print', click: () => { partyprintPopup() } },
-        { label: 'Record Report Without Sample', click: () => {  } },
+        { label: 'Reprint Single Report', click: () => { singlereportreprintPopup() } },
+        { label: 'Print Multiple Report', click: () => { printmultireportPopup() } },
+        { label: 'Record Report', click: () => { recordreportPopup() } },
+        { label: 'Party Detail Print', click: () => { partydetailprintPopup() } },
+        { label: 'Record Report Without Sample', click: () => { recordreportwihtoutsamplePopup() } },
       ],
     },
   ];
