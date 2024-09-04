@@ -16,7 +16,7 @@ function LabReport() {
 
       <div>
         <div
-          className="absolute top-0 bottom-0 left-0 border rounded-md   bg-gradient-to-r from-red-900 via-red-900 to-red-950 ml-36 text-white text-center"
+          className="absolute top-0 bottom-0 left-0 border rounded-md   bg-gradient-to-r from-red-800 via-red-900 to-red-950 ml-36 text-white text-center"
           style={{
             width: "25px",
             height: "516px",
@@ -34,7 +34,7 @@ function LabReport() {
           className="border-2 border-red-950 rounded-md p-1"
           style={{ width: "900px", height: "491px", marginLeft: "35px" }}
         >
-          <div className="h-24 w-full  bg-gradient-to-r from-red-900 via-red-900 to-red-950 flex items-center p-4 rounded-md">
+          <div className="h-24 w-full  bg-gradient-to-r from-red-800 via-red-900 to-red-950 flex items-center p-4 rounded-md">
             <div className="flex flex-col items-start mr-4 ml-28">
               <h1 className="text-4xl ml-20 text-white mb-2 font-bold">
                 Haryana Laboratory
@@ -94,7 +94,7 @@ function LabReport() {
           <div className="flex space-x-1">
             <div className="flex-1 border-2 rounded-lg border-red-950 p-4 px-1">
               <div>
-                <span className="font-bold text-white border border-red-950  bg-gradient-to-r from-red-900 via-red-900 to-red-950 px-5 py-3 rounded-md">
+                <span className="font-bold text-white border border-red-950  bg-gradient-to-r from-red-800 via-red-900 to-red-950 px-5 py-3 rounded-md">
                   Moisture
                 </span>
 
@@ -103,7 +103,7 @@ function LabReport() {
             </div>
             <div className="flex-1  border-2 rounded-lg border-red-950 p-4 px-1">
               <div>
-                <span className=" font-bold text-white border border-red-950 px-5 py-3  bg-gradient-to-r from-red-900 via-red-900 to-red-950 rounded-md">
+                <span className=" font-bold text-white border border-red-950 px-5 py-3  bg-gradient-to-r from-red-800 via-red-900 to-red-950 rounded-md">
                   Oil
                 </span>
                 <span className="ml-24">NA</span>
@@ -111,7 +111,7 @@ function LabReport() {
             </div>
             <div className="flex-1 p-4 border-2 rounded-lg border-red-950 px-1">
               <div>
-                <span className=" font-bold text-white border border-red-950 px-5 py-3  bg-gradient-to-r from-red-900 via-red-900 to-red-950  rounded-md">
+                <span className=" font-bold text-white border border-red-950 px-5 py-3  bg-gradient-to-r from-red-800 via-red-900 to-red-950  rounded-md">
                   FFA
                 </span>
                 <span className="ml-24">NA</span>
@@ -192,47 +192,47 @@ function LabReport() {
           </div>
 
           <div
-            className="border rounded-lg  bg-gradient-to-r from-red-900 via-red-900 to-red-950 text-white px-1 -mt-1"
+            className="border rounded-lg  bg-gradient-to-r from-red-800 via-red-900 to-red-950 text-white px-1 -mt-1"
             style={{ width: "895px", height: "25px", marginLeft: "-4px" }}
           >
             A House For Analysis of Rice Bran, Oil Seeds, Oil Cakes, Atta,
             Maida, Suzi, Besan, Spices, Condiments, Acids & Fertilizers.
           </div>
           <div className="grid grid-rows-12 gap-1 ml-[898px] -mt-[518px]">
-            <div className="row-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 rounded-t-md text-white py-1 px-2 text-lg">
+            <div className="row-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 rounded-t-md text-white py-1 px-2 text-lg">
               Since
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               1
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               2
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               3
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               4
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               5
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               6
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               7
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               8
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               9
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-10 w-14 text-white py-2 px-5 text-lg">
               0
             </div>
-            <div className="col-span-1  bg-gradient-to-r from-red-900 via-red-900 to-red-950 h-9 w-14 rounded-b-md text-white py-1 px-2 text-lg">
+            <div className="col-span-1  bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-9 w-14 rounded-b-md text-white py-1 px-2 text-lg">
               1985
             </div>
           </div>
