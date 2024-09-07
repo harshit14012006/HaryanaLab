@@ -1,6 +1,6 @@
 import React from "react";
-import labmainlogo from '../images/labmainlogo.jpeg';
-import lablogo from '../images/lablogo.png'
+import labmainlogo from "../images/labmainlogo.jpeg";
+import lablogo from "../images/lablogo.png";
 function LabReport() {
   return (
     <div className="flex items-center justify-center h-screen">
@@ -35,83 +35,76 @@ function LabReport() {
           style={{ width: "900px", height: "506px", marginLeft: "35px" }}
         >
           <div className="flex items-center w-full p-2 rounded-md h-28 bg-gradient-to-r from-red-800 via-red-900 to-red-950">
-  <div className="flex items-center mr-auto"> 
-    <div className="w-[100px] border-white border-2">
-    <img
-      src={lablogo}
-      alt="Lab Logo"
-      className="h-20 mr-4 w-28"
-    />
-    </div>
-    <div className="flex flex-col items-start">
-      <h1 className="mb-2 text-5xl font-bold text-white ml-9 whitespace-nowrap">
-        Haryana Laboratory
-      </h1>
-      <p className="ml-8 -ml-3 text-white">
-        Suvidha Marg, Corner Gali no.3, Aggarsain Colony, Sirsa-125055
-      </p>
-    </div>
-  </div>
+            <div className="flex items-center mr-auto">
+              <div className="w-[100px] border-white border-2">
+                <img src={lablogo} alt="Lab Logo" className="h-20 mr-4 w-28" />
+              </div>
+              <div className="flex flex-col items-start">
+                <h1 className="mb-2 text-5xl font-bold text-white ml-9 whitespace-nowrap">
+                  Haryana Laboratory
+                </h1>
+                <p className="ml-8 -ml-3 text-white">
+                  Suvidha Marg, Corner Gali no.3, Aggarsain Colony, Sirsa-125055
+                </p>
+              </div>
+            </div>
 
-  <div className="flex flex-col justify-center h-24 border-2 border-white rounded-md" style={{ width: '150px' }}>
-  <div className="flex items-center px-5">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-      alt="WhatsApp"
-      className="w-4 h-4 mr-2"
-    />
-    <p className="text-white whitespace-nowrap">86076-23157</p>
-  </div>
-  <div className="flex items-center px-5">
-    <img
-      src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
-      alt="Mobile"
-      className="w-4 h-4 mr-2"
-    />
-    <p className="text-white whitespace-nowrap">91833-23157</p>
-  </div>
-  <div className="flex items-center px-5">
-    <img
-      src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
-      alt="Mobile"
-      className="w-4 h-4 mr-2"
-    />
-    <p className="text-white whitespace-nowrap">94655-37157</p>
-  </div>
-  <div className="flex items-center px-5">
-    <img
-      src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
-      alt="Mobile"
-      className="w-4 h-4 mr-2"
-    />
-    <p className="text-white whitespace-nowrap">81685-26828</p>
-  </div>
-</div>
+            <div
+              className="flex flex-col justify-center h-24 border-2 border-white rounded-md"
+              style={{ width: "150px" }}
+            >
+              <div className="flex items-center px-5">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                  alt="WhatsApp"
+                  className="w-4 h-4 mr-2"
+                />
+                <p className="text-white whitespace-nowrap">86076-23157</p>
+              </div>
+              <div className="flex items-center px-5">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
+                  alt="Mobile"
+                  className="w-4 h-4 mr-2"
+                />
+                <p className="text-white whitespace-nowrap">91833-23157</p>
+              </div>
+              <div className="flex items-center px-5">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
+                  alt="Mobile"
+                  className="w-4 h-4 mr-2"
+                />
+                <p className="text-white whitespace-nowrap">94655-37157</p>
+              </div>
+              <div className="flex items-center px-5">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
+                  alt="Mobile"
+                  className="w-4 h-4 mr-2"
+                />
+                <p className="text-white whitespace-nowrap">81685-26828</p>
+              </div>
+            </div>
 
-
-
-
-
-{/* info  no dt  */}
-  <div className="flex flex-col gap-1">
-    <div className="flex items-center">
-      <span className="ml-2 text-white">No.</span>
-      <input
-        type="text"
-        className="w-20 h-8 ml-1 bg-white rounded-md"
-      />
-    </div>
-    <div className="flex items-center">
-      <span className="ml-2 text-white">Dt.</span>
-      <input
-        type="text"
-        className="w-20 h-8 ml-2 bg-white rounded-md"
-      />
-    </div>
-  </div>
-</div>
-
-
+            {/* info  no dt  */}
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center">
+                <span className="ml-2 text-white">No.</span>
+                <input
+                  type="text"
+                  className="w-20 h-8 ml-1 bg-white rounded-md"
+                />
+              </div>
+              <div className="flex items-center">
+                <span className="ml-2 text-white">Dt.</span>
+                <input
+                  type="text"
+                  className="w-20 h-8 ml-2 bg-white rounded-md"
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="mt-4 text-red-950">
             <span className="block mb-3 ml-10">
@@ -246,35 +239,48 @@ function LabReport() {
             <div className="h-10 row-span-1 px-2 py-1 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 rounded-t-md">
               Since
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
+            {/* <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
               1
+            </div> */}
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-yellow-400 text-xs ">★★★★★</div>
+              <div className="text-base">1</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              2
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-red-400 text-xs ">★★★★★</div>
+              <div className="text-base">2</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              3
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-blue-400 text-xs ">★★★★★</div>
+              <div className="text-base">3</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              4
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-green-400 text-xs ">★★★★★</div>
+              <div className="text-base">4</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              5
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-purple-400 text-xs ">★★★★★</div>
+              <div className="text-base">5</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              6
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-fuchsia-600 text-xs ">★★★★★</div>
+              <div className="text-base">6</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              7
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-violet-500 text-xs ">★★★★★</div>
+              <div className="text-base">7</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              8
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-rose-500 text-xs ">★★★★★</div>
+              <div className="text-base">8</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              9
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-pink-600 text-xs ">★★★★★</div>
+              <div className="text-base">9</div>
             </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              0
+            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
+              <div className="text-indigo-600 text-xs ">★★★★★</div>
+              <div className="text-base">0</div>
             </div>
             <div className="col-span-1 px-2 py-1 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-9 w-14 rounded-b-md">
               1985
