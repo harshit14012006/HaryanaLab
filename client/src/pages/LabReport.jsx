@@ -2,6 +2,17 @@ import React from "react";
 import labmainlogo from "../images/labmainlogo.jpeg";
 import lablogo from "../images/lablogo.png";
 function LabReport() {
+  const [moisture, setMoisture] = React.useState(111);
+  const [oil, setoil] = React.useState(148);
+  const [ffa, setffa] = React.useState(320);
+  const digits = `${moisture}${oil}${ffa}`.split("");
+
+  // Function to count the occurrences of each digit
+  const countOccurrences = (digit) =>
+    digits.filter((d) => d === String(digit)).length;
+
+  // const digitArray = Array.from({ length: 10 }, (_, i) => i);
+  const digitArray = Array.from({ length: 9 }, (_, i) => i + 1).concat([0]);
   return (
     <div className="flex items-center justify-center h-screen">
       <div
@@ -239,49 +250,50 @@ function LabReport() {
             <div className="h-10 row-span-1 px-2 py-1 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 rounded-t-md">
               Since
             </div>
-            {/* <div className="h-10 col-span-1 px-5 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14">
-              1
-            </div> */}
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-yellow-400 text-xs ">★★★★★</div>
-              <div className="text-base">1</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-red-400 text-xs ">★★★★★</div>
-              <div className="text-base">2</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-blue-400 text-xs ">★★★★★</div>
-              <div className="text-base">3</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-green-400 text-xs ">★★★★★</div>
-              <div className="text-base">4</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-purple-400 text-xs ">★★★★★</div>
-              <div className="text-base">5</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-fuchsia-600 text-xs ">★★★★★</div>
-              <div className="text-base">6</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-violet-500 text-xs ">★★★★★</div>
-              <div className="text-base">7</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-rose-500 text-xs ">★★★★★</div>
-              <div className="text-base">8</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-pink-600 text-xs ">★★★★★</div>
-              <div className="text-base">9</div>
-            </div>
-            <div className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center">
-              <div className="text-indigo-600 text-xs ">★★★★★</div>
-              <div className="text-base">0</div>
-            </div>
+            {/*Something working on stars   ^-^ */}
+
+            {digitArray.map((digit) => {
+              // Get the count of occurrences for the current digit
+              const count = countOccurrences(digit);
+
+              // Create an array of stars with length equal to count
+              const starsArray = Array(count).fill("★");
+
+              return (
+                <div
+                  key={digit}
+                  className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center"
+                >
+                  {/* Top stars */}
+                  <div className="text-yellow-400 text-xs">
+                    {starsArray.slice(0, 5).map((star, index) => (
+                      <span key={`top-${index}`}>{star}</span>
+                    ))}
+                  </div>
+
+                  {/* Number with stars on the sides */}
+                  <div className="relative flex items-center justify-center">
+                    {/* Left stars */}
+                    <div className="absolute left-[-1rem] flex flex-col items-center text-yellow-400 text-xs">
+                      {starsArray.slice(5, 7).map((star, index) => (
+                        <div key={`left-${index}`}>{star}</div>
+                      ))}
+                    </div>
+
+                    {/* Right stars */}
+                    <div className="absolute right-[-1rem] flex flex-col items-center text-yellow-400 text-xs">
+                      {starsArray.slice(7, 9).map((star, index) => (
+                        <div key={`right-${index}`}>{star}</div>
+                      ))}
+                    </div>
+
+                    {/* Number in the center */}
+                    <div className="text-base">{digit}</div>
+                  </div>
+                </div>
+              );
+            })}
+
             <div className="col-span-1 px-2 py-1 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 h-9 w-14 rounded-b-md">
               1985
             </div>
