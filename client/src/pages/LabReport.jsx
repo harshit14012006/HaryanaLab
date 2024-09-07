@@ -2,9 +2,9 @@ import React from "react";
 import labmainlogo from "../images/labmainlogo.jpeg";
 import lablogo from "../images/lablogo.png";
 function LabReport() {
-  const [moisture, setMoisture] = React.useState(111);
-  const [oil, setoil] = React.useState(148);
-  const [ffa, setffa] = React.useState(320);
+  const moisture = 111;
+  const oil = 148;
+  const ffa = 329;
   const digits = `${moisture}${oil}${ffa}`.split("");
 
   // Function to count the occurrences of each digit
