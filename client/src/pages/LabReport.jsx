@@ -1,5 +1,4 @@
 import React from "react";
-import labmainlogo from "../images/labmainlogo.jpeg";
 import lablogo from "../images/lablogo.png";
 function LabReport() {
   const moisture = 111;
