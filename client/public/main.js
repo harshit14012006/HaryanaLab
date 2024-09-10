@@ -1,6 +1,8 @@
-const { app, Menu, BrowserWindow, globalShortcut } = require('electron');
-const path = require('path');
-require('electron-reload')(__dirname);
+const { app, Menu, BrowserWindow, globalShortcut } = require("electron");
+const path = require("path");
+const { spawn } = require("child_process");
+
+require("electron-reload")(__dirname);
 
 let mainWindow;
 
@@ -16,15 +18,13 @@ const createWindow = () => {
   });
 
   // Load the main page (HomePage)
-  const menuFilePath = path.join(__dirname, 'public', 'menu.html');
+  const menuFilePath = path.join(__dirname, "public", "menu.html");
   mainWindow.loadURL(`file://${menuFilePath}`);
-  mainWindow.loadURL('http://localhost:3000/');
+  mainWindow.loadURL("http://localhost:3000/");
 
   // Optional: Open the DevTools automatically (for development only)
   // mainWindow.webContents.openDevTools();
 };
-
-
 
 const createCustomerFormPopup = () => {
   const popupWindow = new BrowserWindow({
@@ -32,20 +32,20 @@ const createCustomerFormPopup = () => {
     height: 400,
     parent: mainWindow,
     modal: true,
-    frame: true, 
+    frame: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Customer Form', 
+    title: "Customer Form",
   });
 
   // Load the Customer Form page
-  popupWindow.loadURL('http://localhost:3000/customer-form');
+  popupWindow.loadURL("http://localhost:3000/customer-form");
 
-  popupWindow.webContents.on('did-finish-load', () => {
+  popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Customer Form");
   });
 
@@ -59,20 +59,20 @@ const createItemPopup = () => {
     height: 573,
     parent: mainWindow,
     modal: true,
-    frame: true, 
+    frame: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Item', 
+    title: "Item",
   });
 
   // Load the Customer Form page
-  popupWindow.loadURL('http://localhost:3000/create-item');
+  popupWindow.loadURL("http://localhost:3000/create-item");
 
-  popupWindow.webContents.on('did-finish-load', () => {
+  popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Item");
   });
 
@@ -86,20 +86,20 @@ const cityPopup = () => {
     height: 573,
     parent: mainWindow,
     modal: true,
-    frame: true, 
+    frame: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'AddCity', 
+    title: "AddCity",
   });
 
   // Load the Customer Form page
-  popupWindow.loadURL('http://localhost:3000/master-city');
+  popupWindow.loadURL("http://localhost:3000/master-city");
 
-  popupWindow.webContents.on('did-finish-load', () => {
+  popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("AddCity");
   });
 
@@ -111,21 +111,21 @@ const createReportsAnalysisWindow = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 573,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Reports Analysis',
+    title: "Reports Analysis",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/reports-analysis');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/reports-analysis");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Reports Analysis");
   });
 
@@ -137,21 +137,21 @@ const updateReportsAnalysisWindow = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 573,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Single Report Update',
+    title: "Single Report Update",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/update-analysis');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/update-analysis");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Single Report Update");
   });
 
@@ -163,21 +163,21 @@ const ledgerentryPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 573,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Ledger Entry',
+    title: "Ledger Entry",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/ledger-entry');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/ledger-entry");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Ledger Entry");
   });
 
@@ -189,47 +189,47 @@ const ledgerreortPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Ledger Report',
+    title: "Ledger Report",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/ledger-report');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/ledger-report");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Ledger Report");
   });
 
   // Optional: Open the DevTools automatically (for development only)
   // reportsAnalysisWindow.webContents.openDevTools();
-};  
+};
 
 const cashvoucherPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Cash Voucher',
+    title: "Cash Voucher",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/cash-voucher');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/cash-voucher");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Cash Voucher");
   });
 
@@ -241,21 +241,21 @@ const singlereportreprintPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Reprint',
+    title: "Reprint",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/single-report-reprint');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/single-report-reprint");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Reprint");
   });
 
@@ -267,21 +267,21 @@ const printmultireportPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Print Multi Report',
+    title: "Print Multi Report",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/print-multi-report');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/print-multi-report");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Print Multi Report");
   });
 
@@ -293,21 +293,21 @@ const recordreportPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Record Report',
+    title: "Record Report",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/record-report');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/record-report");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Record Report");
   });
 
@@ -319,21 +319,21 @@ const partydetailprintPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Party Detail Print',
+    title: "Party Detail Print",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/party-detail-print');
+  reportsAnalysisWindow.loadURL("http://localhost:3000/party-detail-print");
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Party Detail Print");
   });
 
@@ -345,21 +345,23 @@ const recordreportwihtoutsamplePopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
     height: 600,
-    parent: mainWindow, 
-    modal: true, 
+    parent: mainWindow,
+    modal: true,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegration: true,
     },
     autoHideMenuBar: true,
-    title: 'Record Report Without Sample',
+    title: "Record Report Without Sample",
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL('http://localhost:3000/record-report-without-sample');
+  reportsAnalysisWindow.loadURL(
+    "http://localhost:3000/record-report-without-sample"
+  );
 
-  reportsAnalysisWindow.webContents.on('did-finish-load', () => {
+  reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Record Report Without Sample");
   });
 
@@ -367,11 +369,34 @@ const recordreportwihtoutsamplePopup = () => {
   // reportsAnalysisWindow.webContents.openDevTools();
 };
 
+function startbackend() {
+  backendServer = spawn("node", ["index.js"], {
+    cwd: path.join(__dirname, "../../server"),
+    stdio: "inherit", // To display the server logs in the Electron console
+  });
+
+  backendServer.on("close", (code) => {
+    console.log(`Backend process exited with code ${code}`);
+  });
+
+  backendServer.on("error", (err) => {
+    console.error("Failed to start server:", err);
+  });
+}
+function stopbackend() {
+  backendServer.kill();
+  if (backendServer) {
+    console.log("Backend server stopped.");
+  } else {
+    console.log("No backend server is running.");
+  }
+}
+
 app.whenReady().then(() => {
   createWindow();
-
+  startbackend();
   // Register a shortcut to toggle DevTools
-  globalShortcut.register('CommandOrControl+Shift+I', () => {
+  globalShortcut.register("CommandOrControl+Shift+I", () => {
     const focusedWindow = BrowserWindow.getFocusedWindow();
     if (focusedWindow) {
       focusedWindow.webContents.toggleDevTools();
@@ -381,74 +406,143 @@ app.whenReady().then(() => {
   // Create the application menu
   const menuTemplate = [
     {
-      label: 'Account',
+      label: "Account",
       submenu: [
         {
-          label: 'Company Profile',
+          label: "Company Profile",
+          click: () => {},
+        },
+        {
+          label: "User Profile",
           click: () => {
-            
+            /* Handle User Profile */
           },
         },
-        { label: 'User Profile', click: () => { /* Handle User Profile */ } },
       ],
     },
     {
-      label: 'Master',
-      submenu: [
-        { label: 'Item', click: () => { createItemPopup() } },
-        { label: 'Customer', click: () => { createCustomerFormPopup() } },
-        { label: 'Session', click: () => { /* Handle Session */ } },
-        { label: 'City', click: () => { cityPopup() } }
-      ],
-    },
-    {
-      label: 'Report Analysis',
+      label: "Master",
       submenu: [
         {
-          label: 'Generate Report',
+          label: "Item",
+          click: () => {
+            createItemPopup();
+          },
+        },
+        {
+          label: "Customer",
+          click: () => {
+            createCustomerFormPopup();
+          },
+        },
+        {
+          label: "Session",
+          click: () => {
+            /* Handle Session */
+          },
+        },
+        {
+          label: "City",
+          click: () => {
+            cityPopup();
+          },
+        },
+      ],
+    },
+    {
+      label: "Report Analysis",
+      submenu: [
+        {
+          label: "Generate Report",
           click: () => {
             createReportsAnalysisWindow();
           },
         },
-        { label: 'Update Report', click: () => { updateReportsAnalysisWindow() } },
+        {
+          label: "Update Report",
+          click: () => {
+            updateReportsAnalysisWindow();
+          },
+        },
       ],
     },
     {
-      label: 'Ledger',
+      label: "Ledger",
       submenu: [
-        { label: 'Entry', click: () => { ledgerentryPopup() } },
-        { label: 'Report', click: () => { ledgerreortPopup() } },
-        { label: 'Cash Voucher', click: () => {cashvoucherPopup() } },
+        {
+          label: "Entry",
+          click: () => {
+            ledgerentryPopup();
+          },
+        },
+        {
+          label: "Report",
+          click: () => {
+            ledgerreortPopup();
+          },
+        },
+        {
+          label: "Cash Voucher",
+          click: () => {
+            cashvoucherPopup();
+          },
+        },
       ],
     },
     {
-      label: 'Reports',
+      label: "Reports",
       submenu: [
-        { label: 'Reprint Single Report', click: () => { singlereportreprintPopup() } },
-        { label: 'Print Multiple Report', click: () => { printmultireportPopup() } },
-        { label: 'Record Report', click: () => { recordreportPopup() } },
-        { label: 'Party Detail Print', click: () => { partydetailprintPopup() } },
-        { label: 'Record Report Without Sample', click: () => { recordreportwihtoutsamplePopup() } },
+        {
+          label: "Reprint Single Report",
+          click: () => {
+            singlereportreprintPopup();
+          },
+        },
+        {
+          label: "Print Multiple Report",
+          click: () => {
+            printmultireportPopup();
+          },
+        },
+        {
+          label: "Record Report",
+          click: () => {
+            recordreportPopup();
+          },
+        },
+        {
+          label: "Party Detail Print",
+          click: () => {
+            partydetailprintPopup();
+          },
+        },
+        {
+          label: "Record Report Without Sample",
+          click: () => {
+            recordreportwihtoutsamplePopup();
+          },
+        },
       ],
     },
   ];
-  
+
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 
-  app.on('activate', () => {
+  app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
   });
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
     app.quit();
+    stopbackend(); // Stop the backend server when the application quits
   }
 });
 
-app.on('will-quit', () => {
+app.on("will-quit", () => {
   globalShortcut.unregisterAll();
 });
