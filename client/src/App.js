@@ -1,10 +1,11 @@
 import React from "react";
-import LabReport from "./pages/LabReport"; 
+// import LabReport from "./pages/LabReport";
+import Layout from "./Layout";
 function App() {
   return (
     <div>
-      {/* <Layout /> */}
-      <LabReport/>
+      <Layout />
+      {/* <LabReport /> */}
       {/* <LabReport1/> */}
     </div>
   );
