@@ -1,23 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 // Sample data to be displayed in the table
-const sampleData = [
-  { id: 1, name: "Sample A", date: "2024-08-30" },
-  { id: 2, name: "Sample B", date: "2024-08-31" },
-  { id: 3, name: "Sample C", date: "2024-09-01" },
-  { id: 4, name: "Sample D", date: "2024-09-02" },
-  { id: 5, name: "Sample E", date: "2024-09-03" },
-  { id: 6, name: "Sample F", date: "2024-09-04" },
-  { id: 7, name: "Sample G", date: "2024-09-05" },
-  { id: 8, name: "Sample H", date: "2024-09-06" },
-  { id: 9, name: "Sample I", date: "2024-09-07" },
-  { id: 10, name: "Sample J", date: "2024-09-08" },
-  // Add more data as needed
-];
+// const sampleData = [
+//   { id: 1, name: "Sample A", date: "2024-08-30" },
+//   { id: 2, name: "Sample B", date: "2024-08-31" },
+//   { id: 3, name: "Sample C", date: "2024-09-01" },
+//   { id: 4, name: "Sample D", date: "2024-09-02" },
+//   { id: 5, name: "Sample E", date: "2024-09-03" },
+//   { id: 6, name: "Sample F", date: "2024-09-04" },
+//   { id: 7, name: "Sample G", date: "2024-09-05" },
+//   { id: 8, name: "Sample H", date: "2024-09-06" },
+//   { id: 9, name: "Sample I", date: "2024-09-07" },
+//   { id: 10, name: "Sample J", date: "2024-09-08" },
+//   // Add more data as needed
+// ];
 
 const CreateItem = () => {
   const [hoveredCell, setHoveredCell] = useState({ row: null, column: null });
   const [ItemName, setItemName] = useState("");
+  const [active, setactive] = useState(false);
+  const [Data, getData] = useState([]);
 
   const handleMouseEnter = (rowIndex, columnIndex) => {
     setHoveredCell({ row: rowIndex, column: columnIndex });
@@ -31,6 +34,18 @@ const CreateItem = () => {
     setItemName(event.target.value);
   };
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/getItem")
+      .then((response) => {
+        console.log(response.data.id);
+        getData(response.data.id);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, [active]);
+
   const HandleClick = (event) => {
     event.preventDefault();
     if (!ItemName) {
@@ -42,6 +57,15 @@ const CreateItem = () => {
       date: new Date().toISOString().slice(0, 10),
     };
     console.log(data);
+    axios
+      .post("http://localhost:3001/api/setItem", data)
+      .then((response) => {
+        console.log("Data submitted successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error submitting the data!", error);
+      });
+    setactive(!active);
   };
 
   return (
@@ -106,8 +130,8 @@ const CreateItem = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {sampleData.map((sample, rowIndex) => (
-                    <tr key={sample.id}>
+                  {Data.map((sample, rowIndex) => (
+                    <tr key={sample.ID}>
                       <td
                         onMouseEnter={() => handleMouseEnter(rowIndex, 0)}
                         onMouseLeave={handleMouseLeave}
@@ -118,7 +142,7 @@ const CreateItem = () => {
                             : "text-black"
                         }`}
                       >
-                        {sample.id}
+                        {sample.ID}
                       </td>
                       <td
                         onMouseEnter={() => handleMouseEnter(rowIndex, 1)}
@@ -130,7 +154,7 @@ const CreateItem = () => {
                             : "text-black"
                         }`}
                       >
-                        {sample.name}
+                        {sample.ItemName}
                       </td>
                       <td
                         onMouseEnter={() => handleMouseEnter(rowIndex, 2)}
@@ -142,7 +166,7 @@ const CreateItem = () => {
                             : "text-black"
                         }`}
                       >
-                        {sample.date}
+                        {sample.Date}
                       </td>
                     </tr>
                   ))}
