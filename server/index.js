@@ -42,7 +42,6 @@ app.get("/api/cashvouchers", cashVoucherController.getCashVouchers);
 app.post("/api/analysis", analysisController.createAnalysis);
 app.get("/api/analysis", analysisController.getAnalysisRecords);
 app.post("/upload", upload.single("image"), saveImage);
-
 app.get("/api/getItem", getItem);
 app.post("/api/setItem", setItem);
 

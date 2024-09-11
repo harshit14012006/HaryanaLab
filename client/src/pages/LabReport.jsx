@@ -63,7 +63,7 @@ function LabReport() {
               className="flex flex-col justify-center h-24 border-2 border-white rounded-md"
               style={{ width: "150px" }}
             >
-              <div className="flex items-center px-5">
+              <div className="flex items-center px-3">
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
                   alt="WhatsApp"
@@ -71,7 +71,7 @@ function LabReport() {
                 />
                 <p className="text-white whitespace-nowrap">86076-23157</p>
               </div>
-              <div className="flex items-center px-5">
+              <div className="flex items-center px-3">
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
                   alt="Mobile"
@@ -79,7 +79,7 @@ function LabReport() {
                 />
                 <p className="text-white whitespace-nowrap">91833-23157</p>
               </div>
-              <div className="flex items-center px-5">
+              <div className="flex items-center px-3">
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
                   alt="Mobile"
@@ -87,7 +87,7 @@ function LabReport() {
                 />
                 <p className="text-white whitespace-nowrap">94655-37157</p>
               </div>
-              <div className="flex items-center px-5">
+              <div className="flex items-center px-3">
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
                   alt="Mobile"
@@ -246,8 +246,8 @@ function LabReport() {
             Maida, Suzi, Besan, Spices, Condiments, Acids & Fertilizers.
           </div>
           <div className="grid grid-rows-12 gap-1 ml-[898px] -mt-[531px] h-[533px]">
-            <div className="h-10 row-span-1 px-2 py-1 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 rounded-t-md">
-              Since
+            <div className="h-10 row-span-1 px-1 py-2 text-lg text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 rounded-t-md">
+            Since
             </div>
             {/*Something working on stars   ^-^ */}
 
@@ -261,10 +261,10 @@ function LabReport() {
               return (
                 <div
                   key={digit}
-                  className="h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14 flex flex-col items-center justify-center"
+                  className="flex flex-col items-center justify-center h-10 col-span-1 px-5 py-2 text-white bg-gradient-to-r from-red-800 via-red-900 to-red-950 w-14"
                 >
                   {/* Top stars */}
-                  <div className="text-yellow-400 text-xs">
+                  <div className="text-xs text-yellow-400">
                     {starsArray.slice(0, 5).map((star, index) => (
                       <span key={`top-${index}`}>{star}</span>
                     ))}

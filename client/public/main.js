@@ -5,7 +5,7 @@ const { spawn } = require("child_process");
 require("electron-reload")(__dirname);
 
 let mainWindow;
-
+let backendServer;
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 700,
