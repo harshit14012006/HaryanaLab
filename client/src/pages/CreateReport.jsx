@@ -262,7 +262,7 @@ const CreateReport = () => {
     <option value="signature3">Signature 3</option>
   </select>
   <div className='flex justify-end'>
-    <button className='bg-gray-400 text-white px-2 py-1 rounded'>
+    <button className='bg-gray-400 px-2 py-1 rounded'>
       Save and Print
     </button>
   </div>
