@@ -28,8 +28,8 @@ const createWindow = () => {
 
 const createCustomerFormPopup = () => {
   const popupWindow = new BrowserWindow({
-    width: 700,
-    height: 400,
+    width: 1300,
+    height: 600,
     parent: mainWindow,
     modal: true,
     frame: true,
@@ -370,7 +370,7 @@ const recordreportwihtoutsamplePopup = () => {
 };
 
 function startbackend() {
-  backendServer = spawn("node", ["index.js"], {
+  backendServer = spawn("nodemon", ["index.js"], {
     cwd: path.join(__dirname, "../../server"),
     stdio: "inherit", // To display the server logs in the Electron console
   });
@@ -394,7 +394,7 @@ function stopbackend() {
 
 app.whenReady().then(() => {
   createWindow();
-  startbackend();
+  // startbackend();
   // Register a shortcut to toggle DevTools
   globalShortcut.register("CommandOrControl+Shift+I", () => {
     const focusedWindow = BrowserWindow.getFocusedWindow();
@@ -539,7 +539,7 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
-    stopbackend(); // Stop the backend server when the application quits
+    // stopbackend(); // Stop the backend server when the application quits
   }
 });
 
