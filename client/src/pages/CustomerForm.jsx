@@ -617,7 +617,7 @@ const CustomerForm = () => {
       <fieldset className='border p-1'>
         <legend style={{ fontSize: "13px", fontWeight: "normal" }}>Party Details</legend>
         <div className="container mx-auto">
-          <div className="relative overflow-x-auto overflow-y-auto h-[225px] w-[1200px] ">
+          <div className="relative overflow-x-auto overflow-y-auto h-[185px] w-[1200px] ">
             <table className=" bg-white border border-gray-300 table-auto">
             <thead>
       <tr className="bg-gray-100 border-b border-gray-300">

@@ -29,7 +29,7 @@ const createWindow = () => {
 const createCustomerFormPopup = () => {
   const popupWindow = new BrowserWindow({
     width: 1300,
-    height: 600,
+    height: 650,
     parent: mainWindow,
     modal: true,
     frame: true,

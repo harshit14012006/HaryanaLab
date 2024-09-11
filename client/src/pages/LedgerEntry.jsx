@@ -75,10 +75,10 @@ function LedgerEntry() {
   <fieldset className='border p-4 rounded '>
     <legend className='font-normal text-sm mb-4'>Control Panel</legend>
     <div className="flex justify-between">
-      <button className="bg-gray-400  py-1 px-4 rounded h-8 ">
+      <button className="bg-gray-400  text-white py-1 px-4 rounded h-8 ">
         Add New
       </button>
-      <button className="bg-gray-400  py-1 px-4 rounded h-8 ">
+      <button className="bg-gray-400 text-white py-1 px-4 rounded h-8 ">
         Delete
       </button>
     </div>
@@ -99,15 +99,34 @@ function LedgerEntry() {
     </div>
     
     <div className="bg-gray-200 h-96">
-  <div className="h-full overflow-auto">
-    <div className="min-w-full">
+  <div className="h-full">
+    <div className="min-w-full h-full overflow-x-auto overflow-y-auto">
       <table className="w-full border-collapse">
         <thead className="bg-gray-300">
-          </thead>
+          <tr>
+            <th className="px-4 py-2 text-left">ID</th>
+            <th className="px-4 py-2 text-left">Name</th>
+            <th className="px-4 py-2 text-left">Age</th>
+            <th className="px-4 py-2 text-left">Occupation</th>
+            <th className="px-4 py-2 text-left"></th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y">
+          {Array.from({ length: 20 }, (_, index) => (
+            <tr key={index}>
+              <td className="px-4 py-2">#{index + 1}</td>
+              <td className="px-4 py-2">Person {index + 1}</td>
+              <td className="px-4 py-2">{20 + index}</td>
+              <td className="px-4 py-2">Occupation {index + 1}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   </div>
 </div>
+
+
   </fieldset>
 </div>
 
