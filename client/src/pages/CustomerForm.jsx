@@ -613,48 +613,60 @@ const CustomerForm = () => {
       </form>
 
       {/* Table Content */}
-      <div className='pl-2 pr-4'>
-      <fieldset className='border p-1'>
-        <legend style={{ fontSize: "13px", fontWeight: "normal" }}>Party Details</legend>
-        <div className="container mx-auto">
-          <div className="relative overflow-x-auto overflow-y-auto h-[185px] w-[1200px] ">
-            <table className=" bg-white border border-gray-300 table-auto">
-            <thead>
-      <tr className="bg-gray-100 border-b border-gray-300">
-        {headers.map((header, index) => (
-          <th
-            key={index}
-            className=" border-gray-300 text-left text-sm px-4 py-2 whitespace-nowrap"
-            style={{ fontSize: '13px', fontWeight: 'normal', width: '100px' }}
-            onClick={header === 'Name' ? handleSort : undefined}
-          >
-            {header} {header === 'Name' && getSortIcon()}
-          </th>
-        ))}
-      </tr>
-    </thead>
-              <tbody>
-                {data.map((row, i) => (
-                  <tr key={i} className="hover:bg-blue-500 hover:text-white transition-colors duration-300">
-
-                    {headers.map((header, j) => (
-                      <td
-                      key={j}
-                      className={`border-gray-300 border text-sm whitespace-nowrap ${j < headers.length - 1 ? 'pr-4' : ''}`}
-                      style={{ width: header === 'Name' ? '200px' : '120px',fontSize:"11px" }}
-                    >
-                        {row[header]}
-                      </td>
+      <div className="pl-2 pr-4">
+        <fieldset className="border p-1">
+          <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
+            Party Details
+          </legend>
+          <div className="container mx-auto">
+            <div className="relative overflow-x-auto overflow-y-auto h-[137px] w-[1200px] ">
+              <table className=" bg-white border border-gray-300 table-auto">
+                <thead>
+                  <tr className="bg-gray-100 border-b border-gray-300">
+                    {headers.map((header, index) => (
+                      <th
+                        key={index}
+                        className=" border-gray-300 text-left text-sm px-4 py-2 whitespace-nowrap"
+                        style={{
+                          fontSize: "13px",
+                          fontWeight: "normal",
+                          width: "100px",
+                        }}
+                        onClick={header === "Name" ? handleSort : undefined}
+                      >
+                        {header} {header === "Name" && getSortIcon()}
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.map((row, i) => (
+                    <tr
+                      key={i}
+                      className="hover:bg-blue-500 hover:text-white transition-colors duration-300"
+                    >
+                      {headers.map((header, j) => (
+                        <td
+                          key={j}
+                          className={`border-gray-300 border text-sm whitespace-nowrap ${
+                            j < headers.length - 1 ? "pr-4" : ""
+                          }`}
+                          style={{
+                            width: header === "Name" ? "200px" : "120px",
+                            fontSize: "11px",
+                          }}
+                        >
+                          {row[header]}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </fieldset>
-    </div>  
-
+        </fieldset>
+      </div>
 
       {/* <div className="pl-2 pr-4">
       <fieldset className='border p-1'>

@@ -1,5 +1,6 @@
 // index.js
 const express = require("express");
+const cors = require("cors");
 const {
   getAllUsers,
   addUser,
@@ -24,6 +25,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 const app = express();
+app.use(cors());
 const port = 3001;
 app.use(express.json());
 app.use(express.static("uploads"));
