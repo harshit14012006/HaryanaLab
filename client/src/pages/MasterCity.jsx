@@ -1,26 +1,60 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 // State and City data to be displayed in the table and dropdown
-const itemData = [
-  { id: 1, name: 'State A', city: 'City 1' },
-  { id: 2, name: 'State B', city: 'City 2' },
-  { id: 3, name: 'State C', city: 'City 3' },
-  { id: 4, name: 'State D', city: 'City 4' },
-  { id: 5, name: 'State E', city: 'City 5' },
-  { id: 6, name: 'State F', city: 'City 6' },
-  { id: 7, name: 'State G', city: 'City 7' },
-  { id: 8, name: 'State H', city: 'City 8' },
-  { id: 9, name: 'State I', city: 'City 9' },
-  { id: 10, name: 'State J', city: 'City 10' },
-  // Add more data as needed
+
+const stateName = [
+  "Andhra_Pradesh",
+  "Arunachal_Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal_Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya_Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil_Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar_Pradesh",
+  "Uttarakhand",
+  "West_Bengal",
 ];
 
-const states = [...new Set(itemData.map(item => item.name))]; // Extract unique state names
+// const states = [...new Set(itemData.map((item) => item.name))]; // Extract unique state names
 
 const MasterCity = () => {
+  const [data, setData] = useState([]);
   const [hoveredCell, setHoveredCell] = useState({ row: null, column: null });
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:3001/api/mastercity",
+        selectedState.length && selectedState
+      )
+      .then((response) => {
+        console.log(response.data.id);
+        setData(response.data.id);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, [selectedState]);
 
   const handleMouseEnter = (rowIndex, columnIndex) => {
     setHoveredCell({ row: rowIndex, column: columnIndex });
@@ -35,6 +69,28 @@ const MasterCity = () => {
     setSelectedState(state);
   };
 
+  const HandleClick = (event) => {
+    event.preventDefault();
+    if (!selectedCity) {
+      console.log("No ItemName");
+      return;
+    }
+    const data = {
+      city: selectedCity,
+      state: selectedState,
+    };
+    console.log(data);
+    axios
+      .post("http://localhost:3001/api/mastercity", data)
+      .then((response) => {
+        console.log("Data submitted successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error submitting the data!", error);
+      });
+    setSelectedState("");
+  };
+
   return (
     <div className="bg-gray-100">
       <div className="flex justify-center items-center min-h-screen">
@@ -43,7 +99,10 @@ const MasterCity = () => {
           <form>
             {/* State Dropdown */}
             <div className="flex items-center space-x-14 mb-4">
-              <label htmlFor="stateName" className="text-gray-700 whitespace-nowrap">
+              <label
+                htmlFor="stateName"
+                className="text-gray-700 whitespace-nowrap"
+              >
                 State:
               </label>
               <select
@@ -51,12 +110,19 @@ const MasterCity = () => {
                 name="stateName"
                 className="border border-gray-300 rounded-md h-8 flex-grow focus:outline-none"
                 value={selectedState}
-                onChange={(e) => setSelectedState(e.target.value)}
+                onChange={(e) => {
+                  setSelectedState(e.target.value);
+                  console.log(e.target.value);
+                }}
                 required
               >
                 <option value="">Select State</option>
-                {states.map((state, index) => (
-                  <option key={index} value={state}>
+                {stateName.map((state, index) => (
+                  <option
+                    key={index}
+                    value={state}
+                    // onChange={handleChangeOption(state)}
+                  >
                     {state}
                   </option>
                 ))}
@@ -65,7 +131,10 @@ const MasterCity = () => {
 
             {/* City Input */}
             <div className="flex items-center space-x-4 mb-4">
-              <label htmlFor="cityName" className="text-gray-700 whitespace-nowrap">
+              <label
+                htmlFor="cityName"
+                className="text-gray-700 whitespace-nowrap"
+              >
                 City Name:
               </label>
               <input
@@ -81,13 +150,23 @@ const MasterCity = () => {
 
             {/* Buttons */}
             <div className="flex justify-between mb-4">
-              <button type="submit" className="bg-gray-300 py-1 px-4 rounded-md h-8">
+              <button
+                type="submit"
+                className="bg-gray-300 py-1 px-4 rounded-md h-8"
+                onClick={(e) => HandleClick(e)}
+              >
                 Add
               </button>
-              <button type="button" className="bg-gray-300 py-1 px-4 rounded-md h-8">
+              <button
+                type="button"
+                className="bg-gray-300 py-1 px-4 rounded-md h-8"
+              >
                 Update
               </button>
-              <button type="button" className="bg-gray-300 py-1 px-4 rounded-md h-8">
+              <button
+                type="button"
+                className="bg-gray-300 py-1 px-4 rounded-md h-8"
+              >
                 Delete
               </button>
             </div>
@@ -109,9 +188,9 @@ const MasterCity = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {itemData.map((item, rowIndex) => (
+                  {data.map((item, rowIndex) => (
                     <tr
-                      key={item.id}
+                      key={item.ID}
                       onClick={() => handleCityClick(item.city, item.name)}
                     >
                       <td
@@ -120,11 +199,11 @@ const MasterCity = () => {
                         className={`border border-black px-2 py-1 text-xs whitespace-nowrap ${
                           hoveredCell.row === rowIndex &&
                           hoveredCell.column === 0
-                            ? 'bg-blue-500 text-white'
-                            : 'text-black'
+                            ? "bg-blue-500 text-white"
+                            : "text-black"
                         }`}
                       >
-                        {item.id}
+                        {item.ID}
                       </td>
                       <td
                         onMouseEnter={() => handleMouseEnter(rowIndex, 1)}
@@ -132,11 +211,11 @@ const MasterCity = () => {
                         className={`border border-black px-2 py-1 text-xs whitespace-nowrap ${
                           hoveredCell.row === rowIndex &&
                           hoveredCell.column === 1
-                            ? 'bg-blue-500 text-white'
-                            : 'text-black'
+                            ? "bg-blue-500 text-white"
+                            : "text-black"
                         }`}
                       >
-                        {item.name}
+                        {item.State}
                       </td>
                       <td
                         onMouseEnter={() => handleMouseEnter(rowIndex, 2)}
@@ -144,11 +223,11 @@ const MasterCity = () => {
                         className={`border border-black px-2 py-1 text-xs whitespace-nowrap ${
                           hoveredCell.row === rowIndex &&
                           hoveredCell.column === 2
-                            ? 'bg-blue-500 text-white'
-                            : 'text-black'
+                            ? "bg-blue-500 text-white"
+                            : "text-black"
                         }`}
                       >
-                        {item.city}
+                        {item.City}
                       </td>
                     </tr>
                   ))}
@@ -157,7 +236,7 @@ const MasterCity = () => {
             </div>
             <div className="mt-4 flex justify-end">
               <span className="text-gray-700 text-sm font-medium">
-                Total No. of Items: {itemData.length}
+                Total No. of Items: {data.length}
               </span>
             </div>
           </form>

@@ -1,6 +1,15 @@
 // index.js
 const express = require("express");
+const puppeteer = require("puppeteer");
 const cors = require("cors");
+const path = require("path");
+const multer = require("multer");
+const fs = require("fs");
+const ejs = require("ejs");
+const app = express();
+app.use(express.json());
+app.use(cors());
+const port = 3001;
 const {
   getAllUsers,
   addUser,
@@ -11,8 +20,7 @@ const cashVoucherController = require("./controller/cashVoucherController");
 const customerController = require("./controller/customerController");
 const analysisController = require("./controller/analysisController");
 const { setItem, getItem } = require("./controller/Item");
-const path = require("path");
-const multer = require("multer");
+const { setCity, getCity } = require("./controller/MasterCity");
 const { saveImage } = require("./controller/imageController");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -24,10 +32,6 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-const app = express();
-app.use(cors());
-const port = 3001;
-app.use(express.json());
 app.use(express.static("uploads"));
 app.get("/api/users", getAllUsers);
 app.post("/api/users", addUser);
@@ -45,7 +49,8 @@ app.post("/upload", upload.single("image"), saveImage);
 
 app.get("/api/getItem", getItem);
 app.post("/api/setItem", setItem);
-
+app.get("/api/mastercity", getCity);
+app.post("/api/mastercity", setCity);
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

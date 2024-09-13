@@ -1,10 +1,10 @@
 const db = require("../database/db");
 
-const setItem = (req, res) => {
+const setCity = async (req, res) => {
   try {
-    const query = `INSERT INTO item(ItemName,Date) VALUES ( ?, ?)`;
+    const query = `INSERT INTO mastercity(State,City) VALUES ( ?, ?)`;
 
-    const values = [req.body.name, req.body.date];
+    const values = [req.body.state, req.body.city];
     db.query(query, values, (err, result) => {
       if (err) {
         console.error("Error inserting data:", err);
@@ -16,15 +16,12 @@ const setItem = (req, res) => {
       });
     });
   } catch (err) {
-    if (err) {
-      console.error("Error setting item:", err);
-      return res.status(500).json({ message: "Error setting item" });
-    }
+    err && console.log(err);
   }
 };
 
-const getItem = (req, res) => {
-  db.query("select * from item", (err, result) => {
+const getCity = (req, res) => {
+  db.query("select * from mastercity", (err, result) => {
     if (err) {
       console.error("Error finding data:", err);
       return res.status(500).json({ message: "Error inserting data" });
@@ -34,9 +31,6 @@ const getItem = (req, res) => {
       id: result,
     });
   });
-  //     res.send({
-  //     message: "Working api ",
-  //   });
 };
 
-module.exports = { setItem, getItem };
+module.exports = { setCity, getCity };
