@@ -160,6 +160,7 @@ const LedgerReport = () => {
                   type="date"
                   id="fromDate"
                   name="fromDate"
+                  required
                   className="h-5 p-2 border border-gray-300"
                 />
               </div>
@@ -169,6 +170,7 @@ const LedgerReport = () => {
                   type="date"
                   id="toDate"
                   name="toDate"
+                  required
                   className="h-5 p-2 border border-gray-300"
                 />
               </div>
@@ -188,6 +190,7 @@ const LedgerReport = () => {
                   type="text"
                   id="party"
                   name="party"
+                  required
                   className="h-5 p-2 border border-gray-300"
                 />
               </div>

@@ -96,15 +96,15 @@ function LedgerEntry() {
   const [data, setData] = useState(initialData);
 
   return (
-    <div className="bg-gray-100 flex h-screen">
+    <div className="flex h-screen bg-gray-100">
       <div className="flex-1 p-4">
-        <div className="border border-gray-300 pb-4 mb-4 text-4xl font-bold text-center h-24 flex items-center justify-center">
+        <div className="flex items-center justify-center h-24 pb-4 mb-4 text-4xl font-bold text-center border border-gray-300">
           Ledger Entry
         </div>
         <form>
           <div>
-            <fieldset className="border p-4 rounded">
-              <legend className="font-normal text-sm mb-2">Day Details</legend>
+            <fieldset className="p-4 border rounded">
+              <legend className="mb-2 text-sm font-normal">Day Details</legend>
               <div className="flex items-center space-x-4">
                 <label htmlFor="date" className="w-1/3 text-sm">
                   Date
@@ -112,14 +112,15 @@ function LedgerEntry() {
                 <input
                   type="date"
                   id="date"
-                  className="border px-2 py-1 flex-grow h-5"
+                  required
+                  className="flex-grow h-5 px-2 py-1 border"
                 />
               </div>
             </fieldset>
           </div>
           <div>
-            <fieldset className="border p-4 rounded">
-              <legend className="font-normal text-sm mb-2">Ledger Details</legend>
+            <fieldset className="p-4 border rounded">
+              <legend className="mb-2 text-sm font-normal">Ledger Details</legend>
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <label htmlFor="partyname" className="w-1/3 text-sm">
@@ -128,7 +129,8 @@ function LedgerEntry() {
                   <input
                     type="text"
                     id="partyname"
-                    className="border px-2 py-1 flex-grow h-5"
+                    required
+                    className="flex-grow h-5 px-2 py-1 border"
                   />
                 </div>
                 <div className="flex items-center space-x-4">
@@ -138,7 +140,8 @@ function LedgerEntry() {
                   <input
                     type="number"
                     id="reportno"
-                    className="border px-2 py-1 flex-grow h-5"
+                    required
+                    className="flex-grow h-5 px-2 py-1 border"
                   />
                 </div>
                 <div className="flex items-center space-x-4">
@@ -148,7 +151,8 @@ function LedgerEntry() {
                   <input
                     type="number"
                     id="amount"
-                    className="border px-2 py-1 flex-grow h-5"
+                    required
+                    className="flex-grow h-5 px-2 py-1 border"
                   />
                 </div>
                 <div className="flex items-center space-x-4">
@@ -158,7 +162,8 @@ function LedgerEntry() {
                   <input
                     type="text"
                     id="remarks"
-                    className="border px-2 py-1 flex-grow h-5"
+                    required
+                    className="flex-grow h-5 px-2 py-1 border"
                   />
                 </div>
               </div>
@@ -166,13 +171,13 @@ function LedgerEntry() {
           </div>
         </form>
         <div className="mt-5">
-          <fieldset className="border p-4 rounded">
-            <legend className="font-normal text-sm mb-4">Control Panel</legend>
+          <fieldset className="p-4 border rounded">
+            <legend className="mb-4 text-sm font-normal">Control Panel</legend>
             <div className="flex justify-between">
-              <button className="bg-gray-400 p-1 px-4 rounded h-8">
+              <button className="h-8 p-1 px-4 bg-gray-400 rounded">
                 Add New
               </button>
-              <button className="bg-gray-400 py-1 px-4 rounded h-8">
+              <button className="h-8 px-4 py-1 bg-gray-400 rounded">
                 Delete
               </button>
             </div>
@@ -180,9 +185,9 @@ function LedgerEntry() {
         </div>
       </div>
       <div className="flex-1 p-2">
-        <fieldset className="border p-4 h-full w-full flex flex-col">
+        <fieldset className="flex flex-col w-full h-full p-4 border">
           <legend className="font-normal">Day Cash Details</legend>
-          <div className="flex flex-col space-y-2 mb-4">
+          <div className="flex flex-col mb-4 space-y-2">
             <div>
               <span>Party:</span>
             </div>
@@ -200,7 +205,7 @@ function LedgerEntry() {
                       {headers.map((header, index) => (
                         <th
                           key={index}
-                          className="border-gray-300 text-left text-sm whitespace-nowrap"
+                          className="text-sm text-left border-gray-300 whitespace-nowrap"
                           style={{
                             fontSize: "13px",
                             fontWeight: "normal",
@@ -216,7 +221,7 @@ function LedgerEntry() {
                     {data.map((row, i) => (
                       <tr
                         key={i}
-                        className="hover:bg-blue-500 hover:text-white transition-colors duration-300"
+                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
                       >
                         {headers.map((header, j) => (
                           <td
