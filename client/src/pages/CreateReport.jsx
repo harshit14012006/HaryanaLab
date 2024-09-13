@@ -1,5 +1,5 @@
 import React from "react";
-
+const { ipcRenderer } = window.require('electron');  // Import ipcRenderer
 const CreateReport = () => {
   const [formData, setFormData] = React.useState({
     sampleName: "",
@@ -18,11 +18,17 @@ const CreateReport = () => {
     weigth: "",
     seal: "",
   });
+
+  const handleSaveAndPrint = () => {
+    // Send the event to the main process
+    ipcRenderer.send('open-lab-report');
+  };
+  
   return (
     <div className="bg-gray-100">
-      <div className=" p-1">
+      <div className="p-1 ">
         <form>
-          <fieldset className="border border-gray-300 p-2 rounded">
+          <fieldset className="p-2 border border-gray-300 rounded">
             <legend className="text-sm">Analysis</legend>
             <div className="border border-gray-300 ">
               <div className="text-center">
@@ -34,7 +40,7 @@ const CreateReport = () => {
                   required
                   id="reportno"
                   defaultValue={63}
-                  className="border h-5 w-40"
+                  className="w-40 h-5 border"
                 />
               </div>
               <div className="flex ">
@@ -48,7 +54,7 @@ const CreateReport = () => {
                       <input
                         type="text"
                         id="samplename"
-                        className="border px-2  flex-grow h-5"
+                        className="flex-grow h-5 px-2 border"
                       />
                     </div>
                     <div className="flex items-center">
@@ -58,7 +64,7 @@ const CreateReport = () => {
                       <input
                         type="date"
                         id="dated"
-                        className="border px-2 py-1 flex-grow h-5"
+                        className="flex-grow h-5 px-2 py-1 border"
                         placeholder="Input 2"
                       />
                     </div>
@@ -69,7 +75,7 @@ const CreateReport = () => {
                       <input
                         type="text"
                         id="from"
-                        className="border px-2 py-1 flex-grow h-5"
+                        className="flex-grow h-5 px-2 py-1 border"
                       />
                     </div>
                   </div>
@@ -85,7 +91,7 @@ const CreateReport = () => {
                       <input
                         type="date"
                         id="billedDate"
-                        className="border px-2 py-1 flex-grow h-5"
+                        className="flex-grow h-5 px-2 py-1 border"
                       />
                     </div>
                     <div className="flex items-center">
@@ -97,7 +103,7 @@ const CreateReport = () => {
                       </label>
                       <select
                         id="sealed-unsealed"
-                        className="border px-2  flex-grow h-5"
+                        className="flex-grow h-5 px-2 border"
                       >
                         <option value="sealed">Sealed</option>
                         <option value="unsealed">Unsealed</option>
@@ -111,14 +117,14 @@ const CreateReport = () => {
                       <input
                         type="text"
                         id="input6"
-                        className="border px-2 py-1 flex-grow h-5"
+                        className="flex-grow h-5 px-2 py-1 border"
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="border border-gray-300 p-4 mt-1 h-12">
+            <div className="h-12 p-4 mt-1 border border-gray-300">
               <div className="flex space-x-4">
                 <div className="flex items-center">
                   <label
@@ -130,11 +136,11 @@ const CreateReport = () => {
                   <input
                     type="text"
                     id="moisture"
-                    className="border px-2 py-1 w-28 h-5"
+                    className="h-5 px-2 py-1 border w-28"
                   />
                   <span className="ml-1">%</span>
                 </div>
-                <div className="flex items-center space-x-2 pl-16">
+                <div className="flex items-center pl-16 space-x-2">
                   <label htmlFor="oil" className="w-1/3 text-sm">
                     Oil
                   </label>
@@ -142,40 +148,40 @@ const CreateReport = () => {
                     <input
                       type="text"
                       id="oil"
-                      className="border px-2 py-1 w-28 h-5"
+                      className="h-5 px-2 py-1 border w-28"
                     />
                     <span className="ml-1">%</span>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2 pl-20">
+                <div className="flex items-center pl-20 space-x-2">
                   <label htmlFor="ffa" className="w-1/3 text-sm">
                     Ffa
                   </label>
                   <input
                     type="text"
                     id="ffa"
-                    className="border px-2 py-1 w-28 h-5" // Adjust the width here
+                    className="h-5 px-2 py-1 border w-28" // Adjust the width here
                   />
                   <span className="ml-1">%</span>
                 </div>
               </div>
             </div>
 
-            <div className="border border-gray-300 p-2 mt-1 h-16">
-              <div className="flex flex-wrap  -mx-4">
+            <div className="h-16 p-2 mt-1 border border-gray-300">
+              <div className="flex flex-wrap -mx-4">
                 {/* Code/Sample No. */}
                 <div className="w-1/5 px-4 ">
                   <label
                     htmlFor="sampleNo"
-                    className="block text-gray-700 text-sm mb-1 text-center"
+                    className="block mb-1 text-sm text-center text-gray-700"
                   >
                     Code/Sample No.
                   </label>
                   <input
                     type="text"
                     id="sampleNo"
-                    className="border px-2 py-1 w-full h-5"
+                    className="w-full h-5 px-2 py-1 border"
                   />
                 </div>
 
@@ -183,14 +189,14 @@ const CreateReport = () => {
                 <div className="w-1/5 px-4 mb-4">
                   <label
                     htmlFor="date"
-                    className="block text-gray-700 text-sm mb-1 text-center"
+                    className="block mb-1 text-sm text-center text-gray-700"
                   >
                     Date
                   </label>
                   <input
                     type="date"
                     id="date"
-                    className="border px-2 py-1 w-full h-5"
+                    className="w-full h-5 px-2 py-1 border"
                   />
                 </div>
 
@@ -198,14 +204,14 @@ const CreateReport = () => {
                 <div className="w-1/5 px-4 mb-4">
                   <label
                     htmlFor="vehicleNo"
-                    className="block text-gray-700 text-sm mb-1  text-center"
+                    className="block mb-1 text-sm text-center text-gray-700"
                   >
                     Vehicle No.
                   </label>
                   <input
                     type="text"
                     id="vehicleNo"
-                    className="border px-2 py-1 w-full h-5"
+                    className="w-full h-5 px-2 py-1 border"
                   />
                 </div>
 
@@ -213,14 +219,14 @@ const CreateReport = () => {
                 <div className="w-1/5 px-4 mb-4">
                   <label
                     htmlFor="bags"
-                    className="block text-gray-700 text-sm mb-1 text-center"
+                    className="block mb-1 text-sm text-center text-gray-700"
                   >
                     Bags
                   </label>
                   <input
                     type="number"
                     id="bags"
-                    className="border px-2 py-1 w-full h-5"
+                    className="w-full h-5 px-2 py-1 border"
                   />
                 </div>
 
@@ -228,24 +234,24 @@ const CreateReport = () => {
                 <div className="w-1/5 px-4 mb-4">
                   <label
                     htmlFor="weight"
-                    className="block text-gray-700 text-sm mb-1 text-center"
+                    className="block mb-1 text-sm text-center text-gray-700"
                   >
                     Weight (Ql)
                   </label>
                   <input
                     type="text"
                     id="weight"
-                    className="border px-2 py-1 w-full h-5"
+                    className="w-full h-5 px-2 py-1 border"
                   />
                 </div>
               </div>
             </div>
-            <div className="p-4 mt-2 grid grid-cols-2 gap-4 w-3/4">
+            <div className="grid w-3/4 grid-cols-2 gap-4 p-4 mt-2">
               {/* Row 1, Column 1 */}
               <div>
                 <select
                   id="sealed-unsealed"
-                  className="border px-2  flex-grow h-5"
+                  className="flex-grow h-5 px-2 border"
                 >
                   <option value="sealed">Seal Engraved</option>
                   <option value="unsealed">Buyer</option>
@@ -260,7 +266,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="space"
-                  className="border px-2 py-1 w-full h-5"
+                  className="w-full h-5 px-2 py-1 border"
                 />
               </div>
 
@@ -274,20 +280,20 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="space2"
-                  className="border px-2 py-1 w-full h-5"
+                  className="w-full h-5 px-2 py-1 border"
                 />
               </div>
             </div>
             <div className="text-right">
               <span className="block mr-6 text-sm">Signature</span>
-              <select id="signature" className="border px-2 py-1 mb-2">
+              <select id="signature" className="px-2 py-1 mb-2 border">
                 <option value=""></option>
                 <option value="signature1">Signature 1</option>
                 <option value="signature2">Signature 2</option>
                 <option value="signature3">Signature 3</option>
               </select>
               <div className="flex justify-end">
-                <button className="bg-gray-400 text-white px-2 py-1 rounded">
+                <button onClick={handleSaveAndPrint}  className="px-2 py-1 text-white bg-gray-400 rounded">
                   Save and Print
                 </button>
               </div>
