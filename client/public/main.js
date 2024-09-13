@@ -5,7 +5,7 @@ const { spawn } = require("child_process");
 require("electron-reload")(__dirname);
 
 let mainWindow;
-
+let backendServer;
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 700,
@@ -18,10 +18,10 @@ const createWindow = () => {
   });
 
   // Load the main page (HomePage)
-  const menuFilePath = path.join(__dirname, "public", "menu.html");
-  mainWindow.loadURL(`file://${menuFilePath}`);
-  mainWindow.loadURL("http://localhost:3000/");
-  // mainWindow.loadURL(path.join(__dirname, "homenew.html"));
+  // const menuFilePath = path.join(__dirname, "public", "menu.html");
+  // mainWindow.loadURL(`file://${menuFilePath}`);
+  // mainWindow.loadURL("http://localhost:3000/");
+   mainWindow.loadURL(path.join(__dirname, "homenew.html"));
 
   // Optional: Open the DevTools automatically (for development only)
   // mainWindow.webContents.openDevTools();
@@ -30,7 +30,7 @@ const createWindow = () => {
 const createCustomerFormPopup = () => {
   const popupWindow = new BrowserWindow({
     width: 1300,
-    height: 600,
+    height: 650,
     parent: mainWindow,
     modal: true,
     frame: true,

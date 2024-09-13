@@ -4,8 +4,8 @@ import "./LabReport.css";
 function LabReport() {
   // const [pdfurl, setpdfurl] = useState(null);
   const moisture = 111;
-  const oil = 148;
-  const ffa = 329;
+  const oil = 188;
+  const ffa = 339;
   const digits = `${moisture}${oil}${ffa}`.split("");
 
   // Function to count the occurrences of each digit
