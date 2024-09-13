@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSort,
@@ -6,102 +6,110 @@ import {
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 
+import axios from "axios";
+// const headers = [
+//   "Party Id ",
+//   "Name",
+//   "Address 1",
+//   "Address 2",
+//   "Landmark",
+//   "State",
+//   "Pincode",
+//   "City",
+//   "District",
+//   "Print Name",
+//   "Landline1",
+//   "Landline2",
+//   "Landline3",
+//   "Mobile1",
+//   "Mobile2",
+//   "Mobile3",
+//   "Email",
+//   "Fax",
+//   "Website",
+//   "Opening Balance",
+//   "Mobile 1",
+//   "Designation",
+//   "Mobile 2",
+//   "Remarks1",
+//   "Remarks2",
+//   "Remarks3",
+// ];
+
 const headers = [
-  "Party Id ",
-  "Name",
-  "Address 1",
-  "Address 2",
+  "Partyid",
+  "Partyname",
+  "Address1",
+  "Address2",
   "Landmark",
   "State",
   "Pincode",
   "City",
   "District",
-  "Print Name",
+  "Printname",
   "Landline1",
   "Landline2",
   "Landline3",
   "Mobile1",
   "Mobile2",
   "Mobile3",
-  "Email",
   "Fax",
+  "Email",
   "Website",
-  "Opening Balance",
-  "Mobile 1",
+  "Openingbalance",
+  "Name",
   "Designation",
-  "Mobile 2",
+  "Remarks",
   "Remarks1",
   "Remarks2",
-  "Remarks3",
-];
-
-const initialData = [
-  {
-    "Party Id": 867,
-    Name: "Alpha Corp",
-    "Address 1": "Suite 101",
-    "Address 2": "hljkhk",
-    Landmark: "Near Alpha Park",
-    State: "California",
-    Pincode: "90001",
-    City: "Los Angeles",
-    District: "LA County",
-    "Print Name": "Alpha Corporation",
-    Landline1: "123-456-7890",
-    Landline2: "876-87-87876",
-    Landline3: "98787-87-877",
-    Mobile1: "987-654-3210",
-    Mobile2: "",
-    Mobile3: "",
-    Email: "contact@alphacorp.com",
-    Fax: "123-456-7891",
-    Website: "www.alphacorp.com",
-    "Opening Balance": "$5000",
-    "Mobile 1": "987-654-3210",
-    Designation: "Manager",
-    "Mobile 2": "",
-    Remarks1: "Important client",
-    Remarks2: "",
-    Remarks3: "",
-  },
-  {
-    "Party Id": "868",
-    Name: "Beta Ltd",
-    "Address 1": "Floor 2",
-    "Address 2": "Building B",
-    Landmark: "Opposite Beta Mall",
-    State: "New York",
-    Pincode: "10001",
-    City: "New York",
-    District: "NY County",
-    "Print Name": "Beta Limited",
-    Landline1: "234-567-8901",
-    Landline2: "",
-    Landline3: "",
-    Mobile1: "876-543-2109",
-    Mobile2: "",
-    Mobile3: "",
-    Email: "info@betaltd.com",
-    Fax: "234-567-8902",
-    Website: "www.betaltd.com",
-    "Opening Balance": "$3000",
-    "Mobile 1": "876-543-2109",
-    Designation: "Director",
-    "Mobile 2": "",
-    Remarks1: "Regular partner",
-    Remarks2: "",
-    Remarks3: "",
-  },
-  // Add more rows as needed
 ];
 
 const CustomerForm = () => {
-  const [data, setData] = useState(initialData);
+  const [dataa, getdata] = useState([]);
+  const [formdata, setFormdata] = useState({
+    Partyname: "",
+    Address1: "",
+    Address2: "",
+    Landmark: "",
+    State: "",
+    Pincode: "",
+    City: "",
+    District: "",
+    Printname: "",
+    Landline1: "",
+    Landline2: "",
+    Landline3: "",
+    Mobile1: "",
+    Mobile2: "",
+    Mobile3: "",
+    Fax: "",
+    Email: "",
+    Website: "",
+    Openingbalance: "",
+    Name: "",
+    Designation: "",
+    Remarks: "",
+    Remarks1: "",
+    Remarks2: "",
+  });
   const [sortOrder, setSortOrder] = useState("asc");
-
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:3001/api/customers"
+        // selectedState.length && selectedState
+      )
+      .then((response) => {
+        console.log(response.data.id.length);
+        getdata(response.data.id);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, []);
   const handleSort = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-    const sortedData = [...data].sort((a, b) => {
+    const sortedData = [...dataa].sort((a, b) => {
       const nameA = a["Name"].toLowerCase();
       const nameB = b["Name"].toLowerCase();
 
@@ -109,7 +117,7 @@ const CustomerForm = () => {
         ? nameA.localeCompare(nameB)
         : nameB.localeCompare(nameA);
     });
-    setData(sortedData);
+    getdata(sortedData);
     setSortOrder(newSortOrder);
   };
 
@@ -122,9 +130,40 @@ const CustomerForm = () => {
     return <FontAwesomeIcon icon={faSort} />;
   };
 
+  const handleChange = (event) => {
+    setFormdata({ ...formdata, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Get the clicked button's value
+    const clickedButton = e.nativeEvent.submitter.value;
+
+    // Handle based on the button clicked
+    switch (clickedButton) {
+      case "Add":
+        console.log(formdata);
+        // Open specific handler for button 1
+        break;
+      case "Update":
+        console.log("Handle for Button 2");
+        // Open specific handler for button 2
+        break;
+      case "button3":
+        console.log("Handle for Button 3");
+        // Open specific handler for button 3
+        break;
+      case "button4":
+        console.log("Handle for Button 4");
+        // Open specific handler for button 4
+        break;
+      default:
+        console.log("Unknown button clicked");
+    }
+  };
   return (
     <div className="bg-gray-100">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="flex space-x-4">
           <div className="w-1/2 pl-2">
             {/* First div content */}
@@ -145,6 +184,8 @@ const CustomerForm = () => {
                   id="partyname"
                   className="border w-2/3 h-5"
                   required
+                  name="Partyname"
+                  onChange={handleChange}
                 />
                 <p
                   id="partyNameError"
@@ -170,6 +211,8 @@ const CustomerForm = () => {
                   id="address1"
                   className="border  w-2/3 h-5"
                   required
+                  name="Address1"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -185,6 +228,8 @@ const CustomerForm = () => {
                   id="address2"
                   className="border w-2/3 h-5"
                   required
+                  name="Address2"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -200,6 +245,8 @@ const CustomerForm = () => {
                   id="landmark"
                   className="border w-2/3 h-5"
                   required
+                  name="Landmark"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -214,6 +261,8 @@ const CustomerForm = () => {
                   id="state"
                   className="border w-2/3 h-5 px-2  text-sm"
                   required
+                  name="State"
+                  onChange={handleChange}
                 >
                   <option value="">Select a state</option>
                   <option value="haryana">Haryana</option>
@@ -234,9 +283,11 @@ const CustomerForm = () => {
                 </label>
                 <input
                   type="text"
-                  id="pincode"
+                  id="Pincode"
                   className="border w-2/3 h-5"
                   required
+                  name="Pincode"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -251,6 +302,8 @@ const CustomerForm = () => {
                   id="city"
                   className="border w-2/3 h-5 px-2  text-sm"
                   required
+                  name="City"
+                  onChange={handleChange}
                 >
                   <option value="">Select a City</option>
                   <option value="haryana">Sirsa</option>
@@ -263,32 +316,35 @@ const CustomerForm = () => {
               </div>
               <div className="flex items-center space-x-2 mb-1">
                 <label
-                  htmlFor="email"
+                  htmlFor="text"
                   className="w-1/3"
                   style={{ fontSize: "13px", fontWeight: "normal" }}
                 >
                   District
                 </label>
                 <input
-                  type="email"
-                  id="email"
+                  type="text"
+                  id="District"
                   className="border w-2/3 h-5"
                   required
+                  name="District"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
                 <label
-                  htmlFor="email"
+                  htmlFor="text"
                   className="w-1/3"
                   style={{ fontSize: "13px", fontWeight: "normal" }}
                 >
                   Print Name
                 </label>
                 <input
-                  type="email"
-                  id="email"
+                  type="text"
                   className="border w-2/3 h-5"
                   required
+                  name="Printname"
+                  onChange={handleChange}
                 />
               </div>
             </fieldset>
@@ -314,6 +370,8 @@ const CustomerForm = () => {
                   id="landline1"
                   className="border w-2/3 h-5"
                   required
+                  name="Landline1"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -329,6 +387,8 @@ const CustomerForm = () => {
                   id="landline2"
                   className="border w-2/3 h-5"
                   required
+                  name="Landline2"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -344,6 +404,8 @@ const CustomerForm = () => {
                   id="landline3"
                   className="border w-2/3 h-5"
                   required
+                  name="Landline3"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -359,6 +421,8 @@ const CustomerForm = () => {
                   id="mobile1"
                   className="border w-2/3 h-5"
                   required
+                  name="Mobile1"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -374,6 +438,8 @@ const CustomerForm = () => {
                   id="mobile2"
                   className="border w-2/3 h-5"
                   required
+                  name="Mobile2"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -389,6 +455,8 @@ const CustomerForm = () => {
                   id="mobile3"
                   className="border w-2/3 h-5"
                   required
+                  name="Mobile3"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -404,6 +472,8 @@ const CustomerForm = () => {
                   id="email"
                   className="border w-2/3 h-5"
                   required
+                  name="Email"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -419,6 +489,8 @@ const CustomerForm = () => {
                   id="fax"
                   className="border w-2/3 h-5"
                   required
+                  name="Fax"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -434,6 +506,8 @@ const CustomerForm = () => {
                   id="website"
                   className="border w-2/3 h-5"
                   required
+                  name="Website"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -449,6 +523,8 @@ const CustomerForm = () => {
                   id="opening_balance"
                   className="border w-2/3 h-5"
                   required
+                  name="Openingbalance"
+                  onChange={handleChange}
                 />
               </div>
             </fieldset>
@@ -460,16 +536,33 @@ const CustomerForm = () => {
                 Control Panel
               </legend>
               <div className="flex flex-col space-y-2">
-                <button className="bg-gray-200 text-black px-2 py-1 rounded ">
+                <button
+                  type="submit"
+                  value="Add"
+                  // onClick={HandleAddClick}
+                  className="bg-gray-200 text-black px-2 py-1 rounded "
+                >
                   Add
                 </button>
-                <button className="bg-gray-200 text-black px-2 py-1 rounded max-w-xs w-full">
+                <button
+                  type="submit"
+                  value="Update"
+                  className="bg-gray-200 text-black px-2 py-1 rounded max-w-xs w-full"
+                >
                   Update
                 </button>
-                <button className="bg-gray-200 text-black px-2 py-1 rounded max-w-xs w-full">
+                <button
+                  type="submit"
+                  value="Delete"
+                  className="bg-gray-200 text-black px-2 py-1 rounded max-w-xs w-full"
+                >
                   Delete
                 </button>
-                <button className="bg-gray-200 text-black px-2 py-1 rounded max-w-xs w-full">
+                <button
+                  type="submit"
+                  value="Close"
+                  className="bg-gray-200 text-black px-2 py-1 rounded max-w-xs w-full"
+                >
                   Close
                 </button>
               </div>
@@ -502,6 +595,8 @@ const CustomerForm = () => {
                     id="name"
                     className="border w-2/3 h-5"
                     required
+                    name="Name"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="w-1/2 flex space-x-2">
@@ -535,6 +630,8 @@ const CustomerForm = () => {
                     id="designation"
                     className="border w-2/3 h-5"
                     required
+                    name="Designation"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="w-1/2 flex space-x-2">
@@ -575,6 +672,8 @@ const CustomerForm = () => {
                   id=""
                   className="border w-2/3 h-5"
                   required
+                  name="Remarks"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -590,6 +689,8 @@ const CustomerForm = () => {
                   id=""
                   className="border w-2/3 h-5"
                   required
+                  name="Remarks1"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -605,6 +706,8 @@ const CustomerForm = () => {
                   id=""
                   className="border w-2/3 h-5"
                   required
+                  name="Remarks2"
+                  onChange={handleChange}
                 />
               </div>
             </fieldset>
@@ -619,7 +722,7 @@ const CustomerForm = () => {
             Party Details
           </legend>
           <div className="container mx-auto">
-            <div className="relative overflow-x-auto overflow-y-auto h-[225px] w-[1200px] ">
+            <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px] ">
               <table className=" bg-white border border-gray-300 table-auto">
                 <thead>
                   <tr className="bg-gray-100 border-b border-gray-300">
@@ -640,7 +743,7 @@ const CustomerForm = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((row, i) => (
+                  {dataa.map((row, i) => (
                     <tr
                       key={i}
                       className="hover:bg-blue-500 hover:text-white transition-colors duration-300"

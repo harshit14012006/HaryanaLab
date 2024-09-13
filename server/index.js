@@ -1,11 +1,8 @@
 // index.js
 const express = require("express");
-const puppeteer = require("puppeteer");
 const cors = require("cors");
 const path = require("path");
 const multer = require("multer");
-const fs = require("fs");
-const ejs = require("ejs");
 const app = express();
 app.use(express.json());
 app.use(cors());
