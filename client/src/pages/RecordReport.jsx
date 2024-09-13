@@ -180,7 +180,7 @@ const RecordReportWithoutSample = () => {
                     </div>
 
                     {/* Fieldset for Search */}
-                    <fieldset className="border border-gray-300 p-4 rounded-md">
+                    <fieldset className="p-4 border border-gray-300 rounded-md">
                       <legend className="font-medium">Search</legend>
 
                       {/* Flex Container for Labels and Dropdowns */}
@@ -189,14 +189,14 @@ const RecordReportWithoutSample = () => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="partyName"
-                            className="font-medium mb-2"
+                            className="mb-2 font-medium"
                           >
                             Party Name
                           </label>
                           <select
                             id="partyName"
                             name="partyName"
-                            className="h-8 p-1 w-52 border border-gray-300 rounded-md"
+                            className="h-8 p-1 border border-gray-300 rounded-md w-52"
                           >
                             <option value="">Select Party</option>
                             <option value="party1">Party 1</option>
@@ -211,14 +211,14 @@ const RecordReportWithoutSample = () => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="SampleName"
-                            className="text-gray-600 font-medium mb-2"
+                            className="mb-2 font-medium text-gray-600"
                           >
                             Sample Name
                           </label>
                           <select
                             id="SampleName"
                             name="SampleName"
-                            className="h-8 p-1 w-52 border border-gray-300 rounded-md"
+                            className="h-8 p-1 border border-gray-300 rounded-md w-52"
                           >
                             <option value="">Select Sample</option>
                             <option value="Sample1">Sample 1</option>
@@ -232,16 +232,16 @@ const RecordReportWithoutSample = () => {
                   </div>
 
                   {/* Buttons for Display and Print */}
-                  <div className="flex space-x-80 mt-10">
+                  <div className="flex mt-10 space-x-80">
                     <button
                       type="button"
-                      className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      className="h-8 px-4 py-1 bg-gray-400 rounded-md"
                     >
                       Display
                     </button>
                     <button
                       type="button"
-                      className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      className="h-8 px-4 py-1 bg-gray-400 rounded-md"
                     >
                       Print
                     </button>
@@ -249,7 +249,49 @@ const RecordReportWithoutSample = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-200 rounded-md h-64 mt-6"></div>
+              {/* table grid */}
+              <div className="relative overflow-x-auto overflow-y-auto h-[290px] w-[870px] mt-3">
+                <table className="min-w-full bg-white border border-gray-300 table-auto">
+                  <thead>
+                    <tr className="bg-gray-100 border-b border-gray-300">
+                      {headers.map((header, index) => (
+                        <th
+                          key={index}
+                          className="text-sm text-left border-gray-300 whitespace-nowrap"
+                          style={{
+                            fontSize: "13px",
+                            fontWeight: "normal",
+                            minWidth: "150px", // Set minimum width for headers
+                            width: "100px",
+                          }}
+                        >
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((row, i) => (
+                      <tr
+                        key={i}
+                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                      >
+                        {headers.map((header, j) => (
+                          <td
+                            key={j}
+                            className={`border-gray-300 border text-sm whitespace-nowrap ${
+                              j < headers.length - 1 ? "pr-0" : ""
+                            }`}
+                            style={{ minWidth: "150px" }} // Set minimum width for data cells
+                          >
+                            {row[header]}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </fieldset>
           </form>
         </div>

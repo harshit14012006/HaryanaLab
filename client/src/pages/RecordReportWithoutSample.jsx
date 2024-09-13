@@ -166,9 +166,6 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
-                        onChange={(e) => {
-                          HandleChange(e);
-                        }}
                       />
                       {/* From Label and Date Input */}
                       <label htmlFor="fromDate" className="font-medium">
@@ -177,16 +174,13 @@ const RecordReportWithoutSample = () => {
                       <input
                         type="date"
                         id="fromDate"
-                        name="toDate"
+                        name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
-                        onChange={(e) => {
-                          HandleChange(e);
-                        }}
                       />
                     </div>
 
                     {/* Fieldset for Search */}
-                    <fieldset className="border border-gray-300 p-4 rounded-md">
+                    <fieldset className="p-4 border border-gray-300 rounded-md">
                       <legend className="font-medium">Search</legend>
 
                       {/* Flex Container for Labels and Dropdowns */}
@@ -195,14 +189,14 @@ const RecordReportWithoutSample = () => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="partyName"
-                            className="font-medium mb-2"
+                            className="mb-2 font-medium"
                           >
                             Party Name
                           </label>
                           <select
                             id="partyName"
                             name="partyName"
-                            className="h-8 p-1 w-52 border border-gray-300 rounded-md"
+                            className="h-8 p-1 border border-gray-300 rounded-md w-52"
                           >
                             <option value="">Select Party</option>
                             <option value="party1">Party 1</option>
@@ -223,16 +217,16 @@ const RecordReportWithoutSample = () => {
                   </div>
 
                   {/* Buttons for Display and Print */}
-                  <div className="flex space-x-80 mt-10">
+                  <div className="flex mt-10 space-x-80">
                     <button
                       type="button"
-                      className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      className="h-8 px-4 py-1 bg-gray-400 rounded-md"
                     >
                       Display
                     </button>
                     <button
                       type="button"
-                      className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      className="h-8 px-4 py-1 bg-gray-400 rounded-md"
                     >
                       Print
                     </button>
@@ -240,7 +234,10 @@ const RecordReportWithoutSample = () => {
                 </div>
               </div>
               {/* table grid */}
-              <div className="relative overflow-x-auto overflow-y-auto h-[290px] w-[870px] mt-3">
+              <div
+                className="relative overflow-x-auto overflow-y-auto h-[290px] w-[87
+0px] mt-3"
+              >
                 <table className="min-w-full bg-white border border-gray-300 table-auto">
                   <thead>
                     <tr className="bg-gray-100 border-b border-gray-300">

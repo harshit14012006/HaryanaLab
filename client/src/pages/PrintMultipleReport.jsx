@@ -294,16 +294,16 @@ const RecordReportWithoutSample = () => {
                   </div>
 
                   {/* Buttons for Display and Print */}
-                  <div className="flex mt-6 justify-between">
+                  <div className="flex justify-between mt-6">
                     <button
                       type="button"
-                      className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      className="h-8 px-4 py-1 bg-gray-400 rounded-md"
                     >
                       Display
                     </button>
                     <button
                       type="button"
-                      className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      className="h-8 px-4 py-1 bg-gray-400 rounded-md"
                     >
                       Print
                     </button>
