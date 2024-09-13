@@ -18,10 +18,10 @@ const createWindow = () => {
   });
 
   // Load the main page (HomePage)
-  // const menuFilePath = path.join(__dirname, "public", "menu.html");
-  // mainWindow.loadURL(`file://${menuFilePath}`);
-  // mainWindow.loadURL("http://localhost:3000/");
-   mainWindow.loadURL(path.join(__dirname, "homenew.html"));
+  const menuFilePath = path.join(__dirname, "public", "menu.html");
+  mainWindow.loadURL(`file://${menuFilePath}`);
+  mainWindow.loadURL("http://localhost:3000/");
+  // mainWindow.loadURL(path.join(__dirname, "homenew.html"));
 
   // Optional: Open the DevTools automatically (for development only)
   // mainWindow.webContents.openDevTools();

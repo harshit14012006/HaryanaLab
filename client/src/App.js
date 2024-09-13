@@ -1,12 +1,12 @@
 import React from "react";
 // import Layout from "./Layout";
 import LabReport from "./pages/LabReport";
-// import Layout from "./Layout";
+import Layout from "./Layout";
 function App() {
   return (
     <div>
-      {/* <Layout /> */}
-      <LabReport />
+      <Layout />
+      {/* <LabReport /> */}
     </div>
   );
 }
