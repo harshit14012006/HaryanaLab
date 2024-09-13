@@ -6,7 +6,7 @@ const LedgerReport = () => {
       <div className="flex justify-center min-h-screen">
         <div className="w-full max-w-4xl">
           <form>
-            <fieldset className="w-full p-3 border border-gray-300 rounded-md">
+            <fieldset className="w-full p-3 mt-5 border border-gray-300 rounded-md">
               <legend className="text-sm">Ledger Report</legend>
               <div className="space-y-6">
                 {/* Row: State Label and Dropdown */}

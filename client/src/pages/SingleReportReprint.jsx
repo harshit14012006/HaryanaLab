@@ -6,7 +6,7 @@ const SingleReportReprint = () => {
       <div className="flex justify-center min-h-screen">
         <div className="w-full max-w-4xl">
           <form>
-            <fieldset className="w-full p-3 border border-gray-300 rounded-md">
+            <fieldset className="w-full p-3 mt-5 border border-gray-300 rounded-md">
               <legend className="text-sm">Reprint</legend>
               <div className="flex justify-center space-x-14">
                 <div className="flex flex-col space-y-10">

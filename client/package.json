@@ -14,10 +14,10 @@
     "axios": "^1.7.7",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
-    "electron": "^32.0.1",
     "electron-serve": "^2.1.0",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
+    "electron-squirrel-startup": "^1.0.1",
     "jspdf": "^2.5.1",
     "pdfjs-dist": "^3.11.174",
     "react": "^18.3.1",
@@ -33,13 +33,34 @@
   "homepage": "./",
   "scripts": {
     "electron": "electron .",
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "start": "electron-forge start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-serve": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm run electron:start\"",
+    "electron-serve": "concurrently -k \"cross-env BROWSER=none npm run dev\" \"npm run electron:start\"",
     "electron-build": "yarn build && electron-build -c.extraMetadata.main=build/main.js",
-    "electron:start": "wait-on tcp:3000 && electron ."
+    "electron:start": "wait-on tcp:3000 && electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "platform": "win32",
+        "asar": true
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Laboratory",
+            "authors": "Purab Singla, Harshit Singla, Simar Narula",
+            "description": "Laboratory Application Created By Purab,Harshit and Simar(He done only backend work ;-; )"
+          }
+        }
+      ]
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +81,15 @@
     ]
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron/fuses": "^1.8.0",
+    "electron": "^32.0.1",
     "electron-reload": "^2.0.0-alpha.1"
   }
 }
