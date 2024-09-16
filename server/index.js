@@ -1,4 +1,4 @@
-// index.js
+// imports
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -28,6 +28,8 @@ const {
   deleteCity,
   updateCity,
 } = require("./controller/MasterCity");
+
+//Multer Work
 const { saveImage } = require("./controller/imageController");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -40,10 +42,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 app.use(express.static("uploads"));
+
+//Api's
 app.get("/api/users", getAllUsers);
 app.post("/api/users", addUser);
 app.delete("/api/users/:Reportno", deleteUser);
 app.put("/api/users/:id", updateUser);
+
 //Customer Api's
 app.post("/api/customers", customerController.createCustomer);
 app.get("/api/customers", customerController.getAllCustomers);
