@@ -16,8 +16,18 @@ const {
 const cashVoucherController = require("./controller/cashVoucherController");
 const customerController = require("./controller/customerController");
 const analysisController = require("./controller/analysisController");
-const { setItem, getItem } = require("./controller/Item");
-const { setCity, getCity } = require("./controller/MasterCity");
+const {
+  setItem,
+  getItem,
+  updateItem,
+  DeleteItem,
+} = require("./controller/Item");
+const {
+  setCity,
+  getCity,
+  deleteCity,
+  updateCity,
+} = require("./controller/MasterCity");
 const { saveImage } = require("./controller/imageController");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -34,19 +44,31 @@ app.get("/api/users", getAllUsers);
 app.post("/api/users", addUser);
 app.delete("/api/users/:Reportno", deleteUser);
 app.put("/api/users/:id", updateUser);
+//Customer Api's
 app.post("/api/customers", customerController.createCustomer);
 app.get("/api/customers", customerController.getAllCustomers);
-app.put("/api/customer/:Partyid", customerController.updateCustomer);
-app.delete("/api/customer/:Partyid", customerController.deleteCustomer);
+app.put("/api/customers/:Partyid", customerController.updateCustomer);
+app.delete("/api/customers/:Partyid", customerController.deleteCustomer);
+
+//Cashvouchers Api's
 app.post("/api/cashvoucher", cashVoucherController.createCashVoucher);
 app.get("/api/cashvouchers", cashVoucherController.getCashVouchers);
 app.post("/api/analysis", analysisController.createAnalysis);
 app.get("/api/analysis", analysisController.getAnalysisRecords);
 app.post("/upload", upload.single("image"), saveImage);
-app.get("/api/getItem", getItem);
-app.post("/api/setItem", setItem);
+
+// Item Routes
+app.get("/api/Item", getItem);
+app.post("/api/Item", setItem);
+app.put("/api/Item", updateItem);
+app.delete("/api/Item/?:id", DeleteItem);
+
+//City Routes
 app.get("/api/mastercity", getCity);
 app.post("/api/mastercity", setCity);
+app.put("/api/mastercity", updateCity);
+app.delete("/api/mastercity/:id", deleteCity);
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

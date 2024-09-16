@@ -34,9 +34,51 @@ const getItem = (req, res) => {
       id: result,
     });
   });
-  //     res.send({
-  //     message: "Working api ",
-  //   });
 };
 
-module.exports = { setItem, getItem };
+const updateItem = (req, res) => {
+  try {
+    console.log("Updating item");
+    const query = `UPDATE item SET ItemName =? WHERE ID =?`;
+    const values = [req.body.name, req.body.id];
+    db.query(query, values, (err, result) => {
+      if (err) {
+        console.error("Error finding data:", err);
+        return res.status(500).json({ message: "Error Updating data" });
+      }
+      res.status(200).json({
+        message: "Update data successfully",
+        id: result,
+      });
+    });
+  } catch (err) {
+    if (err) {
+      console.error("Error updating item:", err);
+      return res.status(500).json({ message: "Error updating item" });
+    }
+  }
+};
+
+const DeleteItem = (req, res) => {
+  try {
+    const query = `DELETE FROM item WHERE ID =?`;
+    const values = [req.params.id];
+    db.query(query, values, (err, result) => {
+      if (err) {
+        console.error("Error finding data:", err);
+        return res.status(500).json({ message: "Error DELETING data" });
+      }
+      res.status(200).json({
+        message: "Delete data successfully",
+        id: result,
+      });
+    });
+  } catch (err) {
+    if (err) {
+      console.error("Error deleting item:", err);
+      return res.status(500).json({ message: "Error deleting item" });
+    }
+  }
+};
+
+module.exports = { setItem, getItem, updateItem, DeleteItem };

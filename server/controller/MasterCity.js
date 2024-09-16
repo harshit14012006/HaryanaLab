@@ -33,4 +33,41 @@ const getCity = (req, res) => {
   });
 };
 
-module.exports = { setCity, getCity };
+const deleteCity = (req, res) => {
+  db.query(
+    "DELETE from mastercity WHERE ID = ?",
+    [req.params.id],
+    (err, result) => {
+      if (err) {
+        console.error("Error DELETING data:", err);
+        return res.status(500).json({ message: "Error DELETING data" });
+      }
+      res.status(200).json({
+        message: "Get data successfully",
+        id: result,
+      });
+    }
+  );
+};
+
+const updateCity = (req, res) => {
+  console.log(req.body);
+  try {
+    const query = "UPDATE mastercity SET City = ?,State = ? WHERE ID = ?";
+    const values = [req.body.city, req.body.State, req.body.id];
+    db.query(query, values, (err, result) => {
+      if (err) {
+        console.error("Error DELETING data:", err);
+        return res.status(500).json({ message: "Error DELETING data" });
+      }
+      res.status(200).json({
+        message: "Get data successfully",
+        id: result,
+      });
+    });
+  } catch (error) {
+    console.error("Error updating", error);
+  }
+};
+
+module.exports = { setCity, getCity, deleteCity, updateCity };

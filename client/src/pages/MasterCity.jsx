@@ -40,13 +40,15 @@ const MasterCity = () => {
   const [hoveredCell, setHoveredCell] = useState({ row: null, column: null });
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [Update, getUpdate] = useState([]);
 
   useEffect(() => {
+    FetchData();
+  }, []);
+
+  const FetchData = () => {
     axios
-      .get(
-        "http://localhost:3001/api/mastercity",
-        selectedState.length && selectedState
-      )
+      .get("http://localhost:3001/api/mastercity")
       .then((response) => {
         console.log(response.data.id);
         setData(response.data.id);
@@ -54,7 +56,7 @@ const MasterCity = () => {
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
       });
-  }, [selectedState]);
+  };
 
   const handleMouseEnter = (rowIndex, columnIndex) => {
     setHoveredCell({ row: rowIndex, column: columnIndex });
@@ -64,9 +66,10 @@ const MasterCity = () => {
     setHoveredCell({ row: null, column: null });
   };
 
-  const handleCityClick = (city, state) => {
-    setSelectedCity(city);
-    setSelectedState(state);
+  const handleCityClick = (data) => {
+    setSelectedCity(data.City);
+    setSelectedState(data.State);
+    getUpdate(data);
   };
 
   const HandleClick = (event) => {
@@ -88,7 +91,58 @@ const MasterCity = () => {
       .catch((error) => {
         console.error("There was an error submitting the data!", error);
       });
+    FetchData();
     setSelectedState("");
+    setSelectedCity("");
+  };
+
+  const HandleDelete = () => {
+    console.log("HandleDelete works");
+    try {
+      axios
+        .delete(`http://localhost:3001/api/mastercity/${Update.ID}`)
+        .then((response) => {
+          console.log("Data Deleted successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("There was an error Deleting the data!", error);
+        });
+      FetchData();
+      setSelectedState("");
+      setSelectedCity("");
+    } catch (error) {
+      console.log("Error deleting data:", error);
+    }
+  };
+
+  const HandleUpdate = () => {
+    try {
+      if (selectedCity !== Update.City) {
+        console.log("If works");
+        axios
+          .put("http://localhost:3001/api/mastercity", {
+            State: selectedState,
+            city: selectedCity,
+            id: Update.ID,
+          })
+          .then((response) => {
+            console.log("Data Updated successfully:", response.data);
+            FetchData();
+          })
+          .catch((error) => {
+            console.error("There was an error Updating the data!", error);
+          });
+        setSelectedState("");
+        setSelectedCity("");
+        getUpdate([]);
+      } else {
+        console.log("else works");
+        setSelectedState("");
+        setSelectedCity("");
+      }
+    } catch (error) {
+      console.log("Error updating data:", error);
+    }
   };
 
   return (
@@ -160,12 +214,14 @@ const MasterCity = () => {
               <button
                 type="button"
                 className="bg-gray-300 py-1 px-4 rounded-md h-8"
+                onClick={HandleUpdate}
               >
                 Update
               </button>
               <button
                 type="button"
                 className="bg-gray-300 py-1 px-4 rounded-md h-8"
+                onClick={HandleDelete}
               >
                 Delete
               </button>
@@ -189,10 +245,7 @@ const MasterCity = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {data.map((item, rowIndex) => (
-                    <tr
-                      key={item.ID}
-                      onClick={() => handleCityClick(item.city, item.name)}
-                    >
+                    <tr key={item.ID} onClick={() => handleCityClick(item)}>
                       <td
                         onMouseEnter={() => handleMouseEnter(rowIndex, 0)}
                         onMouseLeave={handleMouseLeave}

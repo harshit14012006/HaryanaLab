@@ -1,26 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-// Sample data to be displayed in the table
-// const sampleData = [
-//   { id: 1, name: "Sample A", date: "2024-08-30" },
-//   { id: 2, name: "Sample B", date: "2024-08-31" },
-//   { id: 3, name: "Sample C", date: "2024-09-01" },
-//   { id: 4, name: "Sample D", date: "2024-09-02" },
-//   { id: 5, name: "Sample E", date: "2024-09-03" },
-//   { id: 6, name: "Sample F", date: "2024-09-04" },
-//   { id: 7, name: "Sample G", date: "2024-09-05" },
-//   { id: 8, name: "Sample H", date: "2024-09-06" },
-//   { id: 9, name: "Sample I", date: "2024-09-07" },
-//   { id: 10, name: "Sample J", date: "2024-09-08" },
-//   // Add more data as needed
-// ];
-
 const CreateItem = () => {
   const [hoveredCell, setHoveredCell] = useState({ row: null, column: null });
   const [ItemName, setItemName] = useState("");
-  const [active, setactive] = useState(false);
   const [Data, getData] = useState([]);
+  const [Update, getUpdate] = useState([]);
 
   const handleMouseEnter = (rowIndex, columnIndex) => {
     setHoveredCell({ row: rowIndex, column: columnIndex });
@@ -35,8 +20,12 @@ const CreateItem = () => {
   };
 
   useEffect(() => {
+    FetchApi();
+  }, []);
+
+  const FetchApi = () => {
     axios
-      .get("http://localhost:3001/api/getItem")
+      .get("http://localhost:3001/api/Item")
       .then((response) => {
         console.log(response.data.id);
         getData(response.data.id);
@@ -44,7 +33,7 @@ const CreateItem = () => {
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
       });
-  }, [active]);
+  };
 
   const HandleClick = (event) => {
     event.preventDefault();
@@ -58,14 +47,62 @@ const CreateItem = () => {
     };
     console.log(data);
     axios
-      .post("http://localhost:3001/api/setItem", data)
+      .post("http://localhost:3001/api/Item", data)
       .then((response) => {
         console.log("Data submitted successfully:", response.data);
       })
       .catch((error) => {
         console.error("There was an error submitting the data!", error);
       });
-    setactive(!active);
+    FetchApi();
+    setItemName("");
+  };
+
+  const HandleData = (data) => {
+    // console.log("Hello by clicking button = ", data);
+    setItemName(data.ItemName);
+    getUpdate(data);
+  };
+
+  const HandleUpdate = () => {
+    if (ItemName !== Update.ItemName) {
+      console.log("If works");
+      axios
+        .put("http://localhost:3001/api/Item", {
+          name: ItemName,
+          id: Update.ID,
+        })
+        .then((response) => {
+          console.log("Data submitted successfully:", response.data);
+          FetchApi();
+        })
+        .catch((error) => {
+          console.error("There was an error submitting the data!", error);
+        });
+      setItemName("");
+      getUpdate([]);
+    } else {
+      console.log("else works");
+      setItemName("");
+    }
+  };
+
+  const HandleDelete = () => {
+    try {
+      axios
+        .delete(`http://localhost:3001/api/Item/${Update.ID}`)
+        .then((response) => {
+          console.log("Data deleted successfully:", response.data);
+          FetchApi();
+        })
+        .catch((error) => {
+          console.error("There was an error deleting the data!", error);
+        });
+      getUpdate([]);
+      setItemName("");
+    } catch (error) {
+      console.error("There was an error deleting the data!", error);
+    }
   };
 
   return (
@@ -104,12 +141,14 @@ const CreateItem = () => {
               <button
                 type="button"
                 className="bg-gray-300  py-1 px-4 rounded-md "
+                onClick={HandleUpdate}
               >
                 Update
               </button>
               <button
                 type="button"
                 className="bg-gray-300 py-1 px-4 rounded-md "
+                onClick={HandleDelete}
               >
                 Delete
               </button>
@@ -131,7 +170,7 @@ const CreateItem = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {Data.map((sample, rowIndex) => (
-                    <tr key={sample.ID}>
+                    <tr key={sample.ID} onClick={() => HandleData(sample)}>
                       <td
                         onMouseEnter={() => handleMouseEnter(rowIndex, 0)}
                         onMouseLeave={handleMouseLeave}

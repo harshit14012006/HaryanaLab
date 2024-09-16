@@ -66,6 +66,8 @@ const headers = [
 
 const CustomerForm = () => {
   const [dataa, getdata] = useState([]);
+  const [StateCity, setStateCity] = useState([]);
+  const [Update, setUpdate] = useState([]);
   const [formdata, setFormdata] = useState({
     Partyname: "",
     Address1: "",
@@ -94,19 +96,36 @@ const CustomerForm = () => {
   });
   const [sortOrder, setSortOrder] = useState("asc");
   useEffect(() => {
-    axios
-      .get(
-        "http://localhost:3001/api/customers"
-        // selectedState.length && selectedState
-      )
-      .then((response) => {
-        console.log(response.data.id.length);
-        getdata(response.data.id);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data!", error);
-      });
+    FetchData();
   }, []);
+
+  const FetchData = () => {
+    try {
+      //Customers Api Call
+
+      axios
+        .get("http://localhost:3001/api/customers")
+        .then((response) => {
+          getdata(response.data.id);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data!", error);
+        });
+
+      axios
+        .get("http://localhost:3001/api/mastercity")
+        .then((response) => {
+          console.log(response.data);
+          setStateCity(response.data.id);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data!", error);
+        });
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+
   const handleSort = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     const sortedData = [...dataa].sort((a, b) => {
@@ -134,6 +153,114 @@ const CustomerForm = () => {
     setFormdata({ ...formdata, [event.target.name]: event.target.value });
   };
 
+  const HandleClick = (data) => {
+    console.log(data);
+    setFormdata(data);
+    setUpdate(data);
+  };
+
+  const handleDelete = () => {
+    try {
+      axios
+        .delete(`http://localhost:3001/api/customers/${Update.Partyid}`)
+        .then((response) => {
+          console.log("Data Deleted successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("There was an error Deleting the data!", error);
+        });
+      setUpdate([]);
+      FetchData();
+    } catch (error) {
+      console.log("Error deleting data:", error);
+    }
+  };
+
+  const HandleAddData = () => {
+    try {
+      axios
+        .post("http://localhost:3001/api/customers", formdata)
+        .then((response) => {
+          console.log("Data submitted successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("There was an error submitting the data!", error);
+        });
+      FetchData();
+      setFormdata({
+        Partyname: "",
+        Address1: "",
+        Address2: "",
+        Landmark: "",
+        State: "",
+        Pincode: "",
+        City: "",
+        District: "",
+        Printname: "",
+        Landline1: "",
+        Landline2: "",
+        Landline3: "",
+        Mobile1: "",
+        Mobile2: "",
+        Mobile3: "",
+        Fax: "",
+        Email: "",
+        Website: "",
+        Openingbalance: "",
+        Name: "",
+        Designation: "",
+        Remarks: "",
+        Remarks1: "",
+        Remarks2: "",
+      });
+    } catch (error) {
+      console.log("Error adding data:", error);
+    }
+  };
+
+  const HandleUpdate = () => {
+    try {
+      axios
+        .put(`http://localhost:3001/api/customers/${Update.Partyid}`, formdata)
+        .then((response) => {
+          console.log("Data updated successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("There was an error updating the data!", error);
+        });
+      setUpdate([]);
+      FetchData();
+      setFormdata({
+        Partyname: "",
+        Address1: "",
+        Address2: "",
+        Landmark: "",
+        State: "",
+        Pincode: "",
+        City: "",
+        District: "",
+        Printname: "",
+        Landline1: "",
+        Landline2: "",
+        Landline3: "",
+        Mobile1: "",
+        Mobile2: "",
+        Mobile3: "",
+        Fax: "",
+        Email: "",
+        Website: "",
+        Openingbalance: "",
+        Name: "",
+        Designation: "",
+        Remarks: "",
+        Remarks1: "",
+        Remarks2: "",
+      });
+    } catch (error) {
+      console.log("Error updating data:", error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Get the clicked button's value
@@ -142,25 +269,20 @@ const CustomerForm = () => {
     // Handle based on the button clicked
     switch (clickedButton) {
       case "Add":
-        console.log(formdata);
-        // Open specific handler for button 1
+        HandleAddData();
         break;
       case "Update":
-        console.log("Handle for Button 2");
+        HandleUpdate();
         // Open specific handler for button 2
         break;
-      case "button3":
-        console.log("Handle for Button 3");
-        // Open specific handler for button 3
-        break;
-      case "button4":
-        console.log("Handle for Button 4");
-        // Open specific handler for button 4
+      case "Delete":
+        handleDelete();
         break;
       default:
         console.log("Unknown button clicked");
     }
   };
+
   return (
     <div className="bg-gray-100">
       <form onSubmit={handleSubmit}>
@@ -185,6 +307,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Partyname"
+                  value={formdata.Partyname}
                   onChange={handleChange}
                 />
                 <p
@@ -212,6 +335,7 @@ const CustomerForm = () => {
                   className="border  w-2/3 h-5"
                   required
                   name="Address1"
+                  value={formdata.Address1}
                   onChange={handleChange}
                 />
               </div>
@@ -229,6 +353,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Address2"
+                  value={formdata.Address2}
                   onChange={handleChange}
                 />
               </div>
@@ -246,6 +371,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Landmark"
+                  value={formdata.Landmark}
                   onChange={handleChange}
                 />
               </div>
@@ -262,15 +388,16 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5 px-2  text-sm"
                   required
                   name="State"
+                  value={formdata.State}
                   onChange={handleChange}
                 >
                   <option value="">Select a state</option>
-                  <option value="haryana">Haryana</option>
-                  <option value="punjab">Punjab</option>
-                  <option value="delhi">Delhi</option>
-                  <option value="up">Uttar Pradesh</option>
-                  <option value="rajasthan">Rajasthan</option>
-                  {/* Add more options as needed */}
+                  {StateCity.length !== 0 &&
+                    StateCity.map((item, index) => (
+                      <option key={index} value={item.State}>
+                        {item.State}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -287,6 +414,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Pincode"
+                  value={formdata.Pincode}
                   onChange={handleChange}
                 />
               </div>
@@ -303,15 +431,16 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5 px-2  text-sm"
                   required
                   name="City"
+                  value={formdata.City}
                   onChange={handleChange}
                 >
                   <option value="">Select a City</option>
-                  <option value="haryana">Sirsa</option>
-                  <option value="punjab">Chandigarh</option>
-                  <option value="delhi">Delhi</option>
-                  <option value="up">Lucknow</option>
-                  <option value="rajasthan">Jaipur</option>
-                  {/* Add more options as needed */}
+                  {StateCity.length !== 0 &&
+                    StateCity.map((item, index) => (
+                      <option key={index} value={item.City}>
+                        {item.City}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="flex items-center space-x-2 mb-1">
@@ -328,6 +457,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="District"
+                  value={formdata.District}
                   onChange={handleChange}
                 />
               </div>
@@ -344,6 +474,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Printname"
+                  value={formdata.Printname}
                   onChange={handleChange}
                 />
               </div>
@@ -371,6 +502,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Landline1"
+                  value={formdata.Landline1}
                   onChange={handleChange}
                 />
               </div>
@@ -388,6 +520,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Landline2"
+                  value={formdata.Landline2}
                   onChange={handleChange}
                 />
               </div>
@@ -405,6 +538,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Landline3"
+                  value={formdata.Landline3}
                   onChange={handleChange}
                 />
               </div>
@@ -422,6 +556,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Mobile1"
+                  value={formdata.Mobile1}
                   onChange={handleChange}
                 />
               </div>
@@ -439,6 +574,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Mobile2"
+                  value={formdata.Mobile2}
                   onChange={handleChange}
                 />
               </div>
@@ -456,6 +592,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Mobile3"
+                  value={formdata.Mobile3}
                   onChange={handleChange}
                 />
               </div>
@@ -473,6 +610,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Email"
+                  value={formdata.Email}
                   onChange={handleChange}
                 />
               </div>
@@ -490,6 +628,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Fax"
+                  value={formdata.Fax}
                   onChange={handleChange}
                 />
               </div>
@@ -507,6 +646,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Website"
+                  value={formdata.Website}
                   onChange={handleChange}
                 />
               </div>
@@ -524,6 +664,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Openingbalance"
+                  value={formdata.Openingbalance}
                   onChange={handleChange}
                 />
               </div>
@@ -539,7 +680,6 @@ const CustomerForm = () => {
                 <button
                   type="submit"
                   value="Add"
-                  // onClick={HandleAddClick}
                   className="bg-gray-200 text-black px-2 py-1 rounded "
                 >
                   Add
@@ -562,6 +702,7 @@ const CustomerForm = () => {
                   type="submit"
                   value="Close"
                   className="bg-gray-200 text-black px-2 py-1 rounded max-w-xs w-full"
+                  onClick={() => window.close()}
                 >
                   Close
                 </button>
@@ -596,6 +737,7 @@ const CustomerForm = () => {
                     className="border w-2/3 h-5"
                     required
                     name="Name"
+                    value={formdata.Name}
                     onChange={handleChange}
                   />
                 </div>
@@ -612,6 +754,7 @@ const CustomerForm = () => {
                     id="mobile1"
                     className="border w-2/3 h-5"
                     required
+                    value={formdata.Mobile1}
                   />
                 </div>
               </div>
@@ -631,6 +774,7 @@ const CustomerForm = () => {
                     className="border w-2/3 h-5"
                     required
                     name="Designation"
+                    value={formdata.Designation}
                     onChange={handleChange}
                   />
                 </div>
@@ -647,6 +791,7 @@ const CustomerForm = () => {
                     id="mobile2"
                     className="border w-2/3 h-5"
                     required
+                    value={formdata.Mobile2}
                   />
                 </div>
               </div>
@@ -673,6 +818,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Remarks"
+                  value={formdata.Remarks}
                   onChange={handleChange}
                 />
               </div>
@@ -690,6 +836,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Remarks1"
+                  value={formdata.Remarks1}
                   onChange={handleChange}
                 />
               </div>
@@ -707,6 +854,7 @@ const CustomerForm = () => {
                   className="border w-2/3 h-5"
                   required
                   name="Remarks2"
+                  value={formdata.Remarks2}
                   onChange={handleChange}
                 />
               </div>
@@ -747,6 +895,7 @@ const CustomerForm = () => {
                     <tr
                       key={i}
                       className="hover:bg-blue-500 hover:text-white transition-colors duration-300"
+                      onClick={() => HandleClick(row)}
                     >
                       {headers.map((header, j) => (
                         <td
