@@ -709,7 +709,8 @@ const CustomerForm = () => {
               </div>
             </fieldset>
             <div className="mt-4 text-sm pl-2">
-              Total No. of Customer: <span className="font-semibold">N</span>
+              Total No. of Customer:{" "}
+              <span className="font-semibold">{dataa.length}</span>
             </div>
           </div>
         </div>

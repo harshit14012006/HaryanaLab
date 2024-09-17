@@ -1,5 +1,5 @@
 import React from "react";
-const { ipcRenderer } = window.require('electron');  // Import ipcRenderer
+const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 const CreateReport = () => {
   const [formData, setFormData] = React.useState({
     sampleName: "",
@@ -21,9 +21,9 @@ const CreateReport = () => {
 
   const handleSaveAndPrint = () => {
     // Send the event to the main process
-    ipcRenderer.send('open-lab-report');
+    ipcRenderer.send("open-lab-report");
   };
-  
+
   return (
     <div className="bg-gray-100">
       <div className="p-1 ">
@@ -39,7 +39,8 @@ const CreateReport = () => {
                   type="number"
                   required
                   id="reportno"
-                  defaultValue={63}
+                  defaultValue={1}
+                  disabled
                   className="w-40 h-5 border"
                 />
               </div>
@@ -293,7 +294,10 @@ const CreateReport = () => {
                 <option value="signature3">Signature 3</option>
               </select>
               <div className="flex justify-end">
-                <button onClick={handleSaveAndPrint}  className="px-2 py-1 text-white bg-gray-400 rounded">
+                <button
+                  onClick={handleSaveAndPrint}
+                  className="px-2 py-1 text-white bg-gray-400 rounded"
+                >
                   Save and Print
                 </button>
               </div>
