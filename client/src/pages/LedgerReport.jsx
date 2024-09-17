@@ -12,7 +12,6 @@ const headers = [
   "Sample9",
   "Sample10",
   "Sample11",
-  
 ];
 
 const initialData = [
@@ -23,7 +22,7 @@ const initialData = [
     Sample4: "Sample Data 2",
     Sample5: "Sample Data 3",
     Sample6: "Sample Data 4",
-    Sample7:"Sample Data 5"
+    Sample7: "Sample Data 5",
   },
   {
     Sample1: "Beta Ltd",
@@ -32,7 +31,7 @@ const initialData = [
     Sample4: "Building B",
     Sample5: "Opposite Beta Mall",
     Sample6: "New York",
-    Sample7:"Sample Data 5"
+    Sample7: "Sample Data 5",
   },
   {
     Sample1: "Gamma Inc.",
@@ -41,7 +40,7 @@ const initialData = [
     Sample4: "Building C",
     Sample5: "Near Gamma Park",
     Sample6: "Los Angeles",
-    Sample7:"Sample Data 5"
+    Sample7: "Sample Data 5",
   },
   {
     Sample1: "Delta Corp.",
@@ -50,7 +49,7 @@ const initialData = [
     Sample4: "Sector A",
     Sample5: "Delta Industrial Area",
     Sample6: "Chicago",
-    Sample7:"Sample Data 5"
+    Sample7: "Sample Data 5",
   },
   {
     Sample1: "Epsilon LLC",
@@ -59,7 +58,7 @@ const initialData = [
     Sample4: "Commercial Plaza",
     Sample5: "Opposite Epsilon Tower",
     Sample6: "San Francisco",
-    Sample7:"Sample Data 5"
+    Sample7: "Sample Data 5",
   },
   {
     Sample1: "Zeta Co.",
@@ -68,7 +67,7 @@ const initialData = [
     Sample4: "Sector Z",
     Sample5: "Zeta Industrial Hub",
     Sample6: "Houston",
-    Sample7: "Sample Data 5"
+    Sample7: "Sample Data 5",
   },
   {
     Sample1: "Omega Ltd",
@@ -76,7 +75,7 @@ const initialData = [
     Sample3: "Headquarters",
     Sample4: "Main Office",
     Sample5: "Omega Plaza",
-    Sample6: "Seattle"
+    Sample6: "Seattle",
   },
   {
     Sample1: "Omega Ltd",
@@ -84,7 +83,7 @@ const initialData = [
     Sample3: "Headquarters",
     Sample4: "Main Office",
     Sample5: "Omega Plaza",
-    Sample6: "Seattle"
+    Sample6: "Seattle",
   },
   {
     Sample1: "Omega Ltd",
@@ -92,7 +91,7 @@ const initialData = [
     Sample3: "Headquarters",
     Sample4: "Main Office",
     Sample5: "Omega Plaza",
-    Sample6: "Seattle"
+    Sample6: "Seattle",
   },
   {
     Sample1: "Omega Ltd",
@@ -100,7 +99,7 @@ const initialData = [
     Sample3: "Headquarters",
     Sample4: "Main Office",
     Sample5: "Omega Plaza",
-    Sample6: "Seattle"
+    Sample6: "Seattle",
   },
   {
     Sample1: "Alpha Tech",
@@ -108,7 +107,7 @@ const initialData = [
     Sample3: "Tech Park",
     Sample4: "Building A",
     Sample5: "Alpha Valley",
-    Sample6: "Austin"
+    Sample6: "Austin",
   },
   {
     Sample1: "Sigma Industries",
@@ -116,7 +115,7 @@ const initialData = [
     Sample3: "Production Unit",
     Sample4: "Industrial Zone",
     Sample5: "Sigma Estate",
-    Sample6: "Boston"
+    Sample6: "Boston",
   },
   {
     Sample1: "Theta Enterprises",
@@ -124,7 +123,7 @@ const initialData = [
     Sample3: "Corporate Office",
     Sample4: "Tower 9",
     Sample5: "Theta Business District",
-    Sample6: "Miami"
+    Sample6: "Miami",
   },
   {
     Sample1: "Omega Ltd",
@@ -132,7 +131,7 @@ const initialData = [
     Sample3: "Headquarters",
     Sample4: "Main Office",
     Sample5: "Omega Plaza",
-    Sample6: "Seattle"
+    Sample6: "Seattle",
   },
   {
     Sample1: "kjj",
@@ -140,142 +139,158 @@ const initialData = [
     Sample3: "h",
     Sample4: "Main Office",
     Sample5: "Omega Plaza",
-    Sample6: "Seattle"
+    Sample6: "Seattle",
   },
 ];
 
 const LedgerReport = () => {
   const [data, setData] = useState(initialData);
   return (
-    <div className='bg-gray-100' >
-    <div className='flex justify-center min-h-screen'>
-      <div className="w-full max-w-4xl">
-        <form>
-          <fieldset className='w-full p-3 border border-gray-300 rounded-md'>
-            <legend className='text-sm'>Ledger Report</legend>
-            <div className="flex justify-center space-x-14">
-              <div className="flex items-center space-x-6">
-                <label htmlFor="fromDate" className="font-medium">From</label>
-                <input
-                  type="date"
-                  id="fromDate"
-                  name="fromDate"
-                  required
-                  className="h-5 p-2 border border-gray-300"
-                />
+    <div className="bg-gray-100">
+      <div className="flex justify-center min-h-screen">
+        <div className="w-full max-w-4xl">
+          <form>
+            <fieldset className="w-full p-3 border border-gray-300 rounded-md">
+              <legend className="text-sm">Ledger Report</legend>
+              <div className="flex justify-center space-x-14">
+                <div className="flex items-center space-x-6">
+                  <label htmlFor="fromDate" className="font-medium">
+                    From
+                  </label>
+                  <input
+                    type="date"
+                    id="fromDate"
+                    name="fromDate"
+                    required
+                    className="h-5 p-2 border border-gray-300"
+                  />
+                </div>
+                <div className="flex items-center space-x-4">
+                  <label htmlFor="toDate" className="font-medium ">
+                    To
+                  </label>
+                  <input
+                    type="date"
+                    id="toDate"
+                    name="toDate"
+                    required
+                    className="h-5 p-2 border border-gray-300"
+                  />
+                </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <label htmlFor="toDate" className="font-medium ">To</label>
-                <input
-                  type="date"
-                  id="toDate"
-                  name="toDate"
-                  required
-                  className="h-5 p-2 border border-gray-300"
-                />
+              <div className="flex justify-end mt-2 mr-24 ">
+                <button
+                  type="submit"
+                  className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                >
+                  Display
+                </button>
               </div>
-            </div>
-            <div className="flex justify-end mt-2 mr-24 ">
-              <button
-                type="submit"
-                className="h-8 px-4 py-1 bg-gray-400 rounded-md"
-              >
-                Display
-              </button>
-            </div>
-            <div className="grid grid-cols-2 gap-4 ml-36">
-            <div className="flex items-center space-x-4">
-                <label htmlFor="party" className="font-medium ">Party</label>
-                <input
-                  type="text"
-                  id="party"
-                  name="party"
-                  required
-                  className="h-5 p-2 border border-gray-300"
-                />
+              <div className="grid grid-cols-2 gap-4 ml-36">
+                <div className="flex items-center space-x-4">
+                  <label htmlFor="party" className="font-medium ">
+                    Party
+                  </label>
+                  <input
+                    type="text"
+                    id="party"
+                    name="party"
+                    required
+                    className="h-5 p-2 border border-gray-300"
+                  />
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <label htmlFor="city" className="font-medium ">
+                    City:
+                  </label>
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <label htmlFor="totalSamples" className="font-medium ">
+                    Total no. of samples:
+                  </label>
+                </div>
+                <div className="flex flex-col space-y-1">
+                  <label htmlFor="openingBalance" className="font-medium ">
+                    Opening balance:
+                  </label>
+                </div>
               </div>
-              <div className="flex flex-col space-y-1">
-                <label htmlFor="city" className="font-medium ">City:</label>
-                
-              </div>
-              <div className="flex flex-col space-y-1">
-                <label htmlFor="totalSamples" className="font-medium ">Total no. of samples:</label>
-                
-              </div>
-              <div className="flex flex-col space-y-1">
-                <label htmlFor="openingBalance" className="font-medium ">Opening balance:</label>
-              </div>
-            </div>
-            {/* table grid */}
-           
-            <div className="relative overflow-x-auto overflow-y-auto h-[320px] w-[850px]">
-  <table className="min-w-full bg-white border border-gray-300 table-auto">
-    <thead>
-      <tr className="bg-gray-100 border-b border-gray-300">
-        {headers.map((header, index) => (
-          <th
-            key={index}
-            className="text-sm text-left border-gray-300 whitespace-nowrap"
-            style={{
-              fontSize: "13px",
-              fontWeight: "normal",
-              minWidth: "150px", // Set minimum width for headers
-              width: "100px"
-            }}
-          >
-            {header}
-          </th>
-        ))}
-      </tr>
-    </thead>
-    <tbody>
-      {data.map((row, i) => (
-        <tr
-          key={i}
-          className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-        >
-          {headers.map((header, j) => (
-            <td
-              key={j}
-              className={`border-gray-300 border text-sm whitespace-nowrap ${
-                j < headers.length - 1 ? "pr-0" : ""
-              }`}
-              style={{ minWidth: "150px" }} // Set minimum width for data cells
-            >
-              {row[header]}
-            </td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+              {/* table grid */}
 
-           
-          
+              <div className="relative overflow-x-auto overflow-y-auto h-[320px] w-[850px]">
+                <table className="min-w-full bg-white border border-gray-300 table-auto">
+                  <thead>
+                    <tr className="bg-gray-100 border-b border-gray-300">
+                      {headers.map((header, index) => (
+                        <th
+                          key={index}
+                          className="text-sm text-left border-gray-300 whitespace-nowrap"
+                          style={{
+                            fontSize: "13px",
+                            fontWeight: "normal",
+                            minWidth: "150px", // Set minimum width for headers
+                            width: "100px",
+                          }}
+                        >
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((row, i) => (
+                      <tr
+                        key={i}
+                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                      >
+                        {headers.map((header, j) => (
+                          <td
+                            key={j}
+                            className={`border-gray-300 border text-sm whitespace-nowrap ${
+                              j < headers.length - 1 ? "pr-0" : ""
+                            }`}
+                            style={{ minWidth: "150px" }} // Set minimum width for data cells
+                          >
+                            {row[header]}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-<div className="flex flex-wrap gap-4 mt-2">
-  <div className="flex-1">
-    <label htmlFor="totalAmount" className="block font-medium ">Total Amount</label>
-  </div>
-  <div className="flex-1">
-    <label htmlFor="paidAmount" className="block font-medium ">Paid Amount</label>
-  </div>
-  <div className="flex-1">
-    <label htmlFor="openingBalance" className="block font-medium ">Balance</label>
-  </div>
-</div>
-<div className="flex justify-end">
-          <button
-            type="button"
-            className="h-8 px-4 py-1 bg-gray-400 rounded-md"
-          >
-            Print
-          </button>
+              <div className="flex flex-wrap gap-4 mt-2">
+                <div className="flex-1">
+                  <label htmlFor="totalAmount" className="block font-medium ">
+                    Total Amount
+                  </label>
+                </div>
+                <div className="flex-1">
+                  <label htmlFor="paidAmount" className="block font-medium ">
+                    Paid Amount
+                  </label>
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="openingBalance"
+                    className="block font-medium "
+                  >
+                    Balance
+                  </label>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                >
+                  Print
+                </button>
+              </div>
+            </fieldset>
+          </form>
         </div>
-          </fieldset>
-        </form>
-      </div>
       </div>
     </div>
   );
