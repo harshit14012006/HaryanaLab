@@ -439,21 +439,6 @@ app.whenReady().then(() => {
   // Create the application menu
   const menuTemplate = [
     {
-      label: "Account",
-      submenu: [
-        {
-          label: "Company Profile",
-          click: () => {},
-        },
-        {
-          label: "User Profile",
-          click: () => {
-            /* Handle User Profile */
-          },
-        },
-      ],
-    },
-    {
       label: "Master",
       submenu: [
         {
@@ -466,12 +451,6 @@ app.whenReady().then(() => {
           label: "Customer",
           click: () => {
             createCustomerFormPopup();
-          },
-        },
-        {
-          label: "Session",
-          click: () => {
-            /* Handle Session */
           },
         },
         {

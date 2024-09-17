@@ -537,6 +537,16 @@
         width: 100%;
         display: flex;
       }
+
+      .textalign {
+        position: absolute;
+        top: 28.3%;
+        left: 50%;
+      }
+      .textset {
+        display: flex;
+        flex-direction: row;
+      }
     </style>
   </head>
   <body>
@@ -621,11 +631,15 @@
               </div>
 
               <div class="IDK">
-                <span class="spanblockExtra">
-                  We hereby certify that the sample described
-                  as...........................................................................................
-                  received by us
-                </span>
+                <div class="textset">
+                  <span class="spanblockExtra">
+                    We hereby certify that the sample described as
+                    ...........................................................................................
+                    <span class="textalign">Harshit singla</span>
+                    received by us
+                  </span>
+                </div>
+
                 <span class="spanblock">
                   on dt. .............................................. From
                   Sh.M/s..........................................................................................................................
