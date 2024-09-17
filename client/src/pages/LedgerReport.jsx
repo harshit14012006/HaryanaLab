@@ -155,7 +155,7 @@ const LedgerReport = () => {
             <legend className='text-sm'>Ledger Report</legend>
             <div className="flex justify-center space-x-14">
               <div className="flex items-center space-x-6">
-                <label htmlFor="fromDate" className="font-medium text-gray-600">From</label>
+                <label htmlFor="fromDate" className="font-medium">From</label>
                 <input
                   type="date"
                   id="fromDate"
@@ -165,7 +165,7 @@ const LedgerReport = () => {
                 />
               </div>
               <div className="flex items-center space-x-4">
-                <label htmlFor="toDate" className="font-medium text-gray-600">To</label>
+                <label htmlFor="toDate" className="font-medium ">To</label>
                 <input
                   type="date"
                   id="toDate"
@@ -185,7 +185,7 @@ const LedgerReport = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 ml-36">
             <div className="flex items-center space-x-4">
-                <label htmlFor="party" className="font-medium text-gray-600">Party</label>
+                <label htmlFor="party" className="font-medium ">Party</label>
                 <input
                   type="text"
                   id="party"
@@ -195,15 +195,15 @@ const LedgerReport = () => {
                 />
               </div>
               <div className="flex flex-col space-y-1">
-                <label htmlFor="city" className="font-medium text-gray-600">City:</label>
+                <label htmlFor="city" className="font-medium ">City:</label>
                 
               </div>
               <div className="flex flex-col space-y-1">
-                <label htmlFor="totalSamples" className="font-medium text-gray-600">Total no. of samples:</label>
+                <label htmlFor="totalSamples" className="font-medium ">Total no. of samples:</label>
                 
               </div>
               <div className="flex flex-col space-y-1">
-                <label htmlFor="openingBalance" className="font-medium text-gray-600">Opening balance:</label>
+                <label htmlFor="openingBalance" className="font-medium ">Opening balance:</label>
               </div>
             </div>
             {/* table grid */}
@@ -256,13 +256,13 @@ const LedgerReport = () => {
 
 <div className="flex flex-wrap gap-4 mt-2">
   <div className="flex-1">
-    <label htmlFor="totalAmount" className="block font-medium text-gray-600">Total Amount</label>
+    <label htmlFor="totalAmount" className="block font-medium ">Total Amount</label>
   </div>
   <div className="flex-1">
-    <label htmlFor="paidAmount" className="block font-medium text-gray-600">Paid Amount</label>
+    <label htmlFor="paidAmount" className="block font-medium ">Paid Amount</label>
   </div>
   <div className="flex-1">
-    <label htmlFor="openingBalance" className="block font-medium text-gray-600">Opening Balance</label>
+    <label htmlFor="openingBalance" className="block font-medium ">Balance</label>
   </div>
 </div>
 <div className="flex justify-end">
