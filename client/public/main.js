@@ -14,8 +14,8 @@ let mainWindow;
 let backendServer;
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 700,
-    height: 400,
+    width: 1920,
+    height: 1080,
     webPreferences: {
       enableRemoteModule: true,
       contextIsolation: false,
