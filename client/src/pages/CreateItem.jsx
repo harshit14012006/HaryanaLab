@@ -107,11 +107,11 @@ const CreateItem = () => {
 
   return (
     <div className="bg-gray-100">
-      <div className="flex justify-center items-center min-h-screen">
-        <fieldset className="border border-gray-300 p-4 rounded-md w-full max-w-lg">
-          <legend className=" px-2">Create Item</legend>
+      <div className="flex items-center justify-center min-h-screen">
+        <fieldset className="w-full max-w-lg p-4 border border-gray-300 rounded-md">
+          <legend className="px-2 ">Create Item</legend>
           <form>
-            <div className="flex items-center space-x-4 mb-4">
+            <div className="flex items-center mb-4 space-x-4">
               <label
                 htmlFor="itemName"
                 className="text-gray-700 whitespace-nowrap"
@@ -122,7 +122,7 @@ const CreateItem = () => {
                 type="text"
                 id="itemName"
                 name="ItemName"
-                className="border border-gray-300 rounded-md h-8 p-2 flex-grow focus:outline-none"
+                className="flex-grow h-8 p-2 border border-gray-300 rounded-md focus:outline-none"
                 required
                 value={ItemName}
                 onChange={(event) => handleChange(event)}
@@ -133,37 +133,37 @@ const CreateItem = () => {
             <div className="flex justify-between mb-4">
               <button
                 // type="submit"
-                className="bg-gray-300 py-1 px-4 rounded-md "
+                className="px-4 py-1 bg-gray-300 rounded-md "
                 onClick={HandleClick}
               >
                 Add
               </button>
               <button
                 type="button"
-                className="bg-gray-300  py-1 px-4 rounded-md "
+                className="px-4 py-1 bg-gray-300 rounded-md "
                 onClick={HandleUpdate}
               >
                 Update
               </button>
               <button
                 type="button"
-                className="bg-gray-300 py-1 px-4 rounded-md "
+                className="px-4 py-1 bg-gray-300 rounded-md "
                 onClick={HandleDelete}
               >
                 Delete
               </button>
             </div>
-            <div className="relative max-h-64 overflow-auto">
+            <div className="relative overflow-auto max-h-64">
               <table className="min-w-full border border-black divide-y divide-gray-300">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                      Sample ID
+                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black uppercase border border-black">
+                      Item ID
                     </th>
-                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                      Sample Name
+                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black uppercase border border-black">
+                      Item Name
                     </th>
-                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black uppercase border border-black">
                       Insert Date
                     </th>
                   </tr>
@@ -212,8 +212,8 @@ const CreateItem = () => {
                 </tbody>
               </table>
             </div>
-            <div className="mt-4 flex justify-end">
-              <span className="text-gray-700 text-sm font-medium">
+            <div className="flex justify-end mt-4">
+              <span className="text-sm font-medium text-gray-700">
                 Total No. of Items: 25
               </span>
             </div>

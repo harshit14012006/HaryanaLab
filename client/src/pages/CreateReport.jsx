@@ -48,16 +48,22 @@ const CreateReport = () => {
                 {/* First container with labels and inputs in rows */}
                 <div className="w-1/2 p-4">
                   <div className="flex flex-col gap-4">
-                    <div className="flex items-center">
-                      <label htmlFor="samplename" className="w-1/3 text-sm">
-                        Sample Name
-                      </label>
-                      <input
-                        type="text"
-                        id="samplename"
-                        className="flex-grow h-5 px-2 border"
-                      />
-                    </div>
+                  <div className="flex items-center">
+  <label htmlFor="samplename" className="w-1/3 text-sm">
+    Sample Name
+  </label>
+  <select
+    id="samplename"
+    className="flex-grow h-5 px-2 border rounded"
+  >
+    <option value="">Select a sample</option>
+    <option value="Sample 1">Sample 1</option>
+    <option value="Sample 2">Sample 2</option>
+    <option value="Sample 3">Sample 3</option>
+    {/* Add more options as needed */}
+  </select>
+</div>
+
                     <div className="flex items-center">
                       <label htmlFor="input2" className="w-1/3 text-sm">
                         Dated
@@ -70,15 +76,21 @@ const CreateReport = () => {
                       />
                     </div>
                     <div className="flex items-center">
-                      <label htmlFor="" className="w-1/3 text-sm">
-                        From Sh/M/s
-                      </label>
-                      <input
-                        type="text"
-                        id="from"
-                        className="flex-grow h-5 px-2 py-1 border"
-                      />
-                    </div>
+  <label htmlFor="from" className="w-1/3 text-sm">
+    From Sh/M/s
+  </label>
+  <select
+    id="from"
+    className="flex-grow h-5 px-2 border rounded"
+  >
+    <option value="">Select an option</option>
+    <option value="Option 1">Option 1</option>
+    <option value="Option 2">Option 2</option>
+    <option value="Option 3">Option 3</option>
+    {/* Add more options as needed */}
+  </select>
+</div>
+
                   </div>
                 </div>
 
@@ -118,6 +130,7 @@ const CreateReport = () => {
                       <input
                         type="text"
                         id="input6"
+                        disabled
                         className="flex-grow h-5 px-2 py-1 border"
                       />
                     </div>
@@ -157,7 +170,7 @@ const CreateReport = () => {
 
                 <div className="flex items-center pl-20 space-x-2">
                   <label htmlFor="ffa" className="w-1/3 text-sm">
-                    Ffa
+                    FFA
                   </label>
                   <input
                     type="text"
@@ -195,7 +208,7 @@ const CreateReport = () => {
                     Date
                   </label>
                   <input
-                    type="date"
+                    type="text"
                     id="date"
                     className="w-full h-5 px-2 py-1 border"
                   />
@@ -256,6 +269,7 @@ const CreateReport = () => {
                 >
                   <option value="sealed">Seal Engraved</option>
                   <option value="unsealed">Buyer</option>
+                  <option value="ricemills">Seller</option>
                   <option value="ricemills">Rice Mills</option>
                   <option value="trader">Trader</option>
                   <option value="broker">Broker</option>
@@ -296,7 +310,7 @@ const CreateReport = () => {
               <div className="flex justify-end">
                 <button
                   onClick={handleSaveAndPrint}
-                  className="px-2 py-1 text-white bg-gray-400 rounded"
+                  className="px-2 py-1 bg-gray-400 rounded"
                 >
                   Save and Print
                 </button>
