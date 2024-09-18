@@ -36,6 +36,7 @@ const CustomerForm = () => {
   const [StateCity, setStateCity] = useState([]);
   const [Update, setUpdate] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCity, setSelectedCity] = useState(""); // State for city filter
   const [sortOrder, setSortOrder] = useState("asc");
   const [formdata, setFormdata] = useState({
     Partyname: "",
@@ -248,10 +249,16 @@ const CustomerForm = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredData = dataa.filter((row) =>
-    row.Partyname.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleCityChange = (event) => {
+    setSelectedCity(event.target.value);
+  };
 
+  // Get unique cities for dropdown
+  const cityOptions = [...new Set(dataa.map((row) => row.City))];
+
+  const filteredData = dataa
+    .filter((row) => row.Partyname.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter((row) => (selectedCity ? row.City === selectedCity : true));
 
   return (
     <div className="bg-gray-100">
@@ -859,8 +866,8 @@ const CustomerForm = () => {
           Party Details
         </legend>
         <div className="container mx-auto">
-          <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px] ">
-            <table className="bg-white border border-gray-300 table-auto ">
+          <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px]">
+            <table className="bg-white border border-gray-300 table-auto">
               <thead>
                 <tr className="bg-gray-100 border-b border-gray-300">
                   {headers.map((header, index) => (
@@ -885,27 +892,36 @@ const CustomerForm = () => {
                           className="w-20 px-2 py-1 ml-2 text-sm border rounded"
                         />
                       )}
+                      {header === "City" && (
+                        <select
+                          value={selectedCity}
+                          onChange={handleCityChange}
+                          className="w-12 py-1 ml-2 text-sm border rounded"
+                        >
+                          <option value="">All</option>
+                          {cityOptions.map((city, i) => (
+                            <option key={i} value={city}>
+                              {city}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((row, i) => (
+                {filteredData.map((row, index) => (
                   <tr
-                    key={i}
-                    className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                    key={index}
+                    className="border-b border-gray-300 hover:bg-gray-100"
                     onClick={() => HandleClick(row)}
                   >
-                    {headers.map((header, j) => (
+                    {headers.map((header, index) => (
                       <td
-                        key={j}
-                        className={`border-gray-300 border text-sm whitespace-nowrap ${
-                          j < headers.length - 1 ? "pr-4" : ""
-                        }`}
-                        style={{
-                          width: header === "Name" ? "200px" : "120px",
-                          fontSize: "11px",
-                        }}
+                        key={index}
+                        className="px-4 py-2 text-sm border-gray-300 whitespace-nowrap"
+                        style={{ fontSize: "13px", fontWeight: "normal" }}
                       >
                         {row[header]}
                       </td>
