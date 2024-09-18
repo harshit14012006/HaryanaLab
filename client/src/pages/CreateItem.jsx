@@ -214,7 +214,7 @@ const CreateItem = () => {
             </div>
             <div className="flex justify-end mt-4">
               <span className="text-sm font-medium text-gray-700">
-                Total No. of Items: 25
+                Total No. of Items: {Data.length}
               </span>
             </div>
           </form>

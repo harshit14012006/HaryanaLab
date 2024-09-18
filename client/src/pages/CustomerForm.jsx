@@ -1,12 +1,40 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort, faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSort,
+  faSortUp,
+  faSortDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 const headers = [
-  "Partyid", "Partyname", "Address1", "Address2", "Landmark", "State", "Pincode", "City", "District",
-  "Printname", "Landline1", "Landline2", "Landline3", "Mobile1", "Mobile2", "Mobile3", "Fax",
-  "Email", "Website", "Openingbalance", "Name", "Designation", "Remarks", "Remarks1", "Remarks2"
+  "Partyname",
+  "Address1",
+  "Address2",
+  "Landmark",
+  "State",
+  "Pincode",
+  "City",
+  "District",
+  "Printname",
+  "Landline1",
+  "Mobile1",
+  "Mobile2",
+  "Mobile3",
+  "Mobile4",
+  "Mobile5",
+  "Fax",
+  "Email1",
+  "Email2",
+  "Website",
+  "Openingbalance",
+  "Name",
+  "Designation",
+  "Mobile1c",
+  "Mobile2c",
+  "Remarks1",
+  "Remarks2",
+  "Remarks3",
 ];
 
 const CustomerForm = () => {
@@ -17,9 +45,33 @@ const CustomerForm = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [formdata, setFormdata] = useState({
-    Partyname: "", Address1: "", Address2: "", Landmark: "", State: "", Pincode: "", City: "",
-    District: "", Printname: "", Landline1: "", Mobile1: "", Mobile2: "", Mobile3: "", Fax: "",
-    Email: "", Website: "", Openingbalance: "", Name: "", Designation: "", Remarks: "", Remarks1: "", Remarks2: ""
+    Partyname: "",
+    Address1: "",
+    Address2: "",
+    Landmark: "",
+    State: "",
+    Pincode: "",
+    City: "",
+    District: "",
+    Printname: "",
+    Landline1: "",
+    Mobile1: "",
+    Mobile2: "",
+    Mobile3: "",
+    Mobile4: "",
+    Mobile5: "",
+    Fax: "",
+    Email1: "",
+    Email2: "",
+    Website: "",
+    Openingbalance: "",
+    Name: "",
+    Designation: "",
+    Mobile1c: "",
+    Mobile2c: "",
+    Remarks1: "",
+    Remarks2: "",
+    Remarks3: "",
   });
 
   useEffect(() => {
@@ -28,7 +80,8 @@ const CustomerForm = () => {
 
   const FetchData = () => {
     try {
-      axios.get("http://localhost:3001/api/customers")
+      axios
+        .get("http://localhost:3001/api/customers")
         .then((response) => {
           // Check if the response data is an array
           if (Array.isArray(response.data)) {
@@ -41,11 +94,13 @@ const CustomerForm = () => {
           console.error("There was an error fetching the data!", error);
         });
 
-      axios.get("http://localhost:3001/api/mastercity")
+      axios
+        .get("http://localhost:3001/api/mastercity")
         .then((response) => {
+          console.log(response.data.id);
           // Check if the response data is an array
-          if (Array.isArray(response.data)) {
-            setStateCity(response.data);
+          if (Array.isArray(response.data.id)) {
+            setStateCity(response.data.id);
           } else {
             setStateCity([]); // Set to an empty array if the data is not as expected
           }
@@ -63,7 +118,9 @@ const CustomerForm = () => {
     const sortedData = [...dataa].sort((a, b) => {
       const nameA = a["Name"].toLowerCase();
       const nameB = b["Name"].toLowerCase();
-      return newSortOrder === "asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+      return newSortOrder === "asc"
+        ? nameA.localeCompare(nameB)
+        : nameB.localeCompare(nameA);
     });
     getdata(sortedData);
     setSortOrder(newSortOrder);
@@ -89,7 +146,8 @@ const CustomerForm = () => {
 
   const handleDelete = () => {
     try {
-      axios.delete(`http://localhost:3001/api/customers/${Update.Partyid}`)
+      axios
+        .delete(`http://localhost:3001/api/customers/${Update.Partyid}`)
         .then((response) => {
           console.log("Data Deleted successfully:", response.data);
           FetchData(); // Refresh data after delete
@@ -104,15 +162,41 @@ const CustomerForm = () => {
   };
 
   const HandleAddData = () => {
+    console.log(formdata);
     try {
-      axios.post("http://localhost:3001/api/customers", formdata)
+      axios
+        .post("http://localhost:3001/api/customers", formdata)
         .then((response) => {
           console.log("Data submitted successfully:", response.data);
           FetchData(); // Refresh data after adding
           setFormdata({
-            Partyname: "", Address1: "", Address2: "", Landmark: "", State: "", Pincode: "", City: "",
-            District: "", Printname: "", Landline1: "", Mobile1: "", Mobile2: "", Mobile3: "", Fax: "",
-            Email: "", Website: "", Openingbalance: "", Name: "", Designation: "", Remarks: "", Remarks1: "", Remarks2: ""
+            Partyname: "",
+            Address1: "",
+            Address2: "",
+            Landmark: "",
+            State: "",
+            Pincode: "",
+            City: "",
+            District: "",
+            Printname: "",
+            Landline1: "",
+            Mobile1: "",
+            Mobile2: "",
+            Mobile3: "",
+            Mobile4: "",
+            Mobile5: "",
+            Fax: "",
+            Email1: "",
+            Email2: "",
+            Website: "",
+            Openingbalance: "",
+            Name: "",
+            Designation: "",
+            Mobile1c: "",
+            Mobile2c: "",
+            Remarks1: "",
+            Remarks2: "",
+            Remarks3: "",
           });
         })
         .catch((error) => {
@@ -125,14 +209,39 @@ const CustomerForm = () => {
 
   const HandleUpdate = () => {
     try {
-      axios.put(`http://localhost:3001/api/customers/${Update.Partyid}`, formdata)
+      axios
+        .put(`http://localhost:3001/api/customers/${Update.Partyid}`, formdata)
         .then((response) => {
           console.log("Data updated successfully:", response.data);
           FetchData(); // Refresh data after update
           setFormdata({
-            Partyname: "", Address1: "", Address2: "", Landmark: "", State: "", Pincode: "", City: "",
-            District: "", Printname: "", Landline1: "", Mobile1: "", Mobile2: "", Mobile3: "", Fax: "",
-            Email: "", Website: "", Openingbalance: "", Name: "", Designation: "", Remarks: "", Remarks1: "", Remarks2: ""
+            Partyname: "",
+            Address1: "",
+            Address2: "",
+            Landmark: "",
+            State: "",
+            Pincode: "",
+            City: "",
+            District: "",
+            Printname: "",
+            Landline1: "",
+            Mobile1: "",
+            Mobile2: "",
+            Mobile3: "",
+            Mobile4: "",
+            Mobile5: "",
+            Fax: "",
+            Email1: "",
+            Email2: "",
+            Website: "",
+            Openingbalance: "",
+            Name: "",
+            Designation: "",
+            Mobile1c: "",
+            Mobile2c: "",
+            Remarks1: "",
+            Remarks2: "",
+            Remarks3: "",
           });
           setUpdate([]);
         })
@@ -174,7 +283,9 @@ const CustomerForm = () => {
   const cityOptions = [...new Set(dataa.map((row) => row.City))];
 
   const filteredData = dataa
-    .filter((row) => row.Partyname.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter((row) =>
+      row.Partyname.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     .filter((row) => (selectedCity ? row.City === selectedCity : true));
 
   return (
@@ -213,7 +324,9 @@ const CustomerForm = () => {
               </div>
             </fieldset>
             <fieldset className="p-2 border">
-              <legend style={{ fontSize: "13px", fontWeight: "normal" }}>Address Details</legend>
+              <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
+                Address Details
+              </legend>
               {/* Address Details Inputs */}
               <div className="flex items-center mb-1 space-x-2">
                 <label
@@ -503,8 +616,8 @@ const CustomerForm = () => {
                   id="email"
                   className="w-2/3 h-5 border"
                   required
-                  name="Email"
-                  value={formdata.Email}
+                  name="Email1"
+                  value={formdata.Email1}
                   onChange={handleChange}
                 />
               </div>
@@ -521,8 +634,8 @@ const CustomerForm = () => {
                   id="email"
                   className="w-2/3 h-5 border"
                   required
-                  name="Email"
-                  value={formdata.Email}
+                  name="Email2"
+                  value={formdata.Email2}
                   onChange={handleChange}
                 />
               </div>
@@ -531,7 +644,7 @@ const CustomerForm = () => {
                   htmlFor="fax"
                   className="w-1/3"
                   style={{ fontSize: "13px", fontWeight: "normal" }}
-                > 
+                >
                   Fax
                 </label>
                 <input
@@ -667,7 +780,9 @@ const CustomerForm = () => {
                     id="mobile1"
                     className="w-2/3 h-5 border"
                     required
-                    value={formdata.Mobile1}
+                    name="Mobile1c"
+                    value={formdata.Mobile1c}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -704,7 +819,9 @@ const CustomerForm = () => {
                     id="mobile2"
                     className="w-2/3 h-5 border"
                     required
-                    value={formdata.Mobile2}
+                    name="Mobile2c"
+                    value={formdata.Mobile2c}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -730,8 +847,8 @@ const CustomerForm = () => {
                   id=""
                   className="w-2/3 h-5 border"
                   required
-                  name="Remarks"
-                  value={formdata.Remarks}
+                  name="Remarks1"
+                  value={formdata.Remarks1}
                   onChange={handleChange}
                 />
               </div>
@@ -748,8 +865,8 @@ const CustomerForm = () => {
                   id=""
                   className="w-2/3 h-5 border"
                   required
-                  name="Remarks1"
-                  value={formdata.Remarks1}
+                  name="Remarks2"
+                  value={formdata.Remarks2}
                   onChange={handleChange}
                 />
               </div>
@@ -766,8 +883,8 @@ const CustomerForm = () => {
                   id=""
                   className="w-2/3 h-5 border"
                   required
-                  name="Remarks2"
-                  value={formdata.Remarks2}
+                  name="Remarks3"
+                  value={formdata.Remarks3}
                   onChange={handleChange}
                 />
               </div>
@@ -778,79 +895,78 @@ const CustomerForm = () => {
 
       {/* Table Content */}
       <div className="pl-2 pr-4">
-      <fieldset className="p-1 border">
-        <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
-          Party Details
-        </legend>
-        <div className="container mx-auto">
-          <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px]">
-            <table className="bg-white border border-gray-300 table-auto">
-              <thead>
-                <tr className="bg-gray-100 border-b border-gray-300">
-                  {headers.map((header, index) => (
-                    <th
-                      key={index}
-                      className="px-4 py-2 text-sm text-left border-gray-300 whitespace-nowrap"
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "normal",
-                        width: "100px",
-                      }}
-                      onClick={header === "Name" ? handleSort : undefined}
-                    >
-                      {header}{" "}
-                      {header === "Name" && getSortIcon()}
-                      {header === "Partyname" && (
-                        <input
-                          type="text"
-                          placeholder="Search"
-                          value={searchQuery}
-                          onChange={handleSearchChange}
-                          className="w-20 px-2 py-1 ml-2 text-sm border rounded"
-                        />
-                      )}
-                      {header === "City" && (
-                        <select
-                          value={selectedCity}
-                          onChange={handleCityChange}
-                          className="w-12 py-1 ml-2 text-sm border rounded"
-                        >
-                          <option value="">All</option>
-                          {cityOptions.map((city, i) => (
-                            <option key={i} value={city}>
-                              {city}
-                            </option>
-                          ))}
-                        </select>
-                      )}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.map((row, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-gray-300 hover:bg-gray-100"
-                    onClick={() => HandleClick(row)}
-                  >
+        <fieldset className="p-1 border">
+          <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
+            Party Details
+          </legend>
+          <div className="container mx-auto">
+            <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px]">
+              <table className="bg-white border border-gray-300 table-auto">
+                <thead>
+                  <tr className="bg-gray-100 border-b border-gray-300">
                     {headers.map((header, index) => (
-                      <td
+                      <th
                         key={index}
-                        className="px-4 py-2 text-sm border-gray-300 whitespace-nowrap"
-                        style={{ fontSize: "13px", fontWeight: "normal" }}
+                        className="px-4 py-2 text-sm text-left border-gray-300 whitespace-nowrap"
+                        style={{
+                          fontSize: "13px",
+                          fontWeight: "normal",
+                          width: "100px",
+                        }}
+                        onClick={header === "Name" ? handleSort : undefined}
                       >
-                        {row[header]}
-                      </td>
+                        {header} {header === "Name" && getSortIcon()}
+                        {header === "Partyname" && (
+                          <input
+                            type="text"
+                            placeholder="Search"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            className="w-20 px-2 py-1 ml-2 text-sm border rounded"
+                          />
+                        )}
+                        {header === "City" && (
+                          <select
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                            className="w-12 py-1 ml-2 text-sm border rounded"
+                          >
+                            <option value="">All</option>
+                            {cityOptions.map((city, i) => (
+                              <option key={i} value={city}>
+                                {city}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredData.map((row, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-gray-300 hover:bg-gray-100"
+                      onClick={() => HandleClick(row)}
+                    >
+                      {headers.map((header, index) => (
+                        <td
+                          key={index}
+                          className="px-4 py-2 text-sm border-gray-300 whitespace-nowrap"
+                          style={{ fontSize: "13px", fontWeight: "normal" }}
+                        >
+                          {row[header]}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </fieldset>
-    </div>
+        </fieldset>
+      </div>
 
       {/* <div className="pl-2 pr-4">
       <fieldset className='p-1 border'>

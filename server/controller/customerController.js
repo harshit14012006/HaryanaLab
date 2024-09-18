@@ -12,27 +12,30 @@ const createCustomer = (req, res) => {
     District,
     Printname,
     Landline1,
-    Landline2,
-    Landline3,
     Mobile1,
     Mobile2,
     Mobile3,
+    Mobile4,
+    Mobile5,
+    Email1,
+    Email2,
     Fax,
-    Email,
     Website,
     Openingbalance,
     Name,
     Designation,
-    Remarks,
+    Mobile1c,
+    Mobile2c,
     Remarks1,
     Remarks2,
+    Remarks3,
   } = req.body;
 
   const query = `INSERT INTO customer (
     Partyname, Address1, Address2, Landmark, State, Pincode, City, District,
-    Printname, Landline1, Landline2, Landline3, Mobile1, Mobile2, Mobile3,
-    Fax, Email, Website, Openingbalance, Name, Designation, Remarks, Remarks1, Remarks2
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)`;
+    Printname, Landline1, Mobile1, Mobile2, Mobile3,Mobile4,Mobile5,Email1,Email2,
+    Fax, Website, Openingbalance, Name, Designation, Mobile1c, Mobile2c, Remarks1, Remarks2,Remarks3
+  ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?, ?, ?)`;
 
   const values = [
     Partyname,
@@ -45,20 +48,23 @@ const createCustomer = (req, res) => {
     District,
     Printname,
     Landline1,
-    Landline2,
-    Landline3,
     Mobile1,
     Mobile2,
     Mobile3,
+    Mobile4,
+    Mobile5,
+    Email1,
+    Email2,
     Fax,
-    Email,
     Website,
     Openingbalance,
     Name,
     Designation,
-    Remarks,
+    Mobile1c,
+    Mobile2c,
     Remarks1,
     Remarks2,
+    Remarks3,
   ];
 
   db.query(query, values, (err, result) => {
@@ -81,15 +87,12 @@ const getAllCustomers = (req, res) => {
       return;
     }
 
-    res.json({
-      status: 200,
-      message: "Customer Fetch successfully",
-      id: results,
-    }); // Send the results as JSON response
+    res.json(results); // Send the results as JSON response
   });
 };
 
 const updateCustomer = (req, res) => {
+  const { Partyid } = req.params;
   const {
     Partyname,
     Address1,
@@ -101,29 +104,31 @@ const updateCustomer = (req, res) => {
     District,
     Printname,
     Landline1,
-    Landline2,
-    Landline3,
     Mobile1,
     Mobile2,
     Mobile3,
+    Mobile4,
+    Mobile5,
+    Email1,
+    Email2,
     Fax,
-    Email,
     Website,
     Openingbalance,
     Name,
     Designation,
-    Remarks,
+    Mobile1c,
+    Mobile2c,
     Remarks1,
     Remarks2,
+    Remarks3,
   } = req.body;
 
-  const { Partyid } = req.params;
-
   const query = `UPDATE customer SET 
-    Partyname = ?, Address1 = ?, Address2 = ?, Landmark = ?, State = ?, Pincode = ?, City = ?, District = ?,
-    Printname = ?, Landline1 = ?, Landline2 = ?, Landline3 = ?, Mobile1 = ?, Mobile2 = ?, Mobile3 = ?,
-    Fax = ?, Email = ?, Website = ?, Openingbalance = ?, Name = ?, Designation = ?, Remarks = ?, Remarks1 = ?, Remarks2 = ?
-  WHERE Partyid = ?`;
+    Partyname = ?, Address1 = ?, Address2 = ?, Landmark = ?, State = ?, Pincode = ?, 
+    City = ?, District = ?, Printname = ?, Landline1 = ?, Mobile1 = ?, Mobile2 = ?, 
+    Mobile3 = ?, Mobile4 = ?, Mobile5 = ?, Email1 = ?, Email2 = ?, Fax = ?, Website = ?, 
+    Openingbalance = ?, Name = ?, Designation = ?,Mobile1c = ?,Mobile2c = ?, Remarks1 = ?, Remarks2 = ?, Remarks3 = ? 
+    WHERE Partyid = ?`;
 
   const values = [
     Partyname,
@@ -136,20 +141,23 @@ const updateCustomer = (req, res) => {
     District,
     Printname,
     Landline1,
-    Landline2,
-    Landline3,
     Mobile1,
     Mobile2,
     Mobile3,
+    Mobile4,
+    Mobile5,
+    Email1,
+    Email2,
     Fax,
-    Email,
     Website,
     Openingbalance,
     Name,
     Designation,
-    Remarks,
+    Mobile1c,
+    Mobile2c,
     Remarks1,
     Remarks2,
+    Remarks3,
     Partyid,
   ];
 
@@ -158,12 +166,15 @@ const updateCustomer = (req, res) => {
       console.error("Error updating data:", err);
       return res.status(500).json({ message: "Error updating data" });
     }
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Customer not found" });
     }
-    res.status(200).json({ message: "Customer updated successfully" });
+
+    res.json({ message: "Customer updated successfully" });
   });
 };
+
 const deleteCustomer = (req, res) => {
   const { Partyid } = req.params;
 
