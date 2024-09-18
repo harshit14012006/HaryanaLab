@@ -947,13 +947,13 @@ const CustomerForm = () => {
                   {filteredData.map((row, index) => (
                     <tr
                       key={index}
-                      className="border-b border-gray-300 hover:bg-gray-100"
+                      className="border-b border-gray-300 transition-all hover:bg-blue-400 hover:text-white"
                       onClick={() => HandleClick(row)}
                     >
                       {headers.map((header, index) => (
                         <td
                           key={index}
-                          className="px-4 py-2 text-sm border-gray-300 whitespace-nowrap"
+                          className="px-4 py-2 text-sm border-gray-300 whitespace-nowrap border-2"
                           style={{ fontSize: "13px", fontWeight: "normal" }}
                         >
                           {row[header]}
