@@ -4,65 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort, faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
 const headers = [
-  "Partyid",
-  "Partyname",
-  "Address1",
-  "Address2",
-  "Landmark",
-  "State",
-  "Pincode",
-  "City",
-  "District",
-  "Printname",
-  "Landline1",
-  "Landline2",
-  "Landline3",
-  "Mobile1",
-  "Mobile2",
-  "Mobile3",
-  "Fax",
-  "Email",
-  "Website",
-  "Openingbalance",
-  "Name",
-  "Designation",
-  "Remarks",
-  "Remarks1",
-  "Remarks2",
+  "Partyid", "Partyname", "Address1", "Address2", "Landmark", "State", "Pincode", "City", "District",
+  "Printname", "Landline1", "Landline2", "Landline3", "Mobile1", "Mobile2", "Mobile3", "Fax",
+  "Email", "Website", "Openingbalance", "Name", "Designation", "Remarks", "Remarks1", "Remarks2"
 ];
 
 const CustomerForm = () => {
   const [dataa, getdata] = useState([]);
-  const [StateCity, setStateCity] = useState([]);
+  const [StateCity, setStateCity] = useState([]); // Initialize as an empty array
   const [Update, setUpdate] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCity, setSelectedCity] = useState(""); // State for city filter
+  const [selectedCity, setSelectedCity] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [formdata, setFormdata] = useState({
-    Partyname: "",
-    Address1: "",
-    Address2: "",
-    Landmark: "",
-    State: "",
-    Pincode: "",
-    City: "",
-    District: "",
-    Printname: "",
-    Landline1: "",
-    Mobile1: "",
-    Mobile2: "",
-    Mobile3: "",
-    Mobile4: "",
-    Mobile5: "",
-    Fax: "",
-    Email: "",
-    Website: "",
-    Openingbalance: "",
-    Name: "",
-    Designation: "",
-    Remarks: "",
-    Remarks1: "",
-    Remarks2: "",
+    Partyname: "", Address1: "", Address2: "", Landmark: "", State: "", Pincode: "", City: "",
+    District: "", Printname: "", Landline1: "", Mobile1: "", Mobile2: "", Mobile3: "", Fax: "",
+    Email: "", Website: "", Openingbalance: "", Name: "", Designation: "", Remarks: "", Remarks1: "", Remarks2: ""
   });
 
   useEffect(() => {
@@ -71,19 +28,27 @@ const CustomerForm = () => {
 
   const FetchData = () => {
     try {
-      axios
-        .get("http://localhost:3001/api/customers")
+      axios.get("http://localhost:3001/api/customers")
         .then((response) => {
-          getdata(response.data);
+          // Check if the response data is an array
+          if (Array.isArray(response.data)) {
+            getdata(response.data);
+          } else {
+            getdata([]); // Set to an empty array if the data is not as expected
+          }
         })
         .catch((error) => {
           console.error("There was an error fetching the data!", error);
         });
 
-      axios
-        .get("http://localhost:3001/api/mastercity")
+      axios.get("http://localhost:3001/api/mastercity")
         .then((response) => {
-          setStateCity(response.data);
+          // Check if the response data is an array
+          if (Array.isArray(response.data)) {
+            setStateCity(response.data);
+          } else {
+            setStateCity([]); // Set to an empty array if the data is not as expected
+          }
         })
         .catch((error) => {
           console.error("There was an error fetching the data!", error);
@@ -98,10 +63,7 @@ const CustomerForm = () => {
     const sortedData = [...dataa].sort((a, b) => {
       const nameA = a["Name"].toLowerCase();
       const nameB = b["Name"].toLowerCase();
-
-      return newSortOrder === "asc"
-        ? nameA.localeCompare(nameB)
-        : nameB.localeCompare(nameA);
+      return newSortOrder === "asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
     });
     getdata(sortedData);
     setSortOrder(newSortOrder);
@@ -127,16 +89,15 @@ const CustomerForm = () => {
 
   const handleDelete = () => {
     try {
-      axios
-        .delete(`http://localhost:3001/api/customers/${Update.Partyid}`)
+      axios.delete(`http://localhost:3001/api/customers/${Update.Partyid}`)
         .then((response) => {
           console.log("Data Deleted successfully:", response.data);
+          FetchData(); // Refresh data after delete
         })
         .catch((error) => {
           console.error("There was an error Deleting the data!", error);
         });
       setUpdate([]);
-      FetchData();
     } catch (error) {
       console.log("Error deleting data:", error);
     }
@@ -144,41 +105,19 @@ const CustomerForm = () => {
 
   const HandleAddData = () => {
     try {
-      axios
-        .post("http://localhost:3001/api/customers", formdata)
+      axios.post("http://localhost:3001/api/customers", formdata)
         .then((response) => {
           console.log("Data submitted successfully:", response.data);
+          FetchData(); // Refresh data after adding
+          setFormdata({
+            Partyname: "", Address1: "", Address2: "", Landmark: "", State: "", Pincode: "", City: "",
+            District: "", Printname: "", Landline1: "", Mobile1: "", Mobile2: "", Mobile3: "", Fax: "",
+            Email: "", Website: "", Openingbalance: "", Name: "", Designation: "", Remarks: "", Remarks1: "", Remarks2: ""
+          });
         })
         .catch((error) => {
           console.error("There was an error submitting the data!", error);
         });
-      FetchData();
-      setFormdata({
-        Partyname: "",
-        Address1: "",
-        Address2: "",
-        Landmark: "",
-        State: "",
-        Pincode: "",
-        City: "",
-        District: "",
-        Printname: "",
-        Landline1: "",
-        Mobile1: "",
-        Mobile2: "",
-        Mobile3: "",
-        Mobile4: "",
-        Mobile5: "",
-        Fax: "",
-        Email: "",
-        Website: "",
-        Openingbalance: "",
-        Name: "",
-        Designation: "",
-        Remarks: "",
-        Remarks1: "",
-        Remarks2: "",
-      });
     } catch (error) {
       console.log("Error adding data:", error);
     }
@@ -186,42 +125,20 @@ const CustomerForm = () => {
 
   const HandleUpdate = () => {
     try {
-      axios
-        .put(`http://localhost:3001/api/customers/${Update.Partyid}`, formdata)
+      axios.put(`http://localhost:3001/api/customers/${Update.Partyid}`, formdata)
         .then((response) => {
           console.log("Data updated successfully:", response.data);
+          FetchData(); // Refresh data after update
+          setFormdata({
+            Partyname: "", Address1: "", Address2: "", Landmark: "", State: "", Pincode: "", City: "",
+            District: "", Printname: "", Landline1: "", Mobile1: "", Mobile2: "", Mobile3: "", Fax: "",
+            Email: "", Website: "", Openingbalance: "", Name: "", Designation: "", Remarks: "", Remarks1: "", Remarks2: ""
+          });
+          setUpdate([]);
         })
         .catch((error) => {
           console.error("There was an error updating the data!", error);
         });
-      setUpdate([]);
-      FetchData();
-      setFormdata({
-        Partyname: "",
-        Address1: "",
-        Address2: "",
-        Landmark: "",
-        State: "",
-        Pincode: "",
-        City: "",
-        District: "",
-        Printname: "",
-        Landline1: "",
-        Mobile1: "",
-        Mobile2: "",
-        Mobile3: "",
-        Mobile4: "",
-        Mobile5: "",
-        Fax: "",
-        Email: "",
-        Website: "",
-        Openingbalance: "",
-        Name: "",
-        Designation: "",
-        Remarks: "",
-        Remarks1: "",
-        Remarks2: "",
-      });
     } catch (error) {
       console.log("Error updating data:", error);
     }
