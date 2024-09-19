@@ -157,13 +157,13 @@ const CreateItem = () => {
               <table className="min-w-full border border-black divide-y divide-gray-300">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black uppercase border border-black">
-                      Item ID
+                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black  border border-black">
+                      Item Id
                     </th>
-                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black uppercase border border-black">
+                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black  border border-black">
                       Item Name
                     </th>
-                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black uppercase border border-black">
+                    <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-black  border border-black">
                       Insert Date
                     </th>
                   </tr>

@@ -232,13 +232,13 @@ const MasterCity = () => {
               <table className="min-w-full border border-black divide-y divide-gray-300">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black  tracking-wider">
                       Item ID
                     </th>
-                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black  tracking-wider">
                       State
                     </th>
-                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="border border-black px-4 py-3 text-left text-xs font-medium text-black  tracking-wider">
                       City
                     </th>
                   </tr>
