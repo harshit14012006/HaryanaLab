@@ -895,78 +895,85 @@ const CustomerForm = () => {
 
       {/* Table Content */}
       <div className="pl-2 pr-4">
-        <fieldset className="p-1 border">
-          <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
-            Party Details
-          </legend>
-          <div className="container mx-auto">
-            <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px]">
-              <table className="bg-white border border-gray-300 table-auto">
-                <thead>
-                  <tr className="bg-gray-100 border-b border-gray-300">
-                    {headers.map((header, index) => (
-                      <th
-                        key={index}
-                        className="px-4 py-2 text-sm text-left border-gray-300 whitespace-nowrap"
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "normal",
-                          width: "100px",
-                        }}
-                        onClick={header === "Name" ? handleSort : undefined}
-                      >
-                        {header} {header === "Name" && getSortIcon()}
-                        {header === "Partyname" && (
-                          <input
-                            type="text"
-                            placeholder="Search"
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            className="w-20 px-2 py-1 ml-2 text-sm border rounded"
-                          />
-                        )}
-                        {header === "City" && (
-                          <select
-                            value={selectedCity}
-                            onChange={handleCityChange}
-                            className="w-12 py-1 ml-2 text-sm border rounded"
-                          >
-                            <option value="">All</option>
-                            {cityOptions.map((city, i) => (
-                              <option key={i} value={city}>
-                                {city}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((row, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-gray-300 transition-all hover:bg-blue-400 hover:text-white"
-                      onClick={() => HandleClick(row)}
+  <fieldset className="p-1 border">
+    <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
+      Party Details
+    </legend>
+    <div className="container mx-auto">
+      <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px]">
+        <table className="bg-white border border-gray-300 table-auto">
+          <thead>
+            <tr className="bg-gray-100 border-b border-gray-300">
+              {headers.map((header, index) => (
+                <th
+                  key={index}
+                  className="text-sm text-left border-gray-300 whitespace-nowrap"
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "normal",
+                    minWidth: "80px", // Set a minimum width for each cell
+                  }}
+                  onClick={header === "Name" ? handleSort : undefined}
+                >
+                  {header} {header === "Name" && getSortIcon()}
+                  {header === "Partyname" && (
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                      className="w-20 px-1 py-1 ml-2 text-sm border rounded"
+                    />
+                  )}
+                  {header === "City" && (
+                    <select
+                      value={selectedCity}
+                      onChange={handleCityChange}
+                      className="w-12 py-1 ml-2 text-sm border rounded"
                     >
-                      {headers.map((header, index) => (
-                        <td
-                          key={index}
-                          className="px-4 py-2 text-sm border-gray-300 whitespace-nowrap border-2"
-                          style={{ fontSize: "13px", fontWeight: "normal" }}
-                        >
-                          {row[header]}
-                        </td>
+                      <option value="">All</option>
+                      {cityOptions.map((city, i) => (
+                        <option key={i} value={city}>
+                          {city}
+                        </option>
                       ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </fieldset>
+                    </select>
+                  )}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((row, index) => (
+              <tr
+                key={index}
+                className="transition-all border-b border-gray-300 hover:bg-blue-400 hover:text-white"
+                onClick={() => HandleClick(row)}
+              >
+                {headers.map((header, index) => (
+                  <td
+                    key={index}
+                    className="text-sm border-2 border-gray-300 whitespace-nowrap"
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: "normal",
+                      minWidth: "80px", // Set a minimum width for each cell
+                    }}
+                  >
+                    {row[header]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div>
+  </fieldset>
+</div>
+
+
+
 
       {/* <div className="pl-2 pr-4">
       <fieldset className='p-1 border'>
