@@ -1,6 +1,9 @@
+
 import React from "react";
+
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 const CreateReport = () => {
+  
   const [formData, setFormData] = React.useState({
     sampleName: "",
     billedDate: "",
@@ -139,48 +142,60 @@ const CreateReport = () => {
               </div>
             </div>
             <div className="h-12 p-4 mt-1 border border-gray-300">
-              <div className="flex space-x-4">
-                <div className="flex items-center">
-                  <label
-                    htmlFor="moisture"
-                    className="w-1/3 text-sm whitespace-nowrap"
-                  >
-                    Moisture
-                  </label>
-                  <input
-                    type="text"
-                    id="moisture"
-                    className="h-5 px-2 py-1 border w-28"
-                  />
-                  <span className="ml-1">%</span>
-                </div>
-                <div className="flex items-center pl-16 space-x-2">
-                  <label htmlFor="oil" className="w-1/3 text-sm">
-                    Oil
-                  </label>
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      id="oil"
-                      className="h-5 px-2 py-1 border w-28"
-                    />
-                    <span className="ml-1">%</span>
-                  </div>
-                </div>
+  <div className="flex space-x-4">
+    <div className="flex items-center">
+    <input
+  type="text"
+  id="editableNumber"
+  className="h-5 px-2 py-1 mr-4 border w-28"
+  defaultValue="Crude"
+/>
 
-                <div className="flex items-center pl-20 space-x-2">
-                  <label htmlFor="ffa" className="w-1/3 text-sm">
-                    FFA
-                  </label>
-                  <input
-                    type="text"
-                    id="ffa"
-                    className="h-5 px-2 py-1 border w-28" // Adjust the width here
-                  />
-                  <span className="ml-1">%</span>
-                </div>
-              </div>
-            </div>
+      <input
+        type="text"
+        id="editableNumber"
+        className="h-5 px-2 py-1 border w-28"
+      />
+    </div>
+    <div className="flex items-center pl-12">
+      <label htmlFor="moisture" className="text-sm whitespace-nowrap">
+        Moisture
+      </label>
+      <input
+        type="text"
+        id="moisture"
+        className="h-5 px-2 py-1 ml-2 border w-28"
+      />
+      <span className="ml-1">%</span>
+    </div>
+    <div className="flex items-center pl-16 space-x-2">
+      <label htmlFor="oil" className="text-sm">
+        Oil
+      </label>
+      <div className="flex items-center">
+        <input
+          type="text"
+          id="oil"
+          className="h-5 px-2 py-1 border w-28"
+        />
+        <span className="ml-1">%</span>
+      </div>
+    </div>
+    <div className="flex items-center pl-16 space-x-2">
+      <label htmlFor="ffa" className="text-sm">
+        FFA
+      </label>
+      <input
+        type="text"
+        id="ffa"
+        className="h-5 px-2 py-1 border w-28"
+      />
+      <span className="ml-1">%</span>
+    </div>
+  </div>
+</div>
+
+
 
             <div className="h-16 p-2 mt-1 border border-gray-300">
               <div className="flex flex-wrap -mx-4">
