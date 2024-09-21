@@ -209,14 +209,14 @@
         justify-content: center;
       }
       .imgsidebarnew1 {
-  width: 24px;
-  height: 519px;
-  float: left;
-  left: 26px;
-  margin-left: 2px;
-  margin-top: 2px;
-  border-radius: 5px; /* Adjust the value to control the roundness */
-}
+        width: 24px;
+        height: 519px;
+        float: left;
+        left: 26px;
+        margin-left: 2px;
+        margin-top: 2px;
+        border-radius: 5px; /* Adjust the value to control the roundness */
+      }
 
       .star1 {
         color: #fbbf24; /* Equivalent to text-yellow-400 */
@@ -544,15 +544,95 @@
 
       .textalign {
         position: absolute;
-        top: 28.3%;
-        left: 50%;
+        top: 28.1%;
+        left: 36%;
+        z-index: 1;
       }
       .textset {
         display: flex;
         flex-direction: row;
       }
-      /* .textdt {
-      } */
+      .inpfld {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+        text-align: center;
+        padding-right: 50px;
+        padding-left: 50px;
+      }
+      .selunsel {
+        position: absolute;
+        top: 28.1%;
+        left: 57.1%;
+      }
+      .inpfld2 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .dte {
+        position: absolute;
+        top: 32.5%;
+        left: 8.26%;
+      }
+      .inpfld3 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .ClientName {
+        position: absolute;
+        top: 32.5%;
+        left: 38%;
+      }
+      .inpfld4 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 130px;
+        padding-right: 130px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .Loc {
+        position: absolute;
+        top: 37.2%;
+        left: 9%;
+      }
+      .inpfld5 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 30px;
+        padding-right: 30px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .remks {
+        position: absolute;
+        top: 41.8%;
+        left: 12.5%;
+      }
+      .inpfld6 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        padding-left: 300px;
+        padding-right: 300px;
+        text-align: center;
+        font-size: 16px;
+        color: #812929;
+        font-family: Arial, sans-serif; /* Change the font family */
+      }
     </style>
   </head>
   <body>
@@ -641,7 +721,21 @@
                   <span class="spanblockExtra">
                     We hereby certify that the sample described as
                     ...........................................................................................
-                    <span class="textalign">Harshit singla</span>
+                    <!-- <span class="textalign">Harshit singla</span> -->
+                    <span class="textalign"
+                      ><input
+                        class="inpfld"
+                        type="text"
+                        disabled
+                        value="RICE BRAN"
+                    /></span>
+                    <span class="selunsel"
+                      ><input
+                        class="inpfld2"
+                        type="text"
+                        disabled
+                        value="UnSealed"
+                    /></span>
                     received by us
                   </span>
                 </div>
@@ -652,18 +746,37 @@
                       >on dt. ..............................................
                       From
                       Sh.M/s..........................................................................................................................
+                      <span class="dte"
+                        ><input
+                          class="inpfld3"
+                          type="text"
+                          disabled
+                          value="12-JUL-2024"
+                      /></span>
+                      <span class="ClientName"
+                        ><input
+                          class="inpfld4"
+                          type="text"
+                          disabled
+                          value="NARENDAR SIR"
+                      /></span>
                     </span>
                   </span>
                 </div>
                 <span class="spanblock">
                   ..............................................................................being
                   particular and result as under.
+                  <span class="Loc"
+                    ><input class="inpfld5" type="text" disabled value="SIRSA"
+                  /></span>
                   <span class="HARYANA">Sample Not Drawn by Haryana Lab</span>
                 </span>
                 <div class="textset">
                   <span class="spanblock">
                     Remarks...........................................................................................................................................................................................
-                    <span class="textalign"></span>
+                    <span class="remks"
+                      ><input type="text" disabled value="NA" class="inpfld6"
+                    /></span>
                   </span>
                 </div>
               </div>
@@ -741,7 +854,7 @@
                 A House For Analysis of Rice Bran, Oil Seeds, Oil Cakes, Atta,
                 Maida, Suzi, Besan, Spices, Condiments, Acids & Fertilizers.
               </div>
-              
+
               <div class="rightbar1">
                 <div class="top">Since</div>
 
