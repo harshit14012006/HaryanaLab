@@ -145,62 +145,69 @@ const CreateReport = () => {
               </div>
             </div>
             <div className="h-12 p-4 mt-1 border border-gray-300">
-      <div className="flex space-x-4">
-        <div className="flex items-center">
-          <input
-            type="text"
-            id="editableNumber"
-            className="h-5 px-2 py-1 mr-4 border w-28"
-            defaultValue="Crude"
-          />
-
-          <input
-            type="text"
-            id="editableNumber"
-            className="h-5 px-2 py-1 border w-28"
-          />
-        </div>
-        <div className="flex items-center pl-12">
-          <label htmlFor="moisture" className="text-sm whitespace-nowrap">
-            Moisture
-          </label>
-          <input
-            type="text"
-            id="moisture"
-            className="h-5 px-2 py-1 ml-2 border w-28"
-          />
-          <span className="ml-1">%</span>
-        </div>
-        <div className="flex items-center pl-16 space-x-2">
-          <label htmlFor="oil" className="text-sm">
-            Oil
-          </label>
-          <div className="flex items-center">
-            <input
-              type="text"
-              id="oil"
-              className="h-5 px-2 py-1 border w-28"
-            />
-            <span className="ml-1">%</span>
-          </div>
-        </div>
-        <div className="flex items-center pl-16 space-x-2">
-          <label htmlFor="ffa" className="text-sm">
-            FFA
-          </label>
-          <input
-            type="text"
-            id="ffa"
-            className="h-5 px-2 py-1 border w-28"
-            onChange={handleFfaChange}
-          />
-          <span className="ml-1">%</span>
-          {ffaTime && (
-            <span className="ml-4 text-sm text-gray-500">Entered at {ffaTime}</span>
-          )}
-        </div>
+  <div className="flex space-x-4">
+    <div className="flex items-center">
+      <input
+        type="text"
+        id="editableNumber"
+        className="h-5 px-2 py-1 mr-4 border w-28"
+        defaultValue="Crude"
+      />
+      <input
+        type="text"
+        id="editableNumber"
+        className="h-5 px-2 py-1 border w-28"
+      />
+    </div>
+    <div className="flex items-center pl-12">
+      <label htmlFor="moisture" className="text-sm whitespace-nowrap">
+        Moisture
+      </label>
+      <input
+        type="text"
+        id="moisture"
+        className="h-5 px-2 py-1 ml-2 border w-28"
+      />
+      <span className="ml-1">%</span>
+    </div>
+    <div className="flex items-center pl-16 space-x-2">
+      <label htmlFor="oil" className="text-sm">
+        Oil
+      </label>
+      <div className="flex items-center">
+        <input
+          type="text"
+          id="oil"
+          className="h-5 px-2 py-1 border w-28"
+        />
+        <span className="ml-1">%</span>
       </div>
     </div>
+    <div className="flex items-center pl-16 space-x-2">
+      <label htmlFor="ffa" className="text-sm">
+        FFA
+      </label>
+      <input
+        type="text"
+        id="ffa"
+        className="h-5 px-2 py-1 border w-28"
+      />
+      <span className="ml-1">%</span>
+    </div>
+    {/* Time label and input moved left */}
+    <div className="flex items-center pl-4 space-x-2">
+      <label htmlFor="time" className="text-sm">
+        Time
+      </label>
+      <input
+        type="text"
+        id="time"
+        className="h-5 px-2 py-1 border w-28"
+      />
+    </div>
+  </div>
+</div>
+
 
           <div className="h-16 p-2 mt-1 border border-gray-300">
             <div className="flex flex-wrap -mx-4">
