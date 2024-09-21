@@ -116,7 +116,7 @@ const cityPopup = () => {
 
 const createReportsAnalysisWindow = () => {
   const reportsAnalysisWindow = new BrowserWindow({
-    width: 1200,
+    width: 1250,
     height: 573,
     parent: mainWindow,
     modal: true,
