@@ -1,146 +1,85 @@
 import React, { useState } from "react";
 
 const headers = [
-  "Sample1",
-  "Sample2",
-  "Sample3",
-  "Sample4",
-  "Sample5",
-  "Sample6",
-  "Sample7",
-  "Sample8",
-  "Sample9",
-  "Sample10",
-  "Sample11",
+  "Sample Date",
+  "Report Number",
+  "Sample Number",
+  "Date Sample",
+  "Vehicle Number",
+  "Bags",
+  "Weight",
+  "Moisture",
+  "Oil",
+  "FFA",
+  "Unknown Test"
 ];
 
 const initialData = [
   {
-    Sample1: "Harshit",
-    Sample2: "12",
-    Sample3: "Sample Data 1",
-    Sample4: "Sample Data 2",
-    Sample5: "Sample Data 3",
-    Sample6: "Sample Data 4",
-    Sample7: "Sample Data 5",
+    "Sample Date": "2024-09-20",
+    "Report Number": "RPT-101",
+    "Sample Number": "SMP-001",
+    "Date Sample": "2024-09-19",
+    "Vehicle Number": "ABC-1234",
+    Bags: "25",
+    Weight: "500kg",
+    Moisture: "12%",
+    Oil: "3.5%",
+    FFA: "1.2%",
+    "Unknown Test": "Passed"
   },
   {
-    Sample1: "Beta Ltd",
-    Sample2: "868",
-    Sample3: "Floor 2",
-    Sample4: "Building B",
-    Sample5: "Opposite Beta Mall",
-    Sample6: "New York",
-    Sample7: "Sample Data 5",
+    "Sample Date": "2024-09-21",
+    "Report Number": "RPT-102",
+    "Sample Number": "SMP-002",
+    "Date Sample": "2024-09-20",
+    "Vehicle Number": "DEF-5678",
+    Bags: "30",
+    Weight: "600kg",
+    Moisture: "13%",
+    Oil: "3.8%",
+    FFA: "1.5%",
+    "Unknown Test": "Pending"
   },
   {
-    Sample1: "Gamma Inc.",
-    Sample2: "432",
-    Sample3: "Office Suite",
-    Sample4: "Building C",
-    Sample5: "Near Gamma Park",
-    Sample6: "Los Angeles",
-    Sample7: "Sample Data 5",
+    "Sample Date": "2024-09-22",
+    "Report Number": "RPT-103",
+    "Sample Number": "SMP-003",
+    "Date Sample": "2024-09-21",
+    "Vehicle Number": "GHI-9101",
+    Bags: "20",
+    Weight: "450kg",
+    Moisture: "11%",
+    Oil: "3.2%",
+    FFA: "1.0%",
+    "Unknown Test": "Failed"
   },
   {
-    Sample1: "Delta Corp.",
-    Sample2: "563",
-    Sample3: "Warehouse 4",
-    Sample4: "Sector A",
-    Sample5: "Delta Industrial Area",
-    Sample6: "Chicago",
-    Sample7: "Sample Data 5",
+    "Sample Date": "2024-09-23",
+    "Report Number": "RPT-104",
+    "Sample Number": "SMP-004",
+    "Date Sample": "2024-09-22",
+    "Vehicle Number": "JKL-2345",
+    Bags: "28",
+    Weight: "560kg",
+    Moisture: "12.5%",
+    Oil: "3.6%",
+    FFA: "1.4%",
+    "Unknown Test": "Passed"
   },
   {
-    Sample1: "Epsilon LLC",
-    Sample2: "789",
-    Sample3: "Showroom",
-    Sample4: "Commercial Plaza",
-    Sample5: "Opposite Epsilon Tower",
-    Sample6: "San Francisco",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Zeta Co.",
-    Sample2: "923",
-    Sample3: "Factory 5",
-    Sample4: "Sector Z",
-    Sample5: "Zeta Industrial Hub",
-    Sample6: "Houston",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Alpha Tech",
-    Sample2: "568",
-    Sample3: "Tech Park",
-    Sample4: "Building A",
-    Sample5: "Alpha Valley",
-    Sample6: "Austin",
-  },
-  {
-    Sample1: "Sigma Industries",
-    Sample2: "111",
-    Sample3: "Production Unit",
-    Sample4: "Industrial Zone",
-    Sample5: "Sigma Estate",
-    Sample6: "Boston",
-  },
-  {
-    Sample1: "Theta Enterprises",
-    Sample2: "643",
-    Sample3: "Corporate Office",
-    Sample4: "Tower 9",
-    Sample5: "Theta Business District",
-    Sample6: "Miami",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "kjj",
-    Sample2: "987",
-    Sample3: "h",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
+    "Sample Date": "2024-09-24",
+    "Report Number": "RPT-105",
+    "Sample Number": "SMP-005",
+    "Date Sample": "2024-09-23",
+    "Vehicle Number": "MNO-6789",
+    Bags: "35",
+    Weight: "700kg",
+    Moisture: "14%",
+    Oil: "3.9%",
+    FFA: "1.6%",
+    "Unknown Test": "Pending"
+  }
 ];
 
 const RecordReportWithoutSample = () => {
@@ -241,47 +180,47 @@ const RecordReportWithoutSample = () => {
               </div>
               {/* table grid */}
               <div className="relative overflow-x-auto overflow-y-auto h-[290px] w-[870px] mt-3">
-                <table className="min-w-full bg-white border border-gray-300 table-auto">
-                  <thead>
-                    <tr className="bg-gray-100 border-b border-gray-300">
-                      {headers.map((header, index) => (
-                        <th
-                          key={index}
-                          className="text-sm text-left border-gray-300 whitespace-nowrap"
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "normal",
-                            minWidth: "150px", // Set minimum width for headers
-                            width: "100px",
-                          }}
-                        >
-                          {header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((row, i) => (
-                      <tr
-                        key={i}
-                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-                      >
-                        {headers.map((header, j) => (
-                          <td
-                            key={j}
-                            className={`border-gray-300 border text-sm whitespace-nowrap ${
-                              j < headers.length - 1 ? "pr-0" : ""
-                            }`}
-                            style={{ minWidth: "150px" }} // Set minimum width for data cells
-                          >
-                            {row[header]}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+  <table className="min-w-full bg-white border border-gray-300 table-auto">
+    <thead>
+      <tr className="bg-gray-100 border-b border-gray-300">
+        {headers.map((header, index) => (
+          <th
+            key={index}
+            className="text-sm text-left border-gray-300 whitespace-nowrap"
+            style={{
+              fontSize: "13px",
+              fontWeight: "normal",
+              minWidth: "150px", // Set minimum width for headers
+              width: "100px",
+            }}
+          >
+            {header}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {initialData.map((row, i) => (
+        <tr
+          key={i}
+          className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+        >
+          {headers.map((header, j) => (
+            <td
+              key={j}
+              className={`border-gray-300 border text-sm whitespace-nowrap ${
+                j < headers.length - 1 ? "pr-0" : ""
+              }`}
+              style={{ minWidth: "150px" }} // Set minimum width for data cells
+            >
+              {row[header]}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
             </fieldset>
           </form>
         </div>

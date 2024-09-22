@@ -34,24 +34,6 @@ const CreateReport = () => {
     Remarks: "",
     Signature: "",
   });
-  //   setFormData({ ...formData, [event.target.name]: event.target.value });
-
-  //   const result =
-  //     event.target.name === "From" &&
-  //     customersbyname.find(
-  //       (person) =>
-  //         person.Name.toLowerCase() === event.target.value.toLowerCase()
-  //     );
-
-  //   // If a match is found, update the city state, otherwise clear it
-  //   if (result) {
-  //     console.log("Found");
-  //     setCity(result.City);
-  //     setFormData({ ...formData, Station: result.City });
-  //   } else {
-  //     console.log("not found");
-  //   }
-  // };
 
   const handleChange = (event) => {
     // Create a new object with the updated formData
@@ -123,42 +105,42 @@ const CreateReport = () => {
     formData.Reportno = id;
     console.log(formData);
 
-    // try {
-    //   axios
-    //     .post("http://localhost:3001/api/analysis", formData)
-    //     .then((response) => {
-    //       console.log("Data submitted successfully:", response.data);
-    //       ipcRenderer.send("open-lab-report", formData);
-    //       setFormData({
-    //         Reportno: 0,
-    //         Samplename: "NA",
-    //         Dated: "NA",
-    //         Selected: "Sealed",
-    //         From: "NA",
-    //         Billeddate: "NA",
-    //         Station: "NA",
-    //         Crude: "NA",
-    //         Moisture: "NA",
-    //         Oil: "NA",
-    //         FFA: "NA",
-    //         Code: "NA",
-    //         Date: "NA",
-    //         Vechileno: "NA",
-    //         Bags: "NA",
-    //         Weight: "NA",
-    //         Itemcategory: "Seal Engraved",
-    //         Remarks1: "NA",
-    //         Remarks2: "NA",
-    //         Remarks: "NA",
-    //         Signature: "NA",
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       console.error("There was an error submitting the data!", error);
-    //     });
-    // } catch (error) {
-    //   console.log("Error adding data:", error);
-    // }
+    try {
+      axios
+        .post("http://localhost:3001/api/analysis", formData)
+        .then((response) => {
+          console.log("Data submitted successfully:", response.data);
+          ipcRenderer.send("open-lab-report", formData);
+          setFormData({
+            Reportno: 0,
+            Samplename: "NA",
+            Dated: "NA",
+            Selected: "Sealed",
+            From: "NA",
+            Billeddate: "NA",
+            Station: "NA",
+            Crude: "NA",
+            Moisture: "NA",
+            Oil: "NA",
+            FFA: "NA",
+            Code: "NA",
+            Date: "NA",
+            Vechileno: "NA",
+            Bags: "NA",
+            Weight: "NA",
+            Itemcategory: "Seal Engraved",
+            Remarks1: "NA",
+            Remarks2: "NA",
+            Remarks: "NA",
+            Signature: "NA",
+          });
+        })
+        .catch((error) => {
+          console.error("There was an error submitting the data!", error);
+        });
+    } catch (error) {
+      console.log("Error adding data:", error);
+    }
 
     // Send the event to the main process
 
