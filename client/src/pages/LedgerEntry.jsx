@@ -1,96 +1,45 @@
 import React, { useState } from "react";
 
 const headers = [
-  "Sample1",
-  "Sample2",
-  "Sample3",
-  "Sample4",
-  "Sample5",
-  "Sample6"
+  "Entry date",
+  "Report Number",
+  "Amount",
+  "Remarks"
 ];
 
 const initialData = [
   {
-    Sample1: "Harshit",
-    Sample2: "12",
-    Sample3: "Sample Data 1",
-    Sample4: "Sample Data 2",
-    Sample5: "Sample Data 3",
-    Sample6: "Sample Data 4"
+    "Entry date": "2024-08-01",
+    "Report Number": "1001",
+    Amount: "-500",
+    Remarks: "Sample remark 1"
   },
   {
-    Sample1: "Beta Ltd",
-    Sample2: "868",
-    Sample3: "Floor 2",
-    Sample4: "Building B",
-    Sample5: "Opposite Beta Mall",
-    Sample6: "New York"
+    "Entry date": "2024-08-02",
+    "Report Number": "1002",
+    Amount: "-700",
+    Remarks: "Sample remark 2"
   },
   {
-    Sample1: "Gamma Inc.",
-    Sample2: "432",
-    Sample3: "Office Suite",
-    Sample4: "Building C",
-    Sample5: "Near Gamma Park",
-    Sample6: "Los Angeles"
+    "Entry date": "2024-08-03",
+    "Report Number": "1003",
+    Amount: "-300",
+    Remarks: "Sample remark 3"
   },
   {
-    Sample1: "Delta Corp.",
-    Sample2: "563",
-    Sample3: "Warehouse 4",
-    Sample4: "Sector A",
-    Sample5: "Delta Industrial Area",
-    Sample6: "Chicago"
+    "Entry date": "2024-08-04",
+    "Report Number": "1004",
+    Amount: "-600",
+    Remarks: "Sample remark 4"
   },
   {
-    Sample1: "Epsilon LLC",
-    Sample2: "789",
-    Sample3: "Showroom",
-    Sample4: "Commercial Plaza",
-    Sample5: "Opposite Epsilon Tower",
-    Sample6: "San Francisco"
-  },
-  {
-    Sample1: "Zeta Co.",
-    Sample2: "923",
-    Sample3: "Factory 5",
-    Sample4: "Sector Z",
-    Sample5: "Zeta Industrial Hub",
-    Sample6: "Houston"
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle"
-  },
-  {
-    Sample1: "Alpha Tech",
-    Sample2: "568",
-    Sample3: "Tech Park",
-    Sample4: "Building A",
-    Sample5: "Alpha Valley",
-    Sample6: "Austin"
-  },
-  {
-    Sample1: "Sigma Industries",
-    Sample2: "111",
-    Sample3: "Production Unit",
-    Sample4: "Industrial Zone",
-    Sample5: "Sigma Estate",
-    Sample6: "Boston"
-  },
-  {
-    Sample1: "Theta Enterprises",
-    Sample2: "643",
-    Sample3: "Corporate Office",
-    Sample4: "Tower 9",
-    Sample5: "Theta Business District",
-    Sample6: "Miami"
+    "Entry date": "2024-08-05",
+    "Report Number": "1005",
+    Amount: "-400",
+    Remarks: "Sample remark 5"
   }
 ];
+
 
 function LedgerEntry() {
   const [data, setData] = useState(initialData);
@@ -196,50 +145,46 @@ function LedgerEntry() {
             </div>
           </div>
 
-          <div>
-            <div className="container mx-auto">
-              <div className="relative overflow-x-auto overflow-y-auto h-[400px] w-[400px]">
-                <table className="bg-white border border-gray-300 table-auto">
-                  <thead>
-                    <tr className="bg-gray-100 border-b border-gray-300">
-                      {headers.map((header, index) => (
-                        <th
-                          key={index}
-                          className="text-sm text-left border-gray-300 whitespace-nowrap"
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "normal",
-                            width: "100px"
-                          }}
-                        >
-                          {header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((row, i) => (
-                      <tr
-                        key={i}
-                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-                      >
-                        {headers.map((header, j) => (
-                          <td
-                            key={j}
-                            className={`border-gray-300 border text-sm whitespace-nowrap ${
-                              j < headers.length - 1 ? "pr-0" : ""
-                            }`}
-                          >
-                            {row[header]}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+         
+  <div className="mx-auto">
+    <div className="relative overflow-x-auto overflow-y-auto h-[400px] w-[430px]">
+      <table className="bg-white border border-gray-300 table-auto">
+        <thead>
+          <tr className="bg-gray-100 border-b border-gray-300">
+            {headers.map((header, index) => (
+              <th
+                key={index}
+                className="text-sm text-left border-gray-300 whitespace-nowrap"
+                style={{
+                  fontSize: "13px",
+                  fontWeight: "normal",
+                  width: "100px"
+                }}
+              >
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {initialData.map((row, i) => (
+            <tr key={i}>
+              {headers.map((header, j) => (
+                <td
+                  key={j}
+                  className="border-gray-300 border text-sm whitespace-nowrap pr-4 transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                >
+                  {row[header]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+ 
+</div>
+
         </fieldset>
       </div>
     </div>
