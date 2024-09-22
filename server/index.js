@@ -52,14 +52,18 @@ app.put("/api/users/:id", updateUser);
 //Customer Api's
 app.post("/api/customers", customerController.createCustomer);
 app.get("/api/customers", customerController.getAllCustomers);
+app.get("/api/customersbyname", customerController.databyname);
 app.put("/api/customers/:Partyid", customerController.updateCustomer);
 app.delete("/api/customers/:Partyid", customerController.deleteCustomer);
 
 //Cashvouchers Api's
 app.post("/api/cashvoucher", cashVoucherController.createCashVoucher);
 app.get("/api/cashvouchers", cashVoucherController.getCashVouchers);
+
+//Analysis Api's
 app.post("/api/analysis", analysisController.createAnalysis);
-app.get("/api/analysis", analysisController.getAnalysisRecords);
+app.get("/api/analysis/:Reportno", analysisController.getAnalysis);
+app.get("/api/analysis", analysisController.getAnalysisnormal);
 app.post("/upload", upload.single("image"), saveImage);
 
 // Item Routes

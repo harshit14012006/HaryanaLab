@@ -141,14 +141,71 @@ const createReportsAnalysisWindow = () => {
 };
 
 // Handle opening the labreport.html file in a popup window
-ipcMain.on("open-lab-report", (event) => {
+// ipcMain.on("open-lab-report", (event, reportData) => {
+//   const labReportWindow = new BrowserWindow({
+//     width: 1200,
+//     height: 700,
+//     title: "Report Print", // Initial title
+//     webPreferences: {
+//       nodeIntegration: true,
+//       contextIsolation: false,
+//     },
+//     autoHideMenuBar: true,
+//   });
+
+//   // Correctly construct the path to the HTML file in the client/public directory
+//   const labReportPath = path.resolve(__dirname, "labreport.html");
+
+//   // Load the file
+//   labReportWindow
+//     .loadFile(labReportPath)
+//     .then(() => {
+//       // Set the title after the file has been loaded
+//       labReportWindow.setTitle("Report Print");
+//     })
+//     .catch((err) => console.log("Failed to load file:", err));
+//   labReportWindow.webContents.send("render-lab-report", reportData);
+// });
+
+// ipcMain.on("open-lab-report", (event, reportData) => {
+//   const labReportWindow = new BrowserWindow({
+//     width: 1200,
+//     height: 700,
+//     title: "Report Print",
+//     webPreferences: {
+//       nodeIntegration: true,
+//       contextIsolation: false, // Consider changing to true with preload.js for better security
+//     },
+//     autoHideMenuBar: true,
+//   });
+
+//   // Correctly construct the path to the HTML file in the client/public directory
+//   const labReportPath = path.resolve(__dirname, "labreport.html");
+
+//   // Load the file
+//   labReportWindow
+//     .loadFile(labReportPath)
+//     .then(() => {
+//       // Set the title after the file has been loaded
+//       labReportWindow.setTitle("Report Print");
+//     })
+//     .catch((err) => console.log("Failed to load file:", err));
+
+//   // Wait for the window to finish loading before sending the data
+//   labReportWindow.webContents.on("did-finish-load", () => {
+//     labReportWindow.webContents.send("render-lab-report", reportData);
+//   });
+// });
+
+ipcMain.on("open-lab-report", (event, reportData) => {
+  console.log(reportData);
   const labReportWindow = new BrowserWindow({
     width: 1200,
     height: 700,
-    title: "Report Print", // Initial title
+    title: "Report Print",
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      preload: path.join(__dirname, "preload.js"), // Use the preload file
+      contextIsolation: true, // Keep contextIsolation true for security
     },
     autoHideMenuBar: true,
   });
@@ -164,6 +221,11 @@ ipcMain.on("open-lab-report", (event) => {
       labReportWindow.setTitle("Report Print");
     })
     .catch((err) => console.log("Failed to load file:", err));
+
+  // Wait for the window to finish loading before sending the data
+  labReportWindow.webContents.on("did-finish-load", () => {
+    labReportWindow.webContents.send("render-lab-report", reportData);
+  });
 });
 
 const updateReportsAnalysisWindow = () => {

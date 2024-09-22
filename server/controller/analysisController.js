@@ -4,6 +4,7 @@ const db = require("../database/db");
 // Function to create a new analysis record
 const createAnalysis = (req, res) => {
   const {
+    Reportno,
     Samplename,
     Billeddate,
     Dated,
@@ -25,11 +26,19 @@ const createAnalysis = (req, res) => {
     Signature,
   } = req.body;
 
-  const query = `INSERT INTO analysis ( Samplename, Billeddate, Dated, Selected, \`From\`, Station,Crude, Moisture, Oil, FFA, \`Time\`,
-    Code, \`Date\`, Vechileno, Bags, Weight, Itemcategory, Remarks, Signature
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  // const query = `INSERT INTO analysis ( Samplename, Billeddate, Dated, Sealunseal, \`From\`, Station, Crude, Moisture, Oil, FFA, \`Time\`,
+  //   Code, \`Date\`, Vechileno, Bags, Weight, Itemcategory, Remarks, Signature
+  // ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  const query = `
+  INSERT INTO analysis (
+    Reportno, Samplename, Billeddate, Dated, Selected, \`From\`, Station, Crude, Moisture, Oil, FFA, \`Time\`,
+    Code, \`Date\`, Vechileno, Bags, Weight, Category, Remarks, Signature
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`;
 
   const values = [
+    Reportno,
     Samplename,
     Billeddate,
     Dated,
@@ -51,18 +60,19 @@ const createAnalysis = (req, res) => {
     Signature,
   ];
 
+  console.log(values);
+
   try {
     db.query(query, values, (err, result) => {
       if (err) {
         console.error("Error inserting data:", err);
         return res.status(500).json({ message: "Error inserting data" });
       }
-      res
-        .status(201)
-        .json({
-          message: "Analysis record created successfully",
-          id: result.insertId,
-        });
+      console.log("saved sucessfully");
+      res.status(201).json({
+        message: "Analysis record created successfully",
+        id: result.insertId,
+      });
       console.log(req.body);
     });
   } catch (error) {
@@ -79,6 +89,33 @@ const getAnalysis = (req, res) => {
     const query = `SELECT * FROM analysis WHERE Reportno = ?`;
 
     db.query(query, [Reportno], (err, results) => {
+      if (err) {
+        console.error("Error retrieving data:", err);
+        return res.status(500).json({ message: "Error retrieving data" });
+      }
+
+      if (results.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No records found for the given reportno" });
+      }
+
+      res
+        .status(200)
+        .json({ message: "Data retrieved successfully", data: results });
+    });
+  } catch (error) {
+    console.error("Internal server error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const getAnalysisnormal = (req, res) => {
+  try {
+    const query = `SELECT MAX(Reportno) AS Reportno FROM analysis;
+ `;
+
+    db.query(query, (err, results) => {
       if (err) {
         console.error("Error retrieving data:", err);
         return res.status(500).json({ message: "Error retrieving data" });
@@ -172,4 +209,9 @@ const updateAnalysis = (req, res) => {
   }
 };
 
-module.exports = { createAnalysis, getAnalysis, updateAnalysis };
+module.exports = {
+  createAnalysis,
+  getAnalysis,
+  updateAnalysis,
+  getAnalysisnormal,
+};

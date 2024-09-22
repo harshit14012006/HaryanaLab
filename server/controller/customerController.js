@@ -191,9 +191,26 @@ const deleteCustomer = (req, res) => {
     res.status(200).json({ message: "Customer deleted successfully" });
   });
 };
+const databyname = async (req, res) => {
+  try {
+    db.query("SELECT Name,City FROM customer", (err, results) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        res.status(500).send("Database query error");
+        return;
+      }
+      res.json(results); // Send the results as JSON response
+    });
+  } catch (error) {
+    console.error("Error fetching data by name:", error);
+    res.status(500).json({ error: "Database query error" });
+  }
+};
+
 module.exports = {
   createCustomer,
   getAllCustomers,
   updateCustomer,
   deleteCustomer,
+  databyname,
 };

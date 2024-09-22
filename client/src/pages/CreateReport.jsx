@@ -1,18 +1,24 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 const CreateReport = () => {
   const [ffaTime, setFfaTime] = useState(null);
-
+  const [sampleName, setSampleName] = useState(null);
+  const [customersbyname, setCustomersbyname] = useState(null);
+  const [City, setCity] = useState("");
+  const [id, setId] = useState(null);
   const handleFfaChange = (e) => {
     setFfaTime(new Date().toLocaleTimeString()); // Set the current time
   };
   const [formData, setFormData] = React.useState({
+    Reportno: 0,
     Samplename: "",
     Dated: "",
     Selected: "Sealed",
     From: "",
+    Billeddate: "",
     Station: "",
+    Time: "",
     Crude: "",
     Moisture: "",
     Oil: "",
@@ -23,17 +29,140 @@ const CreateReport = () => {
     Bags: "",
     Weight: "",
     Itemcategory: "Seal Engraved",
+    Remarks1: "",
+    Remarks2: "",
     Remarks: "",
     Signature: "",
   });
+  //   setFormData({ ...formData, [event.target.name]: event.target.value });
+
+  //   const result =
+  //     event.target.name === "From" &&
+  //     customersbyname.find(
+  //       (person) =>
+  //         person.Name.toLowerCase() === event.target.value.toLowerCase()
+  //     );
+
+  //   // If a match is found, update the city state, otherwise clear it
+  //   if (result) {
+  //     console.log("Found");
+  //     setCity(result.City);
+  //     setFormData({ ...formData, Station: result.City });
+  //   } else {
+  //     console.log("not found");
+  //   }
+  // };
 
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    // Create a new object with the updated formData
+    let newFormData = { ...formData, [event.target.name]: event.target.value };
+
+    const result =
+      event.target.name === "From" &&
+      customersbyname.find(
+        (person) =>
+          person.Name.toLowerCase() === event.target.value.toLowerCase()
+      );
+
+    if (result) {
+      console.log("Found");
+      setCity(result.City);
+      newFormData = { ...newFormData, Station: result.City }; // Update newFormData with Station
+    } else {
+      console.log("not found");
+    }
+
+    // Update formData once with the final values
+    setFormData(newFormData);
+  };
+
+  useEffect(() => {
+    FetchData();
+    getReportno();
+  }, []);
+
+  const FetchData = () => {
+    //Fetching Sample Name
+    axios
+      .get("http://localhost:3001/api/Item")
+      .then((response) => {
+        // console.log(response.data.id);
+        setSampleName(response.data.id);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+
+    //Fetching Customer data
+    axios
+      .get("http://localhost:3001/api/customersbyname")
+      .then((response) => {
+        // console.log(response.data);
+        setCustomersbyname(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  };
+
+  const getReportno = () => {
+    axios
+      .get("http://localhost:3001/api/analysis")
+      .then((response) => {
+        console.log(response.data.data[0].Reportno);
+        setId(response.data.data[0].Reportno + 1);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
   };
 
   const handleSaveAndPrint = () => {
+    formData.Remarks = `${formData.Remarks1} ${formData.Remarks2}`;
+    formData.Time = ffaTime.toString();
+    formData.Reportno = id;
+    console.log(formData);
+
+    // try {
+    //   axios
+    //     .post("http://localhost:3001/api/analysis", formData)
+    //     .then((response) => {
+    //       console.log("Data submitted successfully:", response.data);
+    //       ipcRenderer.send("open-lab-report", formData);
+    //       setFormData({
+    //         Reportno: 0,
+    //         Samplename: "NA",
+    //         Dated: "NA",
+    //         Selected: "Sealed",
+    //         From: "NA",
+    //         Billeddate: "NA",
+    //         Station: "NA",
+    //         Crude: "NA",
+    //         Moisture: "NA",
+    //         Oil: "NA",
+    //         FFA: "NA",
+    //         Code: "NA",
+    //         Date: "NA",
+    //         Vechileno: "NA",
+    //         Bags: "NA",
+    //         Weight: "NA",
+    //         Itemcategory: "Seal Engraved",
+    //         Remarks1: "NA",
+    //         Remarks2: "NA",
+    //         Remarks: "NA",
+    //         Signature: "NA",
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       console.error("There was an error submitting the data!", error);
+    //     });
+    // } catch (error) {
+    //   console.log("Error adding data:", error);
+    // }
+
     // Send the event to the main process
-    ipcRenderer.send("open-lab-report");
+
+    ipcRenderer.send("open-lab-report", formData);
   };
 
   return (
@@ -50,7 +179,7 @@ const CreateReport = () => {
                 type="number"
                 required
                 id="reportno"
-                defaultValue={1}
+                value={id}
                 disabled
                 className="w-40 h-5 border"
               />
@@ -66,11 +195,21 @@ const CreateReport = () => {
                     <select
                       id="samplename"
                       className="flex-grow h-5 px-2 border rounded"
+                      name="Samplename"
+                      onChange={handleChange}
                     >
                       <option value="">Select a sample</option>
-                      <option value="Sample 1">Sample 1</option>
+                      {sampleName &&
+                        sampleName.map((name) => {
+                          return (
+                            <option key={name.ID} value={name.ItemName}>
+                              {name.ItemName}
+                            </option>
+                          );
+                        })}
+                      {/* <option value="Sample 1">Sample 1</option>
                       <option value="Sample 2">Sample 2</option>
-                      <option value="Sample 3">Sample 3</option>
+                      <option value="Sample 3">Sample 3</option> */}
                       {/* Add more options as needed */}
                     </select>
                   </div>
@@ -84,6 +223,8 @@ const CreateReport = () => {
                       id="dated"
                       className="flex-grow h-5 px-2 py-1 border"
                       placeholder="Input 2"
+                      name="Dated"
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="flex items-center">
@@ -93,11 +234,23 @@ const CreateReport = () => {
                     <select
                       id="from"
                       className="flex-grow h-5 px-2 border rounded"
+                      name="From"
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
                     >
                       <option value="">Select an option</option>
-                      <option value="Option 1">Option 1</option>
+                      {customersbyname &&
+                        customersbyname.map((name, index) => {
+                          return (
+                            <option key={index} value={name.Name}>
+                              {name.Name}
+                            </option>
+                          );
+                        })}
+                      {/* <option value="Option 1">Option 1</option>
                       <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option value="Option 3">Option 3</option> */}
                       {/* Add more options as needed */}
                     </select>
                   </div>
@@ -127,7 +280,6 @@ const CreateReport = () => {
                       id="sealed-unsealed"
                       className="flex-grow h-5 px-2 border"
                       value="Selected"
-                      onChange={handleChange}
                     >
                       <option value="sealed">Sealed</option>
                       <option value="unsealed">Unsealed</option>
@@ -143,6 +295,7 @@ const CreateReport = () => {
                       id="input6"
                       disabled
                       className="flex-grow h-5 px-2 py-1 border"
+                      value={City}
                     />
                   </div>
                 </div>
@@ -163,6 +316,8 @@ const CreateReport = () => {
                   type="text"
                   id="editableNumber"
                   className="h-5 px-2 py-1 border w-28"
+                  name="Crude"
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex items-center pl-12">
@@ -173,6 +328,8 @@ const CreateReport = () => {
                   type="text"
                   id="moisture"
                   className="h-5 px-2 py-1 ml-2 border w-28"
+                  name="Moisture"
+                  onChange={handleChange}
                 />
                 <span className="ml-1">%</span>
               </div>
@@ -185,6 +342,8 @@ const CreateReport = () => {
                     type="text"
                     id="oil"
                     className="h-5 px-2 py-1 border w-28"
+                    name="Oil"
+                    onChange={handleChange}
                   />
                   <span className="ml-1">%</span>
                 </div>
@@ -197,7 +356,11 @@ const CreateReport = () => {
                   type="text"
                   id="ffa"
                   className="h-5 px-2 py-1 border w-28"
-                  onChange={handleFfaChange}
+                  name="FFA"
+                  onChange={(e) => {
+                    handleFfaChange();
+                    handleChange(e);
+                  }}
                 />
                 <span className="ml-1">%</span>
                 {ffaTime && (
@@ -223,6 +386,8 @@ const CreateReport = () => {
                   type="text"
                   id="sampleNo"
                   className="w-full h-5 px-2 py-1 border"
+                  name="Code"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -238,6 +403,8 @@ const CreateReport = () => {
                   type="text"
                   id="date"
                   className="w-full h-5 px-2 py-1 border"
+                  name="Date"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -253,6 +420,8 @@ const CreateReport = () => {
                   type="text"
                   id="vehicleNo"
                   className="w-full h-5 px-2 py-1 border"
+                  name="Vechileno"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -268,6 +437,8 @@ const CreateReport = () => {
                   type="number"
                   id="bags"
                   className="w-full h-5 px-2 py-1 border"
+                  name="Bags"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -283,6 +454,8 @@ const CreateReport = () => {
                   type="text"
                   id="weight"
                   className="w-full h-5 px-2 py-1 border"
+                  name="Weight"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -293,6 +466,8 @@ const CreateReport = () => {
               <select
                 id="sealed-unsealed"
                 className="flex-grow h-5 px-2 border"
+                name="Itemcategory"
+                onChange={handleChange}
               >
                 <option value="sealed">Seal Engraved</option>
                 <option value="unsealed">Buyer</option>
@@ -309,7 +484,7 @@ const CreateReport = () => {
                 type="text"
                 id="space"
                 className="w-full h-5 px-2 py-1 border"
-                value="Remarks"
+                name="Remarks1"
                 onChange={handleChange}
               />
             </div>
@@ -325,7 +500,7 @@ const CreateReport = () => {
                 type="text"
                 id="space2"
                 className="w-full h-5 px-2 py-1 border"
-                value="Remarks"
+                name="Remarks2"
                 onChange={handleChange}
               />
             </div>

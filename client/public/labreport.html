@@ -496,6 +496,11 @@
         margin-left: 0.25rem /* 4px */;
         background-color: white;
         border-radius: 0.375rem /* 6px */;
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+        font-weight: bold;
       }
 
       .spandt {
@@ -509,6 +514,11 @@
         margin-left: 0.5rem /* 4px */;
         background-color: white;
         border-radius: 0.375rem /* 6px */;
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 14px; /* Change the font size */
+        color: #812929; /* Change the font color */
+        font-weight: bold;
       }
 
       .spanblock {
@@ -633,6 +643,42 @@
         color: #812929;
         font-family: Arial, sans-serif; /* Change the font family */
       }
+
+      #Sign {
+        width: 81%;
+      }
+
+      .star1 {
+        color: #fbbf24; /* Equivalent to text-yellow-400 */
+        font-size: 0.75rem; /* Equivalent to text-xs */
+      }
+
+      .star2 {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .star3 {
+        position: absolute;
+        right: -1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fbbf24; /* Equivalent to text-yellow-400 */
+        font-size: 0.75rem; /* Equivalent to text-xs */
+      }
+
+      .star22 {
+        position: absolute;
+        left: -1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fbbf24; /* Equivalent to text-yellow-400 */
+        font-size: 0.75rem; /* Equivalent to text-xs */
+      }
     </style>
   </head>
   <body>
@@ -707,11 +753,11 @@
                 <div class="infodt">
                   <div class="infodtpart2">
                     <span class="NOO">No.</span>
-                    <input type="text" class="inputfield" />
+                    <input type="text" class="inputfield" id="Repno" readonly />
                   </div>
                   <div class="infodtpart2">
                     <span class="spandt">Dt.</span>
-                    <input type="text" class="extra" />
+                    <input type="text" class="extra" id="BilDate" readonly />
                   </div>
                 </div>
               </div>
@@ -723,18 +769,10 @@
                     ...........................................................................................
                     <!-- <span class="textalign">Harshit singla</span> -->
                     <span class="textalign"
-                      ><input
-                        class="inpfld"
-                        type="text"
-                        disabled
-                        value="RICE BRAN"
+                      ><input class="inpfld" type="text" disabled id="inpfld"
                     /></span>
                     <span class="selunsel"
-                      ><input
-                        class="inpfld2"
-                        type="text"
-                        disabled
-                        value="UnSealed"
+                      ><input class="inpfld2" type="text" disabled id="inpfld2"
                     /></span>
                     received by us
                   </span>
@@ -751,7 +789,7 @@
                           class="inpfld3"
                           type="text"
                           disabled
-                          value="12-JUL-2024"
+                          id="inpfld3"
                       /></span>
                       <span class="ClientName"
                         ><input
@@ -759,6 +797,7 @@
                           type="text"
                           disabled
                           value="NARENDAR SIR"
+                          id="inpfld4"
                       /></span>
                     </span>
                   </span>
@@ -767,7 +806,7 @@
                   ..............................................................................being
                   particular and result as under.
                   <span class="Loc"
-                    ><input class="inpfld5" type="text" disabled value="SIRSA"
+                    ><input class="inpfld5" type="text" disabled id="inpfld5"
                   /></span>
                   <span class="HARYANA">Sample Not Drawn by Haryana Lab</span>
                 </span>
@@ -775,7 +814,7 @@
                   <span class="spanblock">
                     Remarks...........................................................................................................................................................................................
                     <span class="remks"
-                      ><input type="text" disabled value="NA" class="inpfld6"
+                      ><input type="text" disabled class="inpfld6" id="inpfld6"
                     /></span>
                   </span>
                 </div>
@@ -786,19 +825,19 @@
                   <div>
                     <span class="spantext">Moisture</span>
 
-                    <span class="leftmar">NA</span>
+                    <span class="leftmar" id="Moist"></span>
                   </div>
                 </div>
                 <div class="imptext">
                   <div>
                     <span class="spantext">Oil</span>
-                    <span class="leftmar">NA</span>
+                    <span class="leftmar" id="Oil"></span>
                   </div>
                 </div>
                 <div class="imptext">
                   <div>
                     <span class="spantext">FFA</span>
-                    <span class="leftmar">NA</span>
+                    <span class="leftmar" id="FFA"></span>
                   </div>
                 </div>
               </div>
@@ -808,27 +847,27 @@
                 <!-- Existing Columns -->
                 <div class="bottomText">
                   <p class="para">Code/Sample No.</p>
-                  <p class="marg">13A</p>
+                  <p class="marg" id="Code"></p>
                 </div>
 
                 <div class="bottombox">
                   <p class="para">Date</p>
-                  <p class="marg">12/12/24</p>
+                  <p class="marg" id="Date"></p>
                 </div>
 
                 <div class="bottombox">
                   <p class="para">Vehicle No.</p>
-                  <p class="marg">2346</p>
+                  <p class="marg" id="VehNo"></p>
                 </div>
 
                 <div class="bottombox">
                   <p class="para">Bags</p>
-                  <p class="marg">234</p>
+                  <p class="marg" id="Bags"></p>
                 </div>
 
                 <div class="bottombox1">
                   <p class="para">Weight (Ql.)</p>
-                  <p class="marg">123.46</p>
+                  <p class="marg" id="Weight"></p>
                 </div>
 
                 <div class="remark">
@@ -836,7 +875,9 @@
                   <p class="description">
                     All disputes are subject to SRSA jurisdiction
                   </p>
-                  <p class="imageofsign">[Signature Image]</p>
+                  <p class="imageofsign">
+                    <img src="" alt="Sign" id="Sign" />
+                  </p>
                   <p class="distributionText">
                     Samples will be destroyed after function.
                   </p>
@@ -846,7 +887,7 @@
               <div class="whatisthat">
                 <!-- Seal Engraved -->
                 <div class="namelast">
-                  <p class="testseal">Seal Engraved</p>
+                  <p class="testseal" id="Category"></p>
                   <p class="sealimg">[Seal Image]</p>
                 </div>
               </div>
@@ -882,6 +923,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
+      let Data = null;
       document.getElementById("downloadBtn").addEventListener("click", () => {
         // Ensure jsPDF is available in the scope
         const { jsPDF } = window.jspdf;
@@ -908,93 +950,107 @@
           pdf.save("complex-design.pdf");
         });
       });
+      window.addEventListener("DOMContentLoaded", () => {
+        window.ipcRenderer.on("render-lab-report", (event, reportData) => {
+          Data = reportData;
+          console.log(Data);
+          let BillDate = document.getElementById("BilDate");
+          const Rep = document.getElementById("Repno");
+          const A = Data.Billeddate;
+          if (A !== undefined) BillDate.value = A;
+          else console.log("Error hai bhai koi ");
+          if (Rep) Rep.value = Data.Reportno;
+          else console.error("Repno element not found in the DOM.");
+          document.getElementById("inpfld").value = Data.Samplename;
+          document.getElementById("inpfld2").value = Data.Selected;
+          document.getElementById("inpfld3").value = Data.Dated;
+          document.getElementById("inpfld4").value = Data.From;
+          document.getElementById("inpfld5").value = Data.Station;
+          document.getElementById("inpfld6").value = Data.Remarks.trim().length
+            ? "NAHhhh"
+            : "NA";
+          document.getElementById("Moist").innerHTML = Data.Moisture;
+          document.getElementById("Oil").innerHTML = Data.Oil;
+          document.getElementById("FFA").innerHTML = Data.FFA;
+          document.getElementById("Code").innerHTML = Data.Code;
+          document.getElementById("Date").innerHTML = Data.Date;
+          document.getElementById("VehNo").innerHTML = Data.Vechileno;
+          document.getElementById("Bags").innerHTML = Data.Bags;
+          document.getElementById("Weight").innerHTML = Data.Weight;
+          document.getElementById("Category").innerHTML = Data.Itemcategory;
+          document.getElementById("Sign").src =
+            Data.Signature === "signature1"
+              ? "./Sign1.png"
+              : Data.Signature === "signature2"
+              ? "./Sign2.png"
+              : "./Sign3.jpg";
 
-      // document.getElementById("downloadBtn").addEventListener("click", () => {
-      //   alert("Download Openn");
-      //   const { jsPDF } = window.jspdf;
+          // const digits = `${Data.Moisture}${Data.Oil}${Data.FFA}`.split("");
+          const moisture = 111;
+          const oil = 148;
+          const ffa = 329;
+          const digits = `${moisture}${oil}${ffa}`.split("");
+          // Function to count the occurrences of each digit
+          const countOccurrences = (digit) =>
+            digits.filter((d) => d === String(digit)).length;
 
-      //   html2canvas(document.getElementById("content")).then((canvas) => {
-      //     const imgData = canvas.toDataURL("image/png");
-      //     const pdf = new jsPDF("p", "mm", "a4");
-      //     const imgWidth = 210; // A4 width in mm
-      //     const pageHeight = 295; // A4 height in mm
-      //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      //     let heightLeft = imgHeight;
-      //     let position = 0;
+          // Get all the boxes
+          const boxes = document.querySelectorAll(".box");
 
-      //     // Rotate PDF page by 90 degrees
-      //     pdf.rotate(90, { origin: [105, 148] }); // Adjust origin if needed
+          // Loop through each box and update content based on countOccurrences
+          boxes.forEach((box) => {
+            const digit = box.textContent.trim(); // Get the digit from the box
+            const count = countOccurrences(digit); // Get the count of this digit
+            const starsArray = Array(count).fill("★"); // Create stars array
 
-      //     pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      //     heightLeft -= pageHeight;
+            // Clear existing content of the box
+            box.innerHTML = "";
 
-      //     while (heightLeft >= 0) {
-      //       position = heightLeft - imgHeight;
-      //       pdf.addPage();
-      //       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      //       heightLeft -= pageHeight;
-      //     }
+            // Top stars (max 5)
+            const star1 = document.createElement("div");
+            star1.className = "star1";
+            starsArray.slice(0, 5).forEach((star) => {
+              const span = document.createElement("span");
+              span.textContent = star;
+              star1.appendChild(span);
+            });
+            box.appendChild(star1);
 
-      //     pdf.save("complex-design.pdf");
-      //   });
-      // });
+            // Container for side stars and digit
+            const star2 = document.createElement("div");
+            star2.className = "star2";
 
-      //Attemp 3
-      // document.getElementById("downloadBtn").addEventListener("click", () => {
-      //   alert("Download Open");
+            // Left stars (6-7)
+            const star22 = document.createElement("div");
+            star22.className = "star22";
+            starsArray.slice(5, 7).forEach((star) => {
+              const div = document.createElement("div");
+              div.textContent = star;
+              star22.appendChild(div);
+            });
+            star2.appendChild(star22);
 
-      //   const { jsPDF } = window.jspdf;
+            // Right stars (8-9)
+            const star3 = document.createElement("div");
+            star3.className = "star3";
+            starsArray.slice(7, 9).forEach((star) => {
+              const div = document.createElement("div");
+              div.textContent = star;
+              star3.appendChild(div);
+            });
+            star2.appendChild(star3);
 
-      //   html2canvas(document.getElementById("content"))
-      //     .then((canvas) => {
-      //       const imgData = canvas.toDataURL("image/png");
-      //       const pdf = new jsPDF("p", "mm", "a4");
-      //       const imgWidth = 210; // A4 width in mm
-      //       const pageHeight = 295; // A4 height in mm
-      //       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      //       let heightLeft = imgHeight;
-      //       let position = 0;
+            // Digit in the center
+            const digitText = document.createElement("div");
+            digitText.className = "text-base";
+            digitText.textContent = digit;
+            star2.appendChild(digitText);
 
-      //       // Rotate the content by 90 degrees
-      //       // Note: This is a workaround; you need to adjust the coordinates
-      //       pdf.addImage(
-      //         imgData,
-      //         "PNG",
-      //         0,
-      //         position,
-      //         imgWidth,
-      //         imgHeight,
-      //         undefined,
-      //         "NONE",
-      //         90
-      //       );
-
-      //       heightLeft -= pageHeight;
-
-      //       while (heightLeft >= 0) {
-      //         position = heightLeft - imgHeight;
-      //         pdf.addPage();
-      //         pdf.addImage(
-      //           imgData,
-      //           "PNG",
-      //           0,
-      //           position,
-      //           imgWidth,
-      //           imgHeight,
-      //           undefined,
-      //           "NONE",
-      //           90
-      //         );
-      //         heightLeft -= pageHeight;
-      //       }
-
-      //       pdf.save("complex-design.pdf");
-      //     })
-      //     .catch((error) => {
-      //       console.error("Error generating PDF:", error);
-      //     });
-      // });
+            // Append star2 to the box
+            box.appendChild(star2);
+          });
+        });
+      });
     </script>
-     
   </body>
 </html>
