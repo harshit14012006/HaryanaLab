@@ -211,7 +211,7 @@ const RecordReportWithoutSample = () => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="SampleName"
-                            className="mb-2 font-medium "
+                            className="mb-2 font-medium"
                           >
                             Sample Name
                           </label>

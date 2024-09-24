@@ -1,79 +1,101 @@
-
 const db = require('../database/db');
-exports.getAllUsers = (req, res) => {
-const sqlQuery = 'SELECT * FROM person';
- db.query(sqlQuery, (err, results) => {
-    if (err) {
-      console.error('Error executing query:', err);
-      res.status(500).send('Database query error');
-      return;
-    }
-    res.json(results);  // Send the results as JSON response
-  });
-};
-exports.addUser = (req, res) => {
-  const { Date,PartyName,Reportno,Amount,Remarks } = req.body;
-  if (!Date || !PartyName || !Reportno || !Amount ||!Remarks) {
-    return res.status(400).json({ error: 'All fields of required' });
-  }
-  const sqlQuery = 'INSERT INTO person (Date,PartyName,ReportNo,Amount,Remarks) VALUES (?,?,?,?,?)';
 
-  db.query(sqlQuery, [Date,PartyName,Reportno,Amount,Remarks], (err, result) => {
-    if (err) {
-      console.error('Error inserting user:', err);
-      res.status(500).send('Database insert error');
-      return;
-    }
 
-    res.status(201).json({
-      message: 'User added successfully',
-      userId: result.insertId,  
+exports.getAllUsers = async (req, res) => {
+  try {
+    const sqlQuery = 'SELECT * FROM ledger';
+    db.query(sqlQuery, (err, results) => {
+      if (err) {
+        console.error('Error executing query:', err);
+        return res.status(500).send('Database query error');
+      }
+      res.json(results);  // Send the results as JSON response
     });
-  });
-};
-exports.deleteUser = (req, res) => {
-  const { Reportno } = req.params;
-
-  if (!Reportno) {
-    return res.status(400).json({ error: 'Report number is required' });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).send('Server error');
   }
-
-  const sqlQuery = 'DELETE FROM person WHERE Reportno = ?';
-
-  db.query(sqlQuery, [Reportno], (err, result) => {
-    if (err) {
-      console.error('Error deleting user:', err);
-      return res.status(500).json({ error: 'Database delete error' });
-    }
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    return res.status(200).json({ message: 'User deleted successfully' });
-  });
 };
 
-exports.updateUser = (req, res) => {
-  const { id } = req.params;
-  const { name, email } = req.body;
+exports.addUser = async (req, res) => {
+  try {
+    const { Date, PartyName, Reportno, Amount, Remarks } = req.body;
+    if (!Date || !PartyName || !Reportno || !Amount || !Remarks) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
 
-  // Check if the required fields are provided
-  if (!name || !email ) {
-    return res.status(400).json({ error: 'id, Name and Email are required' });
+    const sqlQuery = 'INSERT INTO ledger (Date, PartyName, ReportNo, Amount, Remarks) VALUES (?,?,?,?,?)';
+    db.query(sqlQuery, [Date, PartyName, Reportno, Amount, Remarks], (err, result) => {
+      if (err) {
+        console.error('Error inserting user:', err);
+        return res.status(500).send('Database insert error');
+      }
+
+      res.status(201).json({
+        message: 'User added successfully',
+        userId: result.insertId,
+      });
+    });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).send('Server error');
   }
+};
 
-  const sqlQuery = 'UPDATE person SET name = ?, email = ? WHERE id = ?';
 
-  // Execute the query to update the user
-  db.query(sqlQuery, [name, email,id], (err, result) => {
-    if (err) {
-      console.error('Error updating user:', err);
-      res.status(500).send('Database update error');
-      return;
+exports.deleteUser = async (req, res) => {
+  try {
+    const { Reportno } = req.params;
+
+    if (!Reportno) {
+      return res.status(400).json({ error: 'Report number is required' });
     }
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'User not found' });
+
+    const sqlQuery = 'DELETE FROM ledger WHERE Reportno = ?';
+    db.query(sqlQuery, [Reportno], (err, result) => {
+      if (err) {
+        console.error('Error deleting user:', err);
+        return res.status(500).json({ error: 'Database delete error' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      return res.status(200).json({ message: 'User deleted successfully' });
+    });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).send('Server error');
+  }
+};
+
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email } = req.body;
+
+    
+    if (!name || !email) {
+      return res.status(400).json({ error: 'Name and Email are required' });
     }
-    res.status(200).json({ message: 'User updated successfully' });
-  });
+
+    const sqlQuery = 'UPDATE ledger SET name = ?, email = ? WHERE id = ?';
+
+    
+    db.query(sqlQuery, [name, email, id], (err, result) => {
+      if (err) {
+        console.error('Error updating user:', err);
+        return res.status(500).send('Database update error');
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json({ message: 'User updated successfully' });
+    });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).send('Server error');
+  }
 };
