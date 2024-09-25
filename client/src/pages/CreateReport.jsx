@@ -12,27 +12,27 @@ const CreateReport = () => {
   };
   const [formData, setFormData] = React.useState({
     Reportno: 0,
-    Samplename: "",
-    Dated: "",
+    Samplename: "NA",
+    Dated: "NA",
     Selected: "Sealed",
-    From: "",
-    Billeddate: "",
-    Station: "",
-    Time: "",
-    Crude: "",
-    Moisture: "",
-    Oil: "",
-    FFA: "",
-    Code: "",
-    Date: "",
-    Vechileno: "",
-    Bags: "",
-    Weight: "",
+    From: "NA",
+    Billeddate: "NA",
+    Station: "NA",
+    Time: "NA",
+    Crude: "NA",
+    Moisture: "NA",
+    Oil: "NA",
+    FFA: "NA",
+    Code: "NA",
+    Date: "NA",
+    Vechileno: "NA",
+    Bags: "NA",
+    Weight: "NA",
     Itemcategory: "Seal Engraved",
     Remarks1: "",
     Remarks2: "",
     Remarks: "",
-    Signature: "",
+    Signature: "NA",
   });
 
   const handleChange = (event) => {
@@ -101,7 +101,7 @@ const CreateReport = () => {
 
   const handleSaveAndPrint = () => {
     formData.Remarks = `${formData.Remarks1} ${formData.Remarks2}`;
-    formData.Time = ffaTime.toString();
+    formData.Time = ffaTime ? ffaTime.toString() : "NA";
     formData.Reportno = id;
     console.log(formData);
 
@@ -110,6 +110,9 @@ const CreateReport = () => {
         .post("http://localhost:3001/api/analysis", formData)
         .then((response) => {
           console.log("Data submitted successfully:", response.data);
+
+          // Send the event to the main process
+
           ipcRenderer.send("open-lab-report", formData);
           setFormData({
             Reportno: 0,
@@ -141,10 +144,6 @@ const CreateReport = () => {
     } catch (error) {
       console.log("Error adding data:", error);
     }
-
-    // Send the event to the main process
-
-    ipcRenderer.send("open-lab-report", formData);
   };
 
   return (
@@ -451,12 +450,12 @@ const CreateReport = () => {
                 name="Itemcategory"
                 onChange={handleChange}
               >
-                <option value="sealed">Seal Engraved</option>
-                <option value="unsealed">Buyer</option>
-                <option value="ricemills">Seller</option>
-                <option value="ricemills">Rice Mills</option>
-                <option value="trader">Trader</option>
-                <option value="broker">Broker</option>
+                <option value="Seal Engraved">Seal Engraved</option>
+                <option value="Buyer">Buyer</option>
+                <option value="Seller">Seller</option>
+                <option value="Rice Mills">Rice Mills</option>
+                <option value="Trader">Trader</option>
+                <option value="Broker">Broker</option>
               </select>
             </div>
 

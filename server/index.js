@@ -12,6 +12,7 @@ const {
   addUser,
   deleteUser,
   updateUser,
+  getUsersByName,
 } = require("./controller/userController");
 const cashVoucherController = require("./controller/cashVoucherController");
 const customerController = require("./controller/customerController");
@@ -48,6 +49,7 @@ app.get("/api/users", getAllUsers);
 app.post("/api/users", addUser);
 app.delete("/api/users/:Reportno", deleteUser);
 app.put("/api/users/:id", updateUser);
+app.get("/api/users/:name", getUsersByName);
 
 //Customer Api's
 app.post("/api/customers", customerController.createCustomer);
@@ -64,6 +66,9 @@ app.get("/api/cashvouchers", cashVoucherController.getCashVouchers);
 app.post("/api/analysis", analysisController.createAnalysis);
 app.get("/api/analysis/:Reportno", analysisController.getAnalysis);
 app.get("/api/analysis", analysisController.getAnalysisnormal);
+app.get("/api/analysises/:from", analysisController.getRepNo);
+
+// Image Upload Route
 app.post("/upload", upload.single("image"), saveImage);
 
 // Item Routes

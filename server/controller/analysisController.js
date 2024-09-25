@@ -209,9 +209,19 @@ const updateAnalysis = (req, res) => {
   }
 };
 
+const getRepNo = async (req, res) => {
+  console.log(req.params.from);
+  const Query = `SELECT Reportno FROM analysis WHERE \`From\` = ? `;
+  db.query(Query, req.params.from, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
 module.exports = {
   createAnalysis,
   getAnalysis,
   updateAnalysis,
   getAnalysisnormal,
+  getRepNo,
 };

@@ -6,24 +6,66 @@ function LedgerEntry() {
   const [selectedParty, setSelectedParty] = useState(""); // Selected party name
   const [selectedCity, setSelectedCity] = useState(""); // Corresponding city of the selected party
   const [ledgerEntries, setLedgerEntries] = useState([]); // Ledger entries (for the table)
+  const [Repno, setRepNo] = useState([]);
   const [formData, setFormData] = useState({
-    date: "",
-    reportNumber: "",
-    amount: "",
-    remarks: ""
+    Date: "",
+    Reportno: "",
+    PartyName: "",
+    Amount: "",
+    Remarks: "",
   });
 
   // Fetch party names and cities from backend
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
     axios
       .get("http://localhost:3001/api/customers") // API endpoint to fetch Partyname and City
       .then((response) => {
+        console.log(response.data);
         setPartyNames(response.data); // Set the fetched party names into state
       })
       .catch((error) => {
         console.error("Error fetching party names:", error);
       });
-  }, []);
+  };
+
+  const RepNo = (Data) => {
+    try {
+      axios
+        .get(`http://localhost:3001/api/analysises/${Data}`) // API endpoint to fetch Partyname and City
+        .then((response) => {
+          console.log(response.data);
+          // Set the fetched party names into state
+          setRepNo(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching party names:", error);
+        });
+    } catch (error) {
+      console.error("Error fetching Data:", error);
+    }
+  };
+
+  //HandleTableData
+  const HandleTableData = (Data) => {
+    try {
+      axios
+        .get(`http://localhost:3001/api/users/${Data}`) // API endpoint to fetch Partyname and City
+        .then((response) => {
+          console.log("Data From HandleTableData", response.data);
+          // Set the fetched party names into state
+          setLedgerEntries(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching party names:", error);
+        });
+    } catch (error) {
+      console.error("Error fetching Data:", error);
+    }
+  };
 
   // Handle party name selection
   const handlePartyChange = (event) => {
@@ -36,6 +78,8 @@ function LedgerEntry() {
     );
     if (selectedPartyObj) {
       setSelectedCity(selectedPartyObj.City); // Set city based on selected party
+      RepNo(selectedPartyObj.Name);
+      HandleTableData(selectedPartyName);
     } else {
       setSelectedCity(""); // Reset if no party selected
     }
@@ -48,42 +92,51 @@ function LedgerEntry() {
   };
 
   // Handle Add New button click (Submit)
-const handleAddNew = async () => {
-  if (!selectedParty || !formData.date || !formData.reportNumber || !formData.amount || !formData.remarks) {
-    return;
-  }
+  const handleAddNew = async () => {
+    if (
+      !selectedParty ||
+      !formData.Date ||
+      !formData.Reportno ||
+      !formData.Amount
+    ) {
+      console.log(formData);
+      return;
+    }
 
-  const newEntry = {
-    Date: formData.date,
-    PartyName: selectedParty,
-    Reportno: formData.reportNumber,
-    Amount: formData.amount,
-    Remarks: formData.remarks,
+    try {
+      formData.PartyName = selectedParty;
+      formData.Amount = `-${formData.Amount}`;
+      // Send POST request to backend
+
+      console.log(formData);
+      await axios
+        .post("http://localhost:3001/api/users", formData)
+        .then((response) => {
+          alert(response.data.message);
+          setFormData({
+            Date: "",
+            Reportno: "",
+            PartyName: "",
+            Amount: "",
+            Remarks: "",
+          });
+          setSelectedParty("");
+          setSelectedCity("");
+          setLedgerEntries([]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // Add new entry to the table
+      // HandleTableData(selectedParty);
+
+      // Reset form fields (commented out to keep fields filled)
+    } catch (error) {
+      console.error("Error adding user:", error);
+      alert("Error adding new entry");
+    }
   };
-
-  try {
-    // Send POST request to backend
-    const response = await axios.post("http://localhost:3001/api/users", newEntry);
-    alert(response.data.message);
-
-    // Add new entry to the table
-    setLedgerEntries([...ledgerEntries, newEntry]);
-
-    // Reset form fields (commented out to keep fields filled)
-    // setFormData({
-    //   date: "",
-    //   reportNumber: "",
-    //   amount: "",
-    //   remarks: "",
-    // });
-    // setSelectedParty("");
-    // setSelectedCity("");
-  } catch (error) {
-    console.error("Error adding user:", error);
-    alert("Error adding new entry");
-  }
-};
-
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -102,9 +155,9 @@ const handleAddNew = async () => {
                 </label>
                 <input
                   type="date"
-                  id="date"
-                  value={formData.date}
+                  id="Date"
                   required
+                  value={formData.Date}
                   onChange={handleInputChange}
                   className="flex-grow h-5 px-2 py-1 border"
                 />
@@ -113,14 +166,16 @@ const handleAddNew = async () => {
           </div>
           <div>
             <fieldset className="p-4 border rounded">
-              <legend className="mb-2 text-sm font-normal">Ledger Details</legend>
+              <legend className="mb-2 text-sm font-normal">
+                Ledger Details
+              </legend>
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <label htmlFor="partyname" className="w-1/3 text-sm">
                     Party Name
                   </label>
                   <select
-                    id="partyname"
+                    id="PartyName"
                     required
                     value={selectedParty}
                     onChange={handlePartyChange} // Capture the change
@@ -140,16 +195,20 @@ const handleAddNew = async () => {
                     Report No.
                   </label>
                   <select
-                    id="reportNumber"
-                    value={formData.reportNumber}
+                    id="Reportno"
+                    value={formData.Reportno}
                     onChange={handleInputChange}
                     required
                     className="flex-grow h-5 border"
                   >
                     <option value="">Select Report No.</option>
-                    <option value="1">Report No. 1</option>
-                    <option value="2">Report No. 2</option>
-                    <option value="3">Report No. 3</option>
+
+                    {RepNo.length > 0 &&
+                      Repno.map((repo, index) => (
+                        <option key={index} value={repo.Reportno}>
+                          {repo.Reportno}
+                        </option>
+                      ))}
                   </select>
                 </div>
 
@@ -159,8 +218,8 @@ const handleAddNew = async () => {
                   </label>
                   <input
                     type="number"
-                    id="amount"
-                    value={formData.amount}
+                    id="Amount"
+                    value={formData.Amount}
                     onChange={handleInputChange}
                     required
                     className="flex-grow h-5 px-2 py-1 border"
@@ -172,8 +231,8 @@ const handleAddNew = async () => {
                   </label>
                   <input
                     type="text"
-                    id="remarks"
-                    value={formData.remarks}
+                    id="Remarks"
+                    value={formData.Remarks}
                     onChange={handleInputChange}
                     required
                     className="flex-grow h-5 px-2 py-1 border"
@@ -196,7 +255,10 @@ const handleAddNew = async () => {
               >
                 Add New
               </button>
-              <button type="button" className="h-8 px-4 py-1 bg-gray-400 rounded">
+              <button
+                type="button"
+                className="h-8 px-4 py-1 bg-gray-400 rounded"
+              >
                 Delete
               </button>
             </div>
@@ -243,9 +305,8 @@ const handleAddNew = async () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {ledgerEntries
-                    .filter(entry => entry.PartyName === selectedParty) // Filter entries by selected party
-                    .map((entry, i) => (
+                  {ledgerEntries.length > 0 &&
+                    ledgerEntries.map((entry, i) => (
                       <tr key={i}>
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
                           {entry.Date}
