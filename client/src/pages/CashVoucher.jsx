@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 const headers = [
   "Entry Date",
   "Report Number",
@@ -40,12 +42,69 @@ const initialData = [
 ];
 
 function CashVoucher() {
-  
   const [data, setData] = useState(initialData);
-  // Handler for form submission
-  const handleSubmit = (event) => {
+  const [vouchers, setVouchers] = useState([]); // New state for vouchers
+  const [parties, setParties] = useState([]);
+  const [selectedParty, setSelectedParty] = useState(null);
+  const [amount, setAmount] = useState("");
+  const [remarks, setRemarks] = useState("");
+  const [date, setDate] = useState("");
+
+  // Fetch the party names from the backend
+  useEffect(() => {
+    const fetchParties = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/customers");
+        setParties(response.data); // Assuming the response contains the party data
+      } catch (error) {
+        console.error("Error fetching parties:", error);
+      }
+    };
+    fetchParties();
+  }, []);
+
+  // Fetch cash vouchers based on selected party
+  useEffect(() => {
+    const fetchVouchers = async () => {
+      if (selectedParty) {
+        try {
+          const response = await axios.get(`http://localhost:3001/api/cashvouchers?partyname=${selectedParty.Partyname}`);
+          setVouchers(response.data); // Assuming the response contains the voucher data
+        } catch (error) {
+          console.error("Error fetching vouchers:", error);
+        }
+      } else {
+        setVouchers([]); // Reset vouchers if no party is selected
+      }
+    };
+    fetchVouchers();
+  }, [selectedParty]); // Re-run this effect when selectedParty changes
+
+  // Handle party selection
+  const handlePartySelect = (event) => {
+    const partyName = event.target.value;
+    const party = parties.find((p) => p.Partyname === partyName);
+    setSelectedParty(party);
+  };
+
+  // Handle form submission
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    alert('Form submitted');
+
+    const newVoucher = {
+      date,
+      partyname: selectedParty?.Partyname || "",
+      amount,
+      remarks
+    };
+
+    try {
+      const response = await axios.post("http://localhost:3001/api/cashvoucher", newVoucher);
+      alert(response.data.message); // Show a success message
+    } catch (error) {
+      console.error("Error creating voucher:", error);
+      alert("Error creating cash voucher");
+    }
   };
 
   return (
@@ -61,11 +120,13 @@ function CashVoucher() {
               <label className="mr-4 font-normal whitespace-nowrap min-w-[120px]">
                 Date:
               </label>
-              <input 
-                type="date" 
-                required 
-                className="box-border flex-1 w-full h-8 p-2 border border-gray-300 rounded-md" 
-                min={new Date().toISOString().split('T')[0]} 
+              <input
+                type="date"
+                required
+                className="box-border flex-1 w-full h-8 p-2 border border-gray-300 rounded-md"
+                min={new Date().toISOString().split("T")[0]}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
               />
             </div>
           </fieldset>
@@ -76,17 +137,32 @@ function CashVoucher() {
                 Party Name:
               </label>
               <div className="relative flex-1">
-                <select 
-                  required 
-                  className="box-border w-full h-8 p-1 border border-gray-300 rounded-md appearance-none cursor-pointer">
+                <select
+                  required
+                  className="box-border w-full h-8 p-1 border border-gray-300 rounded-md appearance-none cursor-pointer"
+                  onChange={handlePartySelect}
+                >
                   <option value="">Select Party</option>
-                  <option value="party1">Party 1</option>
-                  <option value="party2">Party 2</option>
-                  <option value="party3">Party 3</option>
+                  {parties.map((party, index) => (
+                    <option key={index} value={party.Partyname}>
+                      {party.Partyname}
+                    </option>
+                  ))}
                 </select>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
                   </svg>
                 </span>
               </div>
@@ -95,92 +171,95 @@ function CashVoucher() {
               <label className="mr-4 font-normal whitespace-nowrap min-w-[120px]">
                 Amount:
               </label>
-              <input 
-                type="number" 
-                required 
-                className="box-border flex-1 w-full h-8 p-2 border border-gray-300 rounded-md" 
-                min="0" 
+              <input
+                type="number"
+                required
+                className="box-border flex-1 w-full h-8 p-2 border border-gray-300 rounded-md"
+                min="0"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
               />
             </div>
             <div className="flex items-center mb-2">
               <label className="mr-4 font-normal whitespace-nowrap min-w-[120px]">
                 Remarks:
               </label>
-              <input 
-                type="text" 
-                required 
-                className="box-border flex-1 w-full h-8 p-2 border border-gray-300 rounded-md" 
-                pattern=".{3,}" 
-                title="Remarks should be at least 3 characters long" 
+              <input
+                type="text"
+                className="box-border flex-1 w-full h-8 p-2 border border-gray-300 rounded-md"
+                pattern=".{3,}"
+                title="Remarks should be at least 3 characters long"
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
               />
             </div>
           </fieldset>
           <div className="flex justify-between w-full">
-            <button type="submit" className="h-8 px-6 py-1 bg-gray-300 border-none rounded-md cursor-pointer">
+            <button
+              type="submit"
+              className="h-8 px-6 py-1 bg-gray-300 border-none rounded-md cursor-pointer"
+            >
               Add
             </button>
-            <button type="button" className="h-8 px-6 py-1 bg-gray-300 border-none rounded-md cursor-pointer">
+            <button
+              type="button"
+              className="h-8 px-6 py-1 bg-gray-300 border-none rounded-md cursor-pointer"
+            >
               Delete
             </button>
-
-            
           </div>
         </form>
       </div>
+
       <div className="box-border flex flex-col items-center flex-1 p-3 mx-2 bg-gray-100 rounded-lg">
         <div className="w-full">
-          <u><h1 className="mb-1 text-left">Party:</h1></u>
+          <u>
+            <h1 className="mb-1 text-left">Party: {selectedParty ? selectedParty.Partyname : "N/A"}</h1>
+          </u>
         </div>
         <div className="w-full">
-          <u><h1 className="mb-2 text-left">City:</h1></u>
+          <u>
+            <h1 className="mb-2 text-left">City: {selectedParty ? selectedParty.City : "N/A"}</h1>
+          </u>
         </div>
         <div className="w-full">
           <h7 className="text-left">Day Cash Details</h7>
         </div>
         <div>
-  <div className="mx-auto">
-    <div className="relative overflow-x-auto overflow-y-auto h-[453px] w-[400px]">
-      <table className="bg-white border border-gray-300 table-auto">
-        <thead>
-          <tr className="bg-gray-100 border-b border-gray-300">
-            {headers.map((header, index) => (
-              <th
-                key={index}
-                className="border-gray-300 text-left text-sm whitespace-nowrap"
-                style={{
-                  fontSize: "13px",
-                  fontWeight: "normal",
-                  width: "100px"
-                }}
-              >
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {initialData.map((row, i) => (
-            <tr
-              key={i}
-              className="hover:bg-blue-500 hover:text-white transition-colors duration-300"
-            >
-              {headers.map((header, j) => (
-                <td
-                  key={j}
-                  className={`border-gray-300 border text-sm whitespace-nowrap ${
-                    j < headers.length - 1 ? "pr-0" : ""
-                  }`}
-                >
-                  {row[header]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+          <div className="mx-auto">
+            <div className="relative overflow-x-auto overflow-y-auto h-[453px] w-[400px]">
+              <table className="bg-white border border-gray-300 table-auto">
+                <thead>
+                  <tr>
+                    {headers.map((header, index) => (
+                      <th key={index} className="px-2 py-1 border-b border-gray-300">
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {vouchers.length > 0 ? (
+                    vouchers.map((voucher, index) => (
+                      <tr key={index}>
+                        <td className="px-2 py-1 border-b border-gray-300">{voucher.EntryDate}</td>
+                        <td className="px-2 py-1 border-b border-gray-300">{voucher.ReportNumber}</td>
+                        <td className="px-2 py-1 border-b border-gray-300">{voucher.Amount}</td>
+                        <td className="px-2 py-1 border-b border-gray-300">{voucher.Remarks}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={headers.length} className="px-2 py-1 text-center border-b border-gray-300">
+                        No vouchers found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
