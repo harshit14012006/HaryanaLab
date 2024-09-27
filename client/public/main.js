@@ -230,7 +230,7 @@ ipcMain.on("open-lab-report", (event, reportData) => {
 
 const updateReportsAnalysisWindow = () => {
   const reportsAnalysisWindow = new BrowserWindow({
-    width: 950,
+    width: 1250,
     height: 573,
     parent: mainWindow,
     modal: true,
