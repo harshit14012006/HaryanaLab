@@ -27,11 +27,11 @@ const ReportAnalysis = () => {
 
   return (
     <div className="bg-gray-100">
-      <div className="mx-auto p-1">
-        <fieldset className="border border-gray-300 p-2 rounded">
+      <div className="p-1 mx-auto">
+        <fieldset className="p-2 border border-gray-300 rounded">
           <legend className="text-sm">Analysis</legend>
           <div className="border border-gray-300 ">
-            <div className="text-center mt-1">
+            <div className="mt-1 text-center">
               <label htmlFor="reportno" className="block mb-2 text-sm">
                 Report No.
               </label>
@@ -39,11 +39,11 @@ const ReportAnalysis = () => {
                 type="number"
                 required
                 id="reportno"
-                className="border h-5  w-40"
+                className="w-40 h-5 border"
                 onChange={HandleData}
               />
             </div>
-            <div className="flex justify-end -mt-14 mr-4">
+            <div className="flex justify-end mr-4 -mt-14">
               <div>
                 <label htmlFor="time" className="block mb-2 text-sm">
                   Time
@@ -52,7 +52,7 @@ const ReportAnalysis = () => {
                   type="time"
                   required
                   id="time"
-                  className="border h-5 w-40"
+                  className="w-40 h-5 border"
                 />
               </div>
             </div>
@@ -68,7 +68,7 @@ const ReportAnalysis = () => {
                     <input
                       type="text"
                       id="samplename"
-                      className="border px-2  flex-grow h-5"
+                      className="flex-grow h-5 px-2 border"
                     />
                   </div>
                   <div className="flex items-center">
@@ -78,7 +78,7 @@ const ReportAnalysis = () => {
                     <input
                       type="date"
                       id="dated"
-                      className="border px-2 py-1 flex-grow h-5"
+                      className="flex-grow h-5 px-2 py-1 border"
                       placeholder="Input 2"
                     />
                   </div>
@@ -89,7 +89,7 @@ const ReportAnalysis = () => {
                     <input
                       type="text"
                       id="from"
-                      className="border px-2 py-1 flex-grow h-5"
+                      className="flex-grow h-5 px-2 py-1 border"
                     />
                   </div>
                 </div>
@@ -105,7 +105,7 @@ const ReportAnalysis = () => {
                     <input
                       type="text"
                       id="billeddate"
-                      className="border px-2 py-1 flex-grow h-5"
+                      className="flex-grow h-5 px-2 py-1 border"
                     />
                   </div>
                   <div className="flex items-center">
@@ -114,7 +114,7 @@ const ReportAnalysis = () => {
                     </label>
                     <select
                       id="sealed-unsealed"
-                      className="border px-2  flex-grow h-5"
+                      className="flex-grow h-5 px-2 border"
                     >
                       <option value="sealed">Sealed</option>
                       <option value="unsealed">Unsealed</option>
@@ -128,71 +128,87 @@ const ReportAnalysis = () => {
                     <input
                       type="text"
                       id="input6"
-                      className="border px-2 py-1 flex-grow h-5"
+                      className="flex-grow h-5 px-2 py-1 border"
                     />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="border border-gray-300 p-4 mt-1 h-12">
-            <div className="flex space-x-4">
-              <div className="flex items-center">
-                <label
-                  htmlFor="moisture"
-                  className="w-1/3 text-sm whitespace-nowrap"
-                >
-                  Moisture
-                </label>
-                <input
-                  type="text"
-                  id="moisture"
-                  className="border px-2 py-1 w-28 h-5"
-                />
-                <span className="ml-1">%</span>
-              </div>
-              <div className="flex items-center space-x-2 pl-16">
-                <label htmlFor="oil" className="w-1/3 text-sm">
-                  Oil
-                </label>
-                <div className="flex items-center">
-                  <input
-                    type="text"
-                    id="oil"
-                    className="border px-2 py-1 w-28 h-5"
-                  />
-                  <span className="ml-1">%</span>
-                </div>
-              </div>
+          <div className="h-12 p-4 mt-1 border border-gray-300">
+  <div className="flex space-x-4">
+    <div className="flex items-center">
+      <input
+        type="text"
+        id="editableNumber"
+        className="h-5 px-2 py-1 mr-4 border w-28"
+        defaultValue="Crude"
+      />
+      <input
+        type="text"
+        id="editableNumber"
+        className="h-5 px-2 py-1 border w-28"
+        name="Crude"
+      
+      />
+    </div>
+    <div className="flex items-center pl-12">
+      <label htmlFor="moisture" className="text-sm whitespace-nowrap">
+        Moisture
+      </label>
+      <input
+        type="text"
+        id="moisture"
+        className="h-5 px-2 py-1 ml-2 border w-28"
+        name="Moisture"
+        
+      />
+      <span className="ml-1">%</span>
+    </div>
+    <div className="flex items-center pl-16 space-x-2">
+      <label htmlFor="oil" className="text-sm">
+        Oil
+      </label>
+      <div className="flex items-center">
+        <input
+          type="text"
+          id="oil"
+          className="h-5 px-2 py-1 border w-28"
+          name="Oil"
+         
+        />
+        <span className="ml-1">%</span>
+      </div>
+    </div>
+    <div className="flex items-center pl-16 space-x-2">
+      <label htmlFor="ffa" className="text-sm">
+        FFA
+      </label>
+      <input
+        type="text"
+        id="ffa"
+        className="h-5 px-2 py-1 border w-28"
+        name="FFA"
+      />
+      <span className="ml-1">%</span>
+    </div>
+  </div>
+</div>
 
-              <div className="flex items-center space-x-2 pl-20">
-                <label htmlFor="ffa" className="w-1/3 text-sm">
-                  Ffa
-                </label>
-                <input
-                  type="text"
-                  id="ffa"
-                  className="border px-2 py-1 w-28 h-5" // Adjust the width here
-                />
-                <span className="ml-1">%</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-gray-300 p-2 mt-1 h-16">
-            <div className="flex flex-wrap  -mx-4">
+          <div className="h-16 p-2 mt-1 border border-gray-300">
+            <div className="flex flex-wrap -mx-4">
               {/* Code/Sample No. */}
               <div className="w-1/5 px-4 ">
                 <label
                   htmlFor="sampleNo"
-                  className="block text-gray-700 text-sm mb-1 text-center"
+                  className="block mb-1 text-sm text-center text-gray-700"
                 >
                   Code/Sample No.
                 </label>
                 <input
                   type="text"
                   id="sampleNo"
-                  className="border px-2 py-1 w-full h-5"
+                  className="w-full h-5 px-2 py-1 border"
                 />
               </div>
 
@@ -200,14 +216,14 @@ const ReportAnalysis = () => {
               <div className="w-1/5 px-4 mb-4">
                 <label
                   htmlFor="date"
-                  className="block text-gray-700 text-sm mb-1 text-center"
+                  className="block mb-1 text-sm text-center text-gray-700"
                 >
                   Date
                 </label>
                 <input
                   type="date"
                   id="date"
-                  className="border px-2 py-1 w-full h-5"
+                  className="w-full h-5 px-2 py-1 border"
                 />
               </div>
 
@@ -215,14 +231,14 @@ const ReportAnalysis = () => {
               <div className="w-1/5 px-4 mb-4">
                 <label
                   htmlFor="vehicleNo"
-                  className="block text-gray-700 text-sm mb-1  text-center"
+                  className="block mb-1 text-sm text-center text-gray-700"
                 >
                   Vehicle No.
                 </label>
                 <input
                   type="text"
                   id="vehicleNo"
-                  className="border px-2 py-1 w-full h-5"
+                  className="w-full h-5 px-2 py-1 border"
                 />
               </div>
 
@@ -230,14 +246,14 @@ const ReportAnalysis = () => {
               <div className="w-1/5 px-4 mb-4">
                 <label
                   htmlFor="bags"
-                  className="block text-gray-700 text-sm mb-1 text-center"
+                  className="block mb-1 text-sm text-center text-gray-700"
                 >
                   Bags
                 </label>
                 <input
                   type="number"
                   id="bags"
-                  className="border px-2 py-1 w-full h-5"
+                  className="w-full h-5 px-2 py-1 border"
                 />
               </div>
 
@@ -245,24 +261,24 @@ const ReportAnalysis = () => {
               <div className="w-1/5 px-4 mb-4">
                 <label
                   htmlFor="weight"
-                  className="block text-gray-700 text-sm mb-1 text-center"
+                  className="block mb-1 text-sm text-center text-gray-700"
                 >
                   Weight (Ql)
                 </label>
                 <input
                   type="text"
                   id="weight"
-                  className="border px-2 py-1 w-full h-5"
+                  className="w-full h-5 px-2 py-1 border"
                 />
               </div>
             </div>
           </div>
-          <div className="p-4 mt-2 grid grid-cols-2 gap-4 w-3/4">
+          <div className="grid w-3/4 grid-cols-2 gap-4 p-4 mt-2">
             {/* Row 1, Column 1 */}
             <div>
               <select
                 id="sealed-unsealed"
-                className="border px-2  flex-grow h-5"
+                className="flex-grow h-5 px-2 border"
               >
                 <option value="sealed">Seal Engraved</option>
                 <option value="unsealed">Buyer</option>
@@ -277,7 +293,7 @@ const ReportAnalysis = () => {
               <input
                 type="text"
                 id="space"
-                className="border px-2 py-1 w-full h-5"
+                className="w-full h-5 px-2 py-1 border"
               />
             </div>
 
@@ -291,13 +307,13 @@ const ReportAnalysis = () => {
               <input
                 type="text"
                 id="space2"
-                className="border px-2 py-1 w-full h-5"
+                className="w-full h-5 px-2 py-1 border"
               />
             </div>
           </div>
           <div className="text-right">
             <span className="block mr-6 text-sm">Signature</span>
-            <select id="signature" className="border px-2 py-1 mb-2">
+            <select id="signature" className="px-2 py-1 mb-2 border">
               <option value=""></option>
               <option value="signature1">Signature 1</option>
               <option value="signature2">Signature 2</option>
@@ -305,7 +321,7 @@ const ReportAnalysis = () => {
             </select>
             <div className="flex justify-end">
               <button
-                className="bg-gray-400  px-2 py-1 rounded"
+                className="px-2 py-1 bg-gray-400 rounded"
                 onClick={HandleUpdate}
               >
                 Update
