@@ -175,7 +175,6 @@ const ReportAnalysis = () => {
           id="oil"
           className="h-5 px-2 py-1 border w-28"
           name="Oil"
-         
         />
         <span className="ml-1">%</span>
       </div>
