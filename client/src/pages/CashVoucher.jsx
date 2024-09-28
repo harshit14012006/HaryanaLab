@@ -1,48 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const headers = [
-  "Entry Date",
-  "Report Number",
-  "Amount",
-  "Remarks"
-];
+const headers = ["Entry Date", "Report Number", "Amount", "Remarks"];
 
-const initialData = [
-  {
-    "Entry Date": "2024-09-15",
-    "Report Number": "RPT-001",
-    Amount: "$500",
-    Remarks: "Initial Payment"
-  },
-  {
-    "Entry Date": "2024-09-16",
-    "Report Number": "RPT-002",
-    Amount: "$750",
-    Remarks: "Second Installment"
-  },
-  {
-    "Entry Date": "2024-09-17",
-    "Report Number": "RPT-003",
-    Amount: "$1200",
-    Remarks: "Final Payment"
-  },
-  {
-    "Entry Date": "2024-09-18",
-    "Report Number": "RPT-004",
-    Amount: "$300",
-    Remarks: "Refund"
-  },
-  {
-    "Entry Date": "2024-09-19",
-    "Report Number": "RPT-005",
-    Amount: "$450",
-    Remarks: "Overdue Payment"
-  }
-];
+// const initialData = [
+//   {
+//     "Entry Date": "2024-09-15",
+//     "Report Number": "RPT-001",
+//     Amount: "$500",
+//     Remarks: "Initial Payment",
+//   },
+//   {
+//     "Entry Date": "2024-09-16",
+//     "Report Number": "RPT-002",
+//     Amount: "$750",
+//     Remarks: "Second Installment",
+//   },
+//   {
+//     "Entry Date": "2024-09-17",
+//     "Report Number": "RPT-003",
+//     Amount: "$1200",
+//     Remarks: "Final Payment",
+//   },
+//   {
+//     "Entry Date": "2024-09-18",
+//     "Report Number": "RPT-004",
+//     Amount: "$300",
+//     Remarks: "Refund",
+//   },
+//   {
+//     "Entry Date": "2024-09-19",
+//     "Report Number": "RPT-005",
+//     Amount: "$450",
+//     Remarks: "Overdue Payment",
+//   },
+// ];
 
 function CashVoucher() {
-  const [data, setData] = useState(initialData);
+  // const [data, setData] = useState(initialData);
   const [vouchers, setVouchers] = useState([]); // New state for vouchers
   const [parties, setParties] = useState([]);
   const [selectedParty, setSelectedParty] = useState(null);
@@ -52,59 +47,64 @@ function CashVoucher() {
 
   // Fetch the party names from the backend
   useEffect(() => {
-    const fetchParties = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/api/customers");
-        setParties(response.data); // Assuming the response contains the party data
-      } catch (error) {
-        console.error("Error fetching parties:", error);
-      }
-    };
     fetchParties();
   }, []);
 
-  // Fetch cash vouchers based on selected party
-  useEffect(() => {
-    const fetchVouchers = async () => {
-      if (selectedParty) {
-        try {
-          const response = await axios.get(`http://localhost:3001/api/cashvouchers?partyname=${selectedParty.Partyname}`);
-          setVouchers(response.data); // Assuming the response contains the voucher data
-        } catch (error) {
-          console.error("Error fetching vouchers:", error);
-        }
-      } else {
-        setVouchers([]); // Reset vouchers if no party is selected
+  const fetchParties = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/api/customers");
+      setParties(response.data); // Assuming the response contains the party data
+    } catch (error) {
+      console.error("Error fetching parties:", error);
+    }
+  };
+  const fetchVouchers = async (Data) => {
+    if (Data) {
+      console.log("Fetching vouchers for party:", Data);
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/api/users/${Data.Partyname}`
+        );
+        console.log(response.data);
+        setVouchers(response.data); // Assuming the response contains the voucher data
+      } catch (error) {
+        console.error("Error fetching vouchers:", error);
       }
-    };
-    fetchVouchers();
-  }, [selectedParty]); // Re-run this effect when selectedParty changes
-
+    } else {
+      setVouchers([]); // Reset vouchers if no party is selected
+    }
+  };
   // Handle party selection
   const handlePartySelect = (event) => {
     const partyName = event.target.value;
     const party = parties.find((p) => p.Partyname === partyName);
     setSelectedParty(party);
+    fetchVouchers(party);
   };
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    // console.log(vouchers);
     const newVoucher = {
-      date,
-      partyname: selectedParty?.Partyname || "",
-      amount,
-      remarks
+      Date: date,
+      PartyName: selectedParty.Partyname,
+      Reportno: vouchers[0].Reportno,
+      Amount: amount,
+      Remarks: remarks,
     };
 
-    try {
-      const response = await axios.post("http://localhost:3001/api/cashvoucher", newVoucher);
-      alert(response.data.message); // Show a success message
-    } catch (error) {
-      console.error("Error creating voucher:", error);
-      alert("Error creating cash voucher");
-    }
+    console.log(newVoucher);
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:3001/api/users",
+    //     newVoucher
+    //   );
+    //   alert(response.data.message); // Show a success message
+    // } catch (error) {
+    //   console.error("Error creating voucher:", error);
+    //   alert("Error creating cash voucher");
+    // }
   };
 
   return (
@@ -214,12 +214,16 @@ function CashVoucher() {
       <div className="box-border flex flex-col items-center flex-1 p-3 mx-2 bg-gray-100 rounded-lg">
         <div className="w-full">
           <u>
-            <h1 className="mb-1 text-left">Party: {selectedParty ? selectedParty.Partyname : "N/A"}</h1>
+            <h1 className="mb-1 text-left">
+              Party: {selectedParty ? selectedParty.Partyname : "N/A"}
+            </h1>
           </u>
         </div>
         <div className="w-full">
           <u>
-            <h1 className="mb-2 text-left">City: {selectedParty ? selectedParty.City : "N/A"}</h1>
+            <h1 className="mb-2 text-left">
+              City: {selectedParty ? selectedParty.City : "N/A"}
+            </h1>
           </u>
         </div>
         <div className="w-full">
@@ -232,7 +236,10 @@ function CashVoucher() {
                 <thead>
                   <tr>
                     {headers.map((header, index) => (
-                      <th key={index} className="px-2 py-1 border-b border-gray-300">
+                      <th
+                        key={index}
+                        className="px-2 py-1 border-b border-gray-300"
+                      >
                         {header}
                       </th>
                     ))}
@@ -242,15 +249,26 @@ function CashVoucher() {
                   {vouchers.length > 0 ? (
                     vouchers.map((voucher, index) => (
                       <tr key={index}>
-                        <td className="px-2 py-1 border-b border-gray-300">{voucher.EntryDate}</td>
-                        <td className="px-2 py-1 border-b border-gray-300">{voucher.ReportNumber}</td>
-                        <td className="px-2 py-1 border-b border-gray-300">{voucher.Amount}</td>
-                        <td className="px-2 py-1 border-b border-gray-300">{voucher.Remarks}</td>
+                        <td className="px-2 py-1 border-b border-gray-300">
+                          {voucher.Date}
+                        </td>
+                        <td className="px-2 py-1 border-b border-gray-300">
+                          {voucher.Reportno}
+                        </td>
+                        <td className="px-2 py-1 border-b border-gray-300">
+                          {voucher.Amount}
+                        </td>
+                        <td className="px-2 py-1 border-b border-gray-300">
+                          {voucher.Remarks}
+                        </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={headers.length} className="px-2 py-1 text-center border-b border-gray-300">
+                      <td
+                        colSpan={headers.length}
+                        className="px-2 py-1 text-center border-b border-gray-300"
+                      >
                         No vouchers found
                       </td>
                     </tr>
