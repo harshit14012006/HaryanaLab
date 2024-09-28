@@ -6,8 +6,8 @@ import AccountLedger from './pages/AccountLedger';
 function App() {
   return (
     <div>
-      {/* <Layout /> */}
-      <AccountLedger/>
+      <Layout />
+      {/* <AccountLedger/> */}
       {/* <LabReport /> */}
     </div>
   );
