@@ -17,9 +17,10 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.addUser = async (req, res) => {
+  console.log(req.body);
   try {
     const { Date, PartyName, Reportno, Amount, Remarks } = req.body;
-    if (!Date || !PartyName || !Reportno || !Amount || !Remarks) {
+    if (!Date || !PartyName || !Reportno || !Amount) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -48,24 +49,39 @@ exports.addUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const { Reportno } = req.params;
-
-    if (!Reportno) {
+    let sqlQuery;
+    console.log(req.params, " At line 55");
+    const { Reportno, Date, PartyName } = req.params;
+    if (!Date || !PartyName) {
       return res.status(400).json({ error: "Report number is required" });
     }
+    if (!Reportno) {
+      sqlQuery = "DELETE FROM ledger WHERE Reportno = ? AND Date = ?";
+      db.query(sqlQuery, [Reportno, Date], (err, result) => {
+        if (err) {
+          console.error("Error deleting user:", err);
+          return res.status(500).json({ error: "Database delete error" });
+        }
 
-    const sqlQuery = "DELETE FROM ledger WHERE Reportno = ?";
-    db.query(sqlQuery, [Reportno], (err, result) => {
-      if (err) {
-        console.error("Error deleting user:", err);
-        return res.status(500).json({ error: "Database delete error" });
-      }
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({ message: "User deleted successfully" });
+      });
+    } else {
+      sqlQuery = "DELETE FROM ledger WHERE PartyName = ? AND Date = ?";
+      db.query(sqlQuery, [PartyName, Date], (err, result) => {
+        if (err) {
+          console.error("Error deleting user:", err);
+          return res.status(500).json({ error: "Database delete error" });
+        }
 
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      return res.status(200).json({ message: "User deleted successfully" });
-    });
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({ message: "User deleted successfully" });
+      });
+    }
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).send("Server error");

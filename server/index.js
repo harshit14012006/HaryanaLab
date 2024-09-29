@@ -47,7 +47,7 @@ app.use(express.static("uploads"));
 //Api's
 app.get("/api/users", getAllUsers);
 app.post("/api/users", addUser);
-app.delete("/api/users/:Reportno", deleteUser);
+app.delete("/api/users/:Date/:Reportno/:PartyName", deleteUser);
 app.put("/api/users/:id", updateUser);
 app.get("/api/users/:name", getUsersByName);
 
@@ -67,6 +67,7 @@ app.post("/api/analysis", analysisController.createAnalysis);
 app.get("/api/analysis/:Reportno", analysisController.getAnalysis);
 app.get("/api/analysis", analysisController.getAnalysisnormal);
 app.get("/api/analysises/:from", analysisController.getRepNo);
+app.put("/api/analysis/:Reportno", analysisController.updateAnalysis);
 
 // Image Upload Route
 app.post("/upload", upload.single("image"), saveImage);
