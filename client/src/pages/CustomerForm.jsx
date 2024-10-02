@@ -392,7 +392,7 @@ const CustomerForm = () => {
                 </label>
                 <select
                   id="state"
-                  className="w-2/3 h-5 px-2 text-sm border"
+                  className="w-2/3 h-5 text-sm border"
                   required
                   name="State"
                   value={formdata.State}
@@ -417,6 +417,7 @@ const CustomerForm = () => {
                 </label>
                 <input
                   type="text"
+                  style={{fontSize:"14px"}}
                   id="Pincode"
                   className="w-2/3 h-5 border"
                   required
@@ -435,7 +436,7 @@ const CustomerForm = () => {
                 </label>
                 <select
                   id="city"
-                  className="w-2/3 h-5 px-2 text-sm border"
+                  className="w-2/3 h-5 text-sm border"
                   required
                   name="City"
                   value={formdata.City}
@@ -497,6 +498,25 @@ const CustomerForm = () => {
               {/* Contact Details Inputs */}
               <div className="flex items-center mb-1 space-x-2">
                 <label
+                  htmlFor="Mobile1"
+                  className="w-1/3"
+                  style={{ fontSize: "13px", fontWeight: "normal" }}
+                >
+                  Mobile 1
+                </label>
+                <input
+                  type="text"
+                  id="moble1"
+                  className="w-2/3 h-5 border"
+                  required
+                  name="Mobile1"
+                  value={formdata.Mobile1}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div className="flex items-center mb-1 space-x-2">
+                <label
                   htmlFor="landline1"
                   className="w-1/3"
                   style={{ fontSize: "13px", fontWeight: "normal" }}
@@ -515,19 +535,19 @@ const CustomerForm = () => {
               </div>
               <div className="flex items-center mb-1 space-x-2">
                 <label
-                  htmlFor="Mobile1"
+                  htmlFor="email"
                   className="w-1/3"
                   style={{ fontSize: "13px", fontWeight: "normal" }}
                 >
-                  Mobile 1
+                  Email 1
                 </label>
                 <input
-                  type="text"
-                  id="moble1"
+                  type="email"
+                  id="email"
                   className="w-2/3 h-5 border"
                   required
-                  name="Mobile1"
-                  value={formdata.Mobile1}
+                  name="Email1"
+                  value={formdata.Email1}
                   onChange={handleChange}
                 />
               </div>
@@ -603,24 +623,7 @@ const CustomerForm = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex items-center mb-1 space-x-2">
-                <label
-                  htmlFor="email"
-                  className="w-1/3"
-                  style={{ fontSize: "13px", fontWeight: "normal" }}
-                >
-                  Email 1
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-2/3 h-5 border"
-                  required
-                  name="Email1"
-                  value={formdata.Email1}
-                  onChange={handleChange}
-                />
-              </div>
+              
               <div className="flex items-center mb-1 space-x-2">
                 <label
                   htmlFor="email"
