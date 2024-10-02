@@ -3,48 +3,19 @@ import axios from "axios";
 
 const headers = ["Entry Date", "Report Number", "Amount", "Remarks"];
 
-// const initialData = [
-//   {
-//     "Entry Date": "2024-09-15",
-//     "Report Number": "RPT-001",
-//     Amount: "$500",
-//     Remarks: "Initial Payment",
-//   },
-//   {
-//     "Entry Date": "2024-09-16",
-//     "Report Number": "RPT-002",
-//     Amount: "$750",
-//     Remarks: "Second Installment",
-//   },
-//   {
-//     "Entry Date": "2024-09-17",
-//     "Report Number": "RPT-003",
-//     Amount: "$1200",
-//     Remarks: "Final Payment",
-//   },
-//   {
-//     "Entry Date": "2024-09-18",
-//     "Report Number": "RPT-004",
-//     Amount: "$300",
-//     Remarks: "Refund",
-//   },
-//   {
-//     "Entry Date": "2024-09-19",
-//     "Report Number": "RPT-005",
-//     Amount: "$450",
-//     Remarks: "Overdue Payment",
-//   },
-// ];
-
 function CashVoucher() {
   // const [data, setData] = useState(initialData);
   const [vouchers, setVouchers] = useState([]); // New state for vouchers
   const [parties, setParties] = useState([]);
-  const [selectedParty, setSelectedParty] = useState(null);
+  const [selectedParty, setSelectedParty] = useState([]);
   const [amount, setAmount] = useState("");
   const [remarks, setRemarks] = useState("");
   const [date, setDate] = useState("");
-
+  const [PartyName, setPartyName] = useState("");
+  const [tableData, setTableData] = useState({
+    Reportno: "",
+    Date: "",
+  });
   // Fetch the party names from the backend
   useEffect(() => {
     fetchParties();
@@ -63,7 +34,7 @@ function CashVoucher() {
       console.log("Fetching vouchers for party:", Data);
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/users/${Data.Partyname}`
+          `http://localhost:3001/api/users/${Data.Partyname || Data}`
         );
         console.log(response.data);
         setVouchers(response.data); // Assuming the response contains the voucher data
@@ -79,32 +50,74 @@ function CashVoucher() {
     const partyName = event.target.value;
     const party = parties.find((p) => p.Partyname === partyName);
     setSelectedParty(party);
+    setPartyName(partyName);
     fetchVouchers(party);
   };
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log(vouchers);
     const newVoucher = {
       Date: date,
       PartyName: selectedParty.Partyname,
-      Reportno: vouchers[0].Reportno,
+      Reportno: "null",
       Amount: amount,
       Remarks: remarks,
     };
 
     console.log(newVoucher);
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:3001/api/users",
-    //     newVoucher
-    //   );
-    //   alert(response.data.message); // Show a success message
-    // } catch (error) {
-    //   console.error("Error creating voucher:", error);
-    //   alert("Error creating cash voucher");
-    // }
+    try {
+      axios
+        .post("http://localhost:3001/api/users", newVoucher)
+        .then((response) => {
+          console.log(response);
+          if (response) {
+            setAmount("");
+            setRemarks("");
+            setDate("");
+            setSelectedParty(null);
+            fetchVouchers(PartyName);
+            setPartyName("");
+          }
+        })
+        .catch((error) => {
+          console.error("Error creating voucher:", error);
+          // alert("Error creating cash voucher");
+        });
+    } catch (error) {
+      console.error("Error creating voucher:", error);
+      alert("Error creating cash voucher");
+    }
+  };
+
+  const HandleClick = (data) => {
+    console.log(data);
+    setPartyName(data.PartyName);
+    setDate(data.Date);
+    setAmount(data.Amount);
+    setRemarks(data.Remarks);
+    setTableData({
+      Reportno: data.Reportno,
+      Date: data.Date,
+    });
+  };
+
+  const HandleDelete = async () => {
+    try {
+      await axios
+        .delete(
+          `http://localhost:3001/api/users/${tableData.Date}/${tableData.Reportno}/${PartyName}`
+        )
+        .then((response) => {
+          console.log(response);
+          fetchVouchers(PartyName);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -141,6 +154,7 @@ function CashVoucher() {
                   required
                   className="box-border w-full h-8 p-1 border border-gray-300 rounded-md appearance-none cursor-pointer"
                   onChange={handlePartySelect}
+                  value={PartyName || ""}
                 >
                   <option value="">Select Party</option>
                   {parties.map((party, index) => (
@@ -204,6 +218,7 @@ function CashVoucher() {
             <button
               type="button"
               className="h-8 px-6 py-1 bg-gray-300 border-none rounded-md cursor-pointer"
+              onClick={HandleDelete}
             >
               Delete
             </button>
@@ -248,12 +263,12 @@ function CashVoucher() {
                 <tbody>
                   {vouchers.length > 0 ? (
                     vouchers.map((voucher, index) => (
-                      <tr key={index}>
+                      <tr key={index} onClick={() => HandleClick(voucher)}>
                         <td className="px-2 py-1 border-b border-gray-300">
                           {voucher.Date}
                         </td>
                         <td className="px-2 py-1 border-b border-gray-300">
-                          {voucher.Reportno}
+                          {voucher.Reportno === "null" ? "" : voucher.Reportno}
                         </td>
                         <td className="px-2 py-1 border-b border-gray-300">
                           {voucher.Amount}

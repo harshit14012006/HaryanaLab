@@ -11,7 +11,8 @@ const createAnalysis = (req, res) => {
     Selected,
     From,
     Station,
-    Crude,
+    AnotherName,
+    AnotherValue,
     Moisture,
     Oil,
     FFA,
@@ -32,9 +33,10 @@ const createAnalysis = (req, res) => {
 
   const query = `
   INSERT INTO analysis (
-    Reportno, Samplename, Billeddate, Dated, Selected, \`From\`, Station, Crude, Moisture, Oil, FFA, \`Time\`,
+    Reportno, Samplename, Billeddate, Dated, Selected, \`From\`, Station, AnotherName,
+    AnotherValue, Moisture, Oil, FFA, \`Time\`,
     Code, \`Date\`, Vechileno, Bags, Weight, Category, Remarks, Signature
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+  ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
 `;
 
   const values = [
@@ -45,7 +47,8 @@ const createAnalysis = (req, res) => {
     Selected,
     From,
     Station,
-    Crude,
+    AnotherName,
+    AnotherValue,
     Moisture,
     Oil,
     FFA,
@@ -95,14 +98,17 @@ const getAnalysis = (req, res) => {
       }
 
       if (results.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "No records found for the given reportno" });
+        return res.status(201).json({
+          message: "No records found for the given reportno",
+          response: false,
+        });
       }
 
-      res
-        .status(200)
-        .json({ message: "Data retrieved successfully", data: results });
+      res.status(200).json({
+        message: "Data retrieved successfully",
+        data: results,
+        response: true,
+      });
     });
   } catch (error) {
     console.error("Internal server error:", error);
@@ -146,6 +152,8 @@ const updateAnalysis = (req, res) => {
     Selected,
     From,
     Station,
+    AnotherName,
+    AnotherValue,
     Moisture,
     Oil,
     FFA,
@@ -155,7 +163,7 @@ const updateAnalysis = (req, res) => {
     Vechileno,
     Bags,
     Weight,
-    Itemcategory,
+    Category,
     Remarks,
     Signature,
   } = req.body;
@@ -164,8 +172,8 @@ const updateAnalysis = (req, res) => {
 
   const query = `UPDATE analysis SET
     Samplename = ?, Billeddate = ?, Dated = ?, Selected = ?, \`From\` = ?, Station = ?, 
-    Moisture = ?, Oil = ?, FFA = ?, \`Time\` = ?, Code = ?, \`Date\` = ?, Vechileno = ?, 
-    Bags = ?, Weight = ?, Itemcategory = ?, Remarks = ?, Signature = ?
+    Moisture = ?, AnotherName = ?, AnotherValue = ?, Oil = ?, FFA = ?, \`Time\` = ?, Code = ?, \`Date\` = ?, Vechileno = ?, 
+    Bags = ?, Weight = ?, Category = ?, Remarks = ?, Signature = ?
     WHERE Reportno = ?`;
 
   const values = [
@@ -176,6 +184,8 @@ const updateAnalysis = (req, res) => {
     From,
     Station,
     Moisture,
+    AnotherName,
+    AnotherValue,
     Oil,
     FFA,
     Time,
@@ -184,12 +194,11 @@ const updateAnalysis = (req, res) => {
     Vechileno,
     Bags,
     Weight,
-    Itemcategory,
+    Category,
     Remarks,
     Signature,
     Reportno,
   ];
-
   try {
     db.query(query, values, (err, result) => {
       if (err) {
@@ -210,6 +219,7 @@ const updateAnalysis = (req, res) => {
 };
 
 const getRepNo = async (req, res) => {
+  console.log("Working");
   console.log(req.params.from);
   const Query = `SELECT Reportno FROM analysis WHERE \`From\` = ? `;
   db.query(Query, req.params.from, (err, result) => {

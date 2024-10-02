@@ -7,8 +7,12 @@ const CreateReport = () => {
   const [customersbyname, setCustomersbyname] = useState(null);
   const [City, setCity] = useState("");
   const [id, setId] = useState(null);
+  const [time, setTime] = useState("");
   const handleFfaChange = (e) => {
     setFfaTime(new Date().toLocaleTimeString()); // Set the current time
+    const hours = String(new Date().getHours()).padStart(2, "0");
+    const minutes = String(new Date().getMinutes()).padStart(2, "0");
+    setTime(`${hours}:${minutes}`);
   };
   const [formData, setFormData] = React.useState({
     Reportno: 0,
@@ -19,7 +23,8 @@ const CreateReport = () => {
     Billeddate: "NA",
     Station: "NA",
     Time: "NA",
-    Crude: "NA",
+    AnotherName: "",
+    AnotherValue: "",
     Moisture: "NA",
     Oil: "NA",
     FFA: "NA",
@@ -122,7 +127,8 @@ const CreateReport = () => {
             From: "NA",
             Billeddate: "NA",
             Station: "NA",
-            Crude: "NA",
+            AnotherName: "",
+            AnotherValue: "",
             Moisture: "NA",
             Oil: "NA",
             FFA: "NA",
@@ -188,10 +194,6 @@ const CreateReport = () => {
                             </option>
                           );
                         })}
-                      {/* <option value="Sample 1">Sample 1</option>
-                      <option value="Sample 2">Sample 2</option>
-                      <option value="Sample 3">Sample 3</option> */}
-                      {/* Add more options as needed */}
                     </select>
                   </div>
 
@@ -229,10 +231,6 @@ const CreateReport = () => {
                             </option>
                           );
                         })}
-                      {/* <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option> */}
-                      {/* Add more options as needed */}
                     </select>
                   </div>
                 </div>
@@ -260,7 +258,8 @@ const CreateReport = () => {
                     <select
                       id="sealed-unsealed"
                       className="flex-grow h-5 px-2 border"
-                      value="Selected"
+                      name="Selected"
+                      onChange={handleChange}
                     >
                       <option value="sealed">Sealed</option>
                       <option value="unsealed">Unsealed</option>
@@ -284,82 +283,85 @@ const CreateReport = () => {
             </div>
           </div>
           <div className="h-12 p-4 mt-1 border border-gray-300">
-  <div className="flex space-x-4">
-    <div className="flex items-center">
-      <input
-        type="text"
-        id="editableNumber"
-        className="h-5 px-2 py-1 mr-4 border w-28"
-        defaultValue="Crude"
-      />
-      <input
-        type="text"
-        id="editableNumber"
-        className="h-5 px-2 py-1 border w-28"
-        name="Crude"
-        onChange={handleChange}
-      />
-    </div>
-    <div className="flex items-center pl-12">
-      <label htmlFor="moisture" className="text-sm whitespace-nowrap">
-        Moisture
-      </label>
-      <input
-        type="text"
-        id="moisture"
-        className="h-5 px-2 py-1 ml-2 border w-28"
-        name="Moisture"
-        onChange={handleChange}
-      />
-      <span className="ml-1">%</span>
-    </div>
-    <div className="flex items-center pl-16 space-x-2">
-      <label htmlFor="oil" className="text-sm">
-        Oil
-      </label>
-      <div className="flex items-center">
-        <input
-          type="text"
-          id="oil"
-          className="h-5 px-2 py-1 border w-28"
-          name="Oil"
-          onChange={handleChange}
-        />
-        <span className="ml-1">%</span>
-      </div>
-    </div>
-    <div className="flex items-center pl-16 space-x-2">
-      <label htmlFor="ffa" className="text-sm">
-        FFA
-      </label>
-      <input
-        type="text"
-        id="ffa"
-        className="h-5 px-2 py-1 border w-28"
-        name="FFA"
-        onChange={(e) => {
-          handleFfaChange();
-          handleChange(e);
-        }}
-      />
-      <span className="ml-1">%</span>
-    </div>
-    {/* Time input after FFA section */}
-    <div className="flex items-center pl-6 space-x-2">
-      <label htmlFor="ffaTime" className="text-sm">
-        Time
-      </label>
-      <input
-        type="time"
-        id="ffaTime"
-        className="h-5 px-2 py-1 border w-28"
-        name="ffaTime"
-        onChange={handleChange}
-      />
-    </div>
-  </div>
-</div>
-
+            <div className="flex space-x-4">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  id="editableNumber"
+                  className="h-5 px-2 py-1 mr-4 border w-28"
+                  value={formData.AnotherName}
+                  name="AnotherName"
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  id="editableNumber"
+                  className="h-5 px-2 py-1 border w-28"
+                  name="AnotherValue"
+                  value={formData.AnotherValue}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex items-center pl-12">
+                <label htmlFor="moisture" className="text-sm whitespace-nowrap">
+                  Moisture
+                </label>
+                <input
+                  type="text"
+                  id="moisture"
+                  className="h-5 px-2 py-1 ml-2 border w-28"
+                  name="Moisture"
+                  onChange={handleChange}
+                />
+                <span className="ml-1">%</span>
+              </div>
+              <div className="flex items-center pl-16 space-x-2">
+                <label htmlFor="oil" className="text-sm">
+                  Oil
+                </label>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    id="oil"
+                    className="h-5 px-2 py-1 border w-28"
+                    name="Oil"
+                    onChange={handleChange}
+                  />
+                  <span className="ml-1">%</span>
+                </div>
+              </div>
+              <div className="flex items-center pl-16 space-x-2">
+                <label htmlFor="ffa" className="text-sm">
+                  FFA
+                </label>
+                <input
+                  type="text"
+                  id="ffa"
+                  className="h-5 px-2 py-1 border w-28"
+                  name="FFA"
+                  onChange={(e) => {
+                    handleFfaChange();
+                    handleChange(e);
+                  }}
+                />
+                <span className="ml-1">%</span>
+              </div>
+              {/* Time input after FFA section */}
+              <div className="flex items-center pl-6 space-x-2">
+                <label htmlFor="ffaTime" className="text-sm">
+                  Time
+                </label>
+                <input
+                  type="time"
+                  id="ffaTime"
+                  className="h-5 px-2 py-1 border w-28"
+                  name="ffaTime"
+                  value={time}
+                  // onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="h-16 p-2 mt-1 border border-gray-300">
             <div className="flex flex-wrap -mx-4">

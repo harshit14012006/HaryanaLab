@@ -32,7 +32,7 @@ function LedgerEntry() {
       });
   };
 
-  const RepNo = (Data) => {
+  const RepNumber = (Data) => {
     try {
       axios
         .get(`http://localhost:3001/api/analysises/${Data}`) // API endpoint to fetch Partyname and City
@@ -58,6 +58,9 @@ function LedgerEntry() {
           console.log("Data From HandleTableData", response.data);
           // Set the fetched party names into state
           setLedgerEntries(response.data);
+          response.data.map((item) => {
+            setRepNo(Repno.filter((index) => index !== item.Reportno));
+          });
         })
         .catch((error) => {
           console.error("Error fetching party names:", error);
@@ -78,7 +81,7 @@ function LedgerEntry() {
     );
     if (selectedPartyObj) {
       setSelectedCity(selectedPartyObj.City); // Set city based on selected party
-      RepNo(selectedPartyObj.Name);
+      RepNumber(selectedPartyObj.Name);
       HandleTableData(selectedPartyName);
     } else {
       setSelectedCity(""); // Reset if no party selected
@@ -203,7 +206,7 @@ function LedgerEntry() {
                   >
                     <option value="">Select Report No.</option>
 
-                    {RepNo.length > 0 &&
+                    {Repno.length > 0 &&
                       Repno.map((repo, index) => (
                         <option key={index} value={repo.Reportno}>
                           {repo.Reportno}
@@ -312,7 +315,7 @@ function LedgerEntry() {
                           {entry.Date}
                         </td>
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
-                          {entry.Reportno}
+                          {entry.Reportno === null ? "" : entry.Reportno}
                         </td>
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
                           {entry.Amount}

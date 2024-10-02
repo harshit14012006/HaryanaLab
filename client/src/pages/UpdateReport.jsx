@@ -1,17 +1,98 @@
 import React from "react";
 import axios from "axios";
 const ReportAnalysis = () => {
-  const [Data, getData] = React.useState(null);
+  const [Data, getData] = React.useState({});
+  const [time, getTime] = React.useState("");
+  const [customersbyname, setCustomersbyname] = React.useState([]);
+  const [sampleName, setSampleName] = React.useState([]);
+  const [city, setCity] = React.useState(null);
 
+  const [FFaTime, setFfaTime] = React.useState("");
+  const [Remark, SetRemark] = React.useState({
+    remarks1: "",
+    remarks2: "",
+  });
+  let [Repno, setRepno] = React.useState(0);
+  const handleChange = (event) => {
+    // Create a new object with the updated formData
+    let newFormData = { ...Data, [event.target.name]: event.target.value };
+
+    const result =
+      event.target.name === "From" &&
+      customersbyname.find(
+        (person) =>
+          person.Name.toLowerCase() === event.target.value.toLowerCase()
+      );
+
+    if (result) {
+      console.log("Found");
+      setCity(result.City);
+      newFormData = { ...newFormData, Station: result.City }; // Update newFormData with Station
+    } else {
+      console.log("not found");
+    }
+
+    // Update formData once with the final values
+    getData(newFormData);
+  };
+
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+  React.useEffect(() => {
+    getTime(getCurrentTime());
+    // Update time every minute
+    const intervalId = setInterval(() => {
+      getTime(getCurrentTime());
+    }, 1000); // Update every minute
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
   const HandleData = (event) => {
     const Value = event.target.value;
-
+    setRepno(Value);
+    console.log("Handling Data");
     try {
       axios
         .get(`http://localhost:3001/api/analysis/${Value}`)
         .then((response) => {
-          console.log(response.data.data);
-          getData(response.data.data);
+          console.log(response.data);
+          getData({});
+          setCity(null);
+          setCustomersbyname([]);
+          setSampleName([]);
+          if (response.data.response) {
+            console.log("If working");
+            getData(response.data.data[0]);
+            const part = response.data.data[0].Remarks.split(" ");
+            part &&
+              SetRemark({
+                remarks1: part[0],
+                remarks2: part[1],
+              });
+            axios
+              .get("http://localhost:3001/api/customersbyname")
+              .then((response) => {
+                // console.log(response.data);
+                setCustomersbyname(response.data);
+              })
+              .catch((error) => {
+                console.error("There was an error fetching the data!", error);
+              });
+            axios
+              .get("http://localhost:3001/api/Item")
+              .then((response) => {
+                // console.log(response.data.id);
+                setSampleName(response.data.id);
+              })
+              .catch((error) => {
+                console.error("There was an error fetching the data!", error);
+              });
+          }
         })
         .catch((error) => {
           console.error("There was an error fetching the data!", error);
@@ -20,9 +101,32 @@ const ReportAnalysis = () => {
       console.error("Error fetching data:", error);
     }
   };
-
+  const handleFfaChange = (e) => {
+    setFfaTime(new Date().toLocaleTimeString()); // Set the current time
+  };
   const HandleUpdate = () => {
+    Data.Remarks = `${Remark.remarks1} ${Remark.remarks2}`;
+    Data.Time = FFaTime;
     console.log(Data);
+    if (Data.FFA) {
+      try {
+        axios
+          .put(`http://localhost:3001/api/analysis/${Repno} `, Data)
+          .then((response) => {
+            console.log(response.data);
+            setCustomersbyname([]);
+            setSampleName([]);
+            setCity(null);
+            getData({});
+            SetRemark({ remarks1: "", remarks2: "" });
+          })
+          .catch((error) => {
+            console.error("Error updating data:", error);
+          });
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
   };
 
   return (
@@ -51,8 +155,10 @@ const ReportAnalysis = () => {
                 <input
                   type="time"
                   required
+                  readOnly
                   id="time"
                   className="w-40 h-5 border"
+                  value={time}
                 />
               </div>
             </div>
@@ -65,11 +171,23 @@ const ReportAnalysis = () => {
                     <label htmlFor="samplename" className="w-1/3 text-sm">
                       Sample Name
                     </label>
-                    <input
-                      type="text"
+                    <select
                       id="samplename"
-                      className="flex-grow h-5 px-2 border"
-                    />
+                      className="flex-grow h-5 px-2 border rounded"
+                      name="Samplename"
+                      value={Data.Samplename || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select a sample</option>
+                      {sampleName &&
+                        sampleName.map((name) => {
+                          return (
+                            <option key={name.ID} value={name.ItemName}>
+                              {name.ItemName}
+                            </option>
+                          );
+                        })}
+                    </select>
                   </div>
                   <div className="flex items-center">
                     <label htmlFor="input2" className="w-1/3 text-sm">
@@ -78,19 +196,36 @@ const ReportAnalysis = () => {
                     <input
                       type="date"
                       id="dated"
+                      name="Dated"
                       className="flex-grow h-5 px-2 py-1 border"
                       placeholder="Input 2"
+                      value={Data.Dated || ""}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="flex items-center">
                     <label htmlFor="" className="w-1/3 text-sm">
                       From Sh/M/s
                     </label>
-                    <input
-                      type="text"
+                    <select
                       id="from"
-                      className="flex-grow h-5 px-2 py-1 border"
-                    />
+                      className="flex-grow h-5 px-2 border rounded"
+                      name="From"
+                      value={Data.From || ""}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    >
+                      <option value="">Select an option</option>
+                      {customersbyname &&
+                        customersbyname.map((name, index) => {
+                          return (
+                            <option key={index} value={name.Name}>
+                              {name.Name}
+                            </option>
+                          );
+                        })}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -106,6 +241,9 @@ const ReportAnalysis = () => {
                       type="text"
                       id="billeddate"
                       className="flex-grow h-5 px-2 py-1 border"
+                      value={Data.Billeddate || ""}
+                      name="Billeddate"
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="flex items-center">
@@ -115,6 +253,9 @@ const ReportAnalysis = () => {
                     <select
                       id="sealed-unsealed"
                       className="flex-grow h-5 px-2 border"
+                      value={Data.Selected || "sealed"}
+                      name="Selected"
+                      onChange={handleChange}
                     >
                       <option value="sealed">Sealed</option>
                       <option value="unsealed">Unsealed</option>
@@ -128,7 +269,9 @@ const ReportAnalysis = () => {
                     <input
                       type="text"
                       id="input6"
+                      disabled
                       className="flex-grow h-5 px-2 py-1 border"
+                      value={!city ? Data.Station || "" : city}
                     />
                   </div>
                 </div>
@@ -136,63 +279,75 @@ const ReportAnalysis = () => {
             </div>
           </div>
           <div className="h-12 p-4 mt-1 border border-gray-300">
-  <div className="flex space-x-4">
-    <div className="flex items-center">
-      <input
-        type="text"
-        id="editableNumber"
-        className="h-5 px-2 py-1 mr-4 border w-28"
-        defaultValue="Crude"
-      />
-      <input
-        type="text"
-        id="editableNumber"
-        className="h-5 px-2 py-1 border w-28"
-        name="Crude"
-      
-      />
-    </div>
-    <div className="flex items-center pl-12">
-      <label htmlFor="moisture" className="text-sm whitespace-nowrap">
-        Moisture
-      </label>
-      <input
-        type="text"
-        id="moisture"
-        className="h-5 px-2 py-1 ml-2 border w-28"
-        name="Moisture"
-        
-      />
-      <span className="ml-1">%</span>
-    </div>
-    <div className="flex items-center pl-16 space-x-2">
-      <label htmlFor="oil" className="text-sm">
-        Oil
-      </label>
-      <div className="flex items-center">
-        <input
-          type="text"
-          id="oil"
-          className="h-5 px-2 py-1 border w-28"
-          name="Oil"
-        />
-        <span className="ml-1">%</span>
-      </div>
-    </div>
-    <div className="flex items-center pl-16 space-x-2">
-      <label htmlFor="ffa" className="text-sm">
-        FFA
-      </label>
-      <input
-        type="text"
-        id="ffa"
-        className="h-5 px-2 py-1 border w-28"
-        name="FFA"
-      />
-      <span className="ml-1">%</span>
-    </div>
-  </div>
-</div>
+            <div className="flex space-x-4">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  id="editableNumber"
+                  className="h-5 px-2 py-1 mr-4 border w-28"
+                  value={Data.AnotherName || ""}
+                  name="AnotherName"
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  id="editableNumber"
+                  className="h-5 px-2 py-1 border w-28"
+                  value={Data.AnotherValue || ""}
+                  name="AnotherValue"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex items-center pl-12">
+                <label htmlFor="moisture" className="text-sm whitespace-nowrap">
+                  Moisture
+                </label>
+                <input
+                  type="text"
+                  id="moisture"
+                  className="h-5 px-2 py-1 ml-2 border w-28"
+                  name="Moisture"
+                  value={Data.Moisture || ""}
+                  onChange={handleChange}
+                />
+                <span className="ml-1">%</span>
+              </div>
+              <div className="flex items-center pl-16 space-x-2">
+                <label htmlFor="oil" className="text-sm">
+                  Oil
+                </label>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    id="oil"
+                    className="h-5 px-2 py-1 border w-28"
+                    name="Oil"
+                    value={Data.Oil || ""}
+                    onChange={handleChange}
+                  />
+                  <span className="ml-1">%</span>
+                </div>
+              </div>
+              <div className="flex items-center pl-16 space-x-2">
+                <label htmlFor="ffa" className="text-sm">
+                  FFA
+                </label>
+                <input
+                  type="text"
+                  id="ffa"
+                  className="h-5 px-2 py-1 border w-28"
+                  name="FFA"
+                  value={Data.FFA || ""}
+                  onChange={(e) => {
+                    handleChange(e);
+                    handleFfaChange(e);
+                  }}
+                  //
+                />
+                <span className="ml-1">%</span>
+              </div>
+            </div>
+          </div>
 
           <div className="h-16 p-2 mt-1 border border-gray-300">
             <div className="flex flex-wrap -mx-4">
@@ -208,6 +363,9 @@ const ReportAnalysis = () => {
                   type="text"
                   id="sampleNo"
                   className="w-full h-5 px-2 py-1 border"
+                  value={Data.Code || ""}
+                  name="Code"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -220,9 +378,12 @@ const ReportAnalysis = () => {
                   Date
                 </label>
                 <input
-                  type="date"
+                  type="text"
                   id="date"
                   className="w-full h-5 px-2 py-1 border"
+                  value={Data.Date || ""}
+                  name="Date"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -238,6 +399,9 @@ const ReportAnalysis = () => {
                   type="text"
                   id="vehicleNo"
                   className="w-full h-5 px-2 py-1 border"
+                  value={Data.Vechileno || ""}
+                  name="Vechileno"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -253,6 +417,9 @@ const ReportAnalysis = () => {
                   type="number"
                   id="bags"
                   className="w-full h-5 px-2 py-1 border"
+                  value={Data.Bags || ""}
+                  name="Bags"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -268,6 +435,9 @@ const ReportAnalysis = () => {
                   type="text"
                   id="weight"
                   className="w-full h-5 px-2 py-1 border"
+                  value={Data.Weight || ""}
+                  name="Weight"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -278,12 +448,15 @@ const ReportAnalysis = () => {
               <select
                 id="sealed-unsealed"
                 className="flex-grow h-5 px-2 border"
+                value={Data.Category || "sealed"}
+                name="Category"
+                onChange={handleChange}
               >
-                <option value="sealed">Seal Engraved</option>
-                <option value="unsealed">Buyer</option>
-                <option value="ricemills">Rice Mills</option>
-                <option value="trader">Trader</option>
-                <option value="broker">Broker</option>
+                <option value="Seal Engraved">Seal Engraved</option>
+                <option value="Buyer">Buyer</option>
+                <option value="Rice Mills">Rice Mills</option>
+                <option value="Trader">Trader</option>
+                <option value="Broker">Broker</option>
               </select>
             </div>
 
@@ -291,8 +464,12 @@ const ReportAnalysis = () => {
             <div>
               <input
                 type="text"
-                id="space"
+                id="remarks1"
                 className="w-full h-5 px-2 py-1 border"
+                value={Remark.remarks1}
+                onChange={(e) =>
+                  SetRemark({ ...Remark, [e.target.id]: e.target.value })
+                }
               />
             </div>
 
@@ -305,14 +482,24 @@ const ReportAnalysis = () => {
             <div>
               <input
                 type="text"
-                id="space2"
+                id="remarks2"
                 className="w-full h-5 px-2 py-1 border"
+                value={Remark.remarks2}
+                onChange={(e) =>
+                  SetRemark({ ...Remark, [e.target.id]: e.target.value })
+                }
               />
             </div>
           </div>
           <div className="text-right">
             <span className="block mr-6 text-sm">Signature</span>
-            <select id="signature" className="px-2 py-1 mb-2 border">
+            <select
+              id="signature"
+              className="px-2 py-1 mb-2 border"
+              value={Data.Signature || ""}
+              name="Signature"
+              onChange={handleChange}
+            >
               <option value=""></option>
               <option value="signature1">Signature 1</option>
               <option value="signature2">Signature 2</option>
