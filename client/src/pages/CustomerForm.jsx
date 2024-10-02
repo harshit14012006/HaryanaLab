@@ -340,8 +340,8 @@ const CustomerForm = () => {
                   type="text"
                   id="address1"
                   className="w-2/3 h-5 border"
-                  required
                   name="Address1"
+                  required
                   value={formdata.Address1}
                   onChange={handleChange}
                 />
@@ -358,7 +358,7 @@ const CustomerForm = () => {
                   type="text"
                   id="address2"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Address2"
                   value={formdata.Address2}
                   onChange={handleChange}
@@ -376,7 +376,7 @@ const CustomerForm = () => {
                   type="text"
                   id="landmark"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Landmark"
                   value={formdata.Landmark}
                   onChange={handleChange}
@@ -420,7 +420,7 @@ const CustomerForm = () => {
                   style={{fontSize:"14px"}}
                   id="Pincode"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Pincode"
                   value={formdata.Pincode}
                   onChange={handleChange}
@@ -463,7 +463,7 @@ const CustomerForm = () => {
                   type="text"
                   id="District"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="District"
                   value={formdata.District}
                   onChange={handleChange}
@@ -480,7 +480,7 @@ const CustomerForm = () => {
                 <input
                   type="text"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Printname"
                   value={formdata.Printname}
                   onChange={handleChange}
@@ -527,7 +527,7 @@ const CustomerForm = () => {
                   type="text"
                   id="landline1"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Landline1"
                   value={formdata.Landline1}
                   onChange={handleChange}
@@ -545,7 +545,7 @@ const CustomerForm = () => {
                   type="email"
                   id="email"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Email1"
                   value={formdata.Email1}
                   onChange={handleChange}
@@ -563,7 +563,7 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile2"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Mobile2"
                   value={formdata.Mobile2}
                   onChange={handleChange}
@@ -581,7 +581,7 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile3"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Mobile3"
                   value={formdata.Mobile3}
                   onChange={handleChange}
@@ -599,7 +599,7 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile4"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Mobile4"
                   value={formdata.Mobile4}
                   onChange={handleChange}
@@ -617,7 +617,7 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile5"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Mobile5"
                   value={formdata.Mobile5}
                   onChange={handleChange}
@@ -636,7 +636,7 @@ const CustomerForm = () => {
                   type="email"
                   id="email"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Email2"
                   value={formdata.Email2}
                   onChange={handleChange}
@@ -654,7 +654,7 @@ const CustomerForm = () => {
                   type="text"
                   id="fax"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Fax"
                   value={formdata.Fax}
                   onChange={handleChange}
@@ -672,7 +672,7 @@ const CustomerForm = () => {
                   type="text"
                   id="website"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Website"
                   value={formdata.Website}
                   onChange={handleChange}
@@ -690,7 +690,7 @@ const CustomerForm = () => {
                   type="text"
                   id="opening_balance"
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Openingbalance"
                   value={formdata.Openingbalance}
                   onChange={handleChange}
@@ -764,7 +764,7 @@ const CustomerForm = () => {
                     type="text"
                     id="name"
                     className="w-2/3 h-5 border"
-                    required
+                    
                     name="Name"
                     value={formdata.Name}
                     onChange={handleChange}
@@ -782,7 +782,7 @@ const CustomerForm = () => {
                     type="text"
                     id="mobile1"
                     className="w-2/3 h-5 border"
-                    required
+                    
                     name="Mobile1c"
                     value={formdata.Mobile1c}
                     onChange={handleChange}
@@ -803,7 +803,7 @@ const CustomerForm = () => {
                     type="text"
                     id="designation"
                     className="w-2/3 h-5 border"
-                    required
+                    
                     name="Designation"
                     value={formdata.Designation}
                     onChange={handleChange}
@@ -821,7 +821,7 @@ const CustomerForm = () => {
                     type="text"
                     id="mobile2"
                     className="w-2/3 h-5 border"
-                    required
+                    
                     name="Mobile2c"
                     value={formdata.Mobile2c}
                     onChange={handleChange}
@@ -849,7 +849,7 @@ const CustomerForm = () => {
                   type="text"
                   id=""
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Remarks1"
                   value={formdata.Remarks1}
                   onChange={handleChange}
@@ -867,7 +867,7 @@ const CustomerForm = () => {
                   type="text"
                   id=""
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Remarks2"
                   value={formdata.Remarks2}
                   onChange={handleChange}
@@ -885,7 +885,7 @@ const CustomerForm = () => {
                   type="text"
                   id=""
                   className="w-2/3 h-5 border"
-                  required
+                  
                   name="Remarks3"
                   value={formdata.Remarks3}
                   onChange={handleChange}

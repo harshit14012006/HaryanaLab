@@ -181,8 +181,9 @@ const CreateReport = () => {
                     </label>
                     <select
                       id="samplename"
-                      className="flex-grow h-5 px-2 border rounded"
+                      className="flex-grow h-5 border rounded"
                       name="Samplename"
+                      required
                       onChange={handleChange}
                     >
                       <option value="">Select a sample</option>
@@ -193,6 +194,8 @@ const CreateReport = () => {
                               {name.ItemName}
                             </option>
                           );
+                          
+                          
                         })}
                     </select>
                   </div>
@@ -204,9 +207,10 @@ const CreateReport = () => {
                     <input
                       type="date"
                       id="dated"
-                      className="flex-grow h-5 px-2 py-1 border"
+                      className="flex-grow h-5 py-1 border"
                       placeholder="Input 2"
                       name="Dated"
+                      required
                       onChange={handleChange}
                     />
                   </div>
@@ -216,8 +220,9 @@ const CreateReport = () => {
                     </label>
                     <select
                       id="from"
-                      className="flex-grow h-5 px-2 border rounded"
+                      className="flex-grow h-5 px-0 border rounded"
                       name="From"
+                      required
                       onChange={(e) => {
                         handleChange(e);
                       }}
@@ -246,7 +251,8 @@ const CreateReport = () => {
                     <input
                       type="date"
                       id="billedDate"
-                      className="flex-grow h-5 px-2 py-1 border"
+                      required
+                      className="flex-grow h-5 px-0 py-1 border"
                       name="Billeddate"
                       onChange={handleChange}
                     />
@@ -257,8 +263,9 @@ const CreateReport = () => {
                     </label>
                     <select
                       id="sealed-unsealed"
-                      className="flex-grow h-5 px-2 border"
+                      className="flex-grow h-5 px-0 border"
                       name="Selected"
+                      required
                       onChange={handleChange}
                     >
                       <option value="sealed">Sealed</option>
@@ -273,8 +280,9 @@ const CreateReport = () => {
                     <input
                       type="text"
                       id="input6"
+                      
                       disabled
-                      className="flex-grow h-5 px-2 py-1 border"
+                      className="flex-grow h-5 px-0 py-1 border"
                       value={City}
                     />
                   </div>
@@ -288,7 +296,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="editableNumber"
-                  className="h-5 px-2 py-1 mr-4 border w-28"
+                  className="h-5 px-0 py-1 mr-4 border w-28"
                   value={formData.AnotherName}
                   name="AnotherName"
                   onChange={handleChange}
@@ -296,7 +304,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="editableNumber"
-                  className="h-5 px-2 py-1 border w-28"
+                  className="h-5 px-0 py-1 border w-28"
                   name="AnotherValue"
                   value={formData.AnotherValue}
                   onChange={handleChange}
@@ -309,7 +317,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="moisture"
-                  className="h-5 px-2 py-1 ml-2 border w-28"
+                  className="h-5 px-0 py-1 ml-2 border w-28"
                   name="Moisture"
                   onChange={handleChange}
                 />
@@ -323,7 +331,7 @@ const CreateReport = () => {
                   <input
                     type="text"
                     id="oil"
-                    className="h-5 px-2 py-1 border w-28"
+                    className="h-5 px-0 py-1 border w-28"
                     name="Oil"
                     onChange={handleChange}
                   />
@@ -337,7 +345,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="ffa"
-                  className="h-5 px-2 py-1 border w-28"
+                  className="h-5 px-0 py-1 border w-28"
                   name="FFA"
                   onChange={(e) => {
                     handleFfaChange();
@@ -354,7 +362,7 @@ const CreateReport = () => {
                 <input
                   type="time"
                   id="ffaTime"
-                  className="h-5 px-2 py-1 border w-28"
+                  className="h-5 px-0 py-1 border w-28"
                   name="ffaTime"
                   value={time}
                   // onChange={handleChange}
@@ -376,7 +384,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="sampleNo"
-                  className="w-full h-5 px-2 py-1 border"
+                  className="w-full h-5 px-0 py-1 border"
                   name="Code"
                   onChange={handleChange}
                 />
@@ -393,7 +401,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="date"
-                  className="w-full h-5 px-2 py-1 border"
+                  className="w-full h-5 px-0 py-1 border"
                   name="Date"
                   onChange={handleChange}
                 />
@@ -410,7 +418,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="vehicleNo"
-                  className="w-full h-5 px-2 py-1 border"
+                  className="w-full h-5 px-0 py-1 border"
                   name="Vechileno"
                   onChange={handleChange}
                 />
@@ -427,7 +435,7 @@ const CreateReport = () => {
                 <input
                   type="number"
                   id="bags"
-                  className="w-full h-5 px-2 py-1 border"
+                  className="w-full h-5 px-0 py-1 border"
                   name="Bags"
                   onChange={handleChange}
                 />
@@ -444,7 +452,7 @@ const CreateReport = () => {
                 <input
                   type="text"
                   id="weight"
-                  className="w-full h-5 px-2 py-1 border"
+                  className="w-full h-5 px-0 py-1 border"
                   name="Weight"
                   onChange={handleChange}
                 />
@@ -456,7 +464,7 @@ const CreateReport = () => {
             <div>
               <select
                 id="sealed-unsealed"
-                className="flex-grow h-5 px-2 border"
+                className="flex-grow h-5 px-0 border"
                 name="Itemcategory"
                 onChange={handleChange}
               >
@@ -474,7 +482,7 @@ const CreateReport = () => {
               <input
                 type="text"
                 id="space"
-                className="w-full h-5 px-2 py-1 border"
+                className="w-full h-5 px-0 py-1 border"
                 name="Remarks1"
                 onChange={handleChange}
               />
@@ -490,7 +498,7 @@ const CreateReport = () => {
               <input
                 type="text"
                 id="space2"
-                className="w-full h-5 px-2 py-1 border"
+                className="w-full h-5 px-0 py-1 border"
                 name="Remarks2"
                 onChange={handleChange}
               />
@@ -500,7 +508,7 @@ const CreateReport = () => {
             <span className="block mr-6 text-sm">Signature</span>
             <select
               id="signature"
-              className="px-2 py-1 mb-2 border"
+              className="px-0 py-1 mb-2 border"
               name="Signature"
               onChange={handleChange}
             >
