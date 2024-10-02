@@ -219,6 +219,7 @@ const updateAnalysis = (req, res) => {
 };
 
 const getRepNo = async (req, res) => {
+  console.log("Working");
   console.log(req.params.from);
   const Query = `SELECT Reportno FROM analysis WHERE \`From\` = ? `;
   db.query(Query, req.params.from, (err, result) => {

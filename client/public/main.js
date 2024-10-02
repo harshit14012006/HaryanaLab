@@ -283,7 +283,7 @@ const ledgerentryPopup = () => {
 const ledgerreortPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
-    height: 600,
+    height: 608,
     parent: mainWindow,
     modal: true,
     webPreferences: {

@@ -133,3 +133,23 @@ exports.getUsersByName = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+exports.getUsersByDate = async (req, res) => {
+  const { fromDate, toDate } = req.params;
+  console.log(fromDate, toDate);
+  try {
+    const sqlQuery = "SELECT * FROM ledger where Date BETWEEN ? AND ?";
+    db.query(sqlQuery, [fromDate, toDate], (err, results) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return res.status(500).send("Database query error");
+      }
+      results.length > 0
+        ? res.json(results)
+        : res.send({ message: "Not Found" }); // Send the results as JSON response
+    });
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).send("Server error");
+  }
+};

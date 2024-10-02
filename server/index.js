@@ -13,6 +13,7 @@ const {
   deleteUser,
   updateUser,
   getUsersByName,
+  getUsersByDate,
 } = require("./controller/userController");
 const cashVoucherController = require("./controller/cashVoucherController");
 const customerController = require("./controller/customerController");
@@ -50,10 +51,11 @@ app.post("/api/users", addUser);
 app.delete("/api/users/:Date/:Reportno/:PartyName", deleteUser);
 app.put("/api/users/:id", updateUser);
 app.get("/api/users/:name", getUsersByName);
+app.get("/api/usersDate/:fromDate/:toDate", getUsersByDate);
 
 //Customer Api's
-app.post("/api/customers", customerController.createCustomer);
 app.get("/api/customers", customerController.getAllCustomers);
+app.post("/api/customers", customerController.createCustomer);
 app.get("/api/customersbyname", customerController.databyname);
 app.put("/api/customers/:Partyid", customerController.updateCustomer);
 app.delete("/api/customers/:Partyid", customerController.deleteCustomer);
