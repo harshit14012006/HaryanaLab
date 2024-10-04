@@ -291,85 +291,89 @@ const CreateReport = () => {
             </div>
           </div>
           <div className="h-12 p-4 mt-1 border border-gray-300">
-            <div className="flex space-x-4">
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  id="editableNumber"
-                  className="h-5 px-0 py-1 mr-4 border w-28"
-                  value={formData.AnotherName}
-                  name="AnotherName"
-                  onChange={handleChange}
-                />
-                <input
-                  type="text"
-                  id="editableNumber"
-                  className="h-5 px-0 py-1 border w-28"
-                  name="AnotherValue"
-                  value={formData.AnotherValue}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="flex items-center pl-12">
-                <label htmlFor="moisture" className="text-sm whitespace-nowrap">
-                  Moisture
-                </label>
-                <input
-                  type="text"
-                  id="moisture"
-                  className="h-5 px-0 py-1 ml-2 border w-28"
-                  name="Moisture"
-                  onChange={handleChange}
-                />
-                <span className="ml-1">%</span>
-              </div>
-              <div className="flex items-center pl-16 space-x-2">
-                <label htmlFor="oil" className="text-sm">
-                  Oil
-                </label>
-                <div className="flex items-center">
-                  <input
-                    type="text"
-                    id="oil"
-                    className="h-5 px-0 py-1 border w-28"
-                    name="Oil"
-                    onChange={handleChange}
-                  />
-                  <span className="ml-1">%</span>
-                </div>
-              </div>
-              <div className="flex items-center pl-16 space-x-2">
-                <label htmlFor="ffa" className="text-sm">
-                  FFA
-                </label>
-                <input
-                  type="text"
-                  id="ffa"
-                  className="h-5 px-0 py-1 border w-28"
-                  name="FFA"
-                  onChange={(e) => {
-                    handleFfaChange();
-                    handleChange(e);
-                  }}
-                />
-                <span className="ml-1">%</span>
-              </div>
-              {/* Time input after FFA section */}
-              <div className="flex items-center pl-6 space-x-2">
-                <label htmlFor="ffaTime" className="text-sm">
-                  Time
-                </label>
-                <input
-                  type="time"
-                  id="ffaTime"
-                  className="h-5 px-0 py-1 border w-28"
-                  name="ffaTime"
-                  value={time}
-                  // onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
+    <div className="flex space-x-4">
+      <div className="flex items-center">
+        <input
+          type="text"
+          id="editableNumber"
+          className="h-5 px-0 py-1 mr-4 border w-28"
+          value={formData.AnotherName}
+          name="AnotherName"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          id="editableNumber"
+          className="h-5 px-0 py-1 border w-28"
+          name="AnotherValue"
+          value={formData.AnotherValue}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="flex items-center pl-12">
+        <label htmlFor="moisture" className="text-sm whitespace-nowrap">
+          Moisture
+        </label>
+        <input
+          type="text"
+          id="moisture"
+          className="h-5 px-0 py-1 ml-2 border w-28"
+          name="Moisture"
+          onChange={handleChange}
+        />
+        <span className="ml-1">%</span>
+      </div>
+      <div className="flex items-center pl-16 space-x-2">
+        <label htmlFor="oil" className="text-sm">
+          Oil
+        </label>
+        <div className="flex items-center">
+          <input
+            type="text"
+            id="oil"
+            className="h-5 px-0 py-1 border w-28"
+            name="Oil"
+            onChange={handleChange}
+          />
+          <span className="ml-1">%</span>
+        </div>
+      </div>
+      <div className="flex items-center pl-16 space-x-2">
+        <label htmlFor="ffa" className="text-sm">
+          FFA
+        </label>
+        <input
+          type="text"
+          id="ffa"
+          className="h-5 px-0 py-1 border w-28"
+          name="FFA"
+          value={formData.FFA}
+          onChange={(e) => {
+            handleFfaChange(e);
+            handleChange(e);
+          }}
+        />
+        <span className="ml-1">%</span>
+      </div>
+
+      {/* Time input after FFA section, shown conditionally */}
+      {formData.FFA && (
+        <div className="flex items-center pl-6 space-x-2">
+          <label htmlFor="ffaTime" className="text-sm">
+            Time
+          </label>
+          <input
+            type="time"
+            id="ffaTime"
+            className="h-5 px-0 py-1 border w-28"
+            name="ffaTime"
+            value={formData.ffaTime}
+            onChange={handleChange}
+          />
+        </div>
+      )}
+    </div>
+  </div>
 
           <div className="h-16 p-2 mt-1 border border-gray-300">
             <div className="flex flex-wrap -mx-4">

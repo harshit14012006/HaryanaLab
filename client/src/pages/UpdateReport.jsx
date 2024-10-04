@@ -510,7 +510,7 @@ const ReportAnalysis = () => {
                 className="px-2 py-1 bg-gray-400 rounded"
                 onClick={HandleUpdate}
               >
-                Update
+                Update and Print
               </button>
             </div>
           </div>
