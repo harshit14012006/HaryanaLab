@@ -163,6 +163,9 @@ const CustomerForm = () => {
 
   const HandleAddData = () => {
     console.log(formdata);
+    if (formdata.Name === "") {
+      formdata.Name = formdata.Printname;
+    }
     try {
       axios
         .post("http://localhost:3001/api/customers", formdata)
@@ -358,7 +361,6 @@ const CustomerForm = () => {
                   type="text"
                   id="address2"
                   className="w-2/3 h-5 border"
-                  
                   name="Address2"
                   value={formdata.Address2}
                   onChange={handleChange}
@@ -376,7 +378,6 @@ const CustomerForm = () => {
                   type="text"
                   id="landmark"
                   className="w-2/3 h-5 border"
-                  
                   name="Landmark"
                   value={formdata.Landmark}
                   onChange={handleChange}
@@ -417,10 +418,9 @@ const CustomerForm = () => {
                 </label>
                 <input
                   type="text"
-                  style={{fontSize:"14px"}}
+                  style={{ fontSize: "14px" }}
                   id="Pincode"
                   className="w-2/3 h-5 border"
-                  
                   name="Pincode"
                   value={formdata.Pincode}
                   onChange={handleChange}
@@ -463,7 +463,6 @@ const CustomerForm = () => {
                   type="text"
                   id="District"
                   className="w-2/3 h-5 border"
-                  
                   name="District"
                   value={formdata.District}
                   onChange={handleChange}
@@ -480,8 +479,8 @@ const CustomerForm = () => {
                 <input
                   type="text"
                   className="w-2/3 h-5 border"
-                  
                   name="Printname"
+                  required
                   value={formdata.Printname}
                   onChange={handleChange}
                 />
@@ -514,7 +513,7 @@ const CustomerForm = () => {
                   onChange={handleChange}
                 />
               </div>
-              
+
               <div className="flex items-center mb-1 space-x-2">
                 <label
                   htmlFor="landline1"
@@ -527,7 +526,6 @@ const CustomerForm = () => {
                   type="text"
                   id="landline1"
                   className="w-2/3 h-5 border"
-                  
                   name="Landline1"
                   value={formdata.Landline1}
                   onChange={handleChange}
@@ -545,7 +543,6 @@ const CustomerForm = () => {
                   type="email"
                   id="email"
                   className="w-2/3 h-5 border"
-                  
                   name="Email1"
                   value={formdata.Email1}
                   onChange={handleChange}
@@ -563,7 +560,6 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile2"
                   className="w-2/3 h-5 border"
-                  
                   name="Mobile2"
                   value={formdata.Mobile2}
                   onChange={handleChange}
@@ -581,7 +577,6 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile3"
                   className="w-2/3 h-5 border"
-                  
                   name="Mobile3"
                   value={formdata.Mobile3}
                   onChange={handleChange}
@@ -599,7 +594,6 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile4"
                   className="w-2/3 h-5 border"
-                  
                   name="Mobile4"
                   value={formdata.Mobile4}
                   onChange={handleChange}
@@ -617,13 +611,12 @@ const CustomerForm = () => {
                   type="text"
                   id="mobile5"
                   className="w-2/3 h-5 border"
-                  
                   name="Mobile5"
                   value={formdata.Mobile5}
                   onChange={handleChange}
                 />
               </div>
-              
+
               <div className="flex items-center mb-1 space-x-2">
                 <label
                   htmlFor="email"
@@ -636,7 +629,6 @@ const CustomerForm = () => {
                   type="email"
                   id="email"
                   className="w-2/3 h-5 border"
-                  
                   name="Email2"
                   value={formdata.Email2}
                   onChange={handleChange}
@@ -654,7 +646,6 @@ const CustomerForm = () => {
                   type="text"
                   id="fax"
                   className="w-2/3 h-5 border"
-                  
                   name="Fax"
                   value={formdata.Fax}
                   onChange={handleChange}
@@ -672,7 +663,6 @@ const CustomerForm = () => {
                   type="text"
                   id="website"
                   className="w-2/3 h-5 border"
-                  
                   name="Website"
                   value={formdata.Website}
                   onChange={handleChange}
@@ -690,7 +680,6 @@ const CustomerForm = () => {
                   type="text"
                   id="opening_balance"
                   className="w-2/3 h-5 border"
-                  
                   name="Openingbalance"
                   value={formdata.Openingbalance}
                   onChange={handleChange}
@@ -764,7 +753,6 @@ const CustomerForm = () => {
                     type="text"
                     id="name"
                     className="w-2/3 h-5 border"
-                    
                     name="Name"
                     value={formdata.Name}
                     onChange={handleChange}
@@ -782,7 +770,6 @@ const CustomerForm = () => {
                     type="text"
                     id="mobile1"
                     className="w-2/3 h-5 border"
-                    
                     name="Mobile1c"
                     value={formdata.Mobile1c}
                     onChange={handleChange}
@@ -803,7 +790,6 @@ const CustomerForm = () => {
                     type="text"
                     id="designation"
                     className="w-2/3 h-5 border"
-                    
                     name="Designation"
                     value={formdata.Designation}
                     onChange={handleChange}
@@ -821,7 +807,6 @@ const CustomerForm = () => {
                     type="text"
                     id="mobile2"
                     className="w-2/3 h-5 border"
-                    
                     name="Mobile2c"
                     value={formdata.Mobile2c}
                     onChange={handleChange}
@@ -849,7 +834,6 @@ const CustomerForm = () => {
                   type="text"
                   id=""
                   className="w-2/3 h-5 border"
-                  
                   name="Remarks1"
                   value={formdata.Remarks1}
                   onChange={handleChange}
@@ -867,7 +851,6 @@ const CustomerForm = () => {
                   type="text"
                   id=""
                   className="w-2/3 h-5 border"
-                  
                   name="Remarks2"
                   value={formdata.Remarks2}
                   onChange={handleChange}
@@ -885,7 +868,6 @@ const CustomerForm = () => {
                   type="text"
                   id=""
                   className="w-2/3 h-5 border"
-                  
                   name="Remarks3"
                   value={formdata.Remarks3}
                   onChange={handleChange}
@@ -898,85 +880,82 @@ const CustomerForm = () => {
 
       {/* Table Content */}
       <div className="pl-2 pr-4">
-  <fieldset className="p-1 border">
-    <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
-      Party Details
-    </legend>
-    <div className="container mx-auto">
-      <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px]">
-        <table className="bg-white border border-gray-300 table-auto">
-          <thead>
-            <tr className="bg-gray-100 border-b border-gray-300">
-              {headers.map((header, index) => (
-                <th
-                  key={index}
-                  className="text-sm text-left border-gray-300 whitespace-nowrap"
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "normal",
-                    minWidth: "80px", // Set a minimum width for each cell
-                  }}
-                  onClick={header === "Name" ? handleSort : undefined}
-                >
-                  {header} {header === "Name" && getSortIcon()}
-                  {header === "Partyname" && (
-                    <input
-                      type="text"
-                      placeholder="Search"
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                      className="w-20 px-1 py-1 ml-2 text-sm border rounded"
-                    />
-                  )}
-                  {header === "City" && (
-                    <select
-                      value={selectedCity}
-                      onChange={handleCityChange}
-                      className="w-12 py-1 ml-2 text-sm border rounded"
+        <fieldset className="p-1 border">
+          <legend style={{ fontSize: "13px", fontWeight: "normal" }}>
+            Party Details
+          </legend>
+          <div className="container mx-auto">
+            <div className="relative overflow-x-auto overflow-y-auto h-[177px] w-[1200px]">
+              <table className="bg-white border border-gray-300 table-auto">
+                <thead>
+                  <tr className="bg-gray-100 border-b border-gray-300">
+                    {headers.map((header, index) => (
+                      <th
+                        key={index}
+                        className="text-sm text-left border-gray-300 whitespace-nowrap"
+                        style={{
+                          fontSize: "13px",
+                          fontWeight: "normal",
+                          minWidth: "80px", // Set a minimum width for each cell
+                        }}
+                        onClick={header === "Name" ? handleSort : undefined}
+                      >
+                        {header} {header === "Name" && getSortIcon()}
+                        {header === "Partyname" && (
+                          <input
+                            type="text"
+                            placeholder="Search"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            className="w-20 px-1 py-1 ml-2 text-sm border rounded"
+                          />
+                        )}
+                        {header === "City" && (
+                          <select
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                            className="w-12 py-1 ml-2 text-sm border rounded"
+                          >
+                            <option value="">All</option>
+                            {cityOptions.map((city, i) => (
+                              <option key={i} value={city}>
+                                {city}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredData.map((row, index) => (
+                    <tr
+                      key={index}
+                      className="transition-all border-b border-gray-300 hover:bg-blue-400 hover:text-white"
+                      onClick={() => HandleClick(row)}
                     >
-                      <option value="">All</option>
-                      {cityOptions.map((city, i) => (
-                        <option key={i} value={city}>
-                          {city}
-                        </option>
+                      {headers.map((header, index) => (
+                        <td
+                          key={index}
+                          className="text-sm border-2 border-gray-300 whitespace-nowrap"
+                          style={{
+                            fontSize: "13px",
+                            fontWeight: "normal",
+                            minWidth: "80px", // Set a minimum width for each cell
+                          }}
+                        >
+                          {row[header]}
+                        </td>
                       ))}
-                    </select>
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((row, index) => (
-              <tr
-                key={index}
-                className="transition-all border-b border-gray-300 hover:bg-blue-400 hover:text-white"
-                onClick={() => HandleClick(row)}
-              >
-                {headers.map((header, index) => (
-                  <td
-                    key={index}
-                    className="text-sm border-2 border-gray-300 whitespace-nowrap"
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "normal",
-                      minWidth: "80px", // Set a minimum width for each cell
-                    }}
-                  >
-                    {row[header]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </fieldset>
       </div>
-    </div>
-  </fieldset>
-</div>
-
-
-
 
       {/* <div className="pl-2 pr-4">
       <fieldset className='p-1 border'>

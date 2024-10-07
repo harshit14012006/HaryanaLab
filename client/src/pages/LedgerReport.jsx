@@ -8,6 +8,7 @@ const LedgerReport = () => {
   const [PartyName, setPartyName] = useState("");
   const [Party, setSelectedParty] = useState([]);
   const [reportData, setReportData] = useState(null);
+  const [Values, setValues] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
     try {
@@ -53,6 +54,22 @@ const LedgerReport = () => {
     if (!party) {
       setFilteredData(data);
     } else {
+      const sum = data
+        .filter((item) => item.PartyName === partyName)
+        .filter((item) => Number(item.Amount) > 0)
+        .reduce((acc, item) => acc + Number(item.Amount), 0);
+      const sub = data
+        .filter((item) => item.PartyName === partyName)
+        .filter((item) => Number(item.Amount) < 0)
+        .reduce((acc, item) => acc + Number(item.Amount), 0);
+
+      const total = sub + sum;
+      console.log(sum);
+      setValues({
+        Total: String(sub).substring(1),
+        Paid: sum,
+        Balance: String(total).substring(1),
+      });
       setFilteredData(data.filter((item) => item.PartyName === partyName));
     }
   };
@@ -68,6 +85,28 @@ const LedgerReport = () => {
             console.log(response.data);
             setData(response.data);
             setFilteredData(response.data);
+
+            const sum = response.data
+              .filter((item) => Number(item.Amount) > 0)
+              .reduce((acc, total) => acc + Number(total.Amount), 0);
+
+            const sub = response.data
+              .filter((item) => Number(item.Amount) < 0)
+              .reduce((acc, total) => acc + Number(total.Amount), 0);
+            const total = sub + sum;
+            console.log(
+              sum,
+              " And ",
+              String(sub).substring(1),
+              " And Total is ",
+              String(total).substring(1)
+            );
+
+            setValues({
+              Total: String(sub).substring(1),
+              Paid: String(sum),
+              Balance: String(total).substring(1),
+            });
           } else {
             console.log("No Data Found");
             setData([]);
@@ -75,7 +114,9 @@ const LedgerReport = () => {
           }
         })
         .catch((err) => console.log(err));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -223,12 +264,12 @@ const LedgerReport = () => {
               <div className="flex flex-wrap gap-4 mt-2">
                 <div className="flex-1">
                   <label htmlFor="totalAmount" className="block font-medium ">
-                    Total Amount
+                    Total Amount : {Values ? Values.Total : ""}
                   </label>
                 </div>
                 <div className="flex-1">
                   <label htmlFor="paidAmount" className="block font-medium ">
-                    Paid Amount
+                    Paid Amount : {Values ? Values.Paid : ""}
                   </label>
                 </div>
                 <div className="flex-1">
@@ -236,7 +277,7 @@ const LedgerReport = () => {
                     htmlFor="openingBalance"
                     className="block font-medium "
                   >
-                    Balance
+                    Balance : {Values ? Values.Balance : ""}
                   </label>
                 </div>
               </div>

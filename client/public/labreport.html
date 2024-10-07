@@ -909,7 +909,7 @@
                 <div class="box">7</div>
                 <div class="box">8</div>
                 <div class="box">9</div>
-                <div class="box">10</div>
+                <div class="box">0</div>
 
                 <div class="final">1985</div>
               </div>
@@ -977,7 +977,9 @@
           document.getElementById("VehNo").innerHTML = Data.Vechileno;
           document.getElementById("Bags").innerHTML = Data.Bags;
           document.getElementById("Weight").innerHTML = Data.Weight;
-          document.getElementById("Category").innerHTML = Data.Itemcategory;
+          document.getElementById("Category").innerHTML = Data.Itemcategory
+            ? Data.Itemcategory
+            : Data.Category;
           document.getElementById("Sign").src =
             Data.Signature === "signature1"
               ? "./Sign1.png"
