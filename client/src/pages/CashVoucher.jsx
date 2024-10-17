@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const headers = ["Entry Date", "Report Number", "Amount", "Remarks"];
+const headers = ["Entry Date", "Report Number", "Credit", "Debit", "Remarks"];
 
 function CashVoucher() {
   // const [data, setData] = useState(initialData);
@@ -61,14 +61,14 @@ function CashVoucher() {
       Date: date,
       PartyName: selectedParty.Partyname,
       Reportno: "null",
-      Amount: amount,
+      Debit: amount,
       Remarks: remarks,
     };
 
     console.log(newVoucher);
     try {
       axios
-        .post("http://localhost:3001/api/users", newVoucher)
+        .post("http://localhost:3001/api/users/Debit", newVoucher)
         .then((response) => {
           console.log(response);
           if (response) {
@@ -76,8 +76,8 @@ function CashVoucher() {
             setRemarks("");
             setDate("");
             setSelectedParty(null);
-            fetchVouchers(PartyName);
             setPartyName("");
+            setVouchers([]);
           }
         })
         .catch((error) => {
@@ -92,25 +92,33 @@ function CashVoucher() {
 
   const HandleClick = (data) => {
     console.log(data);
-    setPartyName(data.PartyName);
-    setDate(data.Date);
-    setAmount(data.Amount);
-    setRemarks(data.Remarks);
-    setTableData({
-      Reportno: data.Reportno,
-      Date: data.Date,
-    });
+    if (data.Debit !== null) {
+      console.log("Debit working");
+      setPartyName(data.PartyName);
+      setDate(data.Date);
+      setAmount(data.Debit);
+      setRemarks(data.Remarks);
+      setTableData({
+        Reportno: data.Reportno,
+        Date: data.Date,
+      });
+    }
   };
 
   const HandleDelete = async () => {
     try {
       await axios
         .delete(
-          `http://localhost:3001/api/users/${tableData.Date}/${tableData.Reportno}/${PartyName}`
+          `http://localhost:3001/api/users/${tableData.Date}/${amount}/${PartyName}`
         )
         .then((response) => {
           console.log(response);
           fetchVouchers(PartyName);
+          setPartyName("");
+          setDate("");
+          setAmount("");
+          setRemarks("");
+          setDate("");
         })
         .catch((error) => {
           console.log(error);
@@ -271,7 +279,10 @@ function CashVoucher() {
                           {voucher.Reportno === "null" ? "" : voucher.Reportno}
                         </td>
                         <td className="px-2 py-1 border-b border-gray-300">
-                          {voucher.Amount}
+                          {voucher.Credit}
+                        </td>
+                        <td className="px-2 py-1 border-b border-gray-300">
+                          {voucher.Debit}
                         </td>
                         <td className="px-2 py-1 border-b border-gray-300">
                           {voucher.Remarks}

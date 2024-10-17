@@ -14,6 +14,10 @@ const {
   updateUser,
   getUsersByName,
   getUsersByDate,
+  addUserByDebit,
+  addUserByCredit,
+  deleteUserByCredit,
+  deleteUserByDebit,
 } = require("./controller/userController");
 const cashVoucherController = require("./controller/cashVoucherController");
 const customerController = require("./controller/customerController");
@@ -47,8 +51,11 @@ app.use(express.static("uploads"));
 
 //Api's
 app.get("/api/users", getAllUsers);
-app.post("/api/users", addUser);
+app.post("/api/users/Debit", addUserByDebit);
+app.post("/api/users/Credit", addUserByCredit);
 app.delete("/api/users/:Date/:Reportno/:PartyName", deleteUser);
+app.delete("/api/users/:Date/:Credit/:PartyName", deleteUserByCredit);
+app.delete("/api/users/:Date/:Debit/:PartyName", deleteUserByDebit);
 app.put("/api/users/:id", updateUser);
 app.get("/api/users/:name", getUsersByName);
 app.get("/api/usersDate/:fromDate/:toDate", getUsersByDate);

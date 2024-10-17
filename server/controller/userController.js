@@ -16,19 +16,50 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.addUser = async (req, res) => {
+exports.addUserByCredit = async (req, res) => {
   console.log(req.body);
   try {
-    const { Date, PartyName, Reportno, Amount, Remarks } = req.body;
-    if (!Date || !PartyName || !Reportno || !Amount) {
+    const { Date, PartyName, Reportno, Credit, Remarks } = req.body;
+    if (!Date || !PartyName || !Reportno || !Credit) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
     const sqlQuery =
-      "INSERT INTO ledger (Date, PartyName, ReportNo, Amount, Remarks) VALUES (?,?,?,?,?)";
+      "INSERT INTO ledger (Date, PartyName, ReportNo, Credit, Remarks) VALUES (?,?,?,?,?)";
     db.query(
       sqlQuery,
-      [Date, PartyName, Reportno, Amount, Remarks],
+      [Date, PartyName, Reportno, Credit, Remarks],
+      (err, result) => {
+        if (err) {
+          console.error("Error inserting user:", err);
+          return res.status(500).send("Database insert error");
+        }
+
+        res.status(201).json({
+          message: "User added successfully",
+          userId: result.insertId,
+        });
+      }
+    );
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.addUserByDebit = async (req, res) => {
+  console.log(req.body);
+  try {
+    const { Date, PartyName, Reportno, Debit, Remarks } = req.body;
+    if (!Date || !PartyName || !Reportno || !Debit) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const sqlQuery =
+      "INSERT INTO ledger (Date, PartyName, ReportNo, Debit, Remarks) VALUES (?,?,?,?,?)";
+    db.query(
+      sqlQuery,
+      [Date, PartyName, Reportno, Debit, Remarks],
       (err, result) => {
         if (err) {
           console.error("Error inserting user:", err);
@@ -147,6 +178,58 @@ exports.getUsersByDate = async (req, res) => {
       results.length > 0
         ? res.json(results)
         : res.send({ message: "Not Found" }); // Send the results as JSON response
+    });
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.deleteUserByCredit = async (req, res) => {
+  try {
+    let sqlQuery;
+    console.log(req.params, " At line 55");
+    const { Credit, Date, PartyName } = req.params;
+    if (!Date || !PartyName) {
+      return res.status(400).json({ error: "Report number is required" });
+    }
+    sqlQuery = "DELETE FROM ledger WHERE Credit = ?, PartyName= ? AND Date = ?";
+    db.query(sqlQuery, [Credit, PartyName, Date], (err, result) => {
+      if (err) {
+        console.error("Error deleting user:", err);
+        return res.status(500).json({ error: "Database delete error" });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(200).json({ message: "User deleted successfully" });
+    });
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.deleteUserByDebit = async (req, res) => {
+  try {
+    let sqlQuery;
+    console.log(req.params, " At line 55");
+    const { Debit, Date, PartyName } = req.params;
+    if (!Date || !PartyName) {
+      return res.status(400).json({ error: "Report number is required" });
+    }
+    sqlQuery = "DELETE FROM ledger WHERE Debit = ?, PartyName= ? AND Date = ?";
+    db.query(sqlQuery, [Debit, PartyName, Date], (err, result) => {
+      if (err) {
+        console.error("Error deleting user:", err);
+        return res.status(500).json({ error: "Database delete error" });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(200).json({ message: "User deleted successfully" });
     });
   } catch (error) {
     console.error("Server error:", error);

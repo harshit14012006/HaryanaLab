@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState ,useEffect} from "react";
+import axios from 'axios';
 const headers = [
   "Sample1",
   "Sample2",
@@ -145,7 +145,38 @@ const initialData = [
 ];
 
 const LedgerReport = () => {
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [ledgerRecords, setLedgerRecords] = useState([]);
+  const [error, setError] = useState('');
   const [data, setData] = useState(initialData);
+  useEffect(() => {
+   fetchLedgerRecords();
+  }, [city]); 
+  const fetchLedgerRecords = async () => {
+    try {
+      // Clear previous error and records
+      setError('');
+      setLedgerRecords([]);
+
+      // Prepare the payload
+      const payload = {
+        state,
+        city
+      };
+
+      // Make the POST request to the API
+      const response = await axios.post('http://localhost:3000/ledger-records', payload);
+
+      // Set the fetched ledger records in state
+      setData(response.data);
+
+    } catch (err) {
+      console.error('Error fetching ledger records:', err.message);
+      setError(err.response ? err.response.data.error : 'Something went wrong');
+    }
+  };
+
   return (
     <div className="bg-gray-100">
       <div className="flex justify-center min-h-screen">

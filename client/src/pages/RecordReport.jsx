@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from 'axios';
 const headers = [
   "Sample1",
   "Sample2",
@@ -145,6 +145,36 @@ const initialData = [
 
 const RecordReportWithoutSample = () => {
   const [data, setData] = useState(initialData);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [partyName, setPartyName] = useState('');
+  const [sampleName, setSampleName] = useState('');
+  const [records, setRecords] = useState([]);
+  const [error, setError] = useState('');
+  const fetchRecords = async () => {
+    try {
+      // Clear previous error
+      setError('');
+
+      // Prepare the payload
+      const payload = {
+        startDate,
+        endDate,
+        partyName,
+        sampleName
+      };
+
+      // Send POST request to the API
+      const response = await axios.post('http://localhost:3000/records', payload);
+
+      // Set the records in state if response is successful
+      setRecords(response.data);
+
+    } catch (err) {
+      console.error('Error fetching records:', err.message);
+      setError(err.response ? err.response.data.error : 'Something went wrong');
+    }
+  };
   return (
     <div className="bg-gray-100">
       <div className="flex justify-center min-h-screen">
@@ -166,6 +196,7 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
+                        onChange={(e)=>setStartDate(e.target.value)}
                       />
                       {/* From Label and Date Input */}
                       <label htmlFor="fromDate" className="font-medium">
@@ -176,6 +207,7 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
+                        onChange={(e)=>setEndDate(e.target.value)}
                       />
                     </div>
 
@@ -197,6 +229,7 @@ const RecordReportWithoutSample = () => {
                             id="partyName"
                             name="partyName"
                             className="h-8 p-1 border border-gray-300 rounded-md w-52"
+                            onChange={(e)=>(setPartyName(e.target.value))}
                           >
                             <option value="">Select Party</option>
                             <option value="party1">Party 1</option>
@@ -219,6 +252,7 @@ const RecordReportWithoutSample = () => {
                             id="SampleName"
                             name="SampleName"
                             className="h-8 p-1 border border-gray-300 rounded-md w-52"
+                            onChange={(e)=>(setSampleName(e.target.value))}
                           >
                             <option value="">Select Sample</option>
                             <option value="Sample1">Sample 1</option>
@@ -236,6 +270,7 @@ const RecordReportWithoutSample = () => {
                     <button
                       type="button"
                       className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                      onClick={fetchRecords}
                     >
                       Display
                     </button>

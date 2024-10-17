@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const headers = [
   "Sample Date",
@@ -84,6 +85,35 @@ const initialData = [
 
 const RecordReportWithoutSample = () => {
   const [data, setData] = useState(initialData);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [partyName, setPartyName] = useState('');
+ 
+  const [error, setError] = useState('');
+  const fetchRecords = async () => {
+    try {
+      // Clear previous error
+      setError('');
+
+      // Prepare the payload
+      const payload = {
+        startDate,
+        endDate,
+        partyName
+      };
+
+      // Send POST request to the API
+      const response = await axios.post('http://localhost:3000/records', payload);
+
+      // Set the records in state if response is successful
+      setData(response.data);
+
+    } catch (err) {
+      console.error('Error fetching records:', err.message);
+      setError(err.response ? err.response.data.error : 'Something went wrong');
+    }
+  };
+
   return (
     <div className="bg-gray-100">
       <div className="flex justify-center min-h-screen">
@@ -105,6 +135,7 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
+                        onChange={(e)=>{setStartDate(e.target.value)}}
                         // onChange={(e) => {
                         //   HandleChange(e);
                         // }}
@@ -118,6 +149,7 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="toDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
+                        onChange={(e)=>{setEndDate(e.target.value)}}
                         // onChange={(e) => {
                         //   HandleChange(e);
                         // }}
@@ -142,6 +174,7 @@ const RecordReportWithoutSample = () => {
                             id="partyName"
                             name="partyName"
                             className="h-8 p-1 w-52 border border-gray-300 rounded-md"
+                            onChange={(e)=>{setPartyName(e.target.value)}}
                           >
                             <option value="">Select Party</option>
                             <option value="party1">Party 1</option>
@@ -166,6 +199,7 @@ const RecordReportWithoutSample = () => {
                     <button
                       type="button"
                       className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      onClick={fetchRecords}
                     >
                       Display
                     </button>

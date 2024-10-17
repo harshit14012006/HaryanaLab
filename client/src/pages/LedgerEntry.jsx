@@ -11,7 +11,7 @@ function LedgerEntry() {
     Date: "",
     Reportno: "",
     PartyName: "",
-    Amount: "",
+    Credit: "",
     Remarks: "",
   });
 
@@ -58,9 +58,9 @@ function LedgerEntry() {
           console.log("Data From HandleTableData", response.data);
           // Set the fetched party names into state
           setLedgerEntries(response.data);
-          response.data.map((item) => {
-            setRepNo(Repno.filter((index) => index !== item.Reportno));
-          });
+          // response.data.map((item) => {
+          //   setRepNo(Repno.filter((index) => index !== item.Reportno));
+          // });
         })
         .catch((error) => {
           console.error("Error fetching party names:", error);
@@ -100,7 +100,7 @@ function LedgerEntry() {
       !selectedParty ||
       !formData.Date ||
       !formData.Reportno ||
-      !formData.Amount
+      !formData.Credit
     ) {
       console.log(formData);
       return;
@@ -108,19 +108,18 @@ function LedgerEntry() {
 
     try {
       formData.PartyName = selectedParty;
-      formData.Amount = `-${formData.Amount}`;
       // Send POST request to backend
 
       console.log(formData);
       await axios
-        .post("http://localhost:3001/api/users", formData)
+        .post("http://localhost:3001/api/users/Credit", formData)
         .then((response) => {
-          alert(response.data.message);
+          console.log(response);
           setFormData({
             Date: "",
             Reportno: "",
             PartyName: "",
-            Amount: "",
+            Credit: "",
             Remarks: "",
           });
           setSelectedParty("");
@@ -138,6 +137,32 @@ function LedgerEntry() {
     } catch (error) {
       console.error("Error adding user:", error);
       alert("Error adding new entry");
+    }
+  };
+
+  const HandleDeleteData = () => {
+    try {
+      // HandleTableData
+      axios
+        .delete(
+          `http://localhost:3001/api/users/${formData.Date}/${formData.Credit}/${formData.PartyName}`
+        )
+        .then((response) => {
+          console.log(response);
+          HandleTableData(formData.PartyName);
+          setFormData({
+            Date: "",
+            Reportno: "",
+            PartyName: "",
+            Credit: "",
+            Remarks: "",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -221,8 +246,8 @@ function LedgerEntry() {
                   </label>
                   <input
                     type="number"
-                    id="Amount"
-                    value={formData.Amount}
+                    id="Credit"
+                    value={formData.Credit}
                     onChange={handleInputChange}
                     required
                     className="flex-grow h-5 px-2 py-1 border"
@@ -261,6 +286,7 @@ function LedgerEntry() {
               <button
                 type="button"
                 className="h-8 px-4 py-1 bg-gray-400 rounded"
+                onClick={HandleDeleteData}
               >
                 Delete
               </button>
@@ -290,35 +316,47 @@ function LedgerEntry() {
               <table className="bg-white border border-gray-300 table-auto">
                 <thead>
                   <tr className="bg-gray-100 border-b border-gray-300">
-                    {["Entry Date", "Report Number", "Amount", "Remarks"].map(
-                      (header, index) => (
-                        <th
-                          key={index}
-                          className="text-sm text-left border-gray-300 whitespace-nowrap"
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "normal",
-                            width: "100px",
-                          }}
-                        >
-                          {header}
-                        </th>
-                      )
-                    )}
+                    {[
+                      "Entry Date",
+                      "Report Number",
+                      "Credit",
+                      "Debit",
+                      "Remarks",
+                    ].map((header, index) => (
+                      <th
+                        key={index}
+                        className="text-sm text-left border-gray-300 whitespace-nowrap"
+                        style={{
+                          fontSize: "13px",
+                          fontWeight: "normal",
+                          width: "100px",
+                        }}
+                      >
+                        {header}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
                   {ledgerEntries.length > 0 &&
                     ledgerEntries.map((entry, i) => (
-                      <tr key={i}>
+                      <tr
+                        key={i}
+                        onClick={() => {
+                          setFormData(entry);
+                        }}
+                      >
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
                           {entry.Date}
                         </td>
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
-                          {entry.Reportno === null ? "" : entry.Reportno}
+                          {entry.Reportno === "null" ? "" : entry.Reportno}
                         </td>
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
-                          {entry.Amount}
+                          {entry.Credit}
+                        </td>
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Debit}
                         </td>
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
                           {entry.Remarks}

@@ -940,6 +940,17 @@
           pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
 
+          // Move the position 10 pixels down and add a dotted line
+          position += imgHeight + 10;
+          pdf.setLineWidth(0.5);
+          pdf.setLineDash([2, 2], 0); // Dotted line with 2mm dash and gap
+          pdf.line(0, position, imgWidth, position); // Draw the dotted line across the page
+
+          // Add the second image 10 pixels below the dotted line
+          position += 10;
+          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+
           while (heightLeft >= 0) {
             position = heightLeft - imgHeight;
             pdf.addPage();

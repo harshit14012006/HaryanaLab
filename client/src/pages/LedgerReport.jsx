@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const headers = ["Entry Date", "Report Number", "Amount", "Remarks"];
+import ReactPDF from "@react-pdf/renderer";
+import AccountLedger from "./AccountLedger";
+const headers = ["Entry Date", "Report Number", "Credit", "Debit", "Remarks"];
 const LedgerReport = () => {
   const [data, setData] = useState([]);
   const [customer, setCustomer] = useState([]);
@@ -10,6 +12,9 @@ const LedgerReport = () => {
   const [reportData, setReportData] = useState(null);
   const [Values, setValues] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
+
+  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
+
   useEffect(() => {
     try {
       axios
@@ -56,19 +61,23 @@ const LedgerReport = () => {
     } else {
       const sum = data
         .filter((item) => item.PartyName === partyName)
-        .filter((item) => Number(item.Amount) > 0)
-        .reduce((acc, item) => acc + Number(item.Amount), 0);
+        .reduce((acc, item) => acc + Number(item.Debit), 0);
       const sub = data
         .filter((item) => item.PartyName === partyName)
-        .filter((item) => Number(item.Amount) < 0)
-        .reduce((acc, item) => acc + Number(item.Amount), 0);
+        .reduce((acc, item) => acc + Number(item.Credit), 0);
 
-      const total = sub + sum;
-      console.log(sum);
+      console.log(sub);
+      const OpeningBalance =
+        Number(party.Openingbalance) > 0 || Number(party.Openingbalance) < 0
+          ? Number(party.Openingbalance)
+          : 10;
+      console.log(OpeningBalance);
+      const total = sub - sum + OpeningBalance;
+      console.log(total);
       setValues({
-        Total: String(sub).substring(1),
+        Total: sub,
         Paid: sum,
-        Balance: String(total).substring(1),
+        Balance: total,
       });
       setFilteredData(data.filter((item) => item.PartyName === partyName));
     }
@@ -117,6 +126,26 @@ const LedgerReport = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const generateAndOpenPdf = async () => {
+    // Generate the PDF and create a Blob URL
+    const pdfBlob = await ReactPDF.pdf(<AccountLedger />).toBlob();
+    const newBlobUrl = URL.createObjectURL(pdfBlob);
+    console.log("Generated new Blob URL:", newBlobUrl);
+    // Open the new Blob URL in a new tab
+    window.open(newBlobUrl);
+
+    // Clean up the previous Blob URL if it exists
+    if (pdfBlobUrl) {
+      console.log("Revoking old Blob URL:", pdfBlobUrl);
+      let text = URL.revokeObjectURL(pdfBlobUrl);
+      console.log(text);
+    }
+
+    // Update the state with the new Blob URL
+
+    setPdfBlobUrl(newBlobUrl);
   };
 
   return (
@@ -241,13 +270,19 @@ const LedgerReport = () => {
                           className="border-gray-300 border text-sm whitespace-nowrap"
                           style={{ minWidth: "150px" }}
                         >
-                          {row.Reportno}
+                          {row.Reportno === "null" ? "" : row.Reportno}
                         </td>
                         <td
                           className="border-gray-300 border text-sm whitespace-nowrap"
                           style={{ minWidth: "150px" }}
                         >
-                          {row.Amount}
+                          {row.Credit}
+                        </td>
+                        <td
+                          className="border-gray-300 border text-sm whitespace-nowrap"
+                          style={{ minWidth: "150px" }}
+                        >
+                          {row.Debit}
                         </td>
                         <td
                           className="border-gray-300 border text-sm whitespace-nowrap"
@@ -285,6 +320,7 @@ const LedgerReport = () => {
                 <button
                   type="button"
                   className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                  onClick={generateAndOpenPdf}
                 >
                   Print
                 </button>
