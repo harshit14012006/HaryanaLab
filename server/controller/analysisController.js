@@ -171,8 +171,8 @@ const updateAnalysis = (req, res) => {
   const { Reportno } = req.params; // Get the Reportno from query parameters
 
   const query = `UPDATE analysis SET
-    Samplename = ?, Billeddate = ?, Dated = ?, Selected = ?, \`From\` = ?, Station = ?, 
-    Moisture = ?, AnotherName = ?, AnotherValue = ?, Oil = ?, FFA = ?, \`Time\` = ?, Code = ?, \`Date\` = ?, Vechileno = ?, 
+    Samplename = ?, Billeddate = ?, Dated = ?, Selected = ?, \`From\` = ?, Station = ?, AnotherName = ?, AnotherValue = ?, 
+    Moisture = ?,  Oil = ?, FFA = ?, \`Time\` = ?, Code = ?, \`Date\` = ?, Vechileno = ?, 
     Bags = ?, Weight = ?, Category = ?, Remarks = ?, Signature = ?
     WHERE Reportno = ?`;
 
@@ -183,9 +183,9 @@ const updateAnalysis = (req, res) => {
     Selected,
     From,
     Station,
-    Moisture,
     AnotherName,
     AnotherValue,
+    Moisture,
     Oil,
     FFA,
     Time,
@@ -226,6 +226,96 @@ const getRepNo = async (req, res) => {
     if (err) throw err;
     res.json(result);
   });
+};
+
+const getUserFromReport = async (req, res) => {
+  const { startDate, endDate, partyName, sampleName } = req.body;
+
+  try {
+    // Validate input
+    if (!startDate || !endDate || !partyName || !sampleName) {
+      return res.status(400).json({
+        error: "Please provide startDate, endDate, partyName, and sampleName",
+      });
+    }
+
+    // Prepare the query
+    const query = `
+      SELECT c.party_name, a.sample_name
+      FROM analysis a
+      JOIN customer c ON a.customer_id = c.id
+      WHERE a.date BETWEEN ? AND ?
+      AND c.party_name = ?
+      AND a.sample_name = ?
+    `;
+
+    // Execute the query in a promise to handle async execution
+    const results = await new Promise((resolve, reject) => {
+      db.query(
+        query,
+        [startDate, endDate, partyName, sampleName],
+        (err, results) => {
+          if (err) return reject(err); // Reject the promise if there's an error
+          resolve(results); // Resolve with the results if successful
+        }
+      );
+    });
+
+    // Handle case where no records are found
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No records found for the given criteria" });
+    }
+
+    // Return the results
+    res.status(200).json(results);
+  } catch (err) {
+    console.error("Error executing query:", err.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+const getUserFromReportWithoutSample = async (req, res) => {
+  const { startDate, endDate, partyName } = req.body;
+
+  try {
+    // Validate input
+    if (!startDate || !endDate || !partyName) {
+      return res
+        .status(400)
+        .json({ error: "Please provide startDate, endDate, and partyName" });
+    }
+
+    // Prepare the query
+    const query = `
+      SELECT c.party_name, a.sample_name
+      FROM analysis a
+      JOIN customer c ON a.customer_id = c.id
+      WHERE a.date BETWEEN ? AND ?
+      AND c.party_name = ?
+    `;
+
+    // Execute the query in a promise to handle async execution
+    const results = await new Promise((resolve, reject) => {
+      db.query(query, [startDate, endDate, partyName], (err, results) => {
+        if (err) return reject(err); // Reject the promise if there's an error
+        resolve(results); // Resolve with the results if successful
+      });
+    });
+
+    // Handle case where no records are found
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No records found for the given criteria" });
+    }
+
+    // Return the results
+    res.status(200).json(results);
+  } catch (err) {
+    console.error("Error executing query:", err.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 module.exports = {

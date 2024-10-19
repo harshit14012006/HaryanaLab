@@ -236,3 +236,47 @@ exports.deleteUserByDebit = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+exports.getByCity = async (req, res) => {
+  const { state, city } = req.body;
+
+  try {
+    // Validate input
+    if (!state || !city) {
+      return res
+        .status(400)
+        .json({ error: "Please provide both state and city" });
+    }
+
+    // Prepare the SQL query to join customer and ledger tables
+    const query = `
+      SELECT l.* 
+      FROM ledger l
+      JOIN customer c ON l.report_no = c.report_no
+      WHERE c.state = ? AND c.city = ?
+    `;
+
+    // Execute the query in a promise to handle async execution
+    const results = await new Promise((resolve, reject) => {
+      db.query(query, [state, city], (err, results) => {
+        if (err) return reject(err); // Reject the promise if there's an error
+        resolve(results); // Resolve with the results if successful
+      });
+    });
+
+    // Handle case where no records are found
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({
+          message: "No ledger records found for the given state and city",
+        });
+    }
+
+    // Return the ledger records
+    res.status(200).json(results);
+  } catch (err) {
+    console.error("Error executing query:", err.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};

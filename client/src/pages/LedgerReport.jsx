@@ -92,8 +92,12 @@ const LedgerReport = () => {
         .then((response) => {
           if (response) {
             console.log(response.data);
-            setData(response.data);
-            setFilteredData(response.data);
+            const formattedReports = response.data.map((item) => ({
+              ...item, // Spread the original report object
+              Date: formatDate(item.Date), // Format the Date field
+            }));
+            setData(formattedReports);
+            setFilteredData(formattedReports);
 
             const sum = response.data
               .filter((item) => Number(item.Amount) > 0)
@@ -130,7 +134,16 @@ const LedgerReport = () => {
 
   const generateAndOpenPdf = async () => {
     // Generate the PDF and create a Blob URL
-    const pdfBlob = await ReactPDF.pdf(<AccountLedger />).toBlob();
+    console.log(filteredData[0].Date);
+    const pdfBlob = await ReactPDF.pdf(
+      <AccountLedger
+        Data={filteredData}
+        Balance={Values.Balance}
+        OpeningBalance={Party.Openingbalance}
+        Date1={Dates.fromDate}
+        Date2={Dates.toDate}
+      />
+    ).toBlob();
     const newBlobUrl = URL.createObjectURL(pdfBlob);
     console.log("Generated new Blob URL:", newBlobUrl);
     // Open the new Blob URL in a new tab
@@ -146,6 +159,14 @@ const LedgerReport = () => {
     // Update the state with the new Blob URL
 
     setPdfBlobUrl(newBlobUrl);
+  };
+
+  const formatDate = (inputDate) => {
+    const date = new Date(inputDate);
+    const day = String(date.getDate()).padStart(2, "0"); // Pad with 0 if single digit
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
 
   return (
