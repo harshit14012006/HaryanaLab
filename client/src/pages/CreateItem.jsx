@@ -196,21 +196,23 @@ const CreateItem = () => {
                         {sample.ItemName}
                       </td>
                       <td
-  onMouseEnter={() => handleMouseEnter(rowIndex, 2)}
-  onMouseLeave={handleMouseLeave}
-  className={`border border-black px-2 py-1 text-xs whitespace-nowrap ${
-    hoveredCell.row === rowIndex && hoveredCell.column === 2
-      ? "bg-blue-500 text-white"
-      : "text-black"
-  }`}
->
-  {new Date(sample.Date).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: '2-digit',
-    year: '2-digit'
-  })}
-</td>
-
+                        onMouseEnter={() => handleMouseEnter(rowIndex, 2)}
+                        onMouseLeave={handleMouseLeave}
+                        className={`border border-black px-2 py-1 text-xs whitespace-nowrap ${
+                          hoveredCell.row === rowIndex &&
+                          hoveredCell.column === 2
+                            ? "bg-blue-500 text-white"
+                            : "text-black"
+                        }`}
+                      >
+                        {new Date(sample.Date)
+                          .toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "2-digit",
+                          })
+                          .replace(/\//g, "-")}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

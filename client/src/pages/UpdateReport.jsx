@@ -121,7 +121,8 @@ const ReportAnalysis = () => {
         Data[key] = "NA";
       }
     }
-    Data.Time = FFaTime && Data.FFA !== "NA" ? FFaTime.toString() : "NA";
+    Data.Time =
+      FFaTime && Data.FFA !== "NA" && Data.Time ? FFaTime.toString() : "NA";
     Data.Remarks = `${Remark.remarks1} ${Remark.remarks2}`;
     console.log(Data);
     try {
