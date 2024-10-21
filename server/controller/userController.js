@@ -238,45 +238,41 @@ exports.deleteUserByDebit = async (req, res) => {
 };
 
 exports.getByCity = async (req, res) => {
-  const { state, city } = req.body;
-
   try {
-    // Validate input
+    const { state, city } = req.body;
+
+    // Validate if state and city are provided
     if (!state || !city) {
-      return res
-        .status(400)
-        .json({ error: "Please provide both state and city" });
+      return res.status(400).json({ message: "State and city are required" });
     }
 
-    // Prepare the SQL query to join customer and ledger tables
+    // Query to join ledger and analysis tables based on reportno
     const query = `
-      SELECT l.* 
-      FROM ledger l
-      JOIN customer c ON l.report_no = c.report_no
-      WHERE c.state = ? AND c.city = ?
-    `;
+      SELECT ledger.* 
+      FROM ledger 
+      INNER JOIN analysis ON ledger.reportno = analysis.reportno 
+      WHERE analysis.state = ? AND analysis.city = ?`;
 
-    // Execute the query in a promise to handle async execution
-    const results = await new Promise((resolve, reject) => {
-      db.query(query, [state, city], (err, results) => {
-        if (err) return reject(err); // Reject the promise if there's an error
-        resolve(results); // Resolve with the results if successful
-      });
-    });
-
-    // Handle case where no records are found
-    if (results.length === 0) {
-      return res
-        .status(404)
-        .json({
-          message: "No ledger records found for the given state and city",
+    // Promisified version of db.query for using async/await
+    const queryAsync = (sql, params) => {
+      return new Promise((resolve, reject) => {
+        db.query(sql, params, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
         });
-    }
+      });
+    };
 
-    // Return the ledger records
-    res.status(200).json(results);
+    // Execute the query using async/await
+    const results = await queryAsync(query, [state, city]);
+
+    // Return the fetched results
+    res.json(results);
   } catch (err) {
-    console.error("Error executing query:", err.message);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("Error occurred:", err);
+    res.status(500).json({ message: "An error occurred while fetching data" });
   }
 };

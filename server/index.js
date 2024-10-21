@@ -18,6 +18,7 @@ const {
   addUserByCredit,
   deleteUserByCredit,
   deleteUserByDebit,
+  getByCity,
 } = require("./controller/userController");
 const cashVoucherController = require("./controller/cashVoucherController");
 const customerController = require("./controller/customerController");
@@ -59,9 +60,11 @@ app.delete("/api/users/:Date/:Debit/:PartyName", deleteUserByDebit);
 app.put("/api/users/:id", updateUser);
 app.get("/api/users/:name", getUsersByName);
 app.get("/api/usersDate/:fromDate/:toDate", getUsersByDate);
+app.get("/api/usersFindData", getByCity);
 
 //Customer Api's
 app.get("/api/customers", customerController.getAllCustomers);
+app.get("/api/customersPartyName", customerController.getCustomersPartyName);
 app.post("/api/customers", customerController.createCustomer);
 app.get("/api/customersbyname", customerController.databyname);
 app.put("/api/customers/:Partyid", customerController.updateCustomer);
@@ -77,6 +80,7 @@ app.get("/api/analysis/:Reportno", analysisController.getAnalysis);
 app.get("/api/analysis", analysisController.getAnalysisnormal);
 app.get("/api/analysises/:from", analysisController.getRepNo);
 app.put("/api/analysis/:Reportno", analysisController.updateAnalysis);
+app.post("/api/analysisDate", analysisController.getReportByDate);
 
 // Image Upload Route
 app.post("/upload", upload.single("image"), saveImage);

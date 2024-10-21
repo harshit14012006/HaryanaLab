@@ -24,9 +24,15 @@ const createWindow = () => {
   });
 
   // Load the main page (HomePage)
-  const menuFilePath = path.join(__dirname, "public", "menu.html");
-  mainWindow.loadURL(`file://${menuFilePath}`);
-  mainWindow.loadURL("http://localhost:3000/");
+  try {
+    const menuFilePath = path.join(__dirname, "public", "menu.html");
+    mainWindow.loadURL(`file://${menuFilePath}`);
+    mainWindow.loadURL("http://localhost:3000/");
+    // mainWindow.loadFile(path.join(__dirname, "../build", "index.html"));
+  } catch (error) {
+    console.log("Error     =     ", error);
+  }
+  // console.log(path.join(__dirname, "../build", "index.html"));
   // mainWindow.loadURL(path.join(__dirname, "homenew.html"));
 
   // Optional: Open the DevTools automatically (for development only)
@@ -50,7 +56,7 @@ const createCustomerFormPopup = () => {
   });
 
   // Load the Customer Form page
-  popupWindow.loadURL("http://localhost:3000/customer-form");
+  popupWindow.loadURL("http://localhost:3000/#customer-form");
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Customer Form");
@@ -77,7 +83,7 @@ const createItemPopup = () => {
   });
 
   // Load the Customer Form page
-  popupWindow.loadURL("http://localhost:3000/create-item");
+  popupWindow.loadURL("http://localhost:3000/#create-item");
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Item");
@@ -104,7 +110,7 @@ const cityPopup = () => {
   });
 
   // Load the Customer Form page
-  popupWindow.loadURL("http://localhost:3000/master-city");
+  popupWindow.loadURL("http://localhost:3000/#master-city");
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("AddCity");
@@ -130,7 +136,7 @@ const createReportsAnalysisWindow = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/reports-analysis");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#reports-analysis");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Reports Analysis");
@@ -244,7 +250,7 @@ const updateReportsAnalysisWindow = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/update-analysis");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#update-analysis");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Single Report Update");
@@ -270,7 +276,7 @@ const ledgerentryPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/ledger-entry");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#ledger-entry");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Ledger Entry");
@@ -296,7 +302,7 @@ const ledgerreortPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/ledger-report");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#ledger-report");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Ledger Report");
@@ -322,7 +328,7 @@ const cashvoucherPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/cash-voucher");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#cash-voucher");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Cash Voucher");
@@ -348,7 +354,7 @@ const singlereportreprintPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/single-report-reprint");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#single-report-reprint");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Reprint");
@@ -374,7 +380,7 @@ const printmultireportPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/print-multi-report");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#print-multi-report");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Print Multi Report");
@@ -400,7 +406,7 @@ const recordreportPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/record-report");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#record-report");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Record Report");
@@ -426,7 +432,7 @@ const partydetailprintPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/party-detail-print");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#party-detail-print");
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Party Detail Print");
@@ -453,7 +459,7 @@ const recordreportwihtoutsamplePopup = () => {
 
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL(
-    "http://localhost:3000/record-report-without-sample"
+    "http://localhost:3000/#record-report-without-sample"
   );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {

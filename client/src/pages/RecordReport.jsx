@@ -1,180 +1,95 @@
-import React, { useState } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const headers = [
-  "Sample1",
-  "Sample2",
-  "Sample3",
-  "Sample4",
-  "Sample5",
-  "Sample6",
-  "Sample7",
-  "Sample8",
-  "Sample9",
-  "Sample10",
-  "Sample11",
-];
-
-const initialData = [
-  {
-    Sample1: "Harshit",
-    Sample2: "12",
-    Sample3: "Sample Data 1",
-    Sample4: "Sample Data 2",
-    Sample5: "Sample Data 3",
-    Sample6: "Sample Data 4",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Beta Ltd",
-    Sample2: "868",
-    Sample3: "Floor 2",
-    Sample4: "Building B",
-    Sample5: "Opposite Beta Mall",
-    Sample6: "New York",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Gamma Inc.",
-    Sample2: "432",
-    Sample3: "Office Suite",
-    Sample4: "Building C",
-    Sample5: "Near Gamma Park",
-    Sample6: "Los Angeles",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Delta Corp.",
-    Sample2: "563",
-    Sample3: "Warehouse 4",
-    Sample4: "Sector A",
-    Sample5: "Delta Industrial Area",
-    Sample6: "Chicago",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Epsilon LLC",
-    Sample2: "789",
-    Sample3: "Showroom",
-    Sample4: "Commercial Plaza",
-    Sample5: "Opposite Epsilon Tower",
-    Sample6: "San Francisco",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Zeta Co.",
-    Sample2: "923",
-    Sample3: "Factory 5",
-    Sample4: "Sector Z",
-    Sample5: "Zeta Industrial Hub",
-    Sample6: "Houston",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Alpha Tech",
-    Sample2: "568",
-    Sample3: "Tech Park",
-    Sample4: "Building A",
-    Sample5: "Alpha Valley",
-    Sample6: "Austin",
-  },
-  {
-    Sample1: "Sigma Industries",
-    Sample2: "111",
-    Sample3: "Production Unit",
-    Sample4: "Industrial Zone",
-    Sample5: "Sigma Estate",
-    Sample6: "Boston",
-  },
-  {
-    Sample1: "Theta Enterprises",
-    Sample2: "643",
-    Sample3: "Corporate Office",
-    Sample4: "Tower 9",
-    Sample5: "Theta Business District",
-    Sample6: "Miami",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "kjj",
-    Sample2: "987",
-    Sample3: "h",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
+  "Reportno",
+  "Samplename",
+  "Billeddate",
+  "Dated",
+  "Selected",
+  "From",
+  "Station",
+  "AnotherName",
+  "AnotherValue",
+  "Moisture",
+  "Oil",
+  "FFA",
+  "Time",
+  "Code",
+  "Date",
+  "Vechileno",
+  "Bags",
+  "Weight",
+  "Category",
+  "Remarks",
+  "Signature",
 ];
 
 const RecordReportWithoutSample = () => {
-  const [data, setData] = useState(initialData);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [partyName, setPartyName] = useState('');
-  const [sampleName, setSampleName] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [partyName, setPartyName] = useState("");
+  const [sampleName, setSampleName] = useState("");
   const [records, setRecords] = useState([]);
-  const [error, setError] = useState('');
+  const [customers, setCustomers] = useState([]);
+  const [Item, setItem] = useState([]);
   const fetchRecords = async () => {
     try {
       // Clear previous error
-      setError('');
 
       // Prepare the payload
       const payload = {
         startDate,
         endDate,
         partyName,
-        sampleName
+        sampleName,
       };
-
+      console.log(payload);
       // Send POST request to the API
-      const response = await axios.post('http://localhost:3000/records', payload);
+
+      await axios
+        .post("http://localhost:3001/api/analysisDate", payload)
+        .then((response) => {
+          if (response) {
+            setRecords(response.data);
+          }
+        })
+        .catch((err) => console.log(err.response.data));
 
       // Set the records in state if response is successful
-      setRecords(response.data);
-
     } catch (err) {
-      console.error('Error fetching records:', err.message);
-      setError(err.response ? err.response.data.error : 'Something went wrong');
+      console.error("Error fetching records:", err.message);
     }
   };
+
+  // Fetch customer data
+  useEffect(() => {
+    try {
+      //Fetching Customer PartyName
+      axios
+        .get("http://localhost:3001/api/customersPartyName")
+        .then((response) => {
+          console.log(response.data);
+          setCustomers(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      //Fetching Sample Names
+      axios
+        .get("http://localhost:3001/api/Item")
+        .then((response) => {
+          console.log(response.data.id);
+          setItem(response.data.id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   return (
     <div className="bg-gray-100">
       <div className="flex justify-center min-h-screen">
@@ -196,7 +111,7 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
-                        onChange={(e)=>setStartDate(e.target.value)}
+                        onChange={(e) => setStartDate(e.target.value)}
                       />
                       {/* From Label and Date Input */}
                       <label htmlFor="fromDate" className="font-medium">
@@ -207,7 +122,7 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
-                        onChange={(e)=>setEndDate(e.target.value)}
+                        onChange={(e) => setEndDate(e.target.value)}
                       />
                     </div>
 
@@ -229,12 +144,16 @@ const RecordReportWithoutSample = () => {
                             id="partyName"
                             name="partyName"
                             className="h-8 p-1 border border-gray-300 rounded-md w-52"
-                            onChange={(e)=>(setPartyName(e.target.value))}
+                            onChange={(e) => setPartyName(e.target.value)}
                           >
                             <option value="">Select Party</option>
-                            <option value="party1">Party 1</option>
-                            <option value="party2">Party 2</option>
-                            <option value="party3">Party 3</option>
+
+                            {customers &&
+                              customers.map((item, index) => (
+                                <option key={index} value={item.Name}>
+                                  {item.PartyName}
+                                </option>
+                              ))}
                             {/* Add more options as needed */}
                           </select>
                         </div>
@@ -252,12 +171,15 @@ const RecordReportWithoutSample = () => {
                             id="SampleName"
                             name="SampleName"
                             className="h-8 p-1 border border-gray-300 rounded-md w-52"
-                            onChange={(e)=>(setSampleName(e.target.value))}
+                            onChange={(e) => setSampleName(e.target.value)}
                           >
                             <option value="">Select Sample</option>
-                            <option value="Sample1">Sample 1</option>
-                            <option value="Sample2">Sample 2</option>
-                            <option value="Sample3">Sample 3</option>
+                            {Item &&
+                              Item.map((item) => (
+                                <option key={item.ID} value={item.ItemName}>
+                                  {item.ItemName}
+                                </option>
+                              ))}
                             {/* Add more options as needed */}
                           </select>
                         </div>
@@ -306,7 +228,7 @@ const RecordReportWithoutSample = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((row, i) => (
+                    {records.map((row, i) => (
                       <tr
                         key={i}
                         className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"

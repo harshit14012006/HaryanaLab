@@ -142,7 +142,6 @@ const ReportAnalysis = () => {
     } catch (error) {
       console.error("Error updating data:", error);
     }
-    ipcRenderer.send("open-lab-report", Data);
   };
 
   return (

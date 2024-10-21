@@ -317,11 +317,38 @@ const getUserFromReportWithoutSample = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+const getReportByDate = (req, res) => {
+  const { startDate, endDate, partyName, sampleName } = req.body;
+  console.log(startDate, endDate, partyName, sampleName);
+  if (!startDate || !endDate) {
+    return res
+      .status(400)
+      .json({ error: "Please provide startDate and endDate." });
+  }
 
+  const query = `
+    SELECT * FROM analysis
+    WHERE \`From\` = ? AND Samplename = ? AND Dated BETWEEN ? AND ?
+  `;
+
+  db.query(
+    query,
+    [partyName, sampleName, startDate, endDate],
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        return res.status(500).json({ error: "Database query failed." });
+      }
+
+      res.json(results);
+    }
+  );
+};
 module.exports = {
   createAnalysis,
   getAnalysis,
   updateAnalysis,
   getAnalysisnormal,
   getRepNo,
+  getReportByDate,
 };

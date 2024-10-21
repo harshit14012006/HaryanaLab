@@ -78,6 +78,7 @@ const LedgerReport = () => {
         Total: sub,
         Paid: sum,
         Balance: total,
+        ClosingBalance: sub - sum,
       });
       setFilteredData(data.filter((item) => item.PartyName === partyName));
     }
@@ -138,7 +139,7 @@ const LedgerReport = () => {
     const pdfBlob = await ReactPDF.pdf(
       <AccountLedger
         Data={filteredData}
-        Balance={Values.Balance}
+        Balance={Values.ClosingBalance}
         OpeningBalance={Party.Openingbalance}
         Date1={Dates.fromDate}
         Date2={Dates.toDate}

@@ -207,9 +207,24 @@ const databyname = async (req, res) => {
   }
 };
 
+const getCustomersPartyName = (req, res) => {
+  const sqlQuery = "SELECT PartyName,Name,City FROM customer";
+
+  db.query(sqlQuery, (err, results) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      res.status(500).send("Database query error");
+      return;
+    }
+
+    res.json(results); // Send the results as JSON response
+  });
+};
+
 module.exports = {
   createCustomer,
   getAllCustomers,
+  getCustomersPartyName,
   updateCustomer,
   deleteCustomer,
   databyname,
