@@ -60,7 +60,7 @@ app.delete("/api/users/:Date/:Debit/:PartyName", deleteUserByDebit);
 app.put("/api/users/:id", updateUser);
 app.get("/api/users/:name", getUsersByName);
 app.get("/api/usersDate/:fromDate/:toDate", getUsersByDate);
-app.get("/api/usersFindData", getByCity);
+app.post("/api/usersFindData", getByCity);
 
 //Customer Api's
 app.get("/api/customers", customerController.getAllCustomers);
@@ -81,6 +81,7 @@ app.get("/api/analysis", analysisController.getAnalysisnormal);
 app.get("/api/analysises/:from", analysisController.getRepNo);
 app.put("/api/analysis/:Reportno", analysisController.updateAnalysis);
 app.post("/api/analysisDate", analysisController.getReportByDate);
+app.post("/api/analysisPartyname", analysisController.getReportByPartyname);
 
 // Image Upload Route
 app.post("/upload", upload.single("image"), saveImage);

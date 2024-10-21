@@ -208,7 +208,7 @@ const databyname = async (req, res) => {
 };
 
 const getCustomersPartyName = (req, res) => {
-  const sqlQuery = "SELECT PartyName,Name,City FROM customer";
+  const sqlQuery = "SELECT PartyName,Name,City,District,State FROM customer";
 
   db.query(sqlQuery, (err, results) => {
     if (err) {

@@ -238,41 +238,38 @@ exports.deleteUserByDebit = async (req, res) => {
 };
 
 exports.getByCity = async (req, res) => {
+  const { state, district, city } = req.body;
+  console.log(state, district, city);
+  // Validate input fields
+  if (!state || !district || !city) {
+    return res
+      .status(400)
+      .json({ message: "State, district, and city are required" });
+  }
+
   try {
-    const { state, city } = req.body;
-
-    // Validate if state and city are provided
-    if (!state || !city) {
-      return res.status(400).json({ message: "State and city are required" });
-    }
-
-    // Query to join ledger and analysis tables based on reportno
     const query = `
-      SELECT ledger.* 
-      FROM ledger 
-      INNER JOIN analysis ON ledger.reportno = analysis.reportno 
-      WHERE analysis.state = ? AND analysis.city = ?`;
+          SELECT ledger.*
+          FROM ledger 
+          INNER JOIN customer ON ledger.PartyNAME = customer.PartyNAME
+          WHERE customer.state = ? AND customer.district = ? AND customer.city = ?
+      `;
 
-    // Promisified version of db.query for using async/await
-    const queryAsync = (sql, params) => {
-      return new Promise((resolve, reject) => {
-        db.query(sql, params, (err, results) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(results);
-          }
+    // Execute the query
+    db.query(query, [state, district, city], (err, results) => {
+      if (err) console.log(err);
+      else
+        res.json({
+          status: 200,
+          data: results,
         });
-      });
-    };
+    });
 
-    // Execute the query using async/await
-    const results = await queryAsync(query, [state, city]);
-
-    // Return the fetched results
-    res.json(results);
-  } catch (err) {
-    console.error("Error occurred:", err);
-    res.status(500).json({ message: "An error occurred while fetching data" });
+    // Return the result
+  } catch (error) {
+    console.error("Error fetching ledger data:", error);
+    return res
+      .status(500)
+      .json({ message: "An error occurred while fetching ledger data" });
   }
 };

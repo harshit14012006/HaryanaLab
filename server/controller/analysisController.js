@@ -344,6 +344,30 @@ const getReportByDate = (req, res) => {
     }
   );
 };
+
+const getReportByPartyname = (req, res) => {
+  const { startDate, endDate, partyName } = req.body;
+  console.log(startDate, endDate, partyName);
+  if (!startDate || !endDate) {
+    return res
+      .status(400)
+      .json({ error: "Please provide startDate and endDate." });
+  }
+
+  const query = `
+    SELECT * FROM analysis
+    WHERE \`From\` = ?  AND Dated BETWEEN ? AND ?
+  `;
+
+  db.query(query, [partyName, startDate, endDate], (err, results) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      return res.status(500).json({ error: "Database query failed." });
+    }
+    res.json(results);
+  });
+};
+
 module.exports = {
   createAnalysis,
   getAnalysis,
@@ -351,4 +375,5 @@ module.exports = {
   getAnalysisnormal,
   getRepNo,
   getReportByDate,
+  getReportByPartyname,
 };
