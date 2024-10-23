@@ -9,10 +9,6 @@ const ReportAnalysis = () => {
   const [city, setCity] = React.useState(null);
   const [time2, setTime] = React.useState(null);
   const [FFaTime, setFfaTime] = React.useState("");
-  const [Remark, SetRemark] = React.useState({
-    remarks1: "",
-    remarks2: "",
-  });
   let [Repno, setRepno] = React.useState(0);
   const handleChange = (event) => {
     // Create a new object with the updated formData
@@ -69,21 +65,17 @@ const ReportAnalysis = () => {
           if (response.data.response) {
             console.log("If working");
             getData(response.data.data[0]);
-            const part = response.data.data[0].Remarks.split(" ");
+            const part = response.data.data[0].Remarks;
             part &&
-              SetRemark({
-                remarks1: part[0],
-                remarks2: part[1],
-              });
-            axios
-              .get("http://localhost:3001/api/customersbyname")
-              .then((response) => {
-                // console.log(response.data);
-                setCustomersbyname(response.data);
-              })
-              .catch((error) => {
-                console.error("There was an error fetching the data!", error);
-              });
+              axios
+                .get("http://localhost:3001/api/customersbyname")
+                .then((response) => {
+                  // console.log(response.data);
+                  setCustomersbyname(response.data);
+                })
+                .catch((error) => {
+                  console.error("There was an error fetching the data!", error);
+                });
             axios
               .get("http://localhost:3001/api/Item")
               .then((response) => {
@@ -123,7 +115,6 @@ const ReportAnalysis = () => {
     }
     Data.Time =
       FFaTime && Data.FFA !== "NA" && Data.Time ? FFaTime.toString() : "NA";
-    Data.Remarks = `${Remark.remarks1} ${Remark.remarks2}`;
     console.log(Data);
     try {
       axios
@@ -135,7 +126,6 @@ const ReportAnalysis = () => {
           setCity(null);
           ipcRenderer.send("open-lab-report", Data);
           getData({});
-          SetRemark({ remarks1: "", remarks2: "" });
         })
         .catch((error) => {
           console.error("Error updating data:", error);
@@ -258,7 +248,7 @@ const ReportAnalysis = () => {
                         Billed Date
                       </label>
                       <input
-                        type="text"
+                        type="date"
                         id="billeddate"
                         required
                         className="flex-grow h-5 px-2 py-1 border"
@@ -509,10 +499,9 @@ const ReportAnalysis = () => {
                   type="text"
                   id="remarks1"
                   className="w-full h-5 px-2 py-1 border"
-                  value={Remark.remarks1}
-                  onChange={(e) =>
-                    SetRemark({ ...Remark, [e.target.id]: e.target.value })
-                  }
+                  value={Data.SealEngraved || ""}
+                  name="SealEngraved"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -527,10 +516,8 @@ const ReportAnalysis = () => {
                   type="text"
                   id="remarks2"
                   className="w-full h-5 px-2 py-1 border"
-                  value={Remark.remarks2}
-                  onChange={(e) =>
-                    SetRemark({ ...Remark, [e.target.id]: e.target.value })
-                  }
+                  value={Data.Remarks}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -551,6 +538,8 @@ const ReportAnalysis = () => {
               <div className="flex justify-end">
                 <button
                   type="submit"
+                  name="Remarks"
+                  value={Data.Remarks || ""}
                   className="px-2 py-1 bg-gray-400 rounded"
                   onClick={HandleUpdate}
                 >

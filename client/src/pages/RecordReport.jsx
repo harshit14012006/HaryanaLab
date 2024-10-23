@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+const { ipcRenderer } = window.require("electron");
 const headers = [
   "Reportno",
   "Samplename",
@@ -20,6 +21,7 @@ const headers = [
   "Bags",
   "Weight",
   "Category",
+  "SealEngraved",
   "Remarks",
   "Signature",
 ];
@@ -32,6 +34,7 @@ const RecordReportWithoutSample = () => {
   const [records, setRecords] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [Item, setItem] = useState([]);
+  const [filteredCity, setFilteredCity] = useState([]);
   const fetchRecords = async () => {
     try {
       // Clear previous error
@@ -90,6 +93,26 @@ const RecordReportWithoutSample = () => {
     }
   }, []);
 
+  const HandleCity = (event) => {
+    console.log(event.target.value);
+    const Data = customers.filter((item) => item.Name === event.target.value);
+    console.log(Data);
+    setFilteredCity(Data);
+  };
+
+  const HandleClick = async () => {
+    console.log("Print");
+    console.log(filteredCity[0].City);
+    records.City = filteredCity[0].City;
+    const Data = {
+      Records: records,
+      City: filteredCity[0].City,
+      PartyName: filteredCity[0].PartyName,
+    };
+    console.log(Data);
+    ipcRenderer.send("open-Party-report", Data);
+  };
+
   return (
     <div className="bg-gray-100">
       <div className="flex justify-center min-h-screen">
@@ -144,7 +167,10 @@ const RecordReportWithoutSample = () => {
                             id="partyName"
                             name="partyName"
                             className="h-8 p-1 border border-gray-300 rounded-md w-52"
-                            onChange={(e) => setPartyName(e.target.value)}
+                            onChange={(e) => {
+                              setPartyName(e.target.value);
+                              HandleCity(e);
+                            }}
                           >
                             <option value="">Select Party</option>
 
@@ -171,7 +197,9 @@ const RecordReportWithoutSample = () => {
                             id="SampleName"
                             name="SampleName"
                             className="h-8 p-1 border border-gray-300 rounded-md w-52"
-                            onChange={(e) => setSampleName(e.target.value)}
+                            onChange={(e) => {
+                              setSampleName(e.target.value);
+                            }}
                           >
                             <option value="">Select Sample</option>
                             {Item &&
@@ -199,6 +227,7 @@ const RecordReportWithoutSample = () => {
                     <button
                       type="button"
                       className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                      onClick={HandleClick}
                     >
                       Print
                     </button>
@@ -228,24 +257,25 @@ const RecordReportWithoutSample = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {records.map((row, i) => (
-                      <tr
-                        key={i}
-                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-                      >
-                        {headers.map((header, j) => (
-                          <td
-                            key={j}
-                            className={`border-gray-300 border text-sm whitespace-nowrap ${
-                              j < headers.length - 1 ? "pr-0" : ""
-                            }`}
-                            style={{ minWidth: "150px" }} // Set minimum width for data cells
-                          >
-                            {row[header]}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
+                    {records &&
+                      records.map((row, i) => (
+                        <tr
+                          key={i}
+                          className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                        >
+                          {headers.map((header, j) => (
+                            <td
+                              key={j}
+                              className={`border-gray-300 border text-sm whitespace-nowrap ${
+                                j < headers.length - 1 ? "pr-0" : ""
+                              }`}
+                              style={{ minWidth: "150px" }} // Set minimum width for data cells
+                            >
+                              {row[header]}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

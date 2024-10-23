@@ -34,8 +34,7 @@ const CreateReport = () => {
     Bags: "NA",
     Weight: "NA",
     Itemcategory: "Seal Engraved",
-    Remarks1: "",
-    Remarks2: "",
+    SealEngraved: "NA",
     Remarks: "",
     Signature: "NA",
   });
@@ -96,6 +95,16 @@ const CreateReport = () => {
     axios
       .get("http://localhost:3001/api/analysis")
       .then((response) => {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+
+        // Create a date for March 31st of the current year
+        const sessionEndDate = new Date(currentYear, 2, 31); // March is month 2 (0-indexed)
+        if (currentDate > sessionEndDate) {
+          setId(1);
+        } else {
+          setId(response.data.data[0].Reportno + 1);
+        }
         console.log(response.data.data[0].Reportno);
         setId(response.data.data[0].Reportno + 1);
       })
@@ -106,7 +115,6 @@ const CreateReport = () => {
 
   const handleSaveAndPrint = (e) => {
     e.preventDefault();
-    formData.Remarks = `${formData.Remarks1} ${formData.Remarks2}`;
     formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
     formData.Reportno = id;
     console.log(formData);
@@ -139,9 +147,8 @@ const CreateReport = () => {
             Bags: "NA",
             Weight: "NA",
             Itemcategory: "Seal Engraved",
-            Remarks1: "NA",
-            Remarks2: "NA",
             Remarks: "NA",
+            SealEngraved: "NA",
             Signature: "NA",
           });
         })
@@ -492,7 +499,7 @@ const CreateReport = () => {
                   type="text"
                   id="space"
                   className="w-full h-5 px-0 py-1 border"
-                  name="Remarks1"
+                  name="SealEngraved"
                   onChange={handleChange}
                 />
               </div>
@@ -508,7 +515,7 @@ const CreateReport = () => {
                   type="text"
                   id="space2"
                   className="w-full h-5 px-0 py-1 border"
-                  name="Remarks2"
+                  name="Remarks"
                   onChange={handleChange}
                 />
               </div>

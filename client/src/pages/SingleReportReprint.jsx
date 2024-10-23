@@ -21,13 +21,16 @@ const headers = [
   "Bags",
   "Weight",
   "Category",
+  "SealEngraved",
   "Remarks",
   "Signature",
 ];
 
 const SingleReportReprint = () => {
   const [data, setData] = useState([]);
+  const [Filtereddata, setFilteredData] = useState([]);
   const [reportNo, setreportNo] = useState(null);
+  const [years, setYears] = useState([]);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -36,6 +39,18 @@ const SingleReportReprint = () => {
       if (response) {
         setData(response.data.data); // Access the data from the API response
         console.log(response.data.data);
+        setFilteredData(response.data.data);
+        // Extract unique years from the start and end dates
+        const allYears = response.data.data.reduce((acc, data) => {
+          const startYear = new Date(data.Dated).getFullYear();
+          const endYear = new Date(data.Billeddate).getFullYear();
+          return acc.concat(startYear, endYear);
+        }, []);
+
+        // Remove duplicates
+        const uniqueYears = [...new Set(allYears)];
+        console.log(uniqueYears);
+        setYears(uniqueYears);
       } else {
         setData([]);
       }
@@ -46,8 +61,18 @@ const SingleReportReprint = () => {
     }
   };
 
+  const FilteredData = (event) => {
+    const FIlteredDatat = data.filter(
+      (item) =>
+        new Date(item.Dated).getFullYear() === parseInt(event.target.value) ||
+        new Date(item.Billeddate).getFullYear() === parseInt(event.target.value)
+    );
+    console.log(FIlteredDatat);
+    setFilteredData(FIlteredDatat);
+  };
+
   const HandleClick = () => {
-    ipcRenderer.send("open-lab-report", data[0]);
+    Filtereddata && ipcRenderer.send("open-lab-report", Filtereddata[0]);
   };
 
   return (
@@ -78,8 +103,8 @@ const SingleReportReprint = () => {
                     />
                   </div>
 
-                  {/* Buttons for Display and Print */}
-                  <div className="flex mt-10 space-x-80">
+                  {/* Buttons for Display and Print space-x-80 */}
+                  <div className="flex mt-10 justify-between ">
                     <button
                       type="button"
                       className="h-8 px-4 py-1 bg-gray-400 rounded-md"
@@ -87,6 +112,19 @@ const SingleReportReprint = () => {
                     >
                       Display
                     </button>
+                    <select
+                      id="partyName"
+                      name="partyName"
+                      className="h-8 p-1 w-[10rem] border border-gray-300 rounded-md"
+                      onChange={FilteredData}
+                    >
+                      <option value="">Select A Year</option>
+                      {years.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
                     <button
                       type="button"
                       className="h-8 px-4 py-1 bg-gray-400 rounded-md"
@@ -120,24 +158,25 @@ const SingleReportReprint = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.map((row, i) => (
-                        <tr
-                          key={i}
-                          className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-                        >
-                          {headers.map((header, j) => (
-                            <td
-                              key={j}
-                              className={`border-gray-300 border text-sm whitespace-nowrap ${
-                                j < headers.length - 1 ? "pr-0" : ""
-                              }`}
-                              style={{ minWidth: "150px" }} // Set minimum width for data cells
-                            >
-                              {row[header]}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
+                      {Filtereddata &&
+                        Filtereddata.map((row, i) => (
+                          <tr
+                            key={i}
+                            className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                          >
+                            {headers.map((header, j) => (
+                              <td
+                                key={j}
+                                className={`border-gray-300 border text-sm whitespace-nowrap ${
+                                  j < headers.length - 1 ? "pr-0" : ""
+                                }`}
+                                style={{ minWidth: "150px" }} // Set minimum width for data cells
+                              >
+                                {row[header]}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

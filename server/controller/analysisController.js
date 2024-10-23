@@ -25,6 +25,7 @@ const createAnalysis = (req, res) => {
     Itemcategory,
     Remarks,
     Signature,
+    SealEngraved,
   } = req.body;
 
   // const query = `INSERT INTO analysis ( Samplename, Billeddate, Dated, Sealunseal, \`From\`, Station, Crude, Moisture, Oil, FFA, \`Time\`,
@@ -35,8 +36,8 @@ const createAnalysis = (req, res) => {
   INSERT INTO analysis (
     Reportno, Samplename, Billeddate, Dated, Selected, \`From\`, Station, AnotherName,
     AnotherValue, Moisture, Oil, FFA, \`Time\`,
-    Code, \`Date\`, Vechileno, Bags, Weight, Category, Remarks, Signature
-  ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
+    Code, \`Date\`, Vechileno, Bags, Weight, Category, Remarks, Signature, SealEngraved
+  ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?);
 `;
 
   const values = [
@@ -61,6 +62,7 @@ const createAnalysis = (req, res) => {
     Itemcategory,
     Remarks,
     Signature,
+    SealEngraved,
   ];
 
   console.log(values);
@@ -166,6 +168,7 @@ const updateAnalysis = (req, res) => {
     Category,
     Remarks,
     Signature,
+    SealEngraved,
   } = req.body;
   console.log(req.params);
   const { Reportno } = req.params; // Get the Reportno from query parameters
@@ -173,7 +176,7 @@ const updateAnalysis = (req, res) => {
   const query = `UPDATE analysis SET
     Samplename = ?, Billeddate = ?, Dated = ?, Selected = ?, \`From\` = ?, Station = ?, AnotherName = ?, AnotherValue = ?, 
     Moisture = ?,  Oil = ?, FFA = ?, \`Time\` = ?, Code = ?, \`Date\` = ?, Vechileno = ?, 
-    Bags = ?, Weight = ?, Category = ?, Remarks = ?, Signature = ?
+    Bags = ?, Weight = ?, Category = ?, Remarks = ?, Signature = ?, SealEngraved = ?
     WHERE Reportno = ?`;
 
   const values = [
@@ -197,6 +200,7 @@ const updateAnalysis = (req, res) => {
     Category,
     Remarks,
     Signature,
+    SealEngraved,
     Reportno,
   ];
   try {
@@ -368,6 +372,62 @@ const getReportByPartyname = (req, res) => {
   });
 };
 
+const getReportSByEverything = (req, res) => {
+  const {
+    From,
+    Selected,
+    Samplename,
+    Signature,
+    Category,
+    FromDate,
+    ToDate,
+    RepFrom,
+    RepTo,
+  } = req.body;
+  // if (!startDate || !endDate) {
+  //   return res
+  //     .status(400)
+  //     .json({ error: "Please provide startDate and endDate." });
+  // }
+
+  const query = `
+    SELECT * FROM analysis
+    WHERE \`From\` = ?  AND Selected = ? AND Samplename = ? AND Signature = ? AND Category = ? AND Reportno BETWEEN ? AND ? AND Billeddate BETWEEN ? AND ?
+  `;
+  console.log(
+    From,
+    Selected,
+    Samplename,
+    Signature,
+    Category,
+    RepFrom,
+    RepTo,
+    FromDate,
+    ToDate
+  );
+  db.query(
+    query,
+    [
+      From,
+      Selected,
+      Samplename,
+      Signature,
+      Category,
+      RepFrom,
+      RepTo,
+      FromDate,
+      ToDate,
+    ],
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        return res.status(500).json({ error: "Database query failed." });
+      }
+      res.json(results);
+    }
+  );
+};
+
 module.exports = {
   createAnalysis,
   getAnalysis,
@@ -376,4 +436,5 @@ module.exports = {
   getRepNo,
   getReportByDate,
   getReportByPartyname,
+  getReportSByEverything,
 };

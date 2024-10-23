@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ReactPDF from "@react-pdf/renderer";
+import AccountLedger from "./AccountLedger";
 const headers = ["Date", "PartyName", "Reportno", "Credit", "Debit", "Remarks"];
 
 const LedgerReport = () => {
@@ -8,6 +10,7 @@ const LedgerReport = () => {
   const [firstComboBox, setFirstComboBox] = useState("");
   const [secondComboBox, setSecondComboBox] = useState("");
   const [thirdComboBox, setThirdComboBox] = useState("");
+  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/customersPartyName")
@@ -47,6 +50,35 @@ const LedgerReport = () => {
     }
   }, [thirdComboBox, firstComboBox, secondComboBox]); // Trigger API call when thirdComboBox changes
 
+  const HandleClick = async () => {
+    console.log("Print");
+    // console.log(filteredData[0].Date);
+    const pdfBlob = await ReactPDF.pdf(
+      <AccountLedger
+        Data={data}
+        Balance={0}
+        OpeningBalance={0}
+        Date1={"NA"}
+        Date2={"NA"}
+      />
+    ).toBlob();
+    const newBlobUrl = URL.createObjectURL(pdfBlob);
+    console.log("Generated new Blob URL:", newBlobUrl);
+    // Open the new Blob URL in a new tab
+    window.open(newBlobUrl);
+
+    // Clean up the previous Blob URL if it exists
+    if (pdfBlobUrl) {
+      console.log("Revoking old Blob URL:", pdfBlobUrl);
+      let text = URL.revokeObjectURL(pdfBlobUrl);
+      console.log(text);
+    }
+
+    // Update the state with the new Blob URL
+
+    setPdfBlobUrl(newBlobUrl);
+  };
+
   return (
     <div className="bg-gray-100">
       <div className="flex justify-center min-h-screen">
@@ -73,11 +105,13 @@ const LedgerReport = () => {
                     >
                       <option value="">Select State</option>
                       {customers &&
-                        customers.map((item, index) => (
-                          <option key={index} value={item.State}>
-                            {item.State}
-                          </option>
-                        ))}
+                        [...new Set(customers.map((item) => item.State))].map(
+                          (state, index) => (
+                            <option key={index} value={state}>
+                              {state}
+                            </option>
+                          )
+                        )}
                     </select>
                   </div>
 
@@ -97,11 +131,13 @@ const LedgerReport = () => {
                     >
                       <option value="">Select City</option>
                       {customers &&
-                        customers.map((item, index) => (
-                          <option key={index} value={item.City}>
-                            {item.City}
-                          </option>
-                        ))}
+                        [...new Set(customers.map((item) => item.City))].map(
+                          (City, index) => (
+                            <option key={index} value={City}>
+                              {City}
+                            </option>
+                          )
+                        )}
                     </select>
                   </div>
                 </div>
@@ -122,9 +158,11 @@ const LedgerReport = () => {
                     >
                       <option value="">Select District</option>
                       {customers &&
-                        customers.map((item, index) => (
-                          <option key={index} value={item.District}>
-                            {item.District}
+                        [
+                          ...new Set(customers.map((item) => item.District)),
+                        ].map((District, index) => (
+                          <option key={index} value={District}>
+                            {District}
                           </option>
                         ))}
                     </select>
@@ -153,24 +191,29 @@ const LedgerReport = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((row, i) => (
-                      <tr
-                        key={i}
-                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-                      >
-                        {headers.map((header, j) => (
-                          <td
-                            key={j}
-                            className={`border-gray-300 border text-sm whitespace-nowrap ${
-                              j < headers.length - 1 ? "pr-0" : ""
-                            }`}
-                            style={{ minWidth: "150px" }} // Set minimum width for data cells
-                          >
-                            {row[header]}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
+                    {data &&
+                      data.map((row, i) => (
+                        <tr
+                          key={i}
+                          className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                        >
+                          {headers.map((header, j) => (
+                            <td
+                              key={j}
+                              className={`border-gray-300 border text-sm whitespace-nowrap ${
+                                j < headers.length - 1 ? "pr-0" : ""
+                              }`}
+                              style={{ minWidth: "150px" }} // Set minimum width for data cells
+                            >
+                              {row[header] !== "null" &&
+                              row[header] !== null &&
+                              row[header] !== undefined
+                                ? row[header]
+                                : ""}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -178,6 +221,7 @@ const LedgerReport = () => {
                 <button
                   type="button"
                   className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                  onClick={HandleClick}
                 >
                   Print
                 </button>

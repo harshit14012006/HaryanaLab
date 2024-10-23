@@ -234,6 +234,71 @@ ipcMain.on("open-lab-report", (event, reportData) => {
   });
 });
 
+ipcMain.on("open-Party-report", (event, reportData) => {
+  // console.log(reportData);
+  const labReportWindow = new BrowserWindow({
+    width: 1200,
+    height: 700,
+    title: "Report Print",
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"), // Use the preload file
+      contextIsolation: true, // Keep contextIsolation true for security
+    },
+    autoHideMenuBar: true,
+  });
+
+  // Correctly construct the path to the HTML file in the client/public directory
+  const labReportPath = path.resolve(__dirname, "printrecordreport.html");
+
+  // Load the file
+  labReportWindow
+    .loadFile(labReportPath)
+    .then(() => {
+      // Set the title after the file has been loaded
+      labReportWindow.setTitle("Report Print");
+    })
+    .catch((err) => console.log("Failed to load file:", err));
+
+  // Wait for the window to finish loading before sending the data
+  labReportWindow.webContents.on("did-finish-load", () => {
+    labReportWindow.webContents.send("render-Party-report", reportData);
+    // labReportWindow.webContents.send("render-Party-report");
+  });
+});
+
+ipcMain.on("open-MultiReport-report", (event, reportData) => {
+  console.log(reportData);
+  const labReportWindow = new BrowserWindow({
+    width: 1920,
+    height: 1080,
+    title: "Report Print",
+    maximizable: true,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"), // Use the preload file
+      contextIsolation: true, // Keep contextIsolation true for security
+      enableRemoteModule: true,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+  });
+
+  // Correctly construct the path to the HTML file in the client/public directory
+  const labReportPath = path.resolve(__dirname, "multireport.html");
+  // Load the file
+  labReportWindow
+    .loadFile(labReportPath)
+    .then(() => {
+      // Set the title after the file has been loaded
+      labReportWindow.setTitle("Report Print");
+    })
+    .catch((err) => console.log("Failed to load file:", err));
+
+  // Wait for the window to finish loading before sending the data
+  labReportWindow.webContents.on("did-finish-load", () => {
+    labReportWindow.webContents.send("render-MultiReport-report", reportData);
+  });
+});
+
 const updateReportsAnalysisWindow = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 1250,

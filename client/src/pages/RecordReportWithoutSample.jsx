@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+const { ipcRenderer } = window.require("electron");
 
 const headers = [
   "Reportno",
@@ -21,6 +22,7 @@ const headers = [
   "Bags",
   "Weight",
   "Category",
+  "SealEngaved",
   "Remarks",
   "Signature",
 ];
@@ -91,8 +93,16 @@ const RecordReportWithoutSample = () => {
     } else {
       console.log("not found");
     }
+  };
 
-    // Update formData once with the final values
+  const HandlePdf = async () => {
+    const Data = {
+      Records: records,
+      City: city,
+      PartyName: partyName,
+    };
+    console.log(Data);
+    ipcRenderer.send("open-Party-report", Data);
   };
   return (
     <div className="bg-gray-100">
@@ -196,6 +206,7 @@ const RecordReportWithoutSample = () => {
                     <button
                       type="button"
                       className="bg-gray-400 py-1 px-4 rounded-md h-8"
+                      onClick={HandlePdf}
                     >
                       Print
                     </button>
@@ -224,24 +235,25 @@ const RecordReportWithoutSample = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {records.map((row, i) => (
-                      <tr
-                        key={i}
-                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-                      >
-                        {headers.map((header, j) => (
-                          <td
-                            key={j}
-                            className={`border-gray-300 border text-sm whitespace-nowrap ${
-                              j < headers.length - 1 ? "pr-0" : ""
-                            }`}
-                            style={{ minWidth: "150px" }} // Set minimum width for data cells
-                          >
-                            {row[header]}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
+                    {records &&
+                      records.map((row, i) => (
+                        <tr
+                          key={i}
+                          className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                        >
+                          {headers.map((header, j) => (
+                            <td
+                              key={j}
+                              className={`border-gray-300 border text-sm whitespace-nowrap ${
+                                j < headers.length - 1 ? "pr-0" : ""
+                              }`}
+                              style={{ minWidth: "150px" }} // Set minimum width for data cells
+                            >
+                              {row[header]}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

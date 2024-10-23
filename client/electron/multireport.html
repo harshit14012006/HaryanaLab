@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complex Design Example</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .box-container {
+        border: 2px solid #800000;
+        padding: 2px;
+        border-radius: 12px;
+        max-width: 1221px;
+      }
+
+      .reg-number {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #800000;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #8b3f3b;
+        color: white;
+        padding: 10px 20px;
+        width: 1181.5px;
+        height: 80px;
+        border-radius: 12px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid white;
+      }
+
+      .logo img {
+        width: 70px;
+        height: 50px;
+      }
+
+      .lab-name {
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+        flex-grow: 1;
+      }
+
+      .address {
+        font-size: 20px;
+      }
+
+      .contact {
+        text-align: right;
+        font-size: 14px;
+        background-color: transparent;
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid white;
+      }
+
+      .contact div {
+        display: flex;
+        align-items: center;
+      }
+
+      .contact div img {
+        width: 18px;
+        height: 15px;
+      }
+
+      .report-container {
+        border: 1.4px solid #800000;
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: -16px;
+        height: 85px;
+      }
+
+      .report-header {
+        text-align: center;
+        height: 12px;
+        padding-bottom: 10px;
+      }
+
+      .report-header .headername {
+        margin-top: -133px;
+        border-radius: 5px;
+      }
+
+      .report-header .header-left {
+        float: left;
+        font-size: 14px;
+        border: 1.5px solid #800000;
+        padding: 5px;
+        border-radius: 12px;
+        margin-top: -16px;
+        margin-left: -15.5px;
+      }
+
+      .report-header .header-right {
+        float: right;
+        font-size: 14px;
+        border: 1.5px solid #800000;
+        padding: 5px;
+        margin-top: -15px;
+        border-radius: 5px;
+        margin-right: -12px;
+      }
+
+      .report-header h2 {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #800000;
+        color: white;
+        font-size: 16px;
+      }
+
+      .clearfix {
+        clear: both;
+      }
+
+      .report-details {
+        margin-top: 10px;
+        font-size: 14px;
+        line-height: 24px;
+      }
+
+      .detail-row {
+        /* display: flex;
+        justify-content: space-between; */
+        padding: 5px 0;
+      }
+
+      .detail-row span {
+        margin: 0 5px;
+      }
+
+      .dotted-border-section {
+        border-bottom: 1px #800000;
+        padding-bottom: 5px;
+      }
+
+      .report-footer {
+        margin-top: 10px;
+        font-size: 14px;
+        padding-top: 5px;
+        text-align: left;
+      }
+
+      .extra-container {
+        border: 1.4px solid #800000;
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 2px;
+        height: 3px;
+      }
+
+      .report-columns {
+        display: flex;
+        font-size: 12px;
+        width: 1220px;
+        margin-top: 2px;
+        white-space: nowrap;
+      }
+
+      .report-column {
+        flex: 1;
+        border: 1px solid #8b3f3b;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px;
+        color: #8b3f3b;
+        border-radius: 12px;
+      }
+
+      .report-column {
+        white-space: nowrap;
+      }
+
+      .last-container {
+        border: 1.4px solid #800000;
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 2px;
+        height: 30px;
+      }
+
+      .analysis-text {
+        text-align: center;
+        margin-top: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #800000;
+      }
+      .Sample {
+        position: absolute;
+        left: 30rem;
+        top: 13.5rem;
+      }
+      .Selected {
+        position: absolute;
+        left: 47rem;
+        top: 13.5rem;
+      }
+      .Date1 {
+        position: absolute;
+        left: 64rem;
+        top: 13.5rem;
+      }
+      .Name {
+        position: absolute;
+        left: 8rem;
+        top: 15.9rem;
+      }
+      .City {
+        position: absolute;
+        left: 45.5rem;
+        top: 15.9rem;
+      }
+      .Seal {
+        position: absolute;
+        left: 30rem;
+        top: 19rem;
+      }
+      .Remarks {
+        position: absolute;
+        left: 30rem;
+        top: 50rem;
+      }
+      .image {
+        position: absolute;
+        left: 66rem;
+        top: 49.3rem;
+      }
+      .signature {
+        width: 160px;
+        height: 60px;
+      }
+      .inpfld {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 50px;
+        padding-right: 50px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .inpfld1 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .inpfld2 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .inpfld3 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 40px;
+        padding-right: 40px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .inpfld4 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 23px;
+        padding-right: 23px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .inpfld5 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 53px;
+        padding-right: 53px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .inpfld6 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 53px;
+        padding-right: 53px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="downloadBtn">Download As pdf</button>
+    <div class="box-container" id="MainContent">
+      <div class="reg-number">Regd. No. 05/11/03956/P.M.T/SSI/Dt. 11-04-86</div>
+      <div class="header">
+        <div class="logo">
+          <img src="../src/images/lablogo.png" alt="Logo" />
+        </div>
+        <div class="lab-name">
+          HARYANA LABORATORY <br />
+          <span class="address"
+            >Suvidha Marg, Corner Gali No. 3, Aggarsain Colony,
+            SIRSA-125055</span
+          >
+        </div>
+        <div class="contact">
+          <div>
+            <img
+              src="https://img.icons8.com/color/48/000000/whatsapp.png"
+              alt="WhatsApp"
+            />86076-23157
+          </div>
+          <div>
+            <img
+              src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"
+              alt="Phone"
+            />91833-23157
+          </div>
+          <div>
+            <img
+              src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"
+              alt="Phone"
+            />94655-37157
+          </div>
+          <div>
+            <img
+              src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"
+              alt="Phone"
+            />81685-26828
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="report-container">
+        <div class="report-header">
+          <div class="header-left">
+            Sample Not Drawn By<br />
+            Haryana lab.
+          </div>
+          <h2 class="headername">ANALYSIS REPORT</h2>
+          <div class="header-right" id="header-right">Date 03-04-2019</div>
+        </div>
+
+        <div class="report-details">
+          <div class="dotted-border-section">
+            <div class="detail-row">
+              <span
+                >We hereby Certify that a sample described as
+                ......................................................................................................................................................
+                <span class="Sample"
+                  ><input
+                    type="text"
+                    class="inpfld"
+                    id="inpfld"
+                    disabled /></span
+                ><span class="Selected"
+                  ><input
+                    type="text"
+                    disabled
+                    class="inpfld1"
+                    id="inpfld1" /></span
+              ></span>
+              <span
+                >received by us on
+                dt&nbsp;&nbsp;&nbsp;&nbsp;.....................................<span
+                  class="Date1"
+                  ><input
+                    type="text"
+                    disabled
+                    class="inpfld2"
+                    id="inpfld2" /></span
+              ></span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <span
+              >Sh./M/s/
+              &nbsp;.................................................................................................................................................................................................................................<span
+                class="Name"
+                ><input
+                  type="text"
+                  disabled
+                  class="inpfld3"
+                  id="inpfld3" /></span
+              ><span class="City"
+                ><input
+                  type="text"
+                  disabled
+                  class="inpfld4"
+                  id="inpfld4" /></span
+            ></span>
+            <span>being particulars &amp; result as under .</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="extra-container">
+        <div class="report-header">
+          Seal Engraved
+          ...............................................................................................................................................................................................................................................<span
+            class="Seal"
+            ><input type="text" disabled class="inpfld5" id="inpfld5"
+          /></span>
+        </div>
+      </div>
+
+      <div id="reportRows">
+        <div class="report-columns">
+          <div class="report-column">Report No.</div>
+
+          <div class="report-column">Sample Code</div>
+          <div class="report-column">Sample Date</div>
+          <div class="report-column">Vehicle No.</div>
+          <div class="report-column">Bags</div>
+          <div class="report-column">Weight</div>
+          <div class="report-column">Oil %</div>
+          <div class="report-column">Moist. %</div>
+          <div class="report-column">FFA %</div>
+        </div>
+      </div>
+
+      <div class="last-container">
+        Remarks...................................................................................................................................................................................................<span
+          class="Remarks"
+          ><input type="text" disabled class="inpfld6" id="inpfld6"
+        /></span>
+        Signature
+        <span class="image"
+          ><img src="./Sign3.jpg" alt="Sign" id="Sign" class="signature"
+        /></span>
+      </div>
+
+      <div class="analysis-text">
+        A House For Analysis of Rice Bran,Oil Seeds,Oil
+        Cakes,Atta,Maida,Suzi,Besan,Spices,Condiments,Acids & Fertilizers
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+      function generateRows(data) {
+        const reportRows = document.getElementById("reportRows");
+        console.log(data);
+        data.forEach((row) => {
+          const rowDiv = document.createElement("div");
+          rowDiv.className = "report-columns";
+
+          rowDiv.innerHTML = `
+            <div class="report-column">${row.Reportno}</div>
+            <div class="report-column">${row.Code}</div>
+            <div class="report-column">${DateChange(row.Dated)}</div>
+            <div class="report-column">${row.Vechileno}</div>
+            <div class="report-column">${row.Bags}</div>
+            <div class="report-column">${row.Weight}</div>
+            <div class="report-column">${row.Oil}</div>
+            <div class="report-column">${row.Moisture}</div>
+            <div class="report-column">${row.FFA}</div>
+          `;
+
+          reportRows.appendChild(rowDiv);
+        });
+        for (i = 0; i < 11 - data.length; i++) {
+          const rowDiv = document.createElement("div");
+          rowDiv.className = "report-columns";
+
+          rowDiv.innerHTML = `
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+          `;
+
+          reportRows.appendChild(rowDiv);
+        }
+      }
+
+      const { jsPDF } = window.jspdf;
+
+      // Event listener for download button
+      document
+        .getElementById("downloadBtn")
+        .addEventListener("click", function () {
+          var node = document.getElementById("MainContent");
+
+          domtoimage
+            .toPng(node)
+            .then(function (dataUrl) {
+              const pdf = new jsPDF("l", "mm", "a4");
+              const img = new Image();
+              img.src = dataUrl;
+              img.onload = function () {
+                const imgWidth = 297; // A4 width in mm
+                const pageHeight = 210; // A4 height in mm
+                const imgHeight = (img.height * imgWidth) / img.width;
+                let heightLeft = imgHeight;
+                let position = 2;
+
+                pdf.addImage(dataUrl, "PNG", 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                  position = heightLeft - imgHeight;
+                  pdf.addPage();
+                  pdf.addImage(
+                    dataUrl,
+                    "PNG",
+                    0,
+                    position,
+                    imgWidth,
+                    imgHeight
+                  );
+                  heightLeft -= pageHeight;
+                }
+
+                const pdfBlob = pdf.output("blob");
+                const pdfUrl = URL.createObjectURL(pdfBlob);
+
+                // Open the PDF in a new tab
+                window.open(pdfUrl);
+              };
+            })
+            .catch(function (error) {
+              console.error("Oops, something went wrong!", error);
+            });
+        });
+
+      function DateChange(Dataa) {
+        const [year, month, day] = Dataa.split("-"); // Split the date string
+        return `${day}-${month}-${year}`; // Rearrange to dd-MM-yyyy
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        window.ipcRenderer.on(
+          "render-MultiReport-report",
+          (event, reportData) => {
+            Data = reportData;
+            console.log(Data);
+            document.getElementById("inpfld").value = Data[0].Samplename;
+            document.getElementById("inpfld1").value = Data[0].Selected;
+            document.getElementById("inpfld2").value = DateChange(
+              Data[0].Dated
+            );
+            document.getElementById("inpfld3").value = Data[0].From;
+            document.getElementById("inpfld4").value = Data[0].Station;
+            document.getElementById("inpfld5").value = Data[0].SealEngraved;
+            document.getElementById("inpfld6").value = Data[0].Remarks;
+            document.getElementById(
+              "header-right"
+            ).innerHTML = `Date ${DateChange(Data[0].Billeddate)}`;
+            generateRows(Data);
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

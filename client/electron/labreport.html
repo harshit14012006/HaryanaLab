@@ -963,6 +963,7 @@
       });
       window.addEventListener("DOMContentLoaded", () => {
         window.ipcRenderer.on("render-lab-report", (event, reportData) => {
+          console.log("Working");
           Data = reportData;
           console.log(Data);
           let BillDate = document.getElementById("BilDate");

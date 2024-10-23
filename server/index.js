@@ -82,6 +82,7 @@ app.get("/api/analysises/:from", analysisController.getRepNo);
 app.put("/api/analysis/:Reportno", analysisController.updateAnalysis);
 app.post("/api/analysisDate", analysisController.getReportByDate);
 app.post("/api/analysisPartyname", analysisController.getReportByPartyname);
+app.post("/api/analysisEverything", analysisController.getReportSByEverything);
 
 // Image Upload Route
 app.post("/upload", upload.single("image"), saveImage);

@@ -1,150 +1,76 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 const headers = [
-  "Sample1",
-  "Sample2",
-  "Sample3",
-  "Sample4",
-  "Sample5",
-  "Sample6",
-  "Sample7",
-  "Sample8",
-  "Sample9",
-  "Sample10",
-  "Sample11",
-];
-
-const initialData = [
-  {
-    Sample1: "Harshit",
-    Sample2: "12",
-    Sample3: "Sample Data 1",
-    Sample4: "Sample Data 2",
-    Sample5: "Sample Data 3",
-    Sample6: "Sample Data 4",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Beta Ltd",
-    Sample2: "868",
-    Sample3: "Floor 2",
-    Sample4: "Building B",
-    Sample5: "Opposite Beta Mall",
-    Sample6: "New York",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Gamma Inc.",
-    Sample2: "432",
-    Sample3: "Office Suite",
-    Sample4: "Building C",
-    Sample5: "Near Gamma Park",
-    Sample6: "Los Angeles",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Delta Corp.",
-    Sample2: "563",
-    Sample3: "Warehouse 4",
-    Sample4: "Sector A",
-    Sample5: "Delta Industrial Area",
-    Sample6: "Chicago",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Epsilon LLC",
-    Sample2: "789",
-    Sample3: "Showroom",
-    Sample4: "Commercial Plaza",
-    Sample5: "Opposite Epsilon Tower",
-    Sample6: "San Francisco",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Zeta Co.",
-    Sample2: "923",
-    Sample3: "Factory 5",
-    Sample4: "Sector Z",
-    Sample5: "Zeta Industrial Hub",
-    Sample6: "Houston",
-    Sample7: "Sample Data 5",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "Alpha Tech",
-    Sample2: "568",
-    Sample3: "Tech Park",
-    Sample4: "Building A",
-    Sample5: "Alpha Valley",
-    Sample6: "Austin",
-  },
-  {
-    Sample1: "Sigma Industries",
-    Sample2: "111",
-    Sample3: "Production Unit",
-    Sample4: "Industrial Zone",
-    Sample5: "Sigma Estate",
-    Sample6: "Boston",
-  },
-  {
-    Sample1: "Theta Enterprises",
-    Sample2: "643",
-    Sample3: "Corporate Office",
-    Sample4: "Tower 9",
-    Sample5: "Theta Business District",
-    Sample6: "Miami",
-  },
-  {
-    Sample1: "Omega Ltd",
-    Sample2: "104",
-    Sample3: "Headquarters",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
-  {
-    Sample1: "kjj",
-    Sample2: "987",
-    Sample3: "h",
-    Sample4: "Main Office",
-    Sample5: "Omega Plaza",
-    Sample6: "Seattle",
-  },
+  "Reportno",
+  "Samplename",
+  "Billeddate",
+  "Dated",
+  "Selected",
+  "From",
+  "Station",
+  "AnotherName",
+  "AnotherValue",
+  "Moisture",
+  "Oil",
+  "FFA",
+  "Time",
+  "Code",
+  "Date",
+  "Vechileno",
+  "Bags",
+  "Weight",
+  "Category",
+  "SealEngraved",
+  "Remarks",
+  "Signature",
 ];
 
 const RecordReportWithoutSample = () => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
+  const [sample, setSample] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [formdata, setFormData] = useState({});
+  useEffect(() => {
+    try {
+      axios
+        .get("http://localhost:3001/api/Item")
+        .then((response) => setSample(response.data.id))
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get("http://localhost:3001/api/customersPartyName")
+        .then((response) => {
+          console.log(response.data);
+          setCustomers(response.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const HandleDisplay = async () => {
+    formdata.Remarks = `${formdata.Remarks1} ${formdata.Remarks2}`;
+    console.log(formdata);
+
+    try {
+      await axios
+        .post("http://localhost:3001/api/analysisEverything", formdata)
+        .then((response) => {
+          console.log(response.data);
+          setData(response.data);
+        })
+        .catch((error) => console.log("Axios Error = ", error));
+    } catch (error) {
+      console.log("Something Wnt wrong by Displaying Data", error);
+    }
+  };
+
+  const HnadlePrint = () => {
+    console.log(data);
+    data.length > 0 && ipcRenderer.send("open-MultiReport-report", data);
+  };
 
   return (
     <div className="bg-gray-100">
@@ -162,14 +88,26 @@ const RecordReportWithoutSample = () => {
                         <input
                           type="text"
                           id="fromDate"
-                          name="fromDate"
+                          name="RepFrom"
+                          onChange={(e) => {
+                            setFormData({
+                              ...formdata,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
                           className="h-6 p-2 border border-gray-300 rounded-md w-28"
                         />{" "}
                         To{" "}
                         <input
                           type="text"
                           id="fromDate"
-                          name="fromDate"
+                          name="RepTo"
+                          onChange={(e) => {
+                            setFormData({
+                              ...formdata,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
                           className="h-6 p-2 border border-gray-300 rounded-md w-28"
                         />{" "}
                         ]
@@ -181,7 +119,13 @@ const RecordReportWithoutSample = () => {
                         <input
                           type="date"
                           id="fromDate"
-                          name="fromDate"
+                          name="FromDate"
+                          onChange={(e) => {
+                            setFormData({
+                              ...formdata,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
                           className="h-6 p-2 ml-2 border border-gray-300 rounded-md"
                         />
                       </div>
@@ -190,48 +134,77 @@ const RecordReportWithoutSample = () => {
                       We hereby certify that a sample described as
                       <select
                         id="sampleDescription1"
-                        name="sampleDescription1"
+                        name="Samplename"
+                        onChange={(e) => {
+                          setFormData({
+                            ...formdata,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
                         className="h-6 ml-2 border border-gray-300 rounded-md w-28"
                       >
                         <option value="" disabled selected>
-                          Select Option
+                          Select Sample
                         </option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                        {sample &&
+                          sample.map((item, index) => (
+                            <option key={index} value={item.ItemName}>
+                              {item.ItemName}
+                            </option>
+                          ))}
                       </select>
                       <select
                         id="sampleDescription1"
-                        name="sampleDescription1"
+                        name="Selected"
+                        onChange={(e) => {
+                          setFormData({
+                            ...formdata,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
                         className="h-6 ml-2 border border-gray-300 rounded-md w-28"
                       >
                         <option value="" disabled selected>
-                          Select Option
+                          Select Seal
                         </option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                        <option value="Sealed">Sealed</option>
+                        <option value="Unsealed">Unsealed</option>
                       </select>
                       <span className="ml-2"> received by us on </span>
                       <input
                         type="date"
                         id="receivedDate"
-                        name="receivedDate"
+                        name="ToDate"
+                        onChange={(e) => {
+                          setFormData({
+                            ...formdata,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
                         className="h-6 p-2 ml-2 border border-gray-300 rounded-md"
                       />
                       <br />
                       <span className="ml-2"> From Sh./Ms </span>
                       <select
                         id="fromName"
-                        name="fromName"
+                        name="From"
+                        onChange={(e) => {
+                          setFormData({
+                            ...formdata,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
                         className="h-6 border border-gray-300 rounded-md w-96"
                       >
                         <option value="" disabled selected>
                           Select Name
                         </option>
-                        <option value="name1">Name 1</option>
-                        <option value="name2">Name 2</option>
-                        <option value="name3">Name 3</option>
+                        {customers &&
+                          customers.map((item, index) => (
+                            <option key={index} value={item.Name}>
+                              {item.Name}
+                            </option>
+                          ))}
                       </select>
                       <span className="w-full ml-2">
                         {" "}
@@ -244,7 +217,13 @@ const RecordReportWithoutSample = () => {
                           <span>Signature</span>
                           <select
                             id="signature"
-                            name="signature"
+                            name="Signature"
+                            onChange={(e) => {
+                              setFormData({
+                                ...formdata,
+                                [e.target.name]: e.target.value,
+                              });
+                            }}
                             className="h-6 ml-4 border border-gray-300 rounded-md w-36"
                           >
                             <option value="" disabled selected>
@@ -261,7 +240,13 @@ const RecordReportWithoutSample = () => {
                           <span>Remarks</span>
                           <input
                             id="remarks"
-                            name="remarks"
+                            name="Remarks1"
+                            onChange={(e) => {
+                              setFormData({
+                                ...formdata,
+                                [e.target.name]: e.target.value,
+                              });
+                            }}
                             className="h-10 p-2 mt-1 ml-2 border rounded-md w-96 "
                           ></input>
                         </div>
@@ -270,22 +255,35 @@ const RecordReportWithoutSample = () => {
                       <span className="ml-2">
                         <select
                           id="additionalInfo1"
-                          name="additionalInfo1"
+                          name="Category"
+                          onChange={(e) => {
+                            setFormData({
+                              ...formdata,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
                           className="h-6 border border-gray-300 rounded-md w-44"
                         >
-                          <option value="" disabled selected>
-                            Select Option
-                          </option>
-                          <option value="option1">Option 1</option>
-                          <option value="option2">Option 2</option>
-                          <option value="option3">Option 3</option>
+                          <option value="">Select Option</option>
+                          <option value="Seal Engraved">Seal Engraved</option>
+                          <option value="Buyer">Buyer</option>
+                          <option value="Seller">Seller</option>
+                          <option value="Rice Mills">Rice Mills</option>
+                          <option value="Trader">Trader</option>
+                          <option value="Broker">Broker</option>
                         </select>
                       </span>
                       <span className="ml-60">
                         <input
                           type="text"
                           id="additionalInfo2"
-                          name="additionalInfo2"
+                          name="Remarks2"
+                          onChange={(e) => {
+                            setFormData({
+                              ...formdata,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
                           className="h-6 p-2 border border-gray-300 rounded-md"
                           style={{ width: "430px" }} // Adjust the width as needed
                         />
@@ -298,12 +296,14 @@ const RecordReportWithoutSample = () => {
                     <button
                       type="button"
                       className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                      onClick={HandleDisplay}
                     >
                       Display
                     </button>
                     <button
                       type="button"
                       className="h-8 px-4 py-1 bg-gray-400 rounded-md"
+                      onClick={HnadlePrint}
                     >
                       Print
                     </button>
@@ -332,24 +332,25 @@ const RecordReportWithoutSample = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((row, i) => (
-                      <tr
-                        key={i}
-                        className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
-                      >
-                        {headers.map((header, j) => (
-                          <td
-                            key={j}
-                            className={`border-gray-300 border text-sm whitespace-nowrap ${
-                              j < headers.length - 1 ? "pr-0" : ""
-                            }`}
-                            style={{ minWidth: "150px" }} // Set minimum width for data cells
-                          >
-                            {row[header]}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
+                    {data &&
+                      data.map((row, i) => (
+                        <tr
+                          key={i}
+                          className="transition-colors duration-300 hover:bg-blue-500 hover:text-white"
+                        >
+                          {headers.map((header, j) => (
+                            <td
+                              key={j}
+                              className={`border-gray-300 border text-sm whitespace-nowrap ${
+                                j < headers.length - 1 ? "pr-0" : ""
+                              }`}
+                              style={{ minWidth: "150px" }} // Set minimum width for data cells
+                            >
+                              {row[header]}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
