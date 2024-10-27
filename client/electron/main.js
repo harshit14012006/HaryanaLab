@@ -325,11 +325,11 @@ const ledgerentryPopup = () => {
 
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#ledger-entry");
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#ledger-entry"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#ledger-entry"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Ledger Entry");
@@ -389,11 +389,11 @@ const cashvoucherPopup = () => {
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#cash-voucher");
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#cash-voucher"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#cash-voucher"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Cash Voucher");

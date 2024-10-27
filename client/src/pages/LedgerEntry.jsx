@@ -6,7 +6,9 @@ function LedgerEntry() {
   const [selectedParty, setSelectedParty] = useState(""); // Selected party name
   const [selectedCity, setSelectedCity] = useState(""); // Corresponding city of the selected party
   const [ledgerEntries, setLedgerEntries] = useState([]); // Ledger entries (for the table)
+  const [ledgerEntriesFilter, setLedgerEntriesFilter] = useState([]); // Ledger entries (for the table)
   const [Repno, setRepNo] = useState([]);
+  const [ledgerRepno, setledgerRepNo] = useState([]);
   const [formData, setFormData] = useState({
     Date: "",
     Reportno: "",
@@ -30,6 +32,30 @@ function LedgerEntry() {
       .catch((error) => {
         console.error("Error fetching party names:", error);
       });
+    axios
+      .get(`http://localhost:3001/api/users/`) // API endpoint to fetch Partyname and City
+      .then((response) => {
+        console.log("Data From HandleTableData", response.data);
+        // Set the fetched party names into state
+
+        const formattedReports = response.data.map((item) => ({
+          ...item, // Spread the original report object
+          Date: formatDate(item.Date), // Format the Date field
+        }));
+
+        setLedgerEntries(formattedReports);
+        setLedgerEntriesFilter(formattedReports);
+        const First = response.data.map((item) => item.Reportno);
+        let rep = First.filter((item) => item !== "null");
+        rep = rep.map((item) => Number(item));
+        setledgerRepNo(rep);
+        // response.data.map((item) => {
+        //   setRepNo(Repno.filter((index) => index !== item.Reportno));
+        // });
+      })
+      .catch((error) => {
+        console.error("Error fetching party names:", error);
+      });
   };
 
   const RepNumber = (Data) => {
@@ -37,9 +63,13 @@ function LedgerEntry() {
       axios
         .get(`http://localhost:3001/api/analysises/${Data}`) // API endpoint to fetch Partyname and City
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data, " is report mumber");
           // Set the fetched party names into state
-          setRepNo(response.data);
+          const repnumber = response.data.filter(
+            (item) => !ledgerRepno.includes(item.Reportno)
+          );
+          console.log(repnumber);
+          setRepNo(repnumber);
         })
         .catch((error) => {
           console.error("Error fetching party names:", error);
@@ -49,26 +79,10 @@ function LedgerEntry() {
     }
   };
 
-  //HandleTableData
-  const HandleTableData = (Data) => {
-    try {
-      axios
-        .get(`http://localhost:3001/api/users/${Data}`) // API endpoint to fetch Partyname and City
-        .then((response) => {
-          console.log("Data From HandleTableData", response.data);
-          // Set the fetched party names into state
-          setLedgerEntries(response.data);
-          // response.data.map((item) => {
-          //   setRepNo(Repno.filter((index) => index !== item.Reportno));
-          // });
-        })
-        .catch((error) => {
-          console.error("Error fetching party names:", error);
-        });
-    } catch (error) {
-      console.error("Error fetching Data:", error);
-    }
-  };
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
 
   // Handle party name selection
   const handlePartyChange = (event) => {
@@ -80,11 +94,18 @@ function LedgerEntry() {
       (party) => party.Partyname === selectedPartyName
     );
     if (selectedPartyObj) {
+      console.log(ledgerRepno);
+
       setSelectedCity(selectedPartyObj.City); // Set city based on selected party
       RepNumber(selectedPartyObj.Name);
-      HandleTableData(selectedPartyName);
+
+      const filterledger = ledgerEntriesFilter.filter(
+        (item) => item.PartyName === selectedPartyName
+      );
+      setLedgerEntries(filterledger);
     } else {
       setSelectedCity(""); // Reset if no party selected
+      setLedgerEntries(ledgerEntriesFilter);
     }
   };
 
@@ -125,6 +146,7 @@ function LedgerEntry() {
           setSelectedParty("");
           setSelectedCity("");
           setLedgerEntries([]);
+          fetchData();
         })
         .catch((error) => {
           console.log(error);
@@ -149,7 +171,7 @@ function LedgerEntry() {
         )
         .then((response) => {
           console.log(response);
-          HandleTableData(formData.PartyName);
+          // HandleTableData(formData.PartyName);
           setFormData({
             Date: "",
             Reportno: "",
@@ -157,6 +179,7 @@ function LedgerEntry() {
             Credit: "",
             Remarks: "",
           });
+          fetchData();
         })
         .catch((error) => {
           console.log(error);

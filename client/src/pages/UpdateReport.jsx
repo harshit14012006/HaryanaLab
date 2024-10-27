@@ -85,22 +85,21 @@ const ReportAnalysis = () => {
           if (response.data.response) {
             console.log("If working");
             getData(response.data.data[0]);
-            const part = response.data.data[0].Remarks;
             setSelectedImage(
               images.find(
                 (img) => img.value === response.data.data[0].Signature
               )
             );
-            part &&
-              axios
-                .get("http://localhost:3001/api/customersbyname")
-                .then((response) => {
-                  console.log(response.data);
-                  setCustomersbyname(response.data);
-                })
-                .catch((error) => {
-                  console.error("There was an error fetching the data!", error);
-                });
+
+            axios
+              .get("http://localhost:3001/api/customersbyname")
+              .then((response) => {
+                console.log(response.data);
+                setCustomersbyname(response.data);
+              })
+              .catch((error) => {
+                console.error("There was an error fetching the data!", error);
+              });
             axios
               .get("http://localhost:3001/api/Item")
               .then((response) => {
@@ -121,6 +120,12 @@ const ReportAnalysis = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
+
   const handleFfaChange = (e) => {
     setFfaTime(new Date().toLocaleTimeString()); // Set the current time
     const hours = String(new Date().getHours()).padStart(2, "0");
@@ -145,7 +150,8 @@ const ReportAnalysis = () => {
         Data.time = FFaTime.toString();
       }
     }
-
+    Data.Dated = formatDate(Data.Dated);
+    Data.Billeddate = formatDate(Data.Billeddate);
     console.log(Data);
     try {
       axios

@@ -6,6 +6,7 @@ const headers = ["Entry Date", "Report Number", "Credit", "Debit", "Remarks"];
 function CashVoucher() {
   // const [data, setData] = useState(initialData);
   const [vouchers, setVouchers] = useState([]); // New state for vouchers
+  const [vouchersFilter, setVouchersFilter] = useState([]); // New state for vouchers
   const [parties, setParties] = useState([]);
   const [selectedParty, setSelectedParty] = useState([]);
   const [amount, setAmount] = useState("");
@@ -25,33 +26,41 @@ function CashVoucher() {
     try {
       const response = await axios.get("http://localhost:3001/api/customers");
       setParties(response.data); // Assuming the response contains the party data
+
+      const response2 = await axios.get("http://localhost:3001/api/users/");
+      if (response2) {
+        console.log(response2.data);
+        const formattedReports = response2.data.map((item) => ({
+          ...item, // Spread the original report object
+          Date: formatDate(item.Date), // Format the Date field
+        }));
+        setVouchers(formattedReports); // Assuming the response contains the voucher data
+        setVouchersFilter(formattedReports); // Assuming the response contains the voucher data
+      } else {
+        setVouchers([]);
+      }
     } catch (error) {
       console.error("Error fetching parties:", error);
     }
   };
-  const fetchVouchers = async (Data) => {
-    if (Data) {
-      console.log("Fetching vouchers for party:", Data);
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/api/users/${Data.Partyname || Data}`
-        );
-        console.log(response.data);
-        setVouchers(response.data); // Assuming the response contains the voucher data
-      } catch (error) {
-        console.error("Error fetching vouchers:", error);
-      }
-    } else {
-      setVouchers([]); // Reset vouchers if no party is selected
-    }
-  };
+
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
+
   // Handle party selection
   const handlePartySelect = (event) => {
     const partyName = event.target.value;
+    console.log(partyName);
     const party = parties.find((p) => p.Partyname === partyName);
     setSelectedParty(party);
     setPartyName(partyName);
-    fetchVouchers(party);
+    partyName
+      ? setVouchers(
+          vouchersFilter.filter((item) => item.PartyName === partyName)
+        )
+      : setVouchers(vouchersFilter);
   };
 
   // Handle form submission
@@ -78,6 +87,7 @@ function CashVoucher() {
             setSelectedParty(null);
             setPartyName("");
             setVouchers([]);
+            fetchParties();
           }
         })
         .catch((error) => {
@@ -113,12 +123,12 @@ function CashVoucher() {
         )
         .then((response) => {
           console.log(response);
-          fetchVouchers(PartyName);
           setPartyName("");
           setDate("");
           setAmount("");
           setRemarks("");
           setDate("");
+          fetchParties();
         })
         .catch((error) => {
           console.log(error);

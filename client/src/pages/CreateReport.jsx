@@ -133,10 +133,17 @@ const CreateReport = () => {
       });
   };
 
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
+
   const handleSaveAndPrint = (e) => {
     e.preventDefault();
     formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
     formData.Reportno = id;
+    formData.Dated = formatDate(formData.Dated);
+    formData.Billeddate = formatDate(formData.Billeddate);
     console.log(formData);
     ipcRenderer.send("open-lab-report", formData);
     try {
