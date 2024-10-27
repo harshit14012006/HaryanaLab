@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import call1 from "../images/Sign1.png";
+import call2 from "../images/Sign2.png";
+import call3 from "../images/Sign3.jpg";
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
+
 const CreateReport = () => {
   const [ffaTime, setFfaTime] = useState(null);
   const [sampleName, setSampleName] = useState(null);
@@ -38,6 +42,22 @@ const CreateReport = () => {
     Remarks: "",
     Signature: "NA",
   });
+
+  const images = [
+    { id: 1, src: call1, alt: "Image 1", value: "signature1" },
+    { id: 2, src: call2, alt: "Image 2", value: "signature2" },
+    { id: 3, src: call3, alt: "Image 3", value: "signature3" },
+  ];
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSelect = (image) => {
+    console.log(image);
+    setSelectedImage(image);
+    setIsOpen(false); // Close dropdown after selecting
+    setFormData({ ...formData, Signature: image.value });
+  };
 
   const handleChange = (event) => {
     // Create a new object with the updated formData
@@ -114,7 +134,6 @@ const CreateReport = () => {
   };
 
   const handleSaveAndPrint = (e) => {
-    alert("Not working");
     e.preventDefault();
     formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
     formData.Reportno = id;
@@ -515,7 +534,46 @@ const CreateReport = () => {
           </div>
           <div className="text-right">
             <span className="block mr-6 text-sm">Signature</span>
-            <select
+            <div className="flex items-center justify-end gap-2 my-3">
+              {/* Selected Image */}
+              <div className="absolute left-[62rem] top-[28.5rem]">
+                {selectedImage && (
+                  <img
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
+                    className="w-24 h-24 rounded-lg"
+                  />
+                )}
+              </div>
+
+              <div className="relative">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="px-4 py-2 bg-gray-200 rounded-lg"
+                >
+                  Select Image
+                </button>
+
+                {isOpen && (
+                  <div className="absolute bottom-full mb-2 left-0 w-32 bg-white border border-gray-200 rounded-lg shadow-md z-10 overflow-hidden">
+                    {images.map((image) => (
+                      <div
+                        key={image.id}
+                        className="p-2 cursor-pointer hover:bg-gray-100 flex items-center justify-center"
+                        onClick={() => handleSelect(image)}
+                      >
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-12 h-12 rounded-lg"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* <select
               id="signature"
               className="px-0 py-1 mb-2 border"
               name="Signature"
@@ -525,7 +583,7 @@ const CreateReport = () => {
               <option value="signature1">Signature 1</option>
               <option value="signature2">Signature 2</option>
               <option value="signature3">Signature 3</option>
-            </select>
+            </select> */}
             <div className="flex justify-end">
               <button
                 type="submit"

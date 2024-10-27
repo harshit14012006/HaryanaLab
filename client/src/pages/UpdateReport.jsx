@@ -1,5 +1,8 @@
 import React from "react";
 import axios from "axios";
+import call1 from "../images/Sign1.png";
+import call2 from "../images/Sign2.png";
+import call3 from "../images/Sign3.jpg";
 const { ipcRenderer } = window.require("electron");
 const ReportAnalysis = () => {
   const [Data, getData] = React.useState({});
@@ -10,6 +13,23 @@ const ReportAnalysis = () => {
   const [time2, setTime] = React.useState(null);
   const [FFaTime, setFfaTime] = React.useState("");
   let [Repno, setRepno] = React.useState(0);
+
+  const images = [
+    { id: 1, src: call1, alt: "Image 1", value: "signature1" },
+    { id: 2, src: call2, alt: "Image 2", value: "signature2" },
+    { id: 3, src: call3, alt: "Image 3", value: "signature3" },
+  ];
+
+  const [selectedImage, setSelectedImage] = React.useState(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSelect = (image) => {
+    console.log(image);
+    setSelectedImage(image);
+    setIsOpen(false); // Close dropdown after selecting
+    getData({ ...Data, Signature: image.value });
+  };
+
   const handleChange = (event) => {
     // Create a new object with the updated formData
     let newFormData = { ...Data, [event.target.name]: event.target.value };
@@ -66,6 +86,11 @@ const ReportAnalysis = () => {
             console.log("If working");
             getData(response.data.data[0]);
             const part = response.data.data[0].Remarks;
+            setSelectedImage(
+              images.find(
+                (img) => img.value === response.data.data[0].Signature
+              )
+            );
             part &&
               axios
                 .get("http://localhost:3001/api/customersbyname")
@@ -85,6 +110,8 @@ const ReportAnalysis = () => {
               .catch((error) => {
                 console.error("There was an error fetching the data!", error);
               });
+          } else {
+            setSelectedImage(null);
           }
         })
         .catch((error) => {
@@ -527,18 +554,45 @@ const ReportAnalysis = () => {
             </div>
             <div className="text-right">
               <span className="block mr-6 text-sm">Signature</span>
-              <select
-                id="signature"
-                className="px-2 py-1 mb-2 border"
-                value={Data.Signature || ""}
-                name="Signature"
-                onChange={handleChange}
-              >
-                <option value=""></option>
-                <option value="signature1">Signature 1</option>
-                <option value="signature2">Signature 2</option>
-                <option value="signature3">Signature 3</option>
-              </select>
+              <div className="flex items-center justify-end gap-2 my-3">
+                {/* Selected Image */}
+                <div className="absolute left-[60rem] top-[28.5rem]">
+                  {selectedImage && (
+                    <img
+                      src={selectedImage.src}
+                      alt={selectedImage.alt}
+                      className="w-24 h-24 rounded-lg"
+                    />
+                  )}
+                </div>
+
+                <div className="relative">
+                  <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="px-4 py-2 bg-gray-200 rounded-lg"
+                  >
+                    Select Image
+                  </button>
+
+                  {isOpen && (
+                    <div className="absolute bottom-full mb-2 left-0 w-32 bg-white border border-gray-200 rounded-lg shadow-md z-10 overflow-hidden">
+                      {images.map((image) => (
+                        <div
+                          key={image.id}
+                          className="p-2 cursor-pointer hover:bg-gray-100 flex items-center justify-center"
+                          onClick={() => handleSelect(image)}
+                        >
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            className="w-12 h-12 rounded-lg"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="flex justify-end">
                 <button
                   type="submit"
