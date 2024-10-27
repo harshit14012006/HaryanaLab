@@ -542,6 +542,7 @@ const CustomerForm = () => {
                 <input
                   type="email"
                   id="email"
+                  required
                   className="w-2/3 h-5 border"
                   name="Email1"
                   value={formdata.Email1}

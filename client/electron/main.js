@@ -28,9 +28,9 @@ const createWindow = () => {
     const menuFilePath = path.join(__dirname, "public", "menu.html");
     mainWindow.loadURL(`file://${menuFilePath}`);
 
-    mainWindow.loadURL("http://localhost:3000/");
+    // mainWindow.loadURL("http://localhost:3000/");
 
-    // mainWindow.loadFile(path.join(__dirname, "..", "build", "index.html"));
+    mainWindow.loadFile(path.join(__dirname, "..", "build", "index.html"));
   } catch (error) {
     console.log("Error     =     ", error);
   }
@@ -56,11 +56,11 @@ const createCustomerFormPopup = () => {
 
   // Load the Customer Form page
   popupWindow.loadURL("http://localhost:3000/#customer-form");
-  // popupWindow.loadURL(
-  //   "file://" +
-  //     path.join(__dirname, "..", "build", "index.html") +
-  //     "#/customer-form"
-  // );
+  popupWindow.loadURL(
+    "file://" +
+      path.join(__dirname, "..", "build", "index.html") +
+      "#/customer-form"
+  );
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Customer Form");
@@ -154,11 +154,11 @@ const createReportsAnalysisWindow = () => {
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#reports-analysis");
 
-  // reportsAnalysisWindow.loadURL(
-  //   "file://" +
-  //     path.join(__dirname, "..", "build", "index.html") +
-  //     "#reports-analysis"
-  // );
+  reportsAnalysisWindow.loadURL(
+    "file://" +
+      path.join(__dirname, "..", "build", "index.html") +
+      "#reports-analysis"
+  );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Reports Analysis");
@@ -293,11 +293,12 @@ const updateReportsAnalysisWindow = () => {
 
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#update-analysis");
-  // reportsAnalysisWindow.loadURL(
-  //   "file://" +
-  //     path.join(__dirname, "..", "build", "index.html") +
-  //     "#update-analysis"
-  // );
+
+  reportsAnalysisWindow.loadURL(
+    "file://" +
+      path.join(__dirname, "..", "build", "index.html") +
+      "#update-analysis"
+  );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Single Report Update");
