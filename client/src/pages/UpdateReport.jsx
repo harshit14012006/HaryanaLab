@@ -70,7 +70,7 @@ const ReportAnalysis = () => {
               axios
                 .get("http://localhost:3001/api/customersbyname")
                 .then((response) => {
-                  // console.log(response.data);
+                  console.log(response.data);
                   setCustomersbyname(response.data);
                 })
                 .catch((error) => {
@@ -113,8 +113,12 @@ const ReportAnalysis = () => {
         Data[key] = "NA";
       }
     }
-    Data.Time =
-      FFaTime && Data.FFA !== "NA" && Data.Time ? FFaTime.toString() : "NA";
+    if (Data.time !== "NA") {
+      if (FFaTime) {
+        Data.time = FFaTime.toString();
+      }
+    }
+
     console.log(Data);
     try {
       axios

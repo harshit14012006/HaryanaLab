@@ -16,7 +16,6 @@
     "cross-env": "^7.0.3",
     "electron-serve": "^2.1.0",
     "electron-squirrel-startup": "^1.0.1",
-    "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
     "jspdf": "^2.5.1",
     "path-browserify": "^1.0.1",
@@ -49,13 +48,14 @@
     "forge": {
       "packagerConfig": {
         "platform": "win32",
-        "asar": true
+        "asar": true,
+        "icon": "/src/LabIcon.ico"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Laboratory",
+            "name": "Haryana Laboratory",
             "authors": "Purab Singla, Harshit Singla, Simar Narula",
             "description": "Laboratory Application Created By Purab,Harshit and Simar(He done only backend work ;-; )"
           }

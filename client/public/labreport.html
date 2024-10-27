@@ -191,10 +191,6 @@
       .rightbar {
         height: 2.5rem; /* Equivalent to h-10 */
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
-        padding-left: 1.25rem; /* Equivalent to px-5 */
-        padding-right: 1.25rem; /* Equivalent to px-5 */
-        padding-top: 0.5rem; /* Equivalent to py-2 */
-        padding-bottom: 0.5rem; /* Equivalent to py-2 */
         color: white;
         background: linear-gradient(
           to right,
@@ -896,7 +892,7 @@
                 Maida, Suzi, Besan, Spices, Condiments, Acids & Fertilizers.
               </div>
 
-              <div class="rightbar1">
+              <div class="rightbar1" id="rightbar1">
                 <div class="top">Since</div>
 
                 <div class="final">1985</div>
@@ -910,8 +906,9 @@
     <!-- Include jsPDF and html2canvas libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
-      let Data = null;
+      let Data;
       document.getElementById("downloadBtn").addEventListener("click", () => {
         // Ensure jsPDF is available in the scope
         const { jsPDF } = window.jspdf;
