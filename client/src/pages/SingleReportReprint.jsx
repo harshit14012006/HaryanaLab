@@ -42,8 +42,12 @@ const SingleReportReprint = () => {
         setFilteredData(response.data.data);
         // Extract unique years from the start and end dates
         const allYears = response.data.data.reduce((acc, data) => {
-          const startYear = new Date(data.Dated).getFullYear();
-          const endYear = new Date(data.Billeddate).getFullYear();
+          const startYear = new Date(
+            formatDateToStandard(data.Dated)
+          ).getFullYear();
+          const endYear = new Date(
+            formatDateToStandard(data.Billeddate)
+          ).getFullYear();
           return acc.concat(startYear, endYear);
         }, []);
 
@@ -61,14 +65,35 @@ const SingleReportReprint = () => {
     }
   };
 
+  const formatDateToStandard = (dateString) => {
+    if (!dateString) return ""; // Handle empty or null dates
+
+    const parts = dateString.split("-");
+
+    // Check if the date is in yyyy-MM-dd format
+    if (parts[0].length === 4) {
+      return dateString; // Already in yyyy-MM-dd format
+    }
+
+    // Assume it's in dd-MM-yyyy format and convert
+    const [day, month, year] = parts;
+    return `${year}-${month}-${day}`;
+  };
+
   const FilteredData = (event) => {
-    const FIlteredDatat = data.filter(
-      (item) =>
-        new Date(item.Dated).getFullYear() === parseInt(event.target.value) ||
-        new Date(item.Billeddate).getFullYear() === parseInt(event.target.value)
-    );
-    console.log(FIlteredDatat);
-    setFilteredData(FIlteredDatat);
+    if (event.target.value !== "") {
+      const FIlteredDatat = data.filter(
+        (item) =>
+          new Date(formatDateToStandard(item.Dated)).getFullYear() ===
+            parseInt(event.target.value) ||
+          new Date(formatDateToStandard(item.Billeddate)).getFullYear() ===
+            parseInt(event.target.value)
+      );
+      console.log(FIlteredDatat);
+      setFilteredData(FIlteredDatat);
+    } else {
+      setFilteredData(Filtereddata);
+    }
   };
 
   const HandleClick = () => {

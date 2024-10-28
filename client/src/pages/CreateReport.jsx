@@ -27,8 +27,8 @@ const CreateReport = () => {
     Billeddate: "NA",
     Station: "NA",
     Time: "NA",
-    AnotherName: "",
-    AnotherValue: "",
+    AnotherName: "NA",
+    AnotherValue: "NA",
     Moisture: "NA",
     Oil: "NA",
     FFA: "NA",
@@ -39,7 +39,7 @@ const CreateReport = () => {
     Weight: "NA",
     Itemcategory: "Seal Engraved",
     SealEngraved: "NA",
-    Remarks: "",
+    Remarks: "NA",
     Signature: "NA",
   });
 
@@ -162,8 +162,8 @@ const CreateReport = () => {
             From: "NA",
             Billeddate: "NA",
             Station: "NA",
-            AnotherName: "",
-            AnotherValue: "",
+            AnotherName: "NA",
+            AnotherValue: "NA",
             Moisture: "NA",
             Oil: "NA",
             FFA: "NA",
@@ -177,6 +177,10 @@ const CreateReport = () => {
             SealEngraved: "NA",
             Signature: "NA",
           });
+          setCity("");
+          setSelectedImage(null);
+          setIsOpen(false);
+          setTime(null);
         })
         .catch((error) => {
           console.error("There was an error submitting the data!", error);
@@ -217,10 +221,11 @@ const CreateReport = () => {
                       id="samplename"
                       className="flex-grow h-5 border rounded"
                       name="Samplename"
-                      // required
+                      required
+                      value={formData.Samplename}
                       onChange={handleChange}
                     >
-                      <option value="">Select a sample</option>
+                      <option value="NA">Select a sample</option>
                       {sampleName &&
                         sampleName.map((name) => {
                           return (
@@ -242,7 +247,8 @@ const CreateReport = () => {
                       className="flex-grow h-5 py-1 border"
                       placeholder="Input 2"
                       name="Dated"
-                      // required
+                      value={formData.Dated !== "NA" && formData.Dated}
+                      required
                       onChange={handleChange}
                     />
                   </div>
@@ -254,12 +260,13 @@ const CreateReport = () => {
                       id="from"
                       className="flex-grow h-5 px-0 border rounded"
                       name="From"
-                      // required
+                      value={formData.From !== "NA" ? formData.From : "NA"}
+                      required
                       onChange={(e) => {
                         handleChange(e);
                       }}
                     >
-                      <option value="">Select an option</option>
+                      <option value="NA">Select an option</option>
                       {customersbyname &&
                         customersbyname.map((name, index) => {
                           return (
@@ -283,7 +290,10 @@ const CreateReport = () => {
                     <input
                       type="date"
                       id="billedDate"
-                      // required
+                      required
+                      value={
+                        formData.Billeddate !== "NA" && formData.Billeddate
+                      }
                       className="flex-grow h-5 px-0 py-1 border"
                       name="Billeddate"
                       onChange={handleChange}
@@ -297,7 +307,8 @@ const CreateReport = () => {
                       id="sealed-unsealed"
                       className="flex-grow h-5 px-0 border"
                       name="Selected"
-                      // required
+                      required
+                      value={formData.Selected}
                       onChange={handleChange}
                     >
                       <option value="sealed">Sealed</option>
@@ -328,7 +339,9 @@ const CreateReport = () => {
                   type="text"
                   id="editableNumber"
                   className="h-5 px-0 py-1 mr-4 border w-28"
-                  value={formData.AnotherName}
+                  value={
+                    formData.AnotherName !== "NA" ? formData.AnotherName : ""
+                  }
                   name="AnotherName"
                   onChange={handleChange}
                 />
@@ -337,7 +350,9 @@ const CreateReport = () => {
                   id="editableNumber"
                   className="h-5 px-0 py-1 border w-28"
                   name="AnotherValue"
-                  value={formData.AnotherValue}
+                  value={
+                    formData.AnotherValue !== "NA" ? formData.AnotherValue : ""
+                  }
                   onChange={handleChange}
                 />
               </div>
@@ -350,6 +365,7 @@ const CreateReport = () => {
                   id="moisture"
                   className="h-5 px-0 py-1 ml-2 border w-28"
                   name="Moisture"
+                  value={formData.Moisture !== "NA" ? formData.Moisture : ""}
                   onChange={handleChange}
                 />
                 <span className="ml-1">%</span>
@@ -364,6 +380,7 @@ const CreateReport = () => {
                     id="oil"
                     className="h-5 px-0 py-1 border w-28"
                     name="Oil"
+                    value={formData.Oil !== "NA" ? formData.Oil : ""}
                     onChange={handleChange}
                   />
                   <span className="ml-1">%</span>
@@ -421,6 +438,7 @@ const CreateReport = () => {
                   id="sampleNo"
                   className="w-full h-5 px-0 py-1 border"
                   name="Code"
+                  value={formData.Code !== "NA" ? formData.Code : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -438,6 +456,7 @@ const CreateReport = () => {
                   id="date"
                   className="w-full h-5 px-0 py-1 border"
                   name="Date"
+                  value={formData.Date !== "NA" ? formData.Date : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -455,6 +474,7 @@ const CreateReport = () => {
                   id="vehicleNo"
                   className="w-full h-5 px-0 py-1 border"
                   name="Vechileno"
+                  value={formData.Vechileno !== "NA" ? formData.Vechileno : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -472,6 +492,7 @@ const CreateReport = () => {
                   id="bags"
                   className="w-full h-5 px-0 py-1 border"
                   name="Bags"
+                  value={formData.Bags !== "NA" ? formData.Bags : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -489,6 +510,7 @@ const CreateReport = () => {
                   id="weight"
                   className="w-full h-5 px-0 py-1 border"
                   name="Weight"
+                  value={formData.Weight !== "NA" ? formData.Weight : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -502,6 +524,7 @@ const CreateReport = () => {
                 className="flex-grow h-5 px-0 border"
                 name="Itemcategory"
                 onChange={handleChange}
+                value={formData.Itemcategory}
               >
                 <option value="Seal Engraved">Seal Engraved</option>
                 <option value="Buyer">Buyer</option>
@@ -520,6 +543,9 @@ const CreateReport = () => {
                 className="w-full h-5 px-0 py-1 border"
                 name="SealEngraved"
                 onChange={handleChange}
+                value={
+                  formData.SealEngraved !== "NA" ? formData.SealEngraved : ""
+                }
               />
             </div>
 
@@ -535,6 +561,7 @@ const CreateReport = () => {
                 id="space2"
                 className="w-full h-5 px-0 py-1 border"
                 name="Remarks"
+                value={formData.Remarks !== "NA" ? formData.Remarks : ""}
                 onChange={handleChange}
               />
             </div>

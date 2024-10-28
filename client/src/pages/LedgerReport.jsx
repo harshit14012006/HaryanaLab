@@ -139,10 +139,12 @@ const LedgerReport = () => {
     const pdfBlob = await ReactPDF.pdf(
       <AccountLedger
         Data={filteredData}
-        Balance={Values.ClosingBalance}
+        Balance={Values.Balance}
         OpeningBalance={Party.Openingbalance}
-        Date1={Dates.fromDate}
-        Date2={Dates.toDate}
+        Date1={formatDate(Dates.fromDate)}
+        Date2={formatDate(Dates.toDate)}
+        PartyName={Party.Partyname}
+        City={Party.City}
       />
     ).toBlob();
     const newBlobUrl = URL.createObjectURL(pdfBlob);

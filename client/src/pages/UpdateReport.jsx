@@ -77,20 +77,12 @@ const ReportAnalysis = () => {
       axios
         .get(`http://localhost:3001/api/analysis/${Value}`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           getData({});
           setCity(null);
           setCustomersbyname([]);
           setSampleName([]);
           if (response.data.response) {
-            console.log("If working");
-            getData(response.data.data[0]);
-            setSelectedImage(
-              images.find(
-                (img) => img.value === response.data.data[0].Signature
-              )
-            );
-
             axios
               .get("http://localhost:3001/api/customersbyname")
               .then((response) => {
@@ -109,6 +101,21 @@ const ReportAnalysis = () => {
               .catch((error) => {
                 console.error("There was an error fetching the data!", error);
               });
+            console.log("If working");
+            const Data = {
+              ...response.data.data[0],
+              Dated: formatDateReverse(response.data.data[0].Dated),
+              Billeddate: formatDateReverse(response.data.data[0].Billeddate),
+            };
+            console.log(Data);
+            // console.log(Data.Dated);
+            // console.log(Data.Billeddate);
+            getData(Data);
+            setSelectedImage(
+              images.find(
+                (img) => img.value === response.data.data[0].Signature
+              )
+            );
           } else {
             setSelectedImage(null);
           }
@@ -124,6 +131,20 @@ const ReportAnalysis = () => {
   function formatDate(dateString) {
     const [year, month, day] = dateString.split("-");
     return `${day}-${month}-${year}`;
+  }
+  function formatDateReverse(dateString) {
+    if (!dateString) return ""; // Handle empty or null dates
+
+    const parts = dateString.split("-");
+
+    // Check if the date is in yyyy-MM-dd format
+    if (parts[0].length === 4) {
+      return dateString; // Already in yyyy-MM-dd format
+    }
+
+    // If not, assume it's in dd-MM-yyyy format and convert
+    const [day, month, year] = parts;
+    return `${year}-${month}-${day}`;
   }
 
   const handleFfaChange = (e) => {
@@ -158,9 +179,14 @@ const ReportAnalysis = () => {
         .put(`http://localhost:3001/api/analysis/${Repno} `, Data)
         .then((response) => {
           console.log(response.data);
+
           setCustomersbyname([]);
           setSampleName([]);
           setCity(null);
+          setSelectedImage(null);
+          setIsOpen(false);
+          setTime(null);
+
           ipcRenderer.send("open-lab-report", Data);
           getData({});
         })

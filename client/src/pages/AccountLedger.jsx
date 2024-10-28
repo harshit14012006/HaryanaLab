@@ -71,7 +71,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const AccountLedger = ({ Data, Balance, OpeningBalance, Date1, Date2 }) => {
+const AccountLedger = ({
+  Data,
+  Balance,
+  OpeningBalance,
+  Date1,
+  Date2,
+  PartyName,
+  City,
+}) => {
   return (
     <Document>
       <Page orientation="landscape" style={styles.page}>
@@ -88,12 +96,8 @@ const AccountLedger = ({ Data, Balance, OpeningBalance, Date1, Date2 }) => {
 
         <View style={styles.headerSection}>
           <View>
-            <Text style={styles.sectionText}>
-              M/s/Sh.: JAI JAGDAMBE RICE MILLS
-            </Text>
-            <Text style={[styles.sectionText, { marginLeft: 20 }]}>
-              GURUHARSAHAI
-            </Text>
+            <Text style={styles.sectionText}>M/s/Sh.: {PartyName}</Text>
+            <Text style={[styles.sectionText, { marginLeft: 20 }]}>{City}</Text>
           </View>
           <View>
             <Text style={styles.sectionText}>

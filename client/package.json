@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "HaryanaLab",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -49,7 +49,10 @@
       "packagerConfig": {
         "platform": "win32",
         "asar": true,
-        "icon": "/src/LabIcon.ico"
+        "extraResource": [
+          "../server"
+        ],
+        "icon": "./src/LabIcon.ico"
       },
       "makers": [
         {
@@ -90,7 +93,6 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "^32.0.1",
-    "electron-reload": "^2.0.0-alpha.1"
+    "electron": "^32.0.1"
   }
 }

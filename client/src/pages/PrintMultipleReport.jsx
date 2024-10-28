@@ -31,6 +31,12 @@ const RecordReportWithoutSample = () => {
   const [sample, setSample] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [formdata, setFormData] = useState({});
+
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
+
   useEffect(() => {
     try {
       axios
@@ -123,7 +129,7 @@ const RecordReportWithoutSample = () => {
                           onChange={(e) => {
                             setFormData({
                               ...formdata,
-                              [e.target.name]: e.target.value,
+                              [e.target.name]: formatDate(e.target.value),
                             });
                           }}
                           className="h-6 p-2 ml-2 border border-gray-300 rounded-md"
@@ -178,7 +184,7 @@ const RecordReportWithoutSample = () => {
                         onChange={(e) => {
                           setFormData({
                             ...formdata,
-                            [e.target.name]: e.target.value,
+                            [e.target.name]: formatDate(e.target.value),
                           });
                         }}
                         className="h-6 p-2 ml-2 border border-gray-300 rounded-md"

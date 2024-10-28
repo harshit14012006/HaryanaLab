@@ -8,8 +8,6 @@ const {
 const path = require("path");
 const { spawn } = require("child_process");
 
-require("electron-reload")(__dirname);
-
 let mainWindow;
 let backendServer;
 const createWindow = () => {
@@ -34,8 +32,6 @@ const createWindow = () => {
   } catch (error) {
     console.log("Error     =     ", error);
   }
-  // console.log(path.join(__dirname, "../build", "index.html"));
-  // mainWindow.loadURL(path.join(__dirname, "homenew.html"));
 };
 
 const createCustomerFormPopup = () => {
@@ -56,11 +52,11 @@ const createCustomerFormPopup = () => {
 
   // Load the Customer Form page
   popupWindow.loadURL("http://localhost:3000/#customer-form");
-  popupWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#/customer-form"
-  );
+  // popupWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#/customer-form"
+  // );
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Customer Form");
@@ -89,11 +85,11 @@ const createItemPopup = () => {
   // Load the Customer Form page
   popupWindow.loadURL("http://localhost:3000/#create-item");
 
-  popupWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#create-item"
-  );
+  // popupWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#create-item"
+  // );
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Item");
@@ -122,11 +118,11 @@ const cityPopup = () => {
   // Load the Customer Form page
   popupWindow.loadURL("http://localhost:3000/#master-city");
 
-  popupWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#master-city"
-  );
+  // popupWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#master-city"
+  // );
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("AddCity");
@@ -357,11 +353,11 @@ const ledgerreortPopup = () => {
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#ledger-report");
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#ledger-report"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#ledger-report"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Ledger Report");
@@ -421,11 +417,11 @@ const singlereportreprintPopup = () => {
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#single-report-reprint");
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#single-report-reprint"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#single-report-reprint"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Reprint");
@@ -453,11 +449,11 @@ const printmultireportPopup = () => {
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#print-multi-report");
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#print-multi-report"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#print-multi-report"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Print Multi Report");
@@ -485,11 +481,11 @@ const recordreportPopup = () => {
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#record-report");
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#record-report"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#record-report"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Record Report");
@@ -517,11 +513,11 @@ const partydetailprintPopup = () => {
   // Load the Reports Analysis page
   reportsAnalysisWindow.loadURL("http://localhost:3000/#party-detail-print");
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#party-detail-print"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#party-detail-print"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Party Detail Print");
@@ -551,11 +547,11 @@ const recordreportwihtoutsamplePopup = () => {
     "http://localhost:3000/#record-report-without-sample"
   );
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#record-report-without-sample"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#record-report-without-sample"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Record Report Without Sample");

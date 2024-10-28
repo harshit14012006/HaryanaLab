@@ -381,13 +381,13 @@
               <span
                 >We hereby Certify that a sample described as
                 ......................................................................................................................................................
-                <span class="Sample"
+                <span class="Sample" id="Sample"
                   ><input
                     type="text"
                     class="inpfld"
                     id="inpfld"
                     disabled /></span
-                ><span class="Selected"
+                ><span class="Selected" id="Selected"
                   ><input
                     type="text"
                     disabled
@@ -398,6 +398,7 @@
                 >received by us on
                 dt&nbsp;&nbsp;&nbsp;&nbsp;.....................................<span
                   class="Date1"
+                  id="Date1"
                   ><input
                     type="text"
                     disabled
@@ -412,12 +413,13 @@
               >Sh./M/s/
               &nbsp;.................................................................................................................................................................................................................................<span
                 class="Name"
+                id="Name"
                 ><input
                   type="text"
                   disabled
                   class="inpfld3"
                   id="inpfld3" /></span
-              ><span class="City"
+              ><span class="City" id="City"
                 ><input
                   type="text"
                   disabled
@@ -434,6 +436,7 @@
           Seal Engraved
           ...............................................................................................................................................................................................................................................<span
             class="Seal"
+            id="Seal"
             ><input type="text" disabled class="inpfld5" id="inpfld5"
           /></span>
         </div>
@@ -457,10 +460,11 @@
       <div class="last-container">
         Remarks...................................................................................................................................................................................................<span
           class="Remarks"
+          id="Remarks"
           ><input type="text" disabled class="inpfld6" id="inpfld6"
         /></span>
         Signature
-        <span class="image"
+        <span class="image" id="image"
           ><img src="./Sign3.jpg" alt="Sign" id="Sign" class="signature"
         /></span>
       </div>
@@ -523,7 +527,14 @@
         .getElementById("downloadBtn")
         .addEventListener("click", function () {
           var node = document.getElementById("MainContent");
-
+          document.getElementById("Sample").style.top = "11.83rem";
+          document.getElementById("Selected").style.top = "11.83rem";
+          document.getElementById("Date1").style.top = "11.83rem";
+          document.getElementById("Name").style.top = "14.23rem";
+          document.getElementById("City").style.top = "14.23rem";
+          document.getElementById("Seal").style.top = "17.59rem";
+          document.getElementById("Remarks").style.top = "48.33rem";
+          document.getElementById("image").style.top = "47.55rem";
           domtoimage
             .toPng(node)
             .then(function (dataUrl) {
@@ -531,6 +542,15 @@
               const img = new Image();
               img.src = dataUrl;
               img.onload = function () {
+                document.getElementById("Sample").style.top = "13.5rem";
+                document.getElementById("Selected").style.top = "13.5rem";
+                document.getElementById("Date1").style.top = "13.5rem";
+                document.getElementById("Name").style.top = "15.9rem";
+                document.getElementById("City").style.top = "15.9rem";
+                document.getElementById("Seal").style.top = "19rem";
+                document.getElementById("Remarks").style.top = "50rem";
+                document.getElementById("image").style.top = "49.3rem";
+
                 const imgWidth = 297; // A4 width in mm
                 const pageHeight = 210; // A4 height in mm
                 const imgHeight = (img.height * imgWidth) / img.width;
