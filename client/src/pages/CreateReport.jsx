@@ -6,6 +6,13 @@ import call3 from "../images/Sign3.jpg";
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 
 const CreateReport = () => {
+  const [formData1, setFormData1] = useState({
+    AnotherName: "NA",
+    AnotherValue: "NA",
+    From: "",
+    Station: ""
+  });
+  
   const [ffaTime, setFfaTime] = useState(null);
   const [sampleName, setSampleName] = useState(null);
   const [customersbyname, setCustomersbyname] = useState(null);
@@ -60,25 +67,28 @@ const CreateReport = () => {
   };
 
   const handleChange = (event) => {
-    // Create a new object with the updated formData
-    let newFormData = { ...formData, [event.target.name]: event.target.value };
-
-    const result =
-      event.target.name === "From" &&
-      customersbyname.find(
-        (person) =>
-          person.Name.toLowerCase() === event.target.value.toLowerCase()
+    const { name, value } = event.target;
+  
+    // Create a new object with the updated field
+    let newFormData = { ...formData, [name]: value };
+  
+    // Check if 'From' field matches any customer name
+    if (name === "From") {
+      const result = customersbyname.find(
+        (person) => person.Name.toLowerCase() === value.toLowerCase()
       );
-
-    if (result) {
-      console.log("Found");
-      setCity(result.City);
-      newFormData = { ...newFormData, Station: result.City }; // Update newFormData with Station
-    } else {
-      console.log("not found");
+  
+      if (result) {
+        console.log("Found");
+        setCity(result.City); // Set city state if a match is found
+        newFormData = { ...newFormData, Station: result.City }; // Update newFormData with Station
+      } else {
+        console.log("not found");
+        newFormData.Station = ""; // Clear Station if not found
+      }
     }
-
-    // Update formData once with the final values
+  
+    // Update formData with the final values
     setFormData(newFormData);
   };
 
@@ -206,7 +216,7 @@ const CreateReport = () => {
                 id="reportno"
                 value={id}
                 disabled
-                className="w-40 h-5 border"
+                className="w-40 h-5 border bg-slate-50"
               />
             </div>
             <div className="flex ">
@@ -334,28 +344,24 @@ const CreateReport = () => {
           </div>
           <div className="h-12 p-4 mt-1 border border-gray-300">
             <div className="flex space-x-4">
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  id="editableNumber"
-                  className="h-5 px-0 py-1 mr-4 border w-28"
-                  value={
-                    formData.AnotherName !== "NA" ? formData.AnotherName : ""
-                  }
-                  name="AnotherName"
-                  onChange={handleChange}
-                />
-                <input
-                  type="text"
-                  id="editableNumber"
-                  className="h-5 px-0 py-1 border w-28"
-                  name="AnotherValue"
-                  value={
-                    formData.AnotherValue !== "NA" ? formData.AnotherValue : ""
-                  }
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="flex items-center space-x-4">
+    <input
+      type="text"
+      id="anotherName"
+      className="h-5 px-0 py-1 border w-28"
+      value={formData.AnotherName}
+      name="AnotherName"
+      onChange={handleChange}
+    />
+    <input
+      type="text"
+      id="anotherValue"
+      className="h-5 px-0 py-1 border w-28"
+      value={formData.AnotherValue}
+      name="AnotherValue"
+      onChange={handleChange}
+    />
+    </div>
               <div className="flex items-center pl-12">
                 <label htmlFor="moisture" className="text-sm whitespace-nowrap">
                   Moisture
