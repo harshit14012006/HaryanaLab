@@ -357,7 +357,7 @@ const CreateReport = () => {
       type="text"
       id="anotherValue"
       className="h-5 px-0 py-1 border w-28"
-      value={formData.AnotherValue}
+      value={formData.AnotherValue}c
       name="AnotherValue"
       onChange={handleChange}
     />
