@@ -67,10 +67,9 @@ const CreateReport = () => {
   };
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    // Create a new object with the updated field
-    let newFormData = { ...formData, [name]: value };
+    console.log(event.target.value);
+    // Create a new object with the updated formData
+    let newFormData = { ...formData, [event.target.name]: event.target.value };
 
     // Check if 'From' field matches any customer name
     if (name === "From") {
