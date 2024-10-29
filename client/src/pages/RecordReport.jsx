@@ -37,8 +37,6 @@ const RecordReportWithoutSample = () => {
   const [filteredCity, setFilteredCity] = useState([]);
   const fetchRecords = async () => {
     try {
-      // Clear previous error
-
       // Prepare the payload
       const payload = {
         startDate,
@@ -63,6 +61,11 @@ const RecordReportWithoutSample = () => {
       console.error("Error fetching records:", err.message);
     }
   };
+
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
 
   // Fetch customer data
   useEffect(() => {
@@ -134,7 +137,9 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
-                        onChange={(e) => setStartDate(e.target.value)}
+                        onChange={(e) =>
+                          setStartDate(formatDate(e.target.value))
+                        }
                       />
                       {/* From Label and Date Input */}
                       <label htmlFor="fromDate" className="font-medium">
@@ -145,7 +150,7 @@ const RecordReportWithoutSample = () => {
                         id="fromDate"
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
-                        onChange={(e) => setEndDate(e.target.value)}
+                        onChange={(e) => setEndDate(formatDate(e.target.value))}
                       />
                     </div>
 

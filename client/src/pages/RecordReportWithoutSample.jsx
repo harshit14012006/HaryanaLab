@@ -63,6 +63,11 @@ const RecordReportWithoutSample = () => {
     }
   };
 
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
+
   // Fetch customer data
   useEffect(() => {
     try {
@@ -126,7 +131,7 @@ const RecordReportWithoutSample = () => {
                         name="fromDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
                         onChange={(e) => {
-                          setStartDate(e.target.value);
+                          setStartDate(formatDate(e.target.value));
                         }}
                         // onChange={(e) => {
                         //   HandleChange(e);
@@ -142,7 +147,7 @@ const RecordReportWithoutSample = () => {
                         name="toDate"
                         className="h-8 p-2 border border-gray-300 rounded-md"
                         onChange={(e) => {
-                          setEndDate(e.target.value);
+                          setEndDate(formatDate(e.target.value));
                         }}
                         // onChange={(e) => {
                         //   HandleChange(e);
