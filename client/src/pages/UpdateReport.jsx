@@ -155,44 +155,47 @@ const ReportAnalysis = () => {
   };
   const HandleUpdate = (e) => {
     e.preventDefault();
-    for (let key in Data) {
-      if (
-        Data[key] === null ||
-        Data[key] === undefined ||
-        Data[key] === "" ||
-        Data[key] === "NA"
-      ) {
-        // Assign default value from defaultValues or any other value
-        Data[key] = "NA";
-      }
-    }
-    if (Data.time !== "NA") {
-      if (FFaTime) {
-        Data.time = FFaTime.toString();
-      }
-    }
-    Data.Dated = formatDate(Data.Dated);
-    Data.Billeddate = formatDate(Data.Billeddate);
-    console.log(Data);
     try {
-      axios
-        .put(`http://localhost:3001/api/analysis/${Repno} `, Data)
-        .then((response) => {
-          console.log(response.data);
+      if (Data.Signature !== "NA") {
+        for (let key in Data) {
+          if (
+            Data[key] === null ||
+            Data[key] === undefined ||
+            Data[key] === "" ||
+            Data[key] === "NA"
+          ) {
+            // Assign default value from defaultValues or any other value
+            Data[key] = "NA";
+          }
+        }
+        if (Data.time !== "NA") {
+          if (FFaTime) {
+            Data.time = FFaTime.toString();
+          }
+        }
+        Data.Dated = formatDate(Data.Dated);
+        Data.Billeddate = formatDate(Data.Billeddate);
+        console.log(Data);
 
-          setCustomersbyname([]);
-          setSampleName([]);
-          setCity(null);
-          setSelectedImage(null);
-          setIsOpen(false);
-          setTime(null);
+        axios
+          .put(`http://localhost:3001/api/analysis/${Repno} `, Data)
+          .then((response) => {
+            console.log(response.data);
 
-          ipcRenderer.send("open-lab-report", Data);
-          getData({});
-        })
-        .catch((error) => {
-          console.error("Error updating data:", error);
-        });
+            setCustomersbyname([]);
+            setSampleName([]);
+            setCity(null);
+            setSelectedImage(null);
+            setIsOpen(false);
+            setTime(null);
+
+            ipcRenderer.send("open-lab-report", Data);
+            getData({});
+          })
+          .catch((error) => {
+            console.error("Error updating data:", error);
+          });
+      }
     } catch (error) {
       console.error("Error updating data:", error);
     }

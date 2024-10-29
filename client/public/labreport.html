@@ -884,7 +884,7 @@
                 <!-- Seal Engraved -->
                 <div class="namelast">
                   <p class="testseal" id="Category"></p>
-                  <p class="sealimg">[Seal Image]</p>
+                  <p class="sealimg" id="sealimg"></p>
                 </div>
               </div>
               <div class="base">
@@ -970,14 +970,18 @@
           document.getElementById("inpfld6").value = Data.Remarks.trim().length
             ? Data.Remarks
             : "NA";
-          document.getElementById("Moist").innerHTML = Data.Moisture;
-          document.getElementById("Oil").innerHTML = Data.Oil;
-          document.getElementById("FFA").innerHTML = Data.FFA;
+          document.getElementById("Moist").innerHTML =
+            Data.Moisture !== "NA" ? Data.Moisture + "%" : "NA";
+          document.getElementById("Oil").innerHTML =
+            Data.Oil !== "NA" ? Data.Oil + "%" : "NA";
+          document.getElementById("FFA").innerHTML =
+            Data.FFA !== "NA" ? Data.Oil + "%" : "NA";
           document.getElementById("Code").innerHTML = Data.Code;
           document.getElementById("Date").innerHTML = Data.Date;
           document.getElementById("VehNo").innerHTML = Data.Vechileno;
           document.getElementById("Bags").innerHTML = Data.Bags;
           document.getElementById("Weight").innerHTML = Data.Weight;
+          document.getElementById("sealimg").innerHTML = Data.SealEngraved;
           document.getElementById("Category").innerHTML = Data.Itemcategory
             ? Data.Itemcategory
             : Data.Category;
@@ -986,7 +990,7 @@
               ? "./Sign1.png"
               : Data.Signature === "signature2"
               ? "./Sign2.png"
-              : "./Sign3.jpg";
+              : Data.Signature === "signature3" && "./Sign3.jpg";
 
           // const digits = `${Data.Moisture}${Data.Oil}${Data.FFA}`.split("");
           const moisture =
@@ -994,7 +998,7 @@
           const oil = Data.Oil !== "NA" ? Number(Data.Oil) : undefined;
           const ffa = Data.FFA !== "NA" ? Number(Data.FFA) : undefined;
           console.log(moisture, oil, ffa);
-          const digits = `${moisture}${oil}${ffa}`.split("");
+          const digits = `${moisture}${oil}${ffa}`.replace(/\./g, "").split("");
           // Function to count the occurrences of each digit
           const countOccurrences = (digit) =>
             digits.filter((d) => d === String(digit)).length;

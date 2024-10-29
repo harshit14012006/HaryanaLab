@@ -6,13 +6,6 @@ import call3 from "../images/Sign3.jpg";
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 
 const CreateReport = () => {
-  const [formData1, setFormData1] = useState({
-    AnotherName: "NA",
-    AnotherValue: "NA",
-    From: "",
-    Station: "",
-  });
-
   const [ffaTime, setFfaTime] = useState(null);
   const [sampleName, setSampleName] = useState(null);
   const [customersbyname, setCustomersbyname] = useState(null);
@@ -72,9 +65,10 @@ const CreateReport = () => {
     let newFormData = { ...formData, [event.target.name]: event.target.value };
 
     // Check if 'From' field matches any customer name
-    if (name === "From") {
+    if (event.target.name === "From") {
       const result = customersbyname.find(
-        (person) => person.Name.toLowerCase() === value.toLowerCase()
+        (person) =>
+          person.Name.toLowerCase() === event.target.value.toLowerCase()
       );
 
       if (result) {
@@ -149,51 +143,56 @@ const CreateReport = () => {
 
   const handleSaveAndPrint = (e) => {
     e.preventDefault();
-    formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
-    formData.Reportno = id;
-    formData.Dated = formatDate(formData.Dated);
-    formData.Billeddate = formatDate(formData.Billeddate);
-    console.log(formData);
-    ipcRenderer.send("open-lab-report", formData);
+
     try {
-      axios
-        .post("http://localhost:3001/api/analysis", formData)
-        .then((response) => {
-          console.log("Data submitted successfully:", response.data);
+      if (formData.Signature !== "NA") {
+        formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
+        formData.Reportno = id;
+        formData.Dated = formatDate(formData.Dated);
+        formData.Billeddate = formatDate(formData.Billeddate);
+        console.log(formData);
+        axios
+          .post("http://localhost:3001/api/analysis", formData)
+          .then((response) => {
+            console.log("Data submitted successfully:", response.data);
 
-          // Send the event to the main process
+            ipcRenderer.send("open-lab-report", formData);
+            // Send the event to the main process
 
-          setFormData({
-            Reportno: 0,
-            Samplename: "NA",
-            Dated: "NA",
-            Selected: "Sealed",
-            From: "NA",
-            Billeddate: "NA",
-            Station: "NA",
-            AnotherName: "NA",
-            AnotherValue: "NA",
-            Moisture: "NA",
-            Oil: "NA",
-            FFA: "NA",
-            Code: "NA",
-            Date: "NA",
-            Vechileno: "NA",
-            Bags: "NA",
-            Weight: "NA",
-            Itemcategory: "Seal Engraved",
-            Remarks: "NA",
-            SealEngraved: "NA",
-            Signature: "NA",
+            setFormData({
+              Reportno: 0,
+              Samplename: "NA",
+              Dated: "NA",
+              Selected: "Sealed",
+              From: "NA",
+              Billeddate: "NA",
+              Station: "NA",
+              AnotherName: "NA",
+              AnotherValue: "NA",
+              Moisture: "NA",
+              Oil: "NA",
+              FFA: "NA",
+              Code: "NA",
+              Date: "NA",
+              Vechileno: "NA",
+              Bags: "NA",
+              Weight: "NA",
+              Itemcategory: "Seal Engraved",
+              Remarks: "NA",
+              SealEngraved: "NA",
+              Signature: "NA",
+            });
+            getReportno();
+            setCity("");
+            setSelectedImage(null);
+            setIsOpen(false);
+            setTime(null);
+          })
+          .catch((error) => {
+            console.error("There was an error submitting the data!", error);
           });
-          setCity("");
-          setSelectedImage(null);
-          setIsOpen(false);
-          setTime(null);
-        })
-        .catch((error) => {
-          console.error("There was an error submitting the data!", error);
-        });
+        //Adding Data
+      }
     } catch (error) {
       console.log("Error adding data:", error);
     }
@@ -202,415 +201,422 @@ const CreateReport = () => {
   return (
     <div className="bg-gray-100">
       <div className="p-1 ">
-        <div className="p-2 border border-gray-300 rounded">
-          <header className="text-sm">Analysis</header>
-          <div className="border border-gray-300 ">
-            <div className="text-center">
-              <label htmlFor="reportno" className="block mb-2 text-sm">
-                Report No.
-              </label>
-              <input
-                type="number"
-                required
-                id="reportno"
-                value={id}
-                disabled
-                className="w-40 h-5 border bg-slate-50"
-              />
-            </div>
-            <div className="flex ">
-              {/* First container with labels and inputs in rows */}
-              <div className="w-1/2 p-4">
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center">
-                    <label htmlFor="samplename" className="w-1/3 text-sm">
-                      Sample Name
-                    </label>
-                    <select
-                      id="samplename"
-                      className="flex-grow h-5 border rounded"
-                      name="Samplename"
-                      required
-                      value={formData.Samplename}
-                      onChange={handleChange}
-                    >
-                      <option value="NA">Select a sample</option>
-                      {sampleName &&
-                        sampleName.map((name) => {
-                          return (
-                            <option key={name.ID} value={name.ItemName}>
-                              {name.ItemName}
-                            </option>
-                          );
-                        })}
-                    </select>
-                  </div>
+        <form>
+          <fieldset className="p-2 border border-gray-300 rounded">
+            <header className="text-sm">Analysis</header>
+            <div className="border border-gray-300 ">
+              <div className="text-center">
+                <label htmlFor="reportno" className="block mb-2 text-sm">
+                  Report No.
+                </label>
+                <input
+                  type="number"
+                  required
+                  id="reportno"
+                  value={id}
+                  disabled
+                  className="w-40 h-5 border bg-slate-50"
+                />
+              </div>
+              <div className="flex ">
+                {/* First container with labels and inputs in rows */}
+                <div className="w-1/2 p-4">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center">
+                      <label htmlFor="samplename" className="w-1/3 text-sm">
+                        Sample Name
+                      </label>
+                      <select
+                        id="samplename"
+                        className="flex-grow h-5 border rounded"
+                        name="Samplename"
+                        required
+                        value={formData.Samplename}
+                        onChange={handleChange}
+                      >
+                        <option value="NA">Select a sample</option>
+                        {sampleName &&
+                          sampleName.map((name) => {
+                            return (
+                              <option key={name.ID} value={name.ItemName}>
+                                {name.ItemName}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
 
-                  <div className="flex items-center">
-                    <label htmlFor="input2" className="w-1/3 text-sm">
-                      Dated
-                    </label>
-                    <input
-                      type="date"
-                      id="dated"
-                      className="flex-grow h-5 py-1 border"
-                      placeholder="Input 2"
-                      name="Dated"
-                      value={formData.Dated !== "NA" && formData.Dated}
-                      required
-                      onChange={handleChange}
-                    />
+                    <div className="flex items-center">
+                      <label htmlFor="input2" className="w-1/3 text-sm">
+                        Dated
+                      </label>
+                      <input
+                        type="date"
+                        id="dated"
+                        className="flex-grow h-5 py-1 border"
+                        placeholder="Input 2"
+                        name="Dated"
+                        value={formData.Dated !== "NA" && formData.Dated}
+                        required
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="flex items-center">
+                      <label htmlFor="from" className="w-1/3 text-sm">
+                        From Sh/M/s
+                      </label>
+                      <select
+                        id="from"
+                        className="flex-grow h-5 px-0 border rounded"
+                        name="From"
+                        value={formData.From !== "NA" ? formData.From : "NA"}
+                        required
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      >
+                        <option value="NA">Select an option</option>
+                        {customersbyname &&
+                          customersbyname.map((name, index) => {
+                            return (
+                              <option key={index} value={name.Name}>
+                                {name.Name}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <label htmlFor="from" className="w-1/3 text-sm">
-                      From Sh/M/s
-                    </label>
-                    <select
-                      id="from"
-                      className="flex-grow h-5 px-0 border rounded"
-                      name="From"
-                      value={formData.From !== "NA" ? formData.From : "NA"}
-                      required
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    >
-                      <option value="NA">Select an option</option>
-                      {customersbyname &&
-                        customersbyname.map((name, index) => {
-                          return (
-                            <option key={index} value={name.Name}>
-                              {name.Name}
-                            </option>
-                          );
-                        })}
-                    </select>
+                </div>
+
+                {/* Second container with labels and inputs in rows */}
+                <div className="w-1/2 p-4">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center">
+                      <label htmlFor="billeddate" className="w-1/3 text-sm">
+                        Billed Date
+                      </label>
+                      <input
+                        type="date"
+                        id="billedDate"
+                        required
+                        value={
+                          formData.Billeddate !== "NA" && formData.Billeddate
+                        }
+                        className="flex-grow h-5 px-0 py-1 border"
+                        name="Billeddate"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="sealed-unsealed"
+                        className="w-1/3 text-sm"
+                      >
+                        Sealed/Unsealed
+                      </label>
+                      <select
+                        id="sealed-unsealed"
+                        className="flex-grow h-5 px-0 border"
+                        name="Selected"
+                        required
+                        value={formData.Selected}
+                        onChange={handleChange}
+                      >
+                        <option value="sealed">Sealed</option>
+                        <option value="unsealed">Unsealed</option>
+                      </select>
+                    </div>
+
+                    <div className="flex items-center">
+                      <label htmlFor="station" className="w-1/3 text-sm">
+                        Station
+                      </label>
+                      <input
+                        type="text"
+                        id="input6"
+                        disabled
+                        className="flex-grow h-5 px-0 py-1 border"
+                        value={City}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-
-              {/* Second container with labels and inputs in rows */}
-              <div className="w-1/2 p-4">
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center">
-                    <label htmlFor="billeddate" className="w-1/3 text-sm">
-                      Billed Date
-                    </label>
-                    <input
-                      type="date"
-                      id="billedDate"
-                      required
-                      value={
-                        formData.Billeddate !== "NA" && formData.Billeddate
-                      }
-                      className="flex-grow h-5 px-0 py-1 border"
-                      name="Billeddate"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="flex items-center">
-                    <label htmlFor="sealed-unsealed" className="w-1/3 text-sm">
-                      Sealed/Unsealed
-                    </label>
-                    <select
-                      id="sealed-unsealed"
-                      className="flex-grow h-5 px-0 border"
-                      name="Selected"
-                      required
-                      value={formData.Selected}
-                      onChange={handleChange}
-                    >
-                      <option value="sealed">Sealed</option>
-                      <option value="unsealed">Unsealed</option>
-                    </select>
-                  </div>
-
-                  <div className="flex items-center">
-                    <label htmlFor="station" className="w-1/3 text-sm">
-                      Station
-                    </label>
-                    <input
-                      type="text"
-                      id="input6"
-                      disabled
-                      className="flex-grow h-5 px-0 py-1 border"
-                      value={City}
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-          <div className="h-12 p-4 mt-1 border border-gray-300">
-            <div className="flex space-x-4">
-              <div className="flex items-center space-x-4">
-                <input
-                  type="text"
-                  id="anotherName"
-                  className="h-5 px-0 py-1 border w-28"
-                  value={formData.AnotherName}
-                  name="AnotherName"
-                  onChange={handleChange}
-                />
-                <input
-                  type="text"
-                  id="anotherValue"
-                  className="h-5 px-0 py-1 border w-28"
-                  value={formData.AnotherValue}
-                  name="AnotherValue"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="flex items-center pl-12">
-                <label htmlFor="moisture" className="text-sm whitespace-nowrap">
-                  Moisture
-                </label>
-                <input
-                  type="text"
-                  id="moisture"
-                  className="h-5 px-0 py-1 ml-2 border w-28"
-                  name="Moisture"
-                  value={formData.Moisture !== "NA" ? formData.Moisture : ""}
-                  onChange={handleChange}
-                />
-                <span className="ml-1">%</span>
-              </div>
-              <div className="flex items-center pl-16 space-x-2">
-                <label htmlFor="oil" className="text-sm">
-                  Oil
-                </label>
-                <div className="flex items-center">
+            <div className="h-12 p-4 mt-1 border border-gray-300">
+              <div className="flex space-x-4">
+                <div className="flex items-center space-x-4">
                   <input
                     type="text"
-                    id="oil"
+                    id="anotherName"
                     className="h-5 px-0 py-1 border w-28"
-                    name="Oil"
-                    value={formData.Oil !== "NA" ? formData.Oil : ""}
+                    value={formData.AnotherName}
+                    name="AnotherName"
+                    onChange={handleChange}
+                  />
+                  <input
+                    type="text"
+                    id="anotherValue"
+                    className="h-5 px-0 py-1 border w-28"
+                    value={formData.AnotherValue}
+                    name="AnotherValue"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="flex items-center pl-12">
+                  <label
+                    htmlFor="moisture"
+                    className="text-sm whitespace-nowrap"
+                  >
+                    Moisture
+                  </label>
+                  <input
+                    type="text"
+                    id="moisture"
+                    className="h-5 px-0 py-1 ml-2 border w-28"
+                    name="Moisture"
+                    value={formData.Moisture}
                     onChange={handleChange}
                   />
                   <span className="ml-1">%</span>
                 </div>
-              </div>
-              <div className="flex items-center pl-16 space-x-2">
-                <label htmlFor="ffa" className="text-sm">
-                  FFA
-                </label>
-                <input
-                  type="text"
-                  id="ffa"
-                  className="h-5 px-0 py-1 border w-28"
-                  name="FFA"
-                  value={formData.FFA === "NA" ? "" : formData.FFA}
-                  onChange={(e) => {
-                    handleFfaChange(e);
-                    handleChange(e);
-                  }}
-                />
-                <span className="ml-1">%</span>
-              </div>
-
-              {/* Time input after FFA section, shown conditionally */}
-              {time && (
-                <div className="flex items-center pl-6 space-x-2">
-                  <label htmlFor="ffaTime" className="text-sm">
-                    Time
+                <div className="flex items-center pl-16 space-x-2">
+                  <label htmlFor="oil" className="text-sm">
+                    Oil
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                      type="text"
+                      id="oil"
+                      className="h-5 px-0 py-1 border w-28"
+                      name="Oil"
+                      value={formData.Oil}
+                      onChange={handleChange}
+                    />
+                    <span className="ml-1">%</span>
+                  </div>
+                </div>
+                <div className="flex items-center pl-16 space-x-2">
+                  <label htmlFor="ffa" className="text-sm">
+                    FFA
                   </label>
                   <input
-                    type="time"
-                    id="ffaTime"
+                    type="text"
+                    id="ffa"
                     className="h-5 px-0 py-1 border w-28"
-                    name="ffaTime"
-                    value={time}
-                    onChange={handleChange}
+                    name="FFA"
+                    value={formData.FFA}
+                    onChange={(e) => {
+                      handleFfaChange(e);
+                      handleChange(e);
+                    }}
                   />
+                  <span className="ml-1">%</span>
                 </div>
-              )}
-            </div>
-          </div>
 
-          <div className="h-16 p-2 mt-1 border border-gray-300">
-            <div className="flex flex-wrap -mx-4">
-              {/* Code/Sample No. */}
-              <div className="w-1/5 px-4 ">
-                <label
-                  htmlFor="sampleNo"
-                  className="block mb-1 text-sm text-center "
-                >
-                  Code/Sample No.
-                </label>
-                <input
-                  type="text"
-                  id="sampleNo"
-                  className="w-full h-5 px-0 py-1 border"
-                  name="Code"
-                  value={formData.Code !== "NA" ? formData.Code : ""}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Date */}
-              <div className="w-1/5 px-4 mb-4">
-                <label
-                  htmlFor="date"
-                  className="block mb-1 text-sm text-center "
-                >
-                  Date
-                </label>
-                <input
-                  type="text"
-                  id="date"
-                  className="w-full h-5 px-0 py-1 border"
-                  name="Date"
-                  value={formData.Date !== "NA" ? formData.Date : ""}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Vehicle No. */}
-              <div className="w-1/5 px-4 mb-4">
-                <label
-                  htmlFor="vehicleNo"
-                  className="block mb-1 text-sm text-center "
-                >
-                  Vehicle No.
-                </label>
-                <input
-                  type="text"
-                  id="vehicleNo"
-                  className="w-full h-5 px-0 py-1 border"
-                  name="Vechileno"
-                  value={formData.Vechileno !== "NA" ? formData.Vechileno : ""}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Bags */}
-              <div className="w-1/5 px-4 mb-4">
-                <label
-                  htmlFor="bags"
-                  className="block mb-1 text-sm text-center "
-                >
-                  Bags
-                </label>
-                <input
-                  type="number"
-                  id="bags"
-                  className="w-full h-5 px-0 py-1 border"
-                  name="Bags"
-                  value={formData.Bags !== "NA" ? formData.Bags : ""}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Weight(Ql) */}
-              <div className="w-1/5 px-4 mb-4">
-                <label
-                  htmlFor="weight"
-                  className="block mb-1 text-sm text-center "
-                >
-                  Weight (Ql)
-                </label>
-                <input
-                  type="text"
-                  id="weight"
-                  className="w-full h-5 px-0 py-1 border"
-                  name="Weight"
-                  value={formData.Weight !== "NA" ? formData.Weight : ""}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="grid w-3/4 grid-cols-2 gap-4 p-4 mt-2">
-            {/* Row 1, Column 1 */}
-            <div>
-              <select
-                id="sealed-unsealed"
-                className="flex-grow h-5 px-0 border"
-                name="Itemcategory"
-                onChange={handleChange}
-                value={formData.Itemcategory}
-              >
-                <option value="Seal Engraved">Seal Engraved</option>
-                <option value="Buyer">Buyer</option>
-                <option value="Seller">Seller</option>
-                <option value="Rice Mills">Rice Mills</option>
-                <option value="Trader">Trader</option>
-                <option value="Broker">Broker</option>
-              </select>
-            </div>
-
-            {/* Row 1, Column 2 */}
-            <div>
-              <input
-                type="text"
-                id="space"
-                className="w-full h-5 px-0 py-1 border"
-                name="SealEngraved"
-                value={formData.SealEngraved || "NA"}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* Row 2, Column 1 */}
-            <div>
-              <span>Remarks</span>
-            </div>
-
-            {/* Row 2, Column 2 */}
-            <div>
-              <input
-                type="text"
-                id="space2"
-                className="w-full h-5 px-0 py-1 border"
-                name="Remarks"
-                value={formData.Remarks || "NA"}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="text-right">
-            <span className="block mr-6 text-sm">Signature</span>
-            <div className="flex items-center justify-end gap-2 my-3">
-              {/* Selected Image */}
-              <div className="absolute left-[62rem] top-[28.5rem]">
-                {selectedImage && (
-                  <img
-                    src={selectedImage.src}
-                    alt={selectedImage.alt}
-                    className="w-24 h-24 rounded-lg"
-                  />
-                )}
-              </div>
-
-              <div className="relative">
-                <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="px-4 py-2 bg-gray-200 rounded-lg"
-                >
-                  Select Image
-                </button>
-
-                {isOpen && (
-                  <div className="absolute bottom-full mb-2 left-0 w-32 bg-white border border-gray-200 rounded-lg shadow-md z-10 overflow-hidden">
-                    {images.map((image) => (
-                      <div
-                        key={image.id}
-                        className="p-2 cursor-pointer hover:bg-gray-100 flex items-center justify-center"
-                        onClick={() => handleSelect(image)}
-                      >
-                        <img
-                          src={image.src}
-                          alt={image.alt}
-                          className="w-12 h-12 rounded-lg"
-                        />
-                      </div>
-                    ))}
+                {/* Time input after FFA section, shown conditionally */}
+                {time && (
+                  <div className="flex items-center pl-6 space-x-2">
+                    <label htmlFor="ffaTime" className="text-sm">
+                      Time
+                    </label>
+                    <input
+                      type="time"
+                      id="ffaTime"
+                      className="h-5 px-0 py-1 border w-28"
+                      name="ffaTime"
+                      value={time}
+                      onChange={handleChange}
+                    />
                   </div>
                 )}
               </div>
             </div>
-            {/* <select
+
+            <div className="h-16 p-2 mt-1 border border-gray-300">
+              <div className="flex flex-wrap -mx-4">
+                {/* Code/Sample No. */}
+                <div className="w-1/5 px-4 ">
+                  <label
+                    htmlFor="sampleNo"
+                    className="block mb-1 text-sm text-center "
+                  >
+                    Code/Sample No.
+                  </label>
+                  <input
+                    type="text"
+                    id="sampleNo"
+                    className="w-full h-5 px-0 py-1 border"
+                    name="Code"
+                    value={formData.Code}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {/* Date */}
+                <div className="w-1/5 px-4 mb-4">
+                  <label
+                    htmlFor="date"
+                    className="block mb-1 text-sm text-center "
+                  >
+                    Date
+                  </label>
+                  <input
+                    type="text"
+                    id="date"
+                    className="w-full h-5 px-0 py-1 border"
+                    name="Date"
+                    value={formData.Date}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {/* Vehicle No. */}
+                <div className="w-1/5 px-4 mb-4">
+                  <label
+                    htmlFor="vehicleNo"
+                    className="block mb-1 text-sm text-center "
+                  >
+                    Vehicle No.
+                  </label>
+                  <input
+                    type="text"
+                    id="vehicleNo"
+                    className="w-full h-5 px-0 py-1 border"
+                    name="Vechileno"
+                    value={formData.Vechileno}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {/* Bags */}
+                <div className="w-1/5 px-4 mb-4">
+                  <label
+                    htmlFor="bags"
+                    className="block mb-1 text-sm text-center "
+                  >
+                    Bags
+                  </label>
+                  <input
+                    type="text"
+                    id="bags"
+                    className="w-full h-5 px-0 py-1 border"
+                    name="Bags"
+                    value={formData.Bags}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {/* Weight(Ql) */}
+                <div className="w-1/5 px-4 mb-4">
+                  <label
+                    htmlFor="weight"
+                    className="block mb-1 text-sm text-center "
+                  >
+                    Weight (Ql)
+                  </label>
+                  <input
+                    type="text"
+                    id="weight"
+                    className="w-full h-5 px-0 py-1 border"
+                    name="Weight"
+                    value={formData.Weight}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="grid w-3/4 grid-cols-2 gap-4 p-4 mt-2">
+              {/* Row 1, Column 1 */}
+              <div>
+                <select
+                  id="sealed-unsealed"
+                  className="flex-grow h-5 px-0 border"
+                  name="Itemcategory"
+                  onChange={handleChange}
+                  value={formData.Itemcategory}
+                >
+                  <option value="Seal Engraved">Seal Engraved</option>
+                  <option value="Buyer">Buyer</option>
+                  <option value="Seller">Seller</option>
+                  <option value="Rice Mills">Rice Mills</option>
+                  <option value="Trader">Trader</option>
+                  <option value="Broker">Broker</option>
+                </select>
+              </div>
+
+              {/* Row 1, Column 2 */}
+              <div>
+                <input
+                  type="text"
+                  id="space"
+                  className="w-full h-5 px-0 py-1 border"
+                  name="SealEngraved"
+                  value={formData.SealEngraved || "NA"}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* Row 2, Column 1 */}
+              <div>
+                <span>Remarks</span>
+              </div>
+
+              {/* Row 2, Column 2 */}
+              <div>
+                <input
+                  type="text"
+                  id="space2"
+                  className="w-full h-5 px-0 py-1 border"
+                  name="Remarks"
+                  value={formData.Remarks || "NA"}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="text-right">
+              <span className="block mr-6 text-sm">Signature</span>
+              <div className="flex items-center justify-end gap-2 my-3">
+                {/* Selected Image */}
+                <div className="absolute left-[62rem] top-[28.5rem]">
+                  {selectedImage && (
+                    <img
+                      src={selectedImage.src}
+                      alt={selectedImage.alt}
+                      className="w-24 h-24 rounded-lg"
+                    />
+                  )}
+                </div>
+
+                <div className="relative">
+                  <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="px-4 py-2 bg-gray-200 rounded-lg"
+                  >
+                    Select Image
+                  </button>
+
+                  {isOpen && (
+                    <div className="absolute bottom-full mb-2 left-0 w-32 bg-white border border-gray-200 rounded-lg shadow-md z-10 overflow-hidden">
+                      {images.map((image) => (
+                        <div
+                          key={image.id}
+                          className="p-2 cursor-pointer hover:bg-gray-100 flex items-center justify-center"
+                          onClick={() => handleSelect(image)}
+                        >
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            className="w-12 h-12 rounded-lg"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* <select
               id="signature"
               className="px-0 py-1 mb-2 border"
               name="Signature"
@@ -621,17 +627,18 @@ const CreateReport = () => {
               <option value="signature2">Signature 2</option>
               <option value="signature3">Signature 3</option>
             </select> */}
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                onClick={handleSaveAndPrint}
-                className="px-2 py-1 bg-gray-400 rounded"
-              >
-                Save and Print
-              </button>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  onSubmit={handleSaveAndPrint}
+                  className="px-2 py-1 bg-gray-400 rounded"
+                >
+                  Save and Print
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
+          </fieldset>
+        </form>
       </div>
     </div>
   );

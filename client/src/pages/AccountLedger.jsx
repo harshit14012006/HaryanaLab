@@ -97,7 +97,7 @@ const AccountLedger = ({
         <View style={styles.headerSection}>
           <View>
             <Text style={styles.sectionText}>M/s/Sh.: {PartyName}</Text>
-            <Text style={[styles.sectionText, { marginLeft: 20 }]}>{City}</Text>
+            <Text style={[styles.sectionText, { marginLeft: 3 }]}>{City}</Text>
           </View>
           <View>
             <Text style={styles.sectionText}>
@@ -134,7 +134,7 @@ const AccountLedger = ({
 
           <View style={styles.footerSection}>
             <Text style={styles.textcolor}>
-              Total Number of Samples: {Data.length}
+              Total Number of Samples: {Data.Count}
             </Text>
             <Text style={styles.totalSamples}>Closing Balance: {Balance}</Text>
           </View>

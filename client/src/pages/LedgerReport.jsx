@@ -135,7 +135,10 @@ const LedgerReport = () => {
 
   const generateAndOpenPdf = async () => {
     // Generate the PDF and create a Blob URL
-    console.log(filteredData[0].Date);
+
+    filteredData.Count = filteredData.filter(
+      (item) => item.Reportno !== "null"
+    ).length;
     const pdfBlob = await ReactPDF.pdf(
       <AccountLedger
         Data={filteredData}
