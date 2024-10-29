@@ -10,9 +10,9 @@ const CreateReport = () => {
     AnotherName: "NA",
     AnotherValue: "NA",
     From: "",
-    Station: ""
+    Station: "",
   });
-  
+
   const [ffaTime, setFfaTime] = useState(null);
   const [sampleName, setSampleName] = useState(null);
   const [customersbyname, setCustomersbyname] = useState(null);
@@ -68,16 +68,16 @@ const CreateReport = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-  
+
     // Create a new object with the updated field
     let newFormData = { ...formData, [name]: value };
-  
+
     // Check if 'From' field matches any customer name
     if (name === "From") {
       const result = customersbyname.find(
         (person) => person.Name.toLowerCase() === value.toLowerCase()
       );
-  
+
       if (result) {
         console.log("Found");
         setCity(result.City); // Set city state if a match is found
@@ -87,7 +87,7 @@ const CreateReport = () => {
         newFormData.Station = ""; // Clear Station if not found
       }
     }
-  
+
     // Update formData with the final values
     setFormData(newFormData);
   };
@@ -344,24 +344,24 @@ const CreateReport = () => {
           </div>
           <div className="h-12 p-4 mt-1 border border-gray-300">
             <div className="flex space-x-4">
-            <div className="flex items-center space-x-4">
-    <input
-      type="text"
-      id="anotherName"
-      className="h-5 px-0 py-1 border w-28"
-      value={formData.AnotherName}
-      name="AnotherName"
-      onChange={handleChange}
-    />
-    <input
-      type="text"
-      id="anotherValue"
-      className="h-5 px-0 py-1 border w-28"
-      value={formData.AnotherValue}c
-      name="AnotherValue"
-      onChange={handleChange}
-    />
-    </div>
+              <div className="flex items-center space-x-4">
+                <input
+                  type="text"
+                  id="anotherName"
+                  className="h-5 px-0 py-1 border w-28"
+                  value={formData.AnotherName}
+                  name="AnotherName"
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  id="anotherValue"
+                  className="h-5 px-0 py-1 border w-28"
+                  value={formData.AnotherValue}
+                  name="AnotherValue"
+                  onChange={handleChange}
+                />
+              </div>
               <div className="flex items-center pl-12">
                 <label htmlFor="moisture" className="text-sm whitespace-nowrap">
                   Moisture
@@ -548,10 +548,8 @@ const CreateReport = () => {
                 id="space"
                 className="w-full h-5 px-0 py-1 border"
                 name="SealEngraved"
+                value={formData.SealEngraved || "NA"}
                 onChange={handleChange}
-                value={
-                  formData.SealEngraved !== "NA" ? formData.SealEngraved : ""
-                }
               />
             </div>
 
@@ -567,7 +565,7 @@ const CreateReport = () => {
                 id="space2"
                 className="w-full h-5 px-0 py-1 border"
                 name="Remarks"
-                value={formData.Remarks !== "NA" ? formData.Remarks : ""}
+                value={formData.Remarks || "NA"}
                 onChange={handleChange}
               />
             </div>

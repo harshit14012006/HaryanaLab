@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-// const headers = ["Entry Date", "Report Number", "Credit", "Debit", "Remarks"];
+const headers = ["Entry Date", "Report Number", "Credit", "Debit", "Remarks"];
 
 function CashVoucher() {
   // const [data, setData] = useState(initialData);
@@ -264,20 +264,14 @@ function CashVoucher() {
         </div>
         <div>
           <div className="mx-auto">
-            <div className="relative overflow-x-auto overflow-y-auto h-[453px] w-[430px]">
+            <div className="relative overflow-x-auto overflow-y-auto h-[453px] w-[400px]">
               <table className="bg-white border border-gray-300 table-auto">
                 <thead>
-                  <tr className="bg-gray-100 border-b border-gray-300">
-                    {[
-                      "Entry Date",
-                      "Report Number",
-                      "Credit",
-                      "Debit",
-                      "Remarks",
-                    ].map((header, index) => (
+                  <tr>
+                    {headers.map((header, index) => (
                       <th
                         key={index}
-                        className="px-2 py-1 border-b border-gray-300"
+                        className="px-2 py-1 border-b border-gray-300 whitespace-nowrap font-normal text-sm"
                       >
                         {header}
                       </th>
@@ -288,19 +282,19 @@ function CashVoucher() {
                   {vouchers.length > 0 ? (
                     vouchers.map((voucher, index) => (
                       <tr key={index} onClick={() => HandleClick(voucher)}>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Date}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Reportno === "null" ? "" : voucher.Reportno}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Credit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Debit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Remarks}
                         </td>
                       </tr>
@@ -309,7 +303,7 @@ function CashVoucher() {
                     <tr>
                       <td
                         colSpan={headers.length}
-                        className="px-2 py-1 text-center border-b border-gray-300"
+                        className="px-2 py-1 text-center border-b border-gray-300 text-sm"
                       >
                         No vouchers found
                       </td>
