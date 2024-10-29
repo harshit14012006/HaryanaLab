@@ -109,6 +109,20 @@ function LedgerEntry() {
     }
   };
 
+  const handlePartyCity = (data) => {
+    const selectedPartyName = data;
+
+    // Find the selected party's city
+    const selectedPartyObj = partyNames.find(
+      (party) => party.Partyname === selectedPartyName
+    );
+    if (selectedPartyObj) {
+      setSelectedCity(selectedPartyObj.City); // Set city based on selected party
+    } else {
+      setSelectedCity(""); // Reset if no party selected
+    }
+  };
+
   // Handle input changes
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -189,6 +203,25 @@ function LedgerEntry() {
     }
   };
 
+  const handleData = (data) => {
+    if (data.Credit) {
+      console.log(data.Credit);
+      setFormData(data);
+      setSelectedParty(data.PartyName);
+      handlePartyCity(data.PartyName);
+    } else {
+      setFormData({
+        Date: "",
+        Reportno: "",
+        PartyName: "",
+        Credit: "",
+        Remarks: "",
+      });
+      setSelectedCity("");
+      setSelectedParty("");
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Ledger Form Section */}
@@ -228,7 +261,7 @@ function LedgerEntry() {
                   <select
                     id="PartyName"
                     required
-                    value={selectedParty}
+                    value={selectedParty || formData.PartyName}
                     onChange={handlePartyChange} // Capture the change
                     className="flex-grow h-5 border"
                   >
@@ -366,7 +399,7 @@ function LedgerEntry() {
                       <tr
                         key={i}
                         onClick={() => {
-                          setFormData(entry);
+                          handleData(entry);
                         }}
                       >
                         <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">

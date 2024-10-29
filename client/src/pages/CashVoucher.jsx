@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const headers = ["Entry Date", "Report Number", "Credit", "Debit", "Remarks"];
+// const headers = ["Entry Date", "Report Number", "Credit", "Debit", "Remarks"];
 
 function CashVoucher() {
   // const [data, setData] = useState(initialData);
@@ -264,14 +264,25 @@ function CashVoucher() {
         </div>
         <div>
           <div className="mx-auto">
-            <div className="relative overflow-x-auto overflow-y-auto h-[453px] w-[400px]">
+            <div className="relative overflow-x-auto overflow-y-auto h-[453px] w-[430px]">
               <table className="bg-white border border-gray-300 table-auto">
                 <thead>
-                  <tr>
-                    {headers.map((header, index) => (
+                  <tr className="bg-gray-100 border-b border-gray-300">
+                    {[
+                      "Entry Date",
+                      "Report Number",
+                      "Credit",
+                      "Debit",
+                      "Remarks",
+                    ].map((header, index) => (
                       <th
                         key={index}
-                        className="px-2 py-1 border-b border-gray-300"
+                        className="text-sm text-left border-gray-300 whitespace-nowrap"
+                        style={{
+                          fontSize: "13px",
+                          fontWeight: "normal",
+                          width: "100px",
+                        }}
                       >
                         {header}
                       </th>
@@ -279,36 +290,31 @@ function CashVoucher() {
                   </tr>
                 </thead>
                 <tbody>
-                  {vouchers.length > 0 ? (
-                    vouchers.map((voucher, index) => (
-                      <tr key={index} onClick={() => HandleClick(voucher)}>
-                        <td className="px-2 py-1 border-b border-gray-300">
-                          {voucher.Date}
+                  {vouchers.length > 0 &&
+                    vouchers.map((entry, i) => (
+                      <tr
+                        key={i}
+                        onClick={() => {
+                          HandleClick(entry);
+                        }}
+                      >
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Date}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
-                          {voucher.Reportno === "null" ? "" : voucher.Reportno}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Reportno === "null" ? "" : entry.Reportno}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
-                          {voucher.Credit}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Credit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
-                          {voucher.Debit}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Debit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
-                          {voucher.Remarks}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Remarks}
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan={headers.length}
-                        className="px-2 py-1 text-center border-b border-gray-300"
-                      >
-                        No vouchers found
-                      </td>
-                    </tr>
-                  )}
+                    ))}
                 </tbody>
               </table>
             </div>
