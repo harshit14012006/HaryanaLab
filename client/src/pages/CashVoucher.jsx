@@ -271,7 +271,7 @@ function CashVoucher() {
                     {headers.map((header, index) => (
                       <th
                         key={index}
-                        className="px-2 py-1 border-b border-gray-300"
+                        className="px-2 py-1 border-b border-gray-300 whitespace-nowrap font-normal text-sm"
                       >
                         {header}
                       </th>
@@ -282,19 +282,19 @@ function CashVoucher() {
                   {vouchers.length > 0 ? (
                     vouchers.map((voucher, index) => (
                       <tr key={index} onClick={() => HandleClick(voucher)}>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Date}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Reportno === "null" ? "" : voucher.Reportno}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Credit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Debit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300">
+                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
                           {voucher.Remarks}
                         </td>
                       </tr>
@@ -303,7 +303,7 @@ function CashVoucher() {
                     <tr>
                       <td
                         colSpan={headers.length}
-                        className="px-2 py-1 text-center border-b border-gray-300"
+                        className="px-2 py-1 text-center border-b border-gray-300 text-sm"
                       >
                         No vouchers found
                       </td>
