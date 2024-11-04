@@ -83,7 +83,7 @@ const AccountLedger = ({
   return (
     <Document>
       <Page orientation="landscape" style={styles.page}>
-        <View style={styles.container}>
+        <View fixed style={styles.container}>
           <Text style={styles.headerTitle}>Account Ledger</Text>
           <Text style={styles.headerMain}>Haryana Laboratory</Text>
           <Text style={styles.address}>
@@ -94,7 +94,7 @@ const AccountLedger = ({
           </Text>
         </View>
 
-        <View style={styles.headerSection}>
+        <View fixed style={styles.headerSection}>
           <View>
             <Text style={styles.sectionText}>M/s/Sh.: {PartyName}</Text>
             <Text style={[styles.sectionText, { marginLeft: 3 }]}>{City}</Text>
@@ -108,7 +108,7 @@ const AccountLedger = ({
         </View>
 
         <View style={styles.scrollableTable}>
-          <View style={styles.tableHeader}>
+          <View fixed style={styles.tableHeader}>
             <Text style={styles.tableCell}>Date</Text>
             <Text style={styles.tableCell}>Type</Text>
             <Text style={styles.tableCell}>Particulars</Text>

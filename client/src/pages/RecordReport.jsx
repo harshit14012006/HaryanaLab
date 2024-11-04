@@ -48,10 +48,17 @@ const RecordReportWithoutSample = () => {
       // Send POST request to the API
 
       await axios
-        .post("http://localhost:3001/api/analysisDate", payload)
+        .post("http://localhost:3001/api/analysisDate", payload, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((response) => {
           if (response) {
+            console.log(response.data);
             setRecords(response.data);
+          } else {
+            setRecords([]);
           }
         })
         .catch((err) => console.log(err.response.data));
@@ -106,14 +113,16 @@ const RecordReportWithoutSample = () => {
   const HandleClick = async () => {
     console.log("Print");
     console.log(filteredCity[0].City);
-    records.City = filteredCity[0].City;
     const Data = {
       Records: records,
       City: filteredCity[0].City,
       PartyName: filteredCity[0].PartyName,
     };
     console.log(Data);
-    ipcRenderer.send("open-Party-report", Data);
+    Data.Records.length > 0 &&
+      Data.City !== "" &&
+      Data.PartyName !== "" &&
+      ipcRenderer.send("open-Party-report", Data);
   };
 
   return (

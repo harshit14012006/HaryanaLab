@@ -136,6 +136,7 @@
         margin-top: 10px;
         font-size: 14px;
         line-height: 24px;
+        position: relative;
       }
 
       .detail-row {
@@ -166,6 +167,7 @@
         border-radius: 12px;
         margin-top: 2px;
         height: 3px;
+        position: relative;
       }
 
       .report-columns {
@@ -197,6 +199,7 @@
         border-radius: 12px;
         margin-top: 2px;
         height: 30px;
+        position: relative;
       }
 
       .analysis-text {
@@ -209,42 +212,50 @@
       .Sample {
         position: absolute;
         left: 30rem;
-        top: 13.5rem;
+        top: -0.05rem;
+        transform: translateX(-25%); /* Adjust as needed */
       }
       .Selected {
         position: absolute;
         left: 47rem;
-        top: 13.5rem;
+        top: -0.05rem;
+        transform: translateX(-25%); /* Adjust as needed */
       }
       .Date1 {
         position: absolute;
         left: 64rem;
-        top: 13.5rem;
+        top: -0.05rem;
+        transform: translateX(-25%); /* Adjust as needed */
       }
       .Name {
         position: absolute;
         left: 8rem;
-        top: 15.9rem;
+        top: 2.42rem;
+        transform: translateX(-25%); /* Adjust as needed */
       }
       .City {
         position: absolute;
         left: 45.5rem;
-        top: 15.9rem;
+        top: 2.42rem;
+        transform: translateX(-25%); /* Adjust as needed */
       }
       .Seal {
         position: absolute;
         left: 30rem;
-        top: 19rem;
+        top: 0.8rem;
+        transform: translateX(-25%); /* Adjust as needed */
       }
       .Remarks {
         position: absolute;
         left: 30rem;
-        top: 50rem;
+        top: 0.8rem;
+        transform: translateX(-50%); /* Adjust as needed */
       }
       .image {
         position: absolute;
         left: 66rem;
-        top: 49.3rem;
+        top: 0.1rem;
+        transform: translateX(-30%); /* Adjust as needed */
       }
       .signature {
         width: 160px;
@@ -386,14 +397,12 @@
                     type="text"
                     class="inpfld"
                     id="inpfld"
-                    value="Purab"
                     disabled /></span
                 ><span class="Selected" id="Selected"
                   ><input
                     type="text"
                     disabled
                     class="inpfld1"
-                    value="Sealed"
                     id="inpfld1" /></span
               ></span>
               <span
@@ -460,14 +469,14 @@
       </div>
 
       <div class="last-container">
-        Remarks...................................................................................................................................................................................................<span
+        Remarks........................................................................................................................................................................................<span
           class="Remarks"
           id="Remarks"
-          ><input type="text" disabled class="inpfld6" id="inpfld6"
+          ><input type="text" class="inpfld6" id="inpfld6" disabled
         /></span>
         Signature
         <span class="image" id="image"
-          ><img src="./Sign3.jpg" alt="Sign" id="Sign" class="signature"
+          ><img src="" alt="Sign" id="Sign" class="signature"
         /></span>
       </div>
 
@@ -502,7 +511,7 @@
 
           reportRows.appendChild(rowDiv);
         });
-        for (i = 0; i < 11 - data.length; i++) {
+        for (i = 0; i < 10 - data.length; i++) {
           const rowDiv = document.createElement("div");
           rowDiv.className = "report-columns";
 
@@ -528,69 +537,139 @@
       document
         .getElementById("downloadBtn")
         .addEventListener("click", function () {
-          var node = document.getElementById("MainContent");
-          document.getElementById("Sample").style.top = "11.60rem";
-          document.getElementById("Selected").style.top = "11.60rem";
-          document.getElementById("Date1").style.top = "11.60rem";
-          document.getElementById("Name").style.top = "14rem";
-          document.getElementById("City").style.top = "14rem";
-          document.getElementById("Seal").style.top = "17.39rem";
-          document.getElementById("Remarks").style.top = "48.13rem";
-          document.getElementById("image").style.top = "47.50rem";
-          domtoimage
-            .toPng(node)
-            .then(function (dataUrl) {
-              const pdf = new jsPDF("l", "mm", "a4");
-              const img = new Image();
-              img.src = dataUrl;
-              img.onload = function () {
-                document.getElementById("Sample").style.top = "13.5rem";
-                document.getElementById("Selected").style.top = "13.5rem";
-                document.getElementById("Date1").style.top = "13.5rem";
-                document.getElementById("Name").style.top = "15.9rem";
-                document.getElementById("City").style.top = "15.9rem";
-                document.getElementById("Seal").style.top = "19rem";
-                document.getElementById("Remarks").style.top = "50rem";
-                document.getElementById("image").style.top = "49.3rem";
+          const nodes = document.querySelectorAll(
+            "#MainContent, .clone-content"
+          );
+          const pdf = new jsPDF("l", "mm", "a4");
+          const pageWidth = 297; // A4 width in mm
+          const pageHeight = 210; // A4 height in mm
+          const padding = 10; // Padding for the PDF
+          let currentPage = 0; // Track if we're on the first page
 
-                const imgWidth = 297; // A4 width in mm
-                const pageHeight = 210; // A4 height in mm
-                const imgHeight = (img.height * imgWidth) / img.width;
-                let heightLeft = imgHeight;
-                let position = 2;
+          function addNodeToPdf(node, callback) {
+            domtoimage
+              .toPng(node)
+              .then(function (dataUrl) {
+                const img = new Image();
+                img.src = dataUrl;
+                img.onload = function () {
+                  const imgWidth = pageWidth - 2 * padding;
+                  const imgHeight = (img.height * imgWidth) / img.width;
 
-                pdf.addImage(dataUrl, "PNG", 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
+                  // Add a new page only after the first page
+                  if (currentPage > 0) {
+                    pdf.addPage();
+                  }
 
-                while (heightLeft >= 0) {
-                  position = heightLeft - imgHeight;
-                  pdf.addPage();
-                  pdf.addImage(
-                    dataUrl,
-                    "PNG",
-                    0,
-                    position,
-                    imgWidth,
-                    imgHeight
-                  );
-                  heightLeft -= pageHeight;
-                }
+                  pdf.addImage(dataUrl, "PNG", padding, 8, imgWidth, imgHeight);
+                  currentPage++;
 
-                const pdfBlob = pdf.output("blob");
-                const pdfUrl = URL.createObjectURL(pdfBlob);
+                  callback(); // Move to the next node
+                };
+              })
+              .catch(function (error) {
+                console.error("Oops, something went wrong!", error);
+              });
+          }
 
-                // Open the PDF in a new tab
-                window.open(pdfUrl);
-              };
-            })
-            .catch(function (error) {
-              console.error("Oops, something went wrong!", error);
-            });
+          function processNodes(index) {
+            if (index < nodes.length) {
+              addNodeToPdf(nodes[index], function () {
+                processNodes(index + 1);
+              });
+            } else {
+              // All nodes have been processed, save the PDF
+              const pdfBlob = pdf.output("blob");
+              const pdfUrl = URL.createObjectURL(pdfBlob);
+              window.open(pdfUrl); // Open the PDF in a new tab
+            }
+          }
+
+          processNodes(0); // Start processing nodes
         });
 
       function DateChange(Dataa) {
         const [day, month, year] = Dataa.split("-"); // Split the date string
         return `${day}-${month}-${year}`; // Rearrange to dd-MM-yyyy
+      }
+
+      function createPageWithJsonData(dataChunk) {
+        // Clone MainContent section
+        const mainContent = document.getElementById("MainContent");
+        const newComponent = mainContent.cloneNode(true);
+        newComponent.removeAttribute("id");
+
+        // Add a class to cloned content for styling
+        newComponent.classList.add("clone-content");
+
+        // Reset `reportRows` in the cloned component
+        const reportRows = newComponent.querySelector("#reportRows");
+        reportRows.innerHTML = ""; // Clear previous data in the clone
+
+        // Add input fields in the cloned component
+        document.querySelector("#inpfld").value = dataChunk[0].Samplename;
+        document.querySelector("#inpfld1").value = dataChunk[0].Selected;
+        document.querySelector("#inpfld2").value = DateChange(
+          dataChunk[0].Dated
+        );
+        document.querySelector("#inpfld3").value = dataChunk[0].From;
+        document.querySelector("#inpfld4").value = dataChunk[0].Station;
+        document.querySelector("#inpfld5").value = dataChunk[0].SealEngraved;
+        document.querySelector("#inpfld6").value = dataChunk[0].Remarks;
+        document.querySelector("#header-right").innerHTML = `Date ${DateChange(
+          dataChunk[0].Billeddate
+        )}`;
+        document.querySelector("#Sign").src =
+          dataChunk[0].Signature === "signature1"
+            ? "./Sign1.png"
+            : dataChunk[0].Signature === "signature2"
+            ? "./Sign2.png"
+            : dataChunk[0].Signature === "signature3" && "./Sign3.jpg";
+
+        // Generate rows with the data chunk
+        dataChunk.forEach((row) => {
+          const rowDiv = document.createElement("div");
+          rowDiv.className = "report-columns";
+
+          rowDiv.innerHTML = `
+            <div class="report-column">${row.Dated}</div>
+            <div class="report-column">${row.Reportno}</div>
+            <div class="report-column">${row.SealEngraved}</div>
+            <div class="report-column">${row.Code}</div>
+            <div class="report-column">${row.Date}</div>
+            <div class="report-column">${row.Vechileno}</div>
+            <div class="report-column">${row.Bags}</div>
+            <div class="report-column">${row.Weight}</div>
+            <div class="report-column">${row.Oil}</div>
+            <div class="report-column">${row.Moisture}</div>
+            <div class="report-column">${row.FFA}</div>
+        `;
+
+          reportRows.appendChild(rowDiv);
+        });
+        for (i = 0; i < 17 - (dataChunk.length - 1); i++) {
+          const rowDiv = document.createElement("div");
+          rowDiv.className = "report-columns";
+          rowDiv.innerHTML = `
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+            <div class="report-column">_</div>
+          `;
+
+          reportRows.appendChild(rowDiv);
+        }
+
+        // Remove ID to avoid duplicates before appending
+        newComponent.id = "";
+        document.body.appendChild(newComponent);
       }
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -599,19 +678,42 @@
           (event, reportData) => {
             Data = reportData;
             console.log(Data);
-            document.getElementById("inpfld").value = Data[0].Samplename;
-            document.getElementById("inpfld1").value = Data[0].Selected;
-            document.getElementById("inpfld2").value = DateChange(
+            document.querySelector("#inpfld").value = Data[0].Samplename;
+            document.querySelector("#inpfld1").value = Data[0].Selected;
+            document.querySelector("#inpfld2").value = DateChange(
               Data[0].Dated
             );
-            document.getElementById("inpfld3").value = Data[0].From;
-            document.getElementById("inpfld4").value = Data[0].Station;
-            document.getElementById("inpfld5").value = Data[0].SealEngraved;
-            document.getElementById("inpfld6").value = Data[0].Remarks;
-            document.getElementById(
-              "header-right"
+            document.querySelector("#inpfld3").value = Data[0].From;
+            document.querySelector("#inpfld4").value = Data[0].Station;
+            document.querySelector("#inpfld5").value = Data[0].SealEngraved;
+            document.querySelector("#inpfld6").value = Data[0].Remarks;
+            document.querySelector(
+              "#header-right"
             ).innerHTML = `Date ${DateChange(Data[0].Billeddate)}`;
-            generateRows(Data);
+            document.querySelector("#Sign").src =
+              Data[0].Signature === "signature1"
+                ? "./Sign1.png"
+                : Data[0].Signature === "signature2"
+                ? "./Sign2.png"
+                : Data[0].Signature === "signature3" && "./Sign3.jpg";
+
+            const itemsPerPage = 17;
+            for (let i = 0; i < Data.length; i += itemsPerPage) {
+              const dataChunk = Data.slice(i, i + itemsPerPage);
+              // Use initial MainContent if it's the first page
+              console.log("Loop ........");
+              if (i === 0) {
+                generateRows(dataChunk);
+              } else {
+                console.log("Else Working");
+                // Clone for additional data chunks
+                console.table(dataChunk);
+
+                createPageWithJsonData(dataChunk);
+              }
+            }
+
+            // generateRows(Data);
           }
         );
       });

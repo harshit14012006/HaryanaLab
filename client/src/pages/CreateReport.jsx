@@ -12,6 +12,7 @@ const CreateReport = () => {
   const [City, setCity] = useState("");
   const [id, setId] = useState(null);
   const [time, setTime] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(true);
   const handleFfaChange = (e) => {
     setFfaTime(new Date().toLocaleTimeString()); // Set the current time
     const hours = String(new Date().getHours()).padStart(2, "0");
@@ -57,6 +58,7 @@ const CreateReport = () => {
     setSelectedImage(image);
     setIsOpen(false); // Close dropdown after selecting
     setFormData({ ...formData, Signature: image.value });
+    image.value && setIsDisabled(!isDisabled);
   };
 
   const handleChange = (event) => {
@@ -137,62 +139,62 @@ const CreateReport = () => {
   };
 
   function formatDate(dateString) {
+    if (!dateString || dateString === "NA") return "NA";
     const [year, month, day] = dateString.split("-");
     return `${day}-${month}-${year}`;
   }
 
   const handleSaveAndPrint = (e) => {
     e.preventDefault();
-
+    if (isDisabled) return;
     try {
-      if (formData.Signature !== "NA") {
-        formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
-        formData.Reportno = id;
-        formData.Dated = formatDate(formData.Dated);
-        formData.Billeddate = formatDate(formData.Billeddate);
-        console.log(formData);
-        axios
-          .post("http://localhost:3001/api/analysis", formData)
-          .then((response) => {
-            console.log("Data submitted successfully:", response.data);
+      formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
+      formData.Reportno = id;
+      formData.Dated = formatDate(formData.Dated);
+      formData.Billeddate = formatDate(formData.Billeddate);
+      console.log(formData);
+      axios
+        .post("http://localhost:3001/api/analysis", formData)
+        .then((response) => {
+          console.log("Data submitted successfully:", response.data);
 
-            ipcRenderer.send("open-lab-report", formData);
-            // Send the event to the main process
+          ipcRenderer.send("open-lab-report", formData);
+          // Send the event to the main process
 
-            setFormData({
-              Reportno: 0,
-              Samplename: "NA",
-              Dated: "NA",
-              Selected: "Sealed",
-              From: "NA",
-              Billeddate: "NA",
-              Station: "NA",
-              AnotherName: "NA",
-              AnotherValue: "NA",
-              Moisture: "NA",
-              Oil: "NA",
-              FFA: "NA",
-              Code: "NA",
-              Date: "NA",
-              Vechileno: "NA",
-              Bags: "NA",
-              Weight: "NA",
-              Itemcategory: "Seal Engraved",
-              Remarks: "NA",
-              SealEngraved: "NA",
-              Signature: "NA",
-            });
-            getReportno();
-            setCity("");
-            setSelectedImage(null);
-            setIsOpen(false);
-            setTime(null);
-          })
-          .catch((error) => {
-            console.error("There was an error submitting the data!", error);
+          setFormData({
+            Reportno: 0,
+            Samplename: "NA",
+            Dated: "NA",
+            Selected: "Sealed",
+            From: "NA",
+            Billeddate: "NA",
+            Station: "NA",
+            AnotherName: "NA",
+            AnotherValue: "NA",
+            Moisture: "NA",
+            Oil: "NA",
+            FFA: "NA",
+            Code: "NA",
+            Date: "NA",
+            Vechileno: "NA",
+            Bags: "NA",
+            Weight: "NA",
+            Itemcategory: "Seal Engraved",
+            Remarks: "NA",
+            SealEngraved: "NA",
+            Signature: "NA",
           });
-        //Adding Data
-      }
+          getReportno();
+          setCity("");
+          setSelectedImage(null);
+          setIsOpen(false);
+          setTime(null);
+          setIsDisabled(!isDisabled);
+        })
+        .catch((error) => {
+          console.error("There was an error submitting the data!", error);
+        });
+      //Adding Data
     } catch (error) {
       console.log("Error adding data:", error);
     }
@@ -201,7 +203,7 @@ const CreateReport = () => {
   return (
     <div className="bg-gray-100">
       <div className="p-1 ">
-        <form>
+        <form onSubmit={handleSaveAndPrint}>
           <fieldset className="p-2 border border-gray-300 rounded">
             <header className="text-sm">Analysis</header>
             <div className="border border-gray-300 ">
@@ -256,7 +258,7 @@ const CreateReport = () => {
                         className="flex-grow h-5 py-1 border"
                         placeholder="Input 2"
                         name="Dated"
-                        value={formData.Dated !== "NA" && formData.Dated}
+                        value={formData.Dated !== "NA" ? formData.Dated : ""}
                         required
                         onChange={handleChange}
                       />
@@ -301,7 +303,9 @@ const CreateReport = () => {
                         id="billedDate"
                         required
                         value={
-                          formData.Billeddate !== "NA" && formData.Billeddate
+                          formData.Billeddate !== "NA"
+                            ? formData.Billeddate
+                            : ""
                         }
                         className="flex-grow h-5 px-0 py-1 border"
                         name="Billeddate"
@@ -553,7 +557,7 @@ const CreateReport = () => {
                   id="space"
                   className="w-full h-5 px-0 py-1 border"
                   name="SealEngraved"
-                  value={formData.SealEngraved || "NA"}
+                  value={formData.SealEngraved}
                   onChange={handleChange}
                 />
               </div>
@@ -570,7 +574,7 @@ const CreateReport = () => {
                   id="space2"
                   className="w-full h-5 px-0 py-1 border"
                   name="Remarks"
-                  value={formData.Remarks || "NA"}
+                  value={formData.Remarks}
                   onChange={handleChange}
                 />
               </div>
@@ -591,6 +595,7 @@ const CreateReport = () => {
 
                 <div className="relative">
                   <button
+                    type="button"
                     onClick={() => setIsOpen(!isOpen)}
                     className="px-4 py-2 bg-gray-200 rounded-lg"
                   >
@@ -628,11 +633,7 @@ const CreateReport = () => {
               <option value="signature3">Signature 3</option>
             </select> */}
               <div className="flex justify-end">
-                <button
-                  type="submit"
-                  onSubmit={handleSaveAndPrint}
-                  className="px-2 py-1 bg-gray-400 rounded"
-                >
+                <button type="submit" className="px-2 py-1 bg-gray-400 rounded">
                   Save and Print
                 </button>
               </div>

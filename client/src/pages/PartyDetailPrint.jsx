@@ -52,14 +52,15 @@ const LedgerReport = () => {
 
   const HandleClick = async () => {
     console.log("Print");
+    data.Count = data.filter((item) => item.Reportno !== "null").length;
     // console.log(filteredData[0].Date);
     const pdfBlob = await ReactPDF.pdf(
       <AccountLedger
         Data={data}
         Balance={0}
         OpeningBalance={0}
-        Date1={"NA"}
-        Date2={"NA"}
+        Date1={data[0].Date}
+        Date2={data[data.length - 1].Date}
       />
     ).toBlob();
     const newBlobUrl = URL.createObjectURL(pdfBlob);

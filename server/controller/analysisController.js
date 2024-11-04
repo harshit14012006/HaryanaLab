@@ -321,9 +321,11 @@ const getUserFromReportWithoutSample = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 const getReportByDate = (req, res) => {
   const { startDate, endDate, partyName, sampleName } = req.body;
-  console.log(startDate, endDate, partyName, sampleName);
+  console.log("Input values:", { startDate, endDate, partyName, sampleName });
+
   if (!startDate || !endDate) {
     return res
       .status(400)
@@ -332,8 +334,11 @@ const getReportByDate = (req, res) => {
 
   const query = `
     SELECT * FROM analysis
-    WHERE \`From\` = ? AND Samplename = ? AND Dated BETWEEN ? AND ?
+    WHERE \`From\` = ? AND Samplename = ? AND STR_TO_DATE(Dated, '%d-%m-%Y') BETWEEN STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(?, '%d-%m-%Y')
   `;
+
+  console.log("Executing SQL query:", query);
+  console.log("With parameters:", [partyName, sampleName, startDate, endDate]);
 
   db.query(
     query,
@@ -342,9 +347,10 @@ const getReportByDate = (req, res) => {
       if (err) {
         console.error("Error fetching data:", err);
         return res.status(500).json({ error: "Database query failed." });
+      } else {
+        console.log("Query results:", results);
+        res.json(results);
       }
-
-      res.json(results);
     }
   );
 };
@@ -360,7 +366,7 @@ const getReportByPartyname = (req, res) => {
 
   const query = `
     SELECT * FROM analysis
-    WHERE \`From\` = ?  AND Dated BETWEEN ? AND ?
+    WHERE \`From\` = ?  AND STR_TO_DATE(Dated, '%d-%m-%Y') BETWEEN STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(?, '%d-%m-%Y')
   `;
 
   db.query(query, [partyName, startDate, endDate], (err, results) => {
@@ -392,7 +398,7 @@ const getReportSByEverything = (req, res) => {
 
   const query = `
     SELECT * FROM analysis
-    WHERE \`From\` = ?  AND Selected = ? AND Samplename = ? AND Signature = ? AND Category = ? AND Reportno BETWEEN ? AND ? AND Billeddate BETWEEN ? AND ?
+    WHERE \`From\` = ?  AND Selected = ? AND Samplename = ? AND Signature = ? AND Category = ? AND Reportno BETWEEN ? AND ? AND STR_TO_DATE(Billeddate, '%d-%m-%Y') BETWEEN STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(?, '%d-%m-%Y')
   `;
   console.log(
     From,

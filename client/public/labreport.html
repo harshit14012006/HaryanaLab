@@ -15,7 +15,8 @@
         width: 1008px;
         height: 530px;
         background-color: #f9f9f9;
-        /* padding-left: 28px; */
+        margin-left: 20px;
+        margin-right: 20px;
       }
       h1 {
         color: #333;
@@ -916,13 +917,15 @@
         html2canvas(document.getElementById("content")).then((canvas) => {
           const imgData = canvas.toDataURL("image/png");
           const pdf = new jsPDF("p", "mm", "a4");
-          const imgWidth = 210; // A4 width in mm
+          const pageWidth = 210; // A4 width in mm
           const pageHeight = 295; // A4 height in mm
+          const padding = 10; // Adjust this value for the desired padding
+          const imgWidth = pageWidth - 2 * padding; // Subtract padding from both sides
           const imgHeight = (canvas.height * imgWidth) / canvas.width;
           let heightLeft = imgHeight;
-          let position = 0;
+          let position = 8;
 
-          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          pdf.addImage(imgData, "PNG", padding, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
 
           // Move the position 10 pixels down and add a dotted line
@@ -933,7 +936,7 @@
 
           // Add the second image 10 pixels below the dotted line
           position += 10;
-          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          pdf.addImage(imgData, "PNG", padding, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
 
           while (heightLeft >= 0) {

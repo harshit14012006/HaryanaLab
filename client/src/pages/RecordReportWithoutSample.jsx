@@ -107,7 +107,10 @@ const RecordReportWithoutSample = () => {
       PartyName: partyName,
     };
     console.log(Data);
-    ipcRenderer.send("open-Party-report", Data);
+    Data.Records.length > 0 &&
+      Data.City !== "" &&
+      Data.PartyName !== "" &&
+      ipcRenderer.send("open-Party-report", Data);
   };
   return (
     <div className="bg-gray-100">
