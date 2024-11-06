@@ -10,20 +10,20 @@
         margin: 20px;
       }
       .container {
-        border: 2px solid #000;
-        padding: 0px 0px;
-        width: 1012px;
-        height: 560px;
-        background-color: #f9f9f9;
+        width: 1000px;
+        height: 530px;
+
         /* padding-left: 28px; */
       }
       h1 {
         color: #333;
       }
       .content {
+        border: 2px solid #450a0a;
+        padding-top: 2px;
+        width: 921px;
+        height: 494px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
       }
       .text {
         width: 60%;
@@ -57,13 +57,13 @@
         .rep {
           position: absolute;
           top: -10%;
-          right: 40%;
+          right: 25%;
           bottom: 0;
           left: 0;
           display: flex;
           align-items: center;
           justify-content: center;
-
+          text-align: center; /* Centers text alignment */
           font-size: 3rem; /* Equivalent to text-5xl */
           font-weight: bold;
           color: #6b7280; /* Equivalent to text-gray-500 */
@@ -94,13 +94,12 @@
           ); /* Gradient from red-800, red-900, to red-950*/
         }
         .bodysec {
-          padding: 0.25rem; /* Equivalent to p-1 */
           border-width: 2px; /* Equivalent to border-2 */
           border-radius: 0.375rem; /* Equivalent to rounded-md */
           border-color: black; /* Set border color to black */
           width: 900px;
-          height: 506px;
-          padding-left: 30px;
+          height: 520px;
+          padding-left: 4px;
         }
 
         .head {
@@ -125,7 +124,8 @@
         }
 
         .logo {
-          width: 100px;
+          width: 110px;
+          height: 100px;
           border-color: white;
           border-width: 2px;
           border-style: solid; /* Adding border-style for completeness, as border-width alone does not display the border */
@@ -190,10 +190,6 @@
       .rightbar {
         height: 2.5rem; /* Equivalent to h-10 */
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
-        padding-left: 1.25rem; /* Equivalent to px-5 */
-        padding-right: 1.25rem; /* Equivalent to px-5 */
-        padding-top: 0.5rem; /* Equivalent to py-2 */
-        padding-bottom: 0.5rem; /* Equivalent to py-2 */
         color: white;
         background: linear-gradient(
           to right,
@@ -207,14 +203,16 @@
         align-items: center;
         justify-content: center;
       }
-.imgsidebarnew1
-{
-  width: 24px;
-    
-    height: 519px;
-  float: left;
-    left:24px;
-}
+      .imgsidebarnew1 {
+        width: 24px;
+        height: 519px;
+        float: left;
+        left: 26px;
+        margin-left: 2px;
+        margin-top: 2px;
+        border-radius: 5px; /* Adjust the value to control the roundness */
+      }
+
       .star1 {
         color: #fbbf24; /* Equivalent to text-yellow-400 */
         font-size: 0.75rem; /* Equivalent to text-xs */
@@ -252,8 +250,8 @@
         grid-template-rows: repeat(12, 1fr); /* 12 rows */
         gap: 0.25rem;
         margin-right: 0; /* Aligns the element to the right */
-        margin-left: 925px; /* Pushes it to the right */
-        margin-top: -555px; /* Moves it towards the top (adjust value as needed) */
+        margin-left: 922px; /* Pushes it to the right */
+        margin-top: -504px; /* Moves it towards the top (adjust value as needed) */
         width: 20%; /* Adjust width according to your design */
       }
 
@@ -263,7 +261,7 @@
         display: flex;
         justify-content: center; /* Center horizontally */
         align-items: center; /* Center vertically */
-        height: 2.5rem; /* Equivalent to h-10 */
+        height: 2rem; /* Equivalent to h-10 */
         width: 3.5rem; /* Equivalent to w-14 */
         font-size: 1.125rem; /* Equivalent to text-lg */
         color: white;
@@ -293,21 +291,22 @@
       .base {
         padding-left: 0.25rem; /* Equivalent to px-1 */
         padding-right: 0.25rem; /* Equivalent to px-1 */
-        margin-top: -0.4rem; /* Equivalent to -mt-1 (1 in Tailwind corresponds to 0.25rem) */
+        margin-top: 1px; /* Equivalent to -mt-1 */
         color: white;
-        border-style: solid; /* Adding border-style for completeness */
-        border-width: 1px; /* Equivalent to default border width (not specified in Tailwind) */
-        border-color: currentColor; /* Assuming border color is set to the current text color (white) */
-        border-radius: 0.5rem; /* Equivalent to rounded-lg (lg radius is 0.5rem) */
+        border-style: solid;
+        border-width: 1px; /* Default border width */
+        border-color: currentColor; /* Border color set to current text color */
+        border-radius: 0.5rem; /* Equivalent to rounded-lg */
         background: linear-gradient(
           to right,
           #991b1b,
           #7f1d1d,
           #450a0a
-        ); /* Gradient from red-800, red-900, to red-950 */
+        ); /* Gradient from red-800 to red-950 */
         width: 895px;
         height: 25px;
-        margin-left: -4px;
+        margin-left: 27px;
+        line-height: 1.5rem; /* Adjusts the vertical space for text */
       }
 
       .sealimg {
@@ -352,7 +351,7 @@
         border-left: 2px solid #450a0a; /* Equivalent to border-l-2 and border-red-950 */
         border-right: none; /* No border on the right side */
         margin-top: 3px;
-
+        color: #991b1b;
         /* Adding border-radius to the left corners only */
         border-top-left-radius: 0.375rem; /* Equivalent to rounded-tl-md (0.375rem) */
         border-bottom-left-radius: 0.375rem; /* Equivalent to rounded-bl-md (0.375rem) */
@@ -368,6 +367,7 @@
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
         padding: 0.5rem; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
         text-align: center;
+        color: #991b1b;
         border-top: 2px solid #450a0a; /* Equivalent to border-t-2 and border-red-950 */
         border-bottom: 2px solid #450a0a; /* Equivalent to border-b-2 and border-red-950 */
         border-left: 2px solid #450a0a; /* Equivalent to border-l-2 and border-red-950 */
@@ -378,6 +378,7 @@
       .bottombox1 {
         height: 4rem; /* Equivalent to h-20 (20 in Tailwind corresponds to 5rem) */
         width: 150px;
+        color: #991b1b;
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
         padding: 0.5rem; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
         text-align: center;
@@ -451,8 +452,8 @@
       .spantext {
         padding-left: 1.25rem; /* Equivalent to px-5 (5 in Tailwind corresponds to 1.25rem) */
         padding-right: 1.25rem; /* Equivalent to px-5 (5 in Tailwind corresponds to 1.25rem) */
-        padding-top: 0.75rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
-        padding-bottom: 0.75rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
+        padding-top: 0.5rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
+        padding-bottom: 0.5rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
         font-weight: bold;
         color: white;
         border: 2px solid #450a0a; /* Equivalent to border and border-red-950 (Tailwind’s red-950 color) */
@@ -493,6 +494,11 @@
         margin-left: 0.25rem /* 4px */;
         background-color: white;
         border-radius: 0.375rem /* 6px */;
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+        font-weight: bold;
       }
 
       .spandt {
@@ -506,6 +512,11 @@
         margin-left: 0.5rem /* 4px */;
         background-color: white;
         border-radius: 0.375rem /* 6px */;
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 14px; /* Change the font size */
+        color: #812929; /* Change the font color */
+        font-weight: bold;
       }
 
       .spanblock {
@@ -538,25 +549,152 @@
         width: 100%;
         display: flex;
       }
+
+      .textalign {
+        position: absolute;
+        top: 28.1%;
+        left: 36%;
+        z-index: 1;
+      }
+      .textset {
+        display: flex;
+        flex-direction: row;
+      }
+      .inpfld {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+        text-align: center;
+        padding-right: 50px;
+        padding-left: 50px;
+      }
+      .selunsel {
+        position: absolute;
+        top: 28.1%;
+        left: 57.1%;
+      }
+      .inpfld2 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .dte {
+        position: absolute;
+        top: 32.5%;
+        left: 8.26%;
+      }
+      .inpfld3 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .ClientName {
+        position: absolute;
+        top: 32.5%;
+        left: 38%;
+      }
+      .inpfld4 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 130px;
+        padding-right: 130px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .Loc {
+        position: absolute;
+        top: 37.2%;
+        left: 9%;
+      }
+      .inpfld5 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 30px;
+        padding-right: 30px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .remks {
+        position: absolute;
+        top: 41.8%;
+        left: 12.5%;
+      }
+      .inpfld6 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        padding-left: 300px;
+        padding-right: 300px;
+        text-align: center;
+        font-size: 16px;
+        color: #812929;
+        font-family: Arial, sans-serif; /* Change the font family */
+      }
+
+      #Sign {
+        width: 81%;
+      }
+
+      .star1 {
+        color: #fbbf24; /* Equivalent to text-yellow-400 */
+        font-size: 0.75rem; /* Equivalent to text-xs */
+      }
+
+      .star2 {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .star3 {
+        position: absolute;
+        right: -1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fbbf24; /* Equivalent to text-yellow-400 */
+        font-size: 0.75rem; /* Equivalent to text-xs */
+      }
+
+      .star22 {
+        position: absolute;
+        left: -1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fbbf24; /* Equivalent to text-yellow-400 */
+        font-size: 0.75rem; /* Equivalent to text-xs */
+      }
     </style>
   </head>
   <body>
     <button id="downloadBtn">Download as PDF</button>
     <div class="container" id="content">
+      <div class="sidenewbar">
+        <img
+          src="../src/images/sidebar.png"
+          alt="Lab Logo"
+          class="imgsidebarnew1"
+        />
+      </div>
       <div class="content">
         <div class="body">
           <div class="rep">Analysis Report</div>
-        
+
           <div>
-            <div class="sidenewbar">
-              <img
-              src="../src/images/sidebar.png"
-              alt="Lab Logo"
-              class="imgsidebarnew1"
-            />
-            </div>
             <div class="bodysec">
-              
               <div class="head">
                 <div class="head2">
                   <div class="logo">
@@ -613,33 +751,71 @@
                 <div class="infodt">
                   <div class="infodtpart2">
                     <span class="NOO">No.</span>
-                    <input type="text" class="inputfield" />
+                    <input type="text" class="inputfield" id="Repno" readonly />
                   </div>
                   <div class="infodtpart2">
                     <span class="spandt">Dt.</span>
-                    <input type="text" class="extra" />
+                    <input type="text" class="extra" id="BilDate" readonly />
                   </div>
                 </div>
               </div>
 
               <div class="IDK">
-                <span class="spanblockExtra">
-                  We hereby certify that the sample described
-                  as...........................................................................................
-                  received by us
-                </span>
-                <span class="spanblock">
-                  on dt. .............................................. From
-                  Sh.M/s..........................................................................................................................
-                </span>
+                <div class="textset">
+                  <span class="spanblockExtra">
+                    We hereby certify that the sample described as
+                    ...........................................................................................
+                    <!-- <span class="textalign">Harshit singla</span> -->
+                    <span class="textalign"
+                      ><input class="inpfld" type="text" disabled id="inpfld"
+                    /></span>
+                    <span class="selunsel"
+                      ><input class="inpfld2" type="text" disabled id="inpfld2"
+                    /></span>
+                    received by us
+                  </span>
+                </div>
+
+                <div class="textset">
+                  <span class="spanblock">
+                    <span class="textdt"
+                      >on dt. ..............................................
+                      From
+                      Sh.M/s..........................................................................................................................
+                      <span class="dte"
+                        ><input
+                          class="inpfld3"
+                          type="text"
+                          disabled
+                          id="inpfld3"
+                      /></span>
+                      <span class="ClientName"
+                        ><input
+                          class="inpfld4"
+                          type="text"
+                          disabled
+                          value="NARENDAR SIR"
+                          id="inpfld4"
+                      /></span>
+                    </span>
+                  </span>
+                </div>
                 <span class="spanblock">
                   ..............................................................................being
                   particular and result as under.
+                  <span class="Loc"
+                    ><input class="inpfld5" type="text" disabled id="inpfld5"
+                  /></span>
                   <span class="HARYANA">Sample Not Drawn by Haryana Lab</span>
                 </span>
-                <span class="spanblock">
-                  Remarks...........................................................................................................................................................................................
-                </span>
+                <div class="textset">
+                  <span class="spanblock">
+                    Remarks...........................................................................................................................................................................................
+                    <span class="remks"
+                      ><input type="text" disabled class="inpfld6" id="inpfld6"
+                    /></span>
+                  </span>
+                </div>
               </div>
 
               <div class="flexing">
@@ -647,19 +823,19 @@
                   <div>
                     <span class="spantext">Moisture</span>
 
-                    <span class="leftmar">NA</span>
+                    <span class="leftmar" id="Moist"></span>
                   </div>
                 </div>
                 <div class="imptext">
                   <div>
                     <span class="spantext">Oil</span>
-                    <span class="leftmar">NA</span>
+                    <span class="leftmar" id="Oil"></span>
                   </div>
                 </div>
                 <div class="imptext">
                   <div>
                     <span class="spantext">FFA</span>
-                    <span class="leftmar">NA</span>
+                    <span class="leftmar" id="FFA"></span>
                   </div>
                 </div>
               </div>
@@ -669,27 +845,27 @@
                 <!-- Existing Columns -->
                 <div class="bottomText">
                   <p class="para">Code/Sample No.</p>
-                  <p class="marg">13A</p>
+                  <p class="marg" id="Code"></p>
                 </div>
 
                 <div class="bottombox">
                   <p class="para">Date</p>
-                  <p class="marg">12/12/24</p>
+                  <p class="marg" id="Date"></p>
                 </div>
 
                 <div class="bottombox">
                   <p class="para">Vehicle No.</p>
-                  <p class="marg">2346</p>
+                  <p class="marg" id="VehNo"></p>
                 </div>
 
                 <div class="bottombox">
                   <p class="para">Bags</p>
-                  <p class="marg">234</p>
+                  <p class="marg" id="Bags"></p>
                 </div>
 
                 <div class="bottombox1">
                   <p class="para">Weight (Ql.)</p>
-                  <p class="marg">123.46</p>
+                  <p class="marg" id="Weight"></p>
                 </div>
 
                 <div class="remark">
@@ -697,7 +873,9 @@
                   <p class="description">
                     All disputes are subject to SRSA jurisdiction
                   </p>
-                  <p class="imageofsign">[Signature Image]</p>
+                  <p class="imageofsign">
+                    <img src="" alt="Sign" id="Sign" />
+                  </p>
                   <p class="distributionText">
                     Samples will be destroyed after function.
                   </p>
@@ -707,31 +885,13 @@
               <div class="whatisthat">
                 <!-- Seal Engraved -->
                 <div class="namelast">
-                  <p class="testseal">Seal Engraved</p>
-                  <p class="sealimg">[Seal Image]</p>
+                  <p class="testseal" id="Category"></p>
+                  <p class="sealimg" id="sealimg"></p>
                 </div>
               </div>
-              <div class="base">
-                A House For Analysis of Rice Bran, Oil Seeds, Oil Cakes, Atta,
-                Maida, Suzi, Besan, Spices, Condiments, Acids & Fertilizers.
-              </div>
-              <div class="sidebar">
-                Regd. No. 05/11/03956/P .M.T/SSI/Dt. 11-04-86
-              </div>
-              <div class="rightbar1">
-                <div class="top">Since</div>
 
-                <!-- 10 Boxes with numbers -->
-                <div class="box">1</div>
-                <div class="box">2</div>
-                <div class="box">3</div>
-                <div class="box">4</div>
-                <div class="box">5</div>
-                <div class="box">6</div>
-                <div class="box">7</div>
-                <div class="box">8</div>
-                <div class="box">9</div>
-                <div class="box">10</div>
+              <div class="rightbar1" id="rightbar1">
+                <div class="top">Since</div>
 
                 <div class="final">1985</div>
               </div>
@@ -739,12 +899,18 @@
           </div>
         </div>
       </div>
+      <div class="base">
+        A House For Analysis of Rice Bran, Oil Seeds, Oil Cakes, Atta, Maida,
+        Suzi, Besan, Spices, Condiments, Acids & Fertilizers.
+      </div>
     </div>
 
     <!-- Include jsPDF and html2canvas libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
+      let Data;
       document.getElementById("downloadBtn").addEventListener("click", () => {
         // Ensure jsPDF is available in the scope
         const { jsPDF } = window.jspdf;
@@ -761,6 +927,17 @@
           pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
 
+          // Move the position 10 pixels down and add a dotted line
+          position += imgHeight + 10;
+          pdf.setLineWidth(0.5);
+          pdf.setLineDash([2, 2], 0); // Dotted line with 2mm dash and gap
+          pdf.line(0, position, imgWidth, position); // Draw the dotted line across the page
+
+          // Add the second image 10 pixels below the dotted line
+          position += 10;
+          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+
           while (heightLeft >= 0) {
             position = heightLeft - imgHeight;
             pdf.addPage();
@@ -768,95 +945,138 @@
             heightLeft -= pageHeight;
           }
 
-          pdf.save("complex-design.pdf");
+          const pdfBlob = pdf.output("blob");
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+
+          // Open the PDF in a new tab
+          window.open(pdfUrl);
         });
       });
+      window.addEventListener("DOMContentLoaded", () => {
+        window.ipcRenderer.on("render-lab-report", (event, reportData) => {
+          console.log("Working");
+          Data = reportData;
+          console.log(Data);
+          let BillDate = document.getElementById("BilDate");
+          const Rep = document.getElementById("Repno");
+          const A = Data.Billeddate;
+          if (A !== undefined) BillDate.value = A;
+          else console.log("Error hai bhai koi ");
+          if (Rep) Rep.value = Data.Reportno;
+          else console.error("Repno element not found in the DOM.");
+          document.getElementById("inpfld").value = Data.Samplename;
+          document.getElementById("inpfld2").value = Data.Selected;
+          document.getElementById("inpfld3").value = Data.Dated;
+          document.getElementById("inpfld4").value = Data.From;
+          document.getElementById("inpfld5").value = Data.Station;
+          document.getElementById("inpfld6").value = Data.Remarks.trim().length
+            ? Data.Remarks
+            : "NA";
+          document.getElementById("Moist").innerHTML =
+            Data.Moisture !== "NA" ? Data.Moisture + "%" : "NA";
+          document.getElementById("Oil").innerHTML =
+            Data.Oil !== "NA" ? Data.Oil + "%" : "NA";
+          document.getElementById("FFA").innerHTML =
+            Data.FFA !== "NA" ? Data.Oil + "%" : "NA";
+          document.getElementById("Code").innerHTML = Data.Code;
+          document.getElementById("Date").innerHTML = Data.Date;
+          document.getElementById("VehNo").innerHTML = Data.Vechileno;
+          document.getElementById("Bags").innerHTML = Data.Bags;
+          document.getElementById("Weight").innerHTML = Data.Weight;
+          document.getElementById("sealimg").innerHTML = Data.SealEngraved;
+          document.getElementById("Category").innerHTML = Data.Itemcategory
+            ? Data.Itemcategory
+            : Data.Category;
+          document.getElementById("Sign").src =
+            Data.Signature === "signature1"
+              ? "./Sign1.png"
+              : Data.Signature === "signature2"
+              ? "./Sign2.png"
+              : Data.Signature === "signature3" && "./Sign3.jpg";
 
-      // document.getElementById("downloadBtn").addEventListener("click", () => {
-      //   alert("Download Openn");
-      //   const { jsPDF } = window.jspdf;
+          // const digits = ${Data.Moisture}${Data.Oil}${Data.FFA}.split("");
+          const moisture =
+            Data.Moisture !== "NA" ? Number(Data.Moisture) : undefined;
+          const oil = Data.Oil !== "NA" ? Number(Data.Oil) : undefined;
+          const ffa = Data.FFA !== "NA" ? Number(Data.FFA) : undefined;
+          console.log(moisture, oil, ffa);
+          const digits = ${moisture}${oil}${ffa}.replace(/\./g, "").split("");
+          // Function to count the occurrences of each digit
+          const countOccurrences = (digit) =>
+            digits.filter((d) => d === String(digit)).length;
 
-      //   html2canvas(document.getElementById("content")).then((canvas) => {
-      //     const imgData = canvas.toDataURL("image/png");
-      //     const pdf = new jsPDF("p", "mm", "a4");
-      //     const imgWidth = 210; // A4 width in mm
-      //     const pageHeight = 295; // A4 height in mm
-      //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      //     let heightLeft = imgHeight;
-      //     let position = 0;
+          // Get all the boxes
+          const digitArray = Array.from({ length: 9 }, (_, i) => i + 1).concat([
+            0,
+          ]);
 
-      //     // Rotate PDF page by 90 degrees
-      //     pdf.rotate(90, { origin: [105, 148] }); // Adjust origin if needed
+          digitArray.forEach((item) => {
+            console.log(item);
 
-      //     pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      //     heightLeft -= pageHeight;
+            const finalDiv = document.querySelector(".final");
+            const count = countOccurrences(item);
 
-      //     while (heightLeft >= 0) {
-      //       position = heightLeft - imgHeight;
-      //       pdf.addPage();
-      //       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      //       heightLeft -= pageHeight;
-      //     }
+            // Create an array of stars with length equal to count
 
-      //     pdf.save("complex-design.pdf");
-      //   });
-      // });
+            const starsArray = Array(count).fill("★");
 
-      //Attemp 3
-      // document.getElementById("downloadBtn").addEventListener("click", () => {
-      //   alert("Download Open");
+            const a = starsArray.slice(0, 5);
+            const b = starsArray.slice(5, 7);
+            const c = starsArray.slice(7, 9);
 
-      //   const { jsPDF } = window.jspdf;
+            const rightbar = document.createElement("div");
+            rightbar.classList.add("rightbar");
 
-      //   html2canvas(document.getElementById("content"))
-      //     .then((canvas) => {
-      //       const imgData = canvas.toDataURL("image/png");
-      //       const pdf = new jsPDF("p", "mm", "a4");
-      //       const imgWidth = 210; // A4 width in mm
-      //       const pageHeight = 295; // A4 height in mm
-      //       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      //       let heightLeft = imgHeight;
-      //       let position = 0;
+            let star1 = document.createElement("div");
+            star1.classList.add("star1");
 
-      //       // Rotate the content by 90 degrees
-      //       // Note: This is a workaround; you need to adjust the coordinates
-      //       pdf.addImage(
-      //         imgData,
-      //         "PNG",
-      //         0,
-      //         position,
-      //         imgWidth,
-      //         imgHeight,
-      //         undefined,
-      //         "NONE",
-      //         90
-      //       );
+            a.forEach((star) => {
+              let span = document.createElement("span");
+              span.textContent = star;
+              star1.appendChild(span);
+            });
 
-      //       heightLeft -= pageHeight;
+            let star2 = document.createElement("div");
+            star2.classList.add("star2");
 
-      //       while (heightLeft >= 0) {
-      //         position = heightLeft - imgHeight;
-      //         pdf.addPage();
-      //         pdf.addImage(
-      //           imgData,
-      //           "PNG",
-      //           0,
-      //           position,
-      //           imgWidth,
-      //           imgHeight,
-      //           undefined,
-      //           "NONE",
-      //           90
-      //         );
-      //         heightLeft -= pageHeight;
-      //       }
+            let star3 = document.createElement("div");
+            star3.classList.add("star3");
 
-      //       pdf.save("complex-design.pdf");
-      //     })
-      //     .catch((error) => {
-      //       console.error("Error generating PDF:", error);
-      //     });
-      // });
+            let star22 = document.createElement("div");
+            star22.classList.add("star22");
+
+            b.forEach((star) => {
+              let span = document.createElement("div");
+              span.textContent = star;
+              star22.appendChild(span);
+            });
+
+            star2.appendChild(star22);
+
+            c.forEach((star) => {
+              let span = document.createElement("div");
+              span.textContent = star;
+              star3.appendChild(span);
+            });
+
+            star2.appendChild(star3);
+
+            let number = document.createElement("div");
+            number.textContent = item;
+
+            star2.appendChild(number);
+
+            rightbar.appendChild(star1);
+            rightbar.appendChild(star2);
+            const rightbarmain = document.getElementById("rightbar1");
+            if (rightbarmain && rightbar && finalDiv) {
+              rightbarmain.insertBefore(rightbar, finalDiv);
+            } else {
+              console.log("there is error");
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>

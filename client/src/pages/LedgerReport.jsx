@@ -135,36 +135,38 @@ const LedgerReport = () => {
 
   const generateAndOpenPdf = async () => {
     // Generate the PDF and create a Blob URL
+    console.log(Values.Balance);
+    if (filteredData.length > 0 && Values.Balance) {
+      filteredData.Count = filteredData.filter(
+        (item) => item.Reportno !== "null"
+      ).length;
+      const pdfBlob = await ReactPDF.pdf(
+        <AccountLedger
+          Data={filteredData}
+          Balance={Values.Balance}
+          OpeningBalance={Party.Openingbalance}
+          Date1={formatDate(Dates.fromDate)}
+          Date2={formatDate(Dates.toDate)}
+          PartyName={Party.Partyname}
+          City={Party.City}
+        />
+      ).toBlob();
+      const newBlobUrl = URL.createObjectURL(pdfBlob);
+      console.log("Generated new Blob URL:", newBlobUrl);
+      // Open the new Blob URL in a new tab
+      window.open(newBlobUrl);
 
-    filteredData.Count = filteredData.filter(
-      (item) => item.Reportno !== "null"
-    ).length;
-    const pdfBlob = await ReactPDF.pdf(
-      <AccountLedger
-        Data={filteredData}
-        Balance={Values.Balance}
-        OpeningBalance={Party.Openingbalance}
-        Date1={formatDate(Dates.fromDate)}
-        Date2={formatDate(Dates.toDate)}
-        PartyName={Party.Partyname}
-        City={Party.City}
-      />
-    ).toBlob();
-    const newBlobUrl = URL.createObjectURL(pdfBlob);
-    console.log("Generated new Blob URL:", newBlobUrl);
-    // Open the new Blob URL in a new tab
-    window.open(newBlobUrl);
+      // Clean up the previous Blob URL if it exists
+      if (pdfBlobUrl) {
+        console.log("Revoking old Blob URL:", pdfBlobUrl);
+        let text = URL.revokeObjectURL(pdfBlobUrl);
+        console.log(text);
+      }
 
-    // Clean up the previous Blob URL if it exists
-    if (pdfBlobUrl) {
-      console.log("Revoking old Blob URL:", pdfBlobUrl);
-      let text = URL.revokeObjectURL(pdfBlobUrl);
-      console.log(text);
+      // Update the state with the new Blob URL
+
+      setPdfBlobUrl(newBlobUrl);
     }
-
-    // Update the state with the new Blob URL
-
-    setPdfBlobUrl(newBlobUrl);
   };
 
   const formatDate = (inputDate) => {
