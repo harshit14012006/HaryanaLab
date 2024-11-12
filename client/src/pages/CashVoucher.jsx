@@ -48,6 +48,10 @@ function CashVoucher() {
     const [year, month, day] = dateString.split("-");
     return `${day}-${month}-${year}`;
   }
+  function formatDate2(dateString) {
+    const [day, month, year] = dateString.split("-");
+    return `${year}-${month}-${day}`;
+  }
 
   // Handle party selection
   const handlePartySelect = (event) => {
@@ -68,7 +72,7 @@ function CashVoucher() {
     event.preventDefault();
     const newVoucher = {
       Date: date,
-      PartyName: selectedParty.Partyname,
+      PartyName: selectedParty.length > 0 ? selectedParty.Partyname : "",
       Reportno: "null",
       Debit: amount,
       Remarks: remarks,
@@ -76,24 +80,29 @@ function CashVoucher() {
 
     console.log(newVoucher);
     try {
-      axios
-        .post("http://localhost:3001/api/users/Debit", newVoucher)
-        .then((response) => {
-          console.log(response);
-          if (response) {
-            setAmount("");
-            setRemarks("");
-            setDate("");
-            setSelectedParty(null);
-            setPartyName("");
-            setVouchers([]);
-            fetchParties();
-          }
-        })
-        .catch((error) => {
-          console.error("Error creating voucher:", error);
-          // alert("Error creating cash voucher");
-        });
+      if (
+        newVoucher.data !== "" &&
+        newVoucher.PartyName !== "" &&
+        newVoucher.Debit !== ""
+      )
+        axios
+          .post("http://localhost:3001/api/users/Debit", newVoucher)
+          .then((response) => {
+            console.log(response);
+            if (response) {
+              setAmount("");
+              setRemarks("");
+              setDate("");
+              setSelectedParty(null);
+              setPartyName("");
+              setVouchers([]);
+              fetchParties();
+            }
+          })
+          .catch((error) => {
+            console.error("Error creating voucher:", error);
+            // alert("Error creating cash voucher");
+          });
     } catch (error) {
       console.error("Error creating voucher:", error);
       alert("Error creating cash voucher");
@@ -117,22 +126,26 @@ function CashVoucher() {
 
   const HandleDelete = async () => {
     try {
-      await axios
-        .delete(
-          `http://localhost:3001/api/users/${tableData.Date}/${amount}/${PartyName}`
-        )
-        .then((response) => {
-          console.log(response);
-          setPartyName("");
-          setDate("");
-          setAmount("");
-          setRemarks("");
-          setDate("");
-          fetchParties();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      console.log(tableData.Date === "", amount, PartyName);
+      if (tableData.Date !== "" && amount !== "" && PartyName !== "")
+        await axios
+          .delete(
+            `http://localhost:3001/api/users/${formatDate2(
+              tableData.Date
+            )}/${amount}/${PartyName}`
+          )
+          .then((response) => {
+            console.log(response);
+            setPartyName("");
+            setDate("");
+            setAmount("");
+            setRemarks("");
+            setDate("");
+            fetchParties();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     } catch (error) {
       console.log(error);
     }
@@ -264,14 +277,25 @@ function CashVoucher() {
         </div>
         <div>
           <div className="mx-auto">
-            <div className="relative overflow-x-auto overflow-y-auto h-[453px] w-[400px]">
+            <div className="relative overflow-x-auto overflow-y-auto h-[400px] w-[430px]">
               <table className="bg-white border border-gray-300 table-auto">
                 <thead>
-                  <tr>
-                    {headers.map((header, index) => (
+                  <tr className="bg-gray-100 border-b border-gray-300">
+                    {[
+                      "Entry Date",
+                      "Report Number",
+                      "Credit",
+                      "Debit",
+                      "Remarks",
+                    ].map((header, index) => (
                       <th
                         key={index}
-                        className="px-2 py-1 border-b border-gray-300 whitespace-nowrap font-normal text-sm"
+                        className="text-sm text-left border-gray-300 whitespace-nowrap"
+                        style={{
+                          fontSize: "13px",
+                          fontWeight: "normal",
+                          width: "100px",
+                        }}
                       >
                         {header}
                       </th>
@@ -279,36 +303,31 @@ function CashVoucher() {
                   </tr>
                 </thead>
                 <tbody>
-                  {vouchers.length > 0 ? (
-                    vouchers.map((voucher, index) => (
-                      <tr key={index} onClick={() => HandleClick(voucher)}>
-                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
-                          {voucher.Date}
+                  {vouchers.length > 0 &&
+                    vouchers.map((entry, i) => (
+                      <tr
+                        key={i}
+                        onClick={() => {
+                          HandleClick(entry);
+                        }}
+                      >
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Date}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
-                          {voucher.Reportno === "null" ? "" : voucher.Reportno}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Reportno === "null" ? "" : entry.Reportno}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
-                          {voucher.Credit}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Credit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
-                          {voucher.Debit}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Debit}
                         </td>
-                        <td className="px-2 py-1 border-b border-gray-300 text-sm">
-                          {voucher.Remarks}
+                        <td className="pr-4 text-sm transition-colors duration-300 border border-gray-300 whitespace-nowrap hover:bg-blue-500 hover:text-white">
+                          {entry.Remarks}
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan={headers.length}
-                        className="px-2 py-1 text-center border-b border-gray-300 text-sm"
-                      >
-                        No vouchers found
-                      </td>
-                    </tr>
-                  )}
+                    ))}
                 </tbody>
               </table>
             </div>

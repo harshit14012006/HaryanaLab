@@ -156,7 +156,7 @@ const ReportAnalysis = () => {
   const HandleUpdate = (e) => {
     e.preventDefault();
     try {
-      if (Data.Signature !== "NA") {
+      if (Data.Signature !== "NA" && Repno !== 0) {
         for (let key in Data) {
           if (
             Data[key] === null ||
@@ -175,26 +175,33 @@ const ReportAnalysis = () => {
         }
         Data.Dated = formatDate(Data.Dated);
         Data.Billeddate = formatDate(Data.Billeddate);
-        console.log(Data);
+        console.table(Data);
 
-        axios
-          .put(`http://localhost:3001/api/analysis/${Repno} `, Data)
-          .then((response) => {
-            console.log(response.data);
+        if (Repno !== 0) {
+          axios
+            .put(`http://localhost:3001/api/analysis/${Repno} `, Data)
+            .then((response) => {
+              console.log(response.data);
 
-            setCustomersbyname([]);
-            setSampleName([]);
-            setCity(null);
-            setSelectedImage(null);
-            setIsOpen(false);
-            setTime(null);
+              setCustomersbyname([]);
+              setSampleName([]);
+              setCity(null);
+              setSelectedImage(null);
+              setIsOpen(false);
+              setTime(null);
+              setRepno(0);
 
-            ipcRenderer.send("open-lab-report", Data);
-            getData({});
-          })
-          .catch((error) => {
-            console.error("Error updating data:", error);
-          });
+              ipcRenderer.send("open-lab-report", Data);
+              getData({});
+            })
+            .catch((error) => {
+              console.error("Error updating data:", error);
+            });
+        } else {
+          console.log("Please enter valid Report No.");
+        }
+      } else {
+        console.log("Please enter valid Report No.");
       }
     } catch (error) {
       console.error("Error updating data:", error);

@@ -176,28 +176,41 @@ function LedgerEntry() {
     }
   };
 
+  function formatDate2(dateString) {
+    const [day, month, year] = dateString.split("-");
+    return `${year}-${month}-${day}`;
+  }
+
   const HandleDeleteData = () => {
     try {
+      console.log(formData.Date === "");
       // HandleTableData
-      axios
-        .delete(
-          `http://localhost:3001/api/users/${formData.Date}/${formData.Credit}/${formData.PartyName}`
-        )
-        .then((response) => {
-          console.log(response);
-          // HandleTableData(formData.PartyName);
-          setFormData({
-            Date: "",
-            Reportno: "",
-            PartyName: "",
-            Credit: "",
-            Remarks: "",
+      if (
+        formData.Date !== "" &&
+        formData.Credit !== "" &&
+        formData.PartyName !== ""
+      )
+        axios
+          .delete(
+            `http://localhost:3001/api/users/${formatDate2(formData.Date)}/${
+              formData.Credit
+            }/${formData.PartyName}`
+          )
+          .then((response) => {
+            console.log(response);
+            // HandleTableData(formData.PartyName);
+            setFormData({
+              Date: "",
+              Reportno: "",
+              PartyName: "",
+              Credit: "",
+              Remarks: "",
+            });
+            fetchData();
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          fetchData();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     } catch (error) {
       console.log(error);
     }

@@ -11,7 +11,7 @@
       }
       .container {
         width: 1000px;
-        height: 530px;
+        height: 540px;
 
         /* padding-left: 28px; */
       }
@@ -20,10 +20,12 @@
       }
       .content {
         border: 2px solid #450a0a;
-        padding-top: 2px;
-        width: 921px;
-        height: 494px;
+        width: 908px;
+        height: 442px;
         display: flex;
+        justify-content: space-between;
+        padding-top: 3px;
+        margin-left: 29px;
       }
       .text {
         width: 60%;
@@ -44,6 +46,7 @@
         margin: 0px;
       }
     </style>
+
     <style type="text/css">
       @media all {
         .body {
@@ -54,10 +57,10 @@
           background-color: white;
           width: 100%;
         }
-        .rep {
+        .Anarep {
           position: absolute;
-          top: -10%;
-          right: 25%;
+          top: 15.5rem;
+          right: 3rem;
           bottom: 0;
           left: 0;
           display: flex;
@@ -70,6 +73,9 @@
           pointer-events: none;
           opacity: 0.2;
           transform-origin: center;
+        }
+        .rep {
+          position: relative;
         }
 
         .sidebar {
@@ -98,14 +104,14 @@
           border-radius: 0.375rem; /* Equivalent to rounded-md */
           border-color: black; /* Set border color to black */
           width: 900px;
-          height: 520px;
+          height: 480px;
           padding-left: 4px;
         }
 
         .head {
           display: flex;
           align-items: center;
-          width: 100%;
+
           padding: 0.5rem; /* Equivalent to p-2 */
           border-radius: 0.375rem; /* Equivalent to rounded-md */
           height: 7rem; /* Equivalent to h-28 (7rem) */
@@ -136,6 +142,7 @@
           margin-right: 1rem; /* Equivalent to mr-4 */
           width: 7rem; /* Equivalent to w-28 */
           float: left;
+          padding-top: 10px;
         }
       }
 
@@ -148,7 +155,7 @@
 
       .head3 {
         margin-bottom: 0.5rem; /* Equivalent to mb-2 */
-        font-size: 3rem; /* Equivalent to text-5xl */
+        font-size: 2.2rem;
         font-weight: bold;
         color: white;
         margin-left: 2.25rem; /* Equivalent to ml-9 */
@@ -188,7 +195,7 @@
       }
 
       .rightbar {
-        height: 2.5rem; /* Equivalent to h-10 */
+        height: 2.6rem; /* Equivalent to h-10 */
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
         color: white;
         background: linear-gradient(
@@ -205,7 +212,7 @@
       }
       .imgsidebarnew1 {
         width: 24px;
-        height: 519px;
+        height: 472px;
         float: left;
         left: 26px;
         margin-left: 2px;
@@ -247,11 +254,11 @@
 
       .rightbar1 {
         display: grid;
-        grid-template-rows: repeat(12, 1fr); /* 12 rows */
+        grid-template-rows: repeat(1, 1fr); /* 12 rows */
         gap: 0.25rem;
         margin-right: 0; /* Aligns the element to the right */
-        margin-left: 922px; /* Pushes it to the right */
-        margin-top: -504px; /* Moves it towards the top (adjust value as needed) */
+        margin-left: 909px; /* Pushes it to the right */
+        margin-top: -462px; /* Moves it towards the top (adjust value as needed) */
         width: 20%; /* Adjust width according to your design */
       }
 
@@ -289,49 +296,55 @@
       }
 
       .base {
-        padding-left: 0.25rem; /* Equivalent to px-1 */
+        padding-left: 1.01rem; /* Equivalent to px-1 */
         padding-right: 0.25rem; /* Equivalent to px-1 */
         margin-top: 1px; /* Equivalent to -mt-1 */
         color: white;
         border-style: solid;
         border-width: 1px; /* Default border width */
         border-color: currentColor; /* Border color set to current text color */
-        border-radius: 0.5rem; /* Equivalent to rounded-lg */
+        border-radius: 0.4rem; /* Equivalent to rounded-lg */
         background: linear-gradient(
           to right,
           #991b1b,
           #7f1d1d,
           #450a0a
         ); /* Gradient from red-800 to red-950 */
-        width: 895px;
+        width: 890px;
         height: 25px;
         margin-left: 27px;
         line-height: 1.5rem; /* Adjusts the vertical space for text */
       }
 
       .sealimg {
+        position: absolute;
+        top: -2.3rem;
+        left: 10rem;
+        font-weight: bold;
         margin-top: 0.5rem;
-        font-size: 0.875rem /* 14px */;
+        font-size: 1.07rem /* 14px */;
         line-height: 1.25rem /* 20px */;
+        color: #991b1b;
       }
 
       .namelast {
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
         padding: 0.5rem; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
-        margin-top: -5.9rem; /* Equivalent to -mt-20 (20 in Tailwind corresponds to 5rem) */
+        margin-top: -2.3rem; /* Equivalent to -mt-20 (20 in Tailwind corresponds to 5rem) */
         text-align: center;
         border-width: 2px; /* Equivalent to border-2 */
         border-style: solid; /* Adding border-style for completeness */
         border-color: #450a0a; /* Equivalent to border-red-950 (Tailwind’s red-950 color) */
         border-radius: 0.375rem; /* Equivalent to rounded-md (md radius is 0.375rem) */
-        height: 66px;
+
         width: 132px;
       }
 
       .testseal {
         font-weight: bold;
-        border-bottom: 2px solid #450a0a; /* Equivalent to border-b and border-red-950 (Tailwind’s red-950 color) */
+
         white-space: nowrap;
+        color: #991b1b;
       }
 
       .para {
@@ -346,9 +359,9 @@
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
         padding: 0.5rem; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
         text-align: center;
-        border-top: 2px solid #450a0a; /* Equivalent to border-t-2 and border-red-950 */
-        border-bottom: 2px solid #450a0a; /* Equivalent to border-b-2 and border-red-950 */
-        border-left: 2px solid #450a0a; /* Equivalent to border-l-2 and border-red-950 */
+        border-top: 2px solid #812929; /* Equivalent to border-t-2 and border-red-950 */
+        border-bottom: 2px solid #812929; /* Equivalent to border-b-2 and border-red-950 */
+        border-left: 2px solid #812929; /* Equivalent to border-l-2 and border-red-950 */
         border-right: none; /* No border on the right side */
         margin-top: 3px;
         color: #991b1b;
@@ -368,9 +381,9 @@
         padding: 0.5rem; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
         text-align: center;
         color: #991b1b;
-        border-top: 2px solid #450a0a; /* Equivalent to border-t-2 and border-red-950 */
-        border-bottom: 2px solid #450a0a; /* Equivalent to border-b-2 and border-red-950 */
-        border-left: 2px solid #450a0a; /* Equivalent to border-l-2 and border-red-950 */
+        border-top: 2px solid #812929; /* Equivalent to border-t-2 and border-red-950 */
+        border-bottom: 2px solid #812929; /* Equivalent to border-b-2 and border-red-950 */
+        border-left: 2px solid #812929; /* Equivalent to border-l-2 and border-red-950 */
         border-right: none; /* No border on the right side (not specified in Tailwind) */
         margin-top: 3px;
       }
@@ -382,10 +395,10 @@
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
         padding: 0.5rem; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
         text-align: center;
-        border-top: 2px solid #450a0a; /* Equivalent to border-t-2 and border-red-950 */
-        border-bottom: 2px solid #450a0a; /* Equivalent to border-b-2 and border-red-950 */
-        border-left: 2px solid #450a0a; /* Equivalent to border-l-2 and border-red-950 */
-        border-right: 2px solid #450a0a; /* No border on the right side (not specified in Tailwind) */
+        border-top: 2px solid #812929; /* Equivalent to border-t-2 and border-red-950 */
+        border-bottom: 2px solid #812929; /* Equivalent to border-b-2 and border-red-950 */
+        border-left: 2px solid #812929; /* Equivalent to border-l-2 and border-red-950 */
+        border-right: 2px solid #812929; /* No border on the right side (not specified in Tailwind) */
         margin-top: 3px;
         border-top-right-radius: 0.375rem; /* Equivalent to rounded-tl-md (0.375rem) */
         border-bottom-right-radius: 0.375rem; /* Equivalent to rounded-bl-md (0.375rem) */
@@ -396,16 +409,17 @@
         padding: 0.5rem; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
         margin-left: 0.25rem; /* Equivalent to ml-1 (1 in Tailwind corresponds to 0.25rem) */
         text-align: center;
-        border: 2px solid #450a0a; /* Equivalent to border-2 and border-red-950 */
+        border: 2px solid #812929; /* Equivalent to border-2 and border-red-950 */
         border-radius: 0.375rem; /* Equivalent to rounded-md (md radius is 0.375rem) */
-        height: 150px;
+        height: 101px;
         width: 145px;
         margin-top: 3px;
+        color: #991b1b;
       }
 
       .sign {
         font-weight: bold;
-        border-bottom: 2px solid #450a0a; /* Equivalent to border-b with border-red-950 (Tailwind’s red-950 color) */
+        border-bottom: 2px solid #812929; /* Equivalent to border-b with border-red-950 (Tailwind’s red-950 color) */
       }
 
       .description {
@@ -420,7 +434,6 @@
       }
 
       .distributionText {
-        margin-top: 1rem;
         font-size: 0.875rem /* 14px */;
         line-height: 1.25rem /* 20px */;
         white-space: nowrap;
@@ -437,26 +450,27 @@
       }
 
       .leftmar {
-        margin-left: 6rem;
+        margin-left: 1rem;
+        color: #671313;
       }
 
       .imptext {
         flex: 1; /* Equivalent to flex-1 (allows the element to grow and shrink as needed) */
-        padding: 1rem; /* Equivalent to p-4 (4 in Tailwind corresponds to 1rem) */
+        padding: 0.8rem; /* Equivalent to p-4 (4 in Tailwind corresponds to 1rem) */
         padding-left: 0.25rem; /* Equivalent to px-1 (1 in Tailwind corresponds to 0.25rem) */
         padding-right: 0.25rem; /* Equivalent to px-1 (1 in Tailwind corresponds to 0.25rem) */
-        border: 2px solid #450a0a; /* Equivalent to border-2 with border-red-950 (Tailwind’s red-950 color) */
+        border: 2px solid #812929; /* Equivalent to border-2 with border-red-950 (Tailwind’s red-950 color) */
         border-radius: 0.5rem; /* Equivalent to rounded-lg (lg radius is 0.5rem) */
       }
 
       .spantext {
         padding-left: 1.25rem; /* Equivalent to px-5 (5 in Tailwind corresponds to 1.25rem) */
         padding-right: 1.25rem; /* Equivalent to px-5 (5 in Tailwind corresponds to 1.25rem) */
-        padding-top: 0.5rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
-        padding-bottom: 0.5rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
+        padding-top: 0.4rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
+        padding-bottom: 0.4rem; /* Equivalent to py-3 (3 in Tailwind corresponds to 0.75rem) */
         font-weight: bold;
         color: white;
-        border: 2px solid #450a0a; /* Equivalent to border and border-red-950 (Tailwind’s red-950 color) */
+        border: 2px solid #812929; /* Equivalent to border and border-red-950 (Tailwind’s red-950 color) */
         border-radius: 0.375rem; /* Equivalent to rounded-md (md radius is 0.375rem) */
         background: linear-gradient(
           to right,
@@ -499,6 +513,7 @@
         font-size: 16px; /* Change the font size */
         color: #812929; /* Change the font color */
         font-weight: bold;
+        line-height: 2rem;
       }
 
       .spandt {
@@ -517,22 +532,25 @@
         font-size: 14px; /* Change the font size */
         color: #812929; /* Change the font color */
         font-weight: bold;
+        line-height: 2rem; /* Same as height to center text vertically */
       }
 
       .spanblock {
         display: block;
         margin-bottom: 0.75rem;
+        position: relative;
       }
 
       .spanblockExtra {
         display: block;
         margin-bottom: 0.75rem;
         margin-left: 2.5rem;
+        position: relative;
       }
 
       .IDK {
         margin-top: 1rem;
-        color: #450a0a; /* Equivalent to Tailwind’s red-950 color */
+        color: #812929; /* Change the font color */ /* Equivalent to Tailwind’s red-950 color */
       }
 
       .HARYANA {
@@ -541,9 +559,9 @@
         padding-top: 0.25rem; /* Equivalent to py-1 (1 in Tailwind corresponds to 0.25rem) */
         padding-bottom: 0.25rem; /* Equivalent to py-1 (1 in Tailwind corresponds to 0.25rem) */
         font-weight: bold;
-        border: 2px solid #450a0a; /* Equivalent to border and border-red-950 (Tailwind’s red-950 color) */
+        border: 2px solid #812929; /* Equivalent to border and border-red-950 (Tailwind’s red-950 color) */
         border-radius: 0.25rem; /* Equivalent to rounded (default radius is 0.25rem) */
-        color: #450a0a; /* Equivalent to text-red-950 (Tailwind’s red-950 color) */
+        color: #812929; /* Equivalent to text-red-950 (Tailwind’s red-950 color) */
       }
       .grid.grid-cols-6.mt-3 {
         width: 100%;
@@ -552,9 +570,10 @@
 
       .textalign {
         position: absolute;
-        top: 28.1%;
+        top: -24.1%;
         left: 36%;
-        z-index: 1;
+        /* z-index: 1; */
+        /* transform: translateX(-25%); Adjust as needed */
       }
       .textset {
         display: flex;
@@ -572,7 +591,7 @@
       }
       .selunsel {
         position: absolute;
-        top: 28.1%;
+        top: -24.1%;
         left: 57.1%;
       }
       .inpfld2 {
@@ -585,7 +604,7 @@
       }
       .dte {
         position: absolute;
-        top: 32.5%;
+        top: -24.1%;
         left: 8.26%;
       }
       .inpfld3 {
@@ -598,7 +617,7 @@
       }
       .ClientName {
         position: absolute;
-        top: 32.5%;
+        top: -24.1%;
         left: 38%;
       }
       .inpfld4 {
@@ -613,7 +632,7 @@
       }
       .Loc {
         position: absolute;
-        top: 37.2%;
+        top: -24.1%;
         left: 9%;
       }
       .inpfld5 {
@@ -628,7 +647,7 @@
       }
       .remks {
         position: absolute;
-        top: 41.8%;
+        top: -24.1%;
         left: 12.5%;
       }
       .inpfld6 {
@@ -643,7 +662,7 @@
       }
 
       #Sign {
-        width: 81%;
+        width: 71%;
       }
 
       .star1 {
@@ -677,6 +696,9 @@
         color: #fbbf24; /* Equivalent to text-yellow-400 */
         font-size: 0.75rem; /* Equivalent to text-xs */
       }
+      .SealName {
+        position: relative;
+      }
     </style>
   </head>
   <body>
@@ -691,7 +713,7 @@
       </div>
       <div class="content">
         <div class="body">
-          <div class="rep">Analysis Report</div>
+          <div class="rep"><span class="Anarep">Analysis Report</span></div>
 
           <div>
             <div class="bodysec">
@@ -705,7 +727,7 @@
                     />
                   </div>
                   <div class="name">
-                    <h1 class="head3">Haryana Laboratory</h1>
+                    <h1 class="head3">HARYANA LABORATORY</h1>
                     <p class="adder">
                       Suvidha Marg, Corner Gali no.3, Aggarsain Colony,
                       Sirsa-125055
@@ -764,13 +786,24 @@
                 <div class="textset">
                   <span class="spanblockExtra">
                     We hereby certify that the sample described as
-                    ...........................................................................................
-                    <!-- <span class="textalign">Harshit singla</span> -->
+                    <span
+                      >...........................................................................................</span
+                    >
                     <span class="textalign"
-                      ><input class="inpfld" type="text" disabled id="inpfld"
+                      ><input
+                        class="inpfld"
+                        type="text"
+                        disabled
+                        id="inpfld"
+                        value="Name"
                     /></span>
                     <span class="selunsel"
-                      ><input class="inpfld2" type="text" disabled id="inpfld2"
+                      ><input
+                        class="inpfld2"
+                        type="text"
+                        disabled
+                        id="inpfld2"
+                        value="Something"
                     /></span>
                     received by us
                   </span>
@@ -788,6 +821,7 @@
                           type="text"
                           disabled
                           id="inpfld3"
+                          value="123"
                       /></span>
                       <span class="ClientName"
                         ><input
@@ -801,8 +835,10 @@
                   </span>
                 </div>
                 <span class="spanblock">
-                  ..............................................................................being
-                  particular and result as under.
+                  <span
+                    >..............................................................................</span
+                  >
+                  being particular and result as under.
                   <span class="Loc"
                     ><input class="inpfld5" type="text" disabled id="inpfld5"
                   /></span>
@@ -819,10 +855,15 @@
               </div>
 
               <div class="flexing">
+                <div class="imptext" id="imptext" style="display: none">
+                  <div>
+                    <span class="spantext" id="spantext"></span>
+                    <span class="leftmar" id="Val"></span>
+                  </div>
+                </div>
                 <div class="imptext">
                   <div>
                     <span class="spantext">Moisture</span>
-
                     <span class="leftmar" id="Moist"></span>
                   </div>
                 </div>
@@ -874,7 +915,7 @@
                     All disputes are subject to SRSA jurisdiction
                   </p>
                   <p class="imageofsign">
-                    <img src="" alt="Sign" id="Sign" />
+                    <img src="./Sign2.png" alt="Sign" id="Sign" />
                   </p>
                   <p class="distributionText">
                     Samples will be destroyed after function.
@@ -882,18 +923,17 @@
                 </div>
               </div>
               <!-- mmm -->
-              <div class="whatisthat">
-                <!-- Seal Engraved -->
-                <div class="namelast">
-                  <p class="testseal" id="Category"></p>
-                  <p class="sealimg" id="sealimg"></p>
-                </div>
+              <div class="namelast">
+                <p class="testseal" id="Category">Buyer</p>
               </div>
-
-              <div class="rightbar1" id="rightbar1">
-                <div class="top">Since</div>
-
-                <div class="final">1985</div>
+              <div class="SealName">
+                <span class="sealimg" id="sealimg">Hello My Name is Purab</span>
+              </div>
+              <div>
+                <div class="rightbar1" id="rightbar1">
+                  <div class="top">Since</div>
+                  <div class="final">1985</div>
+                </div>
               </div>
             </div>
           </div>
@@ -908,49 +948,68 @@
     <!-- Include jsPDF and html2canvas libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2.8.0/dist/dom-to-image-more.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
       let Data;
       document.getElementById("downloadBtn").addEventListener("click", () => {
         // Ensure jsPDF is available in the scope
-        const { jsPDF } = window.jspdf;
+        // const { jsPDF } = window.jspdf;
+        // html2canvas(document.getElementById("content"), {
+        //   scale: 4,
+        // }).then((canvas) => {
+        //   // document.body.appendChild(canvas);
+        //   // const imgData = canvas.toDataURL("image/png", 0.9);
+        //   // const pdf = new jsPDF("p", "mm", "a4");
+        //   // const pageWidth = 210; // A4 width in mm
+        //   // const pageHeight = 295; // A4 height in mm
+        //   // const padding = 10; // Adjust this value for the desired padding
+        //   // const imgWidth = pageWidth - 2 * padding; // Subtract padding from both sides
+        //   // const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        //   // let heightLeft = imgHeight;
+        //   // let position = 8;
+        //   // pdf.addImage(imgData, "PNG", padding, position, imgWidth, imgHeight);
+        //   // heightLeft -= pageHeight;
+        //   // // Move the position 10 pixels down and add a dotted line
+        //   // position += imgHeight + 10;
+        //   // pdf.setLineWidth(0.5);
+        //   // pdf.setLineDash([2, 2], 0); // Dotted line with 2mm dash and gap
+        //   // pdf.line(0, position, imgWidth, position); // Draw the dotted line across the page
+        //   // // Add the second image 10 pixels below the dotted line
+        //   // position += 10;
+        //   // pdf.addImage(imgData, "PNG", padding, position, imgWidth, imgHeight);
+        //   // heightLeft -= pageHeight;
+        //   // while (heightLeft >= 0) {
+        //   //   position = heightLeft - imgHeight;
+        //   //   pdf.addPage();
+        //   //   pdf.addImage(
+        //   //     imgData,
+        //   //     "PNG",
+        //   //     padding,
+        //   //     position,
+        //   //     imgWidth,
+        //   //     imgHeight
+        //   //   );
+        //   //   heightLeft -= pageHeight;
+        //   // }
+        //   // const pdfBlob = pdf.output("blob");
+        //   // const pdfUrl = URL.createObjectURL(pdfBlob);
+        //   // // Open the PDF in a new tab
+        //   // window.open(pdfUrl);
+        // });
 
-        html2canvas(document.getElementById("content")).then((canvas) => {
-          const imgData = canvas.toDataURL("image/png");
-          const pdf = new jsPDF("p", "mm", "a4");
-          const imgWidth = 210; // A4 width in mm
-          const pageHeight = 295; // A4 height in mm
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
-          let heightLeft = imgHeight;
-          let position = 0;
+        const element = document.getElementById("content");
+        const options = {
+          margin: [30, 8, 0, 0],
+          filename: "my-document.pdf",
+          image: { type: "png", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "mm", format: "letter", orientation: "landscape" },
+        };
 
-          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-
-          // Move the position 10 pixels down and add a dotted line
-          position += imgHeight + 10;
-          pdf.setLineWidth(0.5);
-          pdf.setLineDash([2, 2], 0); // Dotted line with 2mm dash and gap
-          pdf.line(0, position, imgWidth, position); // Draw the dotted line across the page
-
-          // Add the second image 10 pixels below the dotted line
-          position += 10;
-          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-
-          while (heightLeft >= 0) {
-            position = heightLeft - imgHeight;
-            pdf.addPage();
-            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-          }
-
-          const pdfBlob = pdf.output("blob");
-          const pdfUrl = URL.createObjectURL(pdfBlob);
-
-          // Open the PDF in a new tab
-          window.open(pdfUrl);
-        });
+        // Promise-based usage:
+        html2pdf().set(options).from(element).save();
       });
       window.addEventListener("DOMContentLoaded", () => {
         window.ipcRenderer.on("render-lab-report", (event, reportData) => {
@@ -977,7 +1036,7 @@
           document.getElementById("Oil").innerHTML =
             Data.Oil !== "NA" ? Data.Oil + "%" : "NA";
           document.getElementById("FFA").innerHTML =
-            Data.FFA !== "NA" ? Data.Oil + "%" : "NA";
+            Data.FFA !== "NA" ? Data.FFA + "%" : "NA";
           document.getElementById("Code").innerHTML = Data.Code;
           document.getElementById("Date").innerHTML = Data.Date;
           document.getElementById("VehNo").innerHTML = Data.Vechileno;
@@ -994,13 +1053,46 @@
               ? "./Sign2.png"
               : Data.Signature === "signature3" && "./Sign3.jpg";
 
-          // const digits = ${Data.Moisture}${Data.Oil}${Data.FFA}.split("");
+          //Putting values of Anothers
+          if (Data.AnotherName !== "NA" && Data.AnotherValue !== "NA") {
+            document.getElementById("imptext").style = "display: block";
+            console.log(Data.AnotherName);
+            document.getElementById("spantext").innerHTML = Data.AnotherName;
+            document.getElementById("Val").innerHTML =
+              Data.AnotherValue.replace("%", "").trim() + "%";
+
+            document.getElementById("Val").style = "margin-left: 2.5rem";
+            document.getElementById("Moist").style = "margin-left : 1.8rem";
+            document.getElementById("Oil").style = "margin-left : 2.65rem";
+            document.getElementById("FFA").style = "margin-left : 2.4rem";
+          } else if (Data.AnotherName !== "NA" && Data.AnotherValue === "NA") {
+            document.getElementById("imptext").style = "display: block";
+            document.getElementById("spantext").innerHTML = Data.AnotherName;
+            document.getElementById("Val").innerHTML = "NA";
+
+            document.getElementById("Val").style = "margin-left: 2.5rem";
+            document.getElementById("Moist").style = "margin-left : 1.8rem";
+            document.getElementById("Oil").style = "margin-left : 2.65rem";
+            document.getElementById("FFA").style = "margin-left : 2.4rem";
+          } else {
+            console.log("Working else");
+            document.getElementById("Moist").style = "margin-left : 5rem";
+            document.getElementById("Oil").style = "margin-left : 6rem";
+            document.getElementById("FFA").style = "margin-left : 6rem";
+          }
+
           const moisture =
             Data.Moisture !== "NA" ? Number(Data.Moisture) : undefined;
           const oil = Data.Oil !== "NA" ? Number(Data.Oil) : undefined;
           const ffa = Data.FFA !== "NA" ? Number(Data.FFA) : undefined;
-          console.log(moisture, oil, ffa);
-          const digits = ${moisture}${oil}${ffa}.replace(/\./g, "").split("");
+          const Val =
+            Data.AnotherValue !== "NA"
+              ? Number(Data.AnotherValue.replace("%", "").trim())
+              : undefined;
+          console.log(moisture, oil, ffa, Val);
+          const digits = `${moisture}${oil}${ffa}${Val}`
+            .replace(/\./g, "")
+            .split("");
           // Function to count the occurrences of each digit
           const countOccurrences = (digit) =>
             digits.filter((d) => d === String(digit)).length;

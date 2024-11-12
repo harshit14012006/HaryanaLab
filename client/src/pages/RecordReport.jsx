@@ -45,23 +45,29 @@ const RecordReportWithoutSample = () => {
         sampleName,
       };
       console.log(payload);
+      if (
+        payload.startDate !== "" &&
+        payload.endDate !== "" &&
+        payload.partyName !== "" &&
+        payload.sampleName !== ""
+      ) {
+        await axios
+          .post("http://localhost:3001/api/analysisDate", payload, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => {
+            if (response) {
+              console.log(response.data);
+              setRecords(response.data);
+            } else {
+              setRecords([]);
+            }
+          })
+          .catch((err) => console.log(err.response.data));
+      }
       // Send POST request to the API
-
-      await axios
-        .post("http://localhost:3001/api/analysisDate", payload, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          if (response) {
-            console.log(response.data);
-            setRecords(response.data);
-          } else {
-            setRecords([]);
-          }
-        })
-        .catch((err) => console.log(err.response.data));
 
       // Set the records in state if response is successful
     } catch (err) {
@@ -111,18 +117,22 @@ const RecordReportWithoutSample = () => {
   };
 
   const HandleClick = async () => {
-    console.log("Print");
-    console.log(filteredCity[0].City);
-    const Data = {
-      Records: records,
-      City: filteredCity[0].City,
-      PartyName: filteredCity[0].PartyName,
-    };
-    console.log(Data);
-    Data.Records.length > 0 &&
-      Data.City !== "" &&
-      Data.PartyName !== "" &&
-      ipcRenderer.send("open-Party-report", Data);
+    try {
+      console.log("Print");
+
+      const Data = {
+        Records: records,
+        City: filteredCity.length > 0 ? filteredCity[0].City : "",
+        PartyName: filteredCity.length > 0 ? filteredCity[0].PartyName : "",
+      };
+      console.log(Data);
+      Data.Records.length > 0 &&
+        Data.City !== "" &&
+        Data.PartyName !== "" &&
+        ipcRenderer.send("open-Party-report", Data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

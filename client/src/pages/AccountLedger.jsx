@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     paddingVertical: 5,
+    borderBottom: 1,
   },
   tableCell: {
     flex: 1,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderTop: 2,
     borderBottom: 2,
-    marginTop: 10,
+    // marginTop: 10,
     paddingTop: 10,
     paddingBottom: 5,
     color: "#8B4513",

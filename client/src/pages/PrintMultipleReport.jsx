@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+import call1 from "../images/Sign1.png";
+import call2 from "../images/Sign2.png";
+import call3 from "../images/Sign3.jpg";
+
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 const headers = [
   "Reportno",
@@ -32,10 +37,28 @@ const RecordReportWithoutSample = () => {
   const [customers, setCustomers] = useState([]);
   const [formdata, setFormData] = useState({});
 
+  const images = [
+    { id: 1, src: call1, alt: "Image 1", value: "signature1" },
+    { id: 2, src: call2, alt: "Image 2", value: "signature2" },
+    { id: 3, src: call3, alt: "Image 3", value: "signature3" },
+  ];
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+
   function formatDate(dateString) {
     const [year, month, day] = dateString.split("-");
     return `${day}-${month}-${year}`;
   }
+
+  const handleSelect = (image) => {
+    console.log(image);
+    setSelectedImage(image);
+    setIsOpen(false); // Close dropdown after selecting
+    setFormData({ ...formdata, Signature: image.value });
+    image.value && setIsDisabled(!isDisabled);
+  };
 
   useEffect(() => {
     try {
@@ -57,19 +80,29 @@ const RecordReportWithoutSample = () => {
   }, []);
 
   const HandleDisplay = async () => {
-    formdata.Remarks = `${formdata.Remarks1} ${formdata.Remarks2}`;
     console.log(formdata);
-
-    try {
-      await axios
-        .post("http://localhost:3001/api/analysisEverything", formdata)
-        .then((response) => {
-          console.log(response.data);
-          setData(response.data);
-        })
-        .catch((error) => console.log("Axios Error = ", error));
-    } catch (error) {
-      console.log("Something Wnt wrong by Displaying Data", error);
+    if (
+      formdata.Category &&
+      formdata.From &&
+      formdata.FromDate &&
+      formdata.RepFrom &&
+      formdata.RepTo &&
+      formdata.Samplename &&
+      formdata.Selected &&
+      formdata.Signature &&
+      formdata.ToDate
+    ) {
+      try {
+        await axios
+          .post("http://localhost:3001/api/analysisEverything", formdata)
+          .then((response) => {
+            console.log(response.data);
+            setData(response.data);
+          })
+          .catch((error) => console.log("Axios Error = ", error));
+      } catch (error) {
+        console.log("Something Wnt wrong by Displaying Data", error);
+      }
     }
   };
 
@@ -220,25 +253,48 @@ const RecordReportWithoutSample = () => {
                       <div className="flex items-start">
                         {/* Signature Section */}
                         <div className="flex items-center ml-2">
-                          <span>Signature</span>
-                          <select
-                            id="signature"
-                            name="Signature"
-                            onChange={(e) => {
-                              setFormData({
-                                ...formdata,
-                                [e.target.name]: e.target.value,
-                              });
-                            }}
-                            className="h-6 ml-4 border border-gray-300 rounded-md w-36"
-                          >
-                            <option value="" disabled selected>
-                              Select Signature
-                            </option>
-                            <option value="signature1">Signature 1</option>
-                            <option value="signature2">Signature 2</option>
-                            <option value="signature3">Signature 3</option>
-                          </select>
+                          <span className="mr-2">Signature</span>
+
+                          <div className="flex items-center justify-end gap-2 my-3">
+                            {/* Selected Image */}
+
+                            <div className="relative">
+                              <button
+                                type="button"
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="px-4 py-2 bg-gray-200 rounded-lg"
+                              >
+                                Select Image
+                              </button>
+
+                              {isOpen && (
+                                <div className="absolute mb-2 left-0 w-32 bg-white border border-gray-200 rounded-lg shadow-md z-10 overflow-hidden">
+                                  {images.map((image) => (
+                                    <div
+                                      key={image.id}
+                                      className="p-2 cursor-pointer hover:bg-gray-100 flex items-center justify-center"
+                                      onClick={() => handleSelect(image)}
+                                    >
+                                      <img
+                                        src={image.src}
+                                        alt={image.alt}
+                                        className="w-12 h-12 rounded-lg"
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="absolute left-[16rem] top-[11rem]">
+                            {selectedImage && (
+                              <img
+                                src={selectedImage.src}
+                                alt={selectedImage.alt}
+                                className="w-24 h-24 rounded-lg"
+                              />
+                            )}
+                          </div>
                         </div>
 
                         {/* Remarks Section */}
@@ -246,7 +302,7 @@ const RecordReportWithoutSample = () => {
                           <span>Remarks</span>
                           <input
                             id="remarks"
-                            name="Remarks1"
+                            name="Remarks"
                             onChange={(e) => {
                               setFormData({
                                 ...formdata,
@@ -283,7 +339,7 @@ const RecordReportWithoutSample = () => {
                         <input
                           type="text"
                           id="additionalInfo2"
-                          name="Remarks2"
+                          name="SealEngraved"
                           onChange={(e) => {
                             setFormData({
                               ...formdata,
