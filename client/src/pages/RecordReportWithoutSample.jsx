@@ -46,16 +46,20 @@ const RecordReportWithoutSample = () => {
       };
       console.log(payload);
       // Send POST request to the API
-
-      await axios
-        .post("http://localhost:3001/api/analysisPartyname", payload)
-        .then((response) => {
-          if (response) {
-            console.log(response.data);
-            setRecords(response.data);
-          }
-        })
-        .catch((err) => console.log(err.response.data));
+      if (
+        payload.startDate !== "" &&
+        payload.endDate !== "" &&
+        payload.partyName !== ""
+      )
+        await axios
+          .post("http://localhost:3001/api/analysisPartyname", payload)
+          .then((response) => {
+            if (response) {
+              console.log(response.data);
+              setRecords(response.data);
+            }
+          })
+          .catch((err) => console.log(err.response.data));
 
       // Set the records in state if response is successful
     } catch (err) {

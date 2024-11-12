@@ -16,7 +16,7 @@
         background-color: #8b3f3b;
         color: white;
         padding: 10px 20px;
-        width: 1220px;
+        width: 973px;
         height: 80px;
         border-radius: 12px;
       }
@@ -70,8 +70,9 @@
         align-items: center;
         justify-content: space-between;
         color: #8b3f3b;
-        padding: 10px 20px;
-        width: 1220px;
+        padding: 0px 20px;
+        width: 973px;
+        padding-top: 13px;
         height: auto;
         border-radius: 12px;
         border: 1px solid #8b3f3b;
@@ -84,7 +85,7 @@
         font-weight: bold;
         text-align: center;
         flex-grow: 1;
-        margin-bottom: 20px;
+        margin-bottom: 4px;
         position: relative;
       }
 
@@ -101,14 +102,14 @@
       }
 
       .report-column {
-        flex: 1;
         border: 1px solid #8b3f3b;
         text-align: center;
         font-weight: bold;
         background-color: white;
-        padding: 10px;
+        padding: 10px 0px;
+        width: 90.5px;
         color: #8b3f3b;
-        border-radius: 12px;
+        border-radius: 5px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -126,8 +127,8 @@
       }
       .partynameByuser {
         position: absolute;
-        left: 50%; /* Center horizontally relative to the container */
-        top: 1.5rem; /* Adjust top positioning as needed */
+        left: 35%; /* Center horizontally relative to the container */
+        top: 0.8rem; /* Adjust top positioning as needed */
         transform: translateX(-50%); /* Center-aligns it within the container */
       }
       .inpfld {
@@ -143,7 +144,7 @@
       .stateset {
         position: absolute;
         left: 85%; /* Adjust as needed to keep spacing */
-        top: 1.5rem; /* Same top positioning as partynameByuser */
+        top: 0.8rem; /* Same top positioning as partynameByuser */
         transform: translateX(-50%); /* Adjust as needed */
       }
       .inpfld1 {
@@ -174,45 +175,26 @@
           >
         </div>
         <div class="contact">
-          <div>
-            <img
-              src="https://img.icons8.com/color/48/000000/whatsapp.png"
-              alt="WhatsApp"
-            />86076-23157
-          </div>
-          <div>
-            <img
-              src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"
-              alt="Phone"
-            />91833-23157
-          </div>
-          <div>
-            <img
-              src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"
-              alt="Phone"
-            />94655-37157
-          </div>
-          <div>
-            <img
-              src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"
-              alt="Phone"
-            />81685-26828
-          </div>
+          <div><img src="whtsapp.png" alt="WhatsApp" />86076-23157</div>
+          <div><img src="call.jpg" alt="Phone" />91833-23157</div>
+          <div><img src="call.jpg" alt="Phone" />94655-37157</div>
+          <div><img src="call.jpg" alt="Phone" />81685-26828</div>
         </div>
       </div>
       <br />
       <div class="reportrecord">
         <div class="reportrecordtext">
-          (Record Of Your Reports) <br /><br />
+          (Record Of Your Reports) <br />
           <span class="partyname"
             >Party Name Sh/M/S
-            ................................................................................................................................................................................................................................................<span
-              class="partynameByuser"
-              id="partynameByuser"
-              ><input type="text" class="inpfld" disabled
+            <span
+              >.................................................................................................................................................................................</span
+            >
+            <span class="partynameByuser" id="partynameByuser"
+              ><input type="text" class="inpfld" disabled value="Hrllo"
             /></span>
             <span class="stateset" id="stateset"
-              ><input type="text" disabled class="inpfld1"
+              ><input type="text" disabled class="inpfld1" value="Sirsa"
             /></span>
           </span>
         </div>
@@ -240,6 +222,7 @@
     <!-- Script Tag Called -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
       // Sample data for the rows
 
@@ -266,7 +249,7 @@
 
           reportRows.appendChild(rowDiv);
         });
-        for (i = 0; i < 17 - data.length; i++) {
+        for (i = 0; i < 15 - data.length; i++) {
           const rowDiv = document.createElement("div");
           rowDiv.className = "report-columns";
           console.log("Generate Loop Working", data.length);
@@ -291,59 +274,48 @@
       // Call the function to populate rows
 
       const { jsPDF } = window.jspdf;
+      let pdfContainer;
+      let cloneContainer;
+
+      const addCSS = () => {
+        const style = document.createElement("style");
+        style.textContent = `
+    .clone-content {
+      margin-bottom: 8mm; /* Adjust padding as needed */
+      page-break-inside: avoid; /* Prevents splitting within the element */
+      overflow: hidden; /* Hides overflow */
+    }
+      #MainContent{
+      margin-bottom: 10mm; /* Adjust padding as needed */
+      }
+  `;
+        document.head.appendChild(style);
+      };
+
+      // Add the CSS when document is loaded
+      window.addEventListener("DOMContentLoaded", addCSS);
 
       document
         .getElementById("downloadBtn")
         .addEventListener("click", function () {
-          const nodes = document.querySelectorAll(
-            "#MainContent, .clone-content"
-          );
-          const pdf = new jsPDF("l", "mm", "a4");
-          const pageWidth = 297; // A4 width in mm
-          const pageHeight = 210; // A4 height in mm
-          const padding = 10; // Padding for the PDF
-          let currentPage = 0; // Track if we're on the first page
-
-          function addNodeToPdf(node, callback) {
-            domtoimage
-              .toPng(node)
-              .then(function (dataUrl) {
-                const img = new Image();
-                img.src = dataUrl;
-                img.onload = function () {
-                  const imgWidth = pageWidth - 2 * padding;
-                  const imgHeight = (img.height * imgWidth) / img.width;
-
-                  // Add a new page only after the first page
-                  if (currentPage > 0) {
-                    pdf.addPage();
-                  }
-
-                  pdf.addImage(dataUrl, "PNG", padding, 8, imgWidth, imgHeight);
-                  currentPage++;
-
-                  callback(); // Move to the next node
-                };
-              })
-              .catch(function (error) {
-                console.error("Oops, something went wrong!", error);
-              });
+          if (cloneContainer) {
+            pdfContainer.appendChild(cloneContainer); // Append cloned content
           }
+          const options = {
+            margin: [7, 5, 0, 0], // [top, right, bottom, left] in mm
+            filename: "my-document.pdf",
+            image: { type: "png", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "mm", format: "letter", orientation: "landscape" },
+          };
 
-          function processNodes(index) {
-            if (index < nodes.length) {
-              addNodeToPdf(nodes[index], function () {
-                processNodes(index + 1);
-              });
-            } else {
-              // All nodes have been processed, save the PDF
-              const pdfBlob = pdf.output("blob");
-              const pdfUrl = URL.createObjectURL(pdfBlob);
-              window.open(pdfUrl); // Open the PDF in a new tab
-            }
-          }
-
-          processNodes(0); // Start processing nodes
+          html2pdf()
+            .set(options)
+            .from(pdfContainer)
+            .save()
+            .then(function () {
+              cloneContainer.innerHTML = "";
+            });
         });
 
       function createPageWithJsonData(dataChunk, City, PartyName) {
@@ -368,6 +340,7 @@
         if (inpfld1) inpfld1.value = City;
 
         // Generate rows with the data chunk
+
         dataChunk.forEach((row) => {
           const rowDiv = document.createElement("div");
           rowDiv.className = "report-columns";
@@ -388,7 +361,7 @@
 
           reportRows.appendChild(rowDiv);
         });
-        for (i = 0; i < 17 - (dataChunk.length - 1); i++) {
+        for (i = 0; i < 14 - (dataChunk.length - 1); i++) {
           const rowDiv = document.createElement("div");
           rowDiv.className = "report-columns";
           rowDiv.innerHTML = `
@@ -411,6 +384,7 @@
         // Remove ID to avoid duplicates before appending
         newComponent.id = "";
         document.body.appendChild(newComponent);
+        cloneContainer.appendChild(newComponent);
       }
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -420,7 +394,19 @@
           document.querySelector(".inpfld1").value = Data.City;
           document.querySelector(".inpfld").value = Data.PartyName;
 
-          const itemsPerPage = 17;
+          pdfContainer = document.createElement("div");
+          pdfContainer.id = "pdfContainer";
+          document.body.appendChild(pdfContainer);
+
+          cloneContainer = document.createElement("div");
+          cloneContainer.id = "cloneContainer";
+          pdfContainer.appendChild(cloneContainer);
+
+          // First page setup with main content
+          const mainContent = document.getElementById("MainContent");
+          pdfContainer.appendChild(mainContent);
+          // Split data into chunks and generate pages
+          const itemsPerPage = 15;
           for (let i = 0; i < Data.Records.length; i += itemsPerPage) {
             const dataChunk = Data.Records.slice(i, i + itemsPerPage);
             // Use initial MainContent if it's the first page

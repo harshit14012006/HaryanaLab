@@ -434,7 +434,7 @@ const singlereportreprintPopup = () => {
 const printmultireportPopup = () => {
   const reportsAnalysisWindow = new BrowserWindow({
     width: 950,
-    height: 615,
+    height: 635,
     parent: mainWindow,
     modal: true,
     webPreferences: {
