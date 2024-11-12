@@ -564,7 +564,8 @@ const recordreportwihtoutsamplePopup = () => {
 function startbackend() {
   backendServer = spawn("node", ["index.js"], {
     cwd: path.join(__dirname, "../../server"),
-    stdio: "inherit", // To display the server logs in the Electron console
+    stdio: "pipe", // To display the server logs in the Electron console
+    windowsHide: true, // Hide the terminal window on Windows
   });
 
   backendServer.on("close", (code) => {
