@@ -69,6 +69,29 @@ const ReportAnalysis = () => {
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
+
+  const convertTimeTo24Hour = (time12h) => {
+    console.log(time12h);
+    const [time, modifier] = time12h.split(" ");
+    let [hours, minutes] = time.split(":");
+
+    if (hours === "12") {
+      hours = "00";
+    }
+    if (modifier === "PM") {
+      hours = parseInt(hours, 10) + 12;
+    }
+
+    return `${hours}:${minutes}`;
+  };
+  const convertTimeTo12Hour = (time12h) => {
+    console.log(time12h);
+    const [time, modifier] = time12h.split(" ");
+    const maintime = time.split(0, 5);
+
+    return `${maintime} ${modifier}`;
+  };
+
   const HandleData = (event) => {
     const Value = event.target.value;
     setRepno(Value);
@@ -108,6 +131,16 @@ const ReportAnalysis = () => {
               Billeddate: formatDateReverse(response.data.data[0].Billeddate),
             };
             console.log(Data);
+            console.log(
+              is12HourFormat()
+                ? convertTimeTo24Hour(Data.Time)
+                : convertTimeTo12Hour(Data.Time)
+            );
+            setTime(
+              is12HourFormat()
+                ? convertTimeTo24Hour(Data.Time)
+                : convertTimeTo12Hour(Data.Time)
+            );
             // console.log(Data.Dated);
             // console.log(Data.Billeddate);
             getData(Data);
@@ -147,6 +180,11 @@ const ReportAnalysis = () => {
     return `${year}-${month}-${day}`;
   }
 
+  const is12HourFormat = () => {
+    const date = new Date();
+    return date.toLocaleTimeString().includes("M");
+  };
+
   const handleFfaChange = (e) => {
     setFfaTime(new Date().toLocaleTimeString()); // Set the current time
     const hours = String(new Date().getHours()).padStart(2, "0");
@@ -168,11 +206,11 @@ const ReportAnalysis = () => {
             Data[key] = "NA";
           }
         }
-        if (Data.time !== "NA") {
-          if (FFaTime) {
-            Data.time = FFaTime.toString();
-          }
-        }
+        // if (Data.time !== "NA") {
+        //   if (FFaTime) {
+        //     Data.time = FFaTime.toString();
+        //   }
+        // }
         Data.Dated = formatDate(Data.Dated);
         Data.Billeddate = formatDate(Data.Billeddate);
         console.table(Data);
@@ -236,7 +274,7 @@ const ReportAnalysis = () => {
                     type="time"
                     required
                     readOnly
-                    id="time"
+                    id="Time"
                     className="w-40 h-5 border"
                     value={time}
                   />
@@ -446,7 +484,7 @@ const ReportAnalysis = () => {
                       type="time"
                       id="ffaTime"
                       className="h-5 px-0 py-1 border w-28"
-                      name="ffaTime"
+                      name="Time"
                       value={time2}
                       onChange={handleChange}
                     />
@@ -610,6 +648,7 @@ const ReportAnalysis = () => {
 
                 <div className="relative">
                   <button
+                    type="button"
                     onClick={() => setIsOpen(!isOpen)}
                     className="px-4 py-2 bg-gray-200 rounded-lg"
                   >

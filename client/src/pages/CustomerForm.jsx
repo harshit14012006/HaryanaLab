@@ -7,6 +7,37 @@ import {
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 
+const stateName = [
+  "Andhra_Pradesh",
+  "Arunachal_Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal_Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya_Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil_Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar_Pradesh",
+  "Uttarakhand",
+  "West_Bengal",
+];
+
 const headers = [
   "Partyname",
   "Address1",
@@ -74,6 +105,8 @@ const CustomerForm = () => {
     Remarks3: "",
   });
 
+  const [TempState, SetTemp] = useState([]);
+
   useEffect(() => {
     FetchData();
   }, []);
@@ -101,6 +134,7 @@ const CustomerForm = () => {
           // Check if the response data is an array
           if (Array.isArray(response.data.id)) {
             setStateCity(response.data.id);
+            SetTemp(response.data.id);
           } else {
             setStateCity([]); // Set to an empty array if the data is not as expected
           }
@@ -291,6 +325,18 @@ const CustomerForm = () => {
     )
     .filter((row) => (selectedCity ? row.City === selectedCity : true));
 
+  const HandleFilter = (event) => {
+    console.log(TempState);
+    const Data = TempState.filter((e) => e.State === event.target.value);
+    console.log(Data);
+    setStateCity(Data);
+  };
+
+  const handleOnChange = (e) => {
+    handleChange(e); // Update the form data
+    HandleFilter(e); // Filter data based on selected state
+  };
+
   return (
     <div className="bg-gray-100">
       <form onSubmit={handleSubmit}>
@@ -397,15 +443,14 @@ const CustomerForm = () => {
                   required
                   name="State"
                   value={formdata.State}
-                  onChange={handleChange}
+                  onChange={handleOnChange}
                 >
                   <option value="">Select a state</option>
-                  {StateCity.length !== 0 &&
-                    StateCity.map((item, index) => (
-                      <option key={index} value={item.State}>
-                        {item.State}
-                      </option>
-                    ))}
+                  {stateName.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="flex items-center mb-1 space-x-2">

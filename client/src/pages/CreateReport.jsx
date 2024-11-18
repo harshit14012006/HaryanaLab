@@ -148,7 +148,7 @@ const CreateReport = () => {
     e.preventDefault();
     if (isDisabled) return;
     try {
-      formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
+      // formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
       formData.Reportno = id;
       formData.Dated = formatDate(formData.Dated);
       formData.Billeddate = formatDate(formData.Billeddate);
@@ -429,8 +429,8 @@ const CreateReport = () => {
                       type="time"
                       id="ffaTime"
                       className="h-5 px-0 py-1 border w-28"
-                      name="ffaTime"
-                      value={time}
+                      name="Time"
+                      value={formData.Time === "NA" ? time : formData.Time}
                       onChange={handleChange}
                     />
                   </div>

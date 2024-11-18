@@ -114,6 +114,32 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+      .report-column2 {
+        border: 1px solid #8b3f3b;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px 0px;
+        width: 212.5px;
+        color: #8b3f3b;
+        border-radius: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .report-columnOMF {
+        border: 1px solid #8b3f3b;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px 0px;
+        width: 153.5px;
+        color: #8b3f3b;
+        border-radius: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       /* Ensuring no wrap for the text */
       .report-column {
@@ -204,15 +230,13 @@
       <div class="report-columns">
         <div class="report-column">Date Of Testing</div>
         <div class="report-column">Report No.</div>
-        <div class="report-column">Sealed By</div>
+        <div class="report-column2">Sealed By</div>
         <div class="report-column">Sample Code</div>
         <div class="report-column">Sample Date</div>
         <div class="report-column">Vehicle No.</div>
         <div class="report-column">Bags</div>
         <div class="report-column">Weight</div>
-        <div class="report-column">Oil %</div>
-        <div class="report-column">Moist. %</div>
-        <div class="report-column">FFA %</div>
+        <div class="report-columnOMF">Oil%/Moist%/FFA%/Others</div>
       </div>
 
       <!-- Generate rows dynamically -->
@@ -236,15 +260,13 @@
           rowDiv.innerHTML = `
             <div class="report-column">${row.Dated}</div>
             <div class="report-column">${row.Reportno}</div>
-            <div class="report-column">${row.SealEngraved}</div>
+            <div class="report-column2">${row.SealEngraved}</div>
             <div class="report-column">${row.Code}</div>
             <div class="report-column">${row.Date}</div>
             <div class="report-column">${row.Vechileno}</div>
             <div class="report-column">${row.Bags}</div>
             <div class="report-column">${row.Weight}</div>
-            <div class="report-column">${row.Oil}</div>
-            <div class="report-column">${row.Moisture}</div>
-            <div class="report-column">${row.FFA}</div>
+            <div class="report-columnOMF">${row.Oil} / ${row.Moisture} / ${row.FFA} / ${row.AnotherValue}</div>
           `;
 
           reportRows.appendChild(rowDiv);
@@ -256,15 +278,13 @@
           rowDiv.innerHTML = `
             <div class="report-column">_</div>
             <div class="report-column">_</div>
+            <div class="report-column2">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
+            <div class="report-columnOMF">_</div>
           `;
 
           reportRows.appendChild(rowDiv);
@@ -348,15 +368,13 @@
           rowDiv.innerHTML = `
             <div class="report-column">${row.Dated}</div>
             <div class="report-column">${row.Reportno}</div>
-            <div class="report-column">${row.SealEngraved}</div>
+            <div class="report-column2">${row.SealEngraved}</div>
             <div class="report-column">${row.Code}</div>
             <div class="report-column">${row.Date}</div>
             <div class="report-column">${row.Vechileno}</div>
             <div class="report-column">${row.Bags}</div>
             <div class="report-column">${row.Weight}</div>
-            <div class="report-column">${row.Oil}</div>
-            <div class="report-column">${row.Moisture}</div>
-            <div class="report-column">${row.FFA}</div>
+            <div class="report-columnOMF">${row.Oil} / ${row.Moisture} / ${row.FFA} / ${row.AnotherValue}</div>
         `;
 
           reportRows.appendChild(rowDiv);
@@ -367,15 +385,13 @@
           rowDiv.innerHTML = `
             <div class="report-column">_</div>
             <div class="report-column">_</div>
+            <div class="report-column2">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
+            <div class="report-columnOMF">_</div>
           `;
 
           reportRows.appendChild(rowDiv);
