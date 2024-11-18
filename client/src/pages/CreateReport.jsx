@@ -557,7 +557,7 @@ const CreateReport = () => {
                   id="space"
                   className="w-full h-5 px-0 py-1 border"
                   name="SealEngraved"
-                  value={formData.SealEngraved}
+                  value={formData.SealEngraved || "NA"}
                   onChange={handleChange}
                 />
               </div>
@@ -574,7 +574,7 @@ const CreateReport = () => {
                   id="space2"
                   className="w-full h-5 px-0 py-1 border"
                   name="Remarks"
-                  value={formData.Remarks}
+                  value={formData.Remarks || "NA"}
                   onChange={handleChange}
                 />
               </div>
