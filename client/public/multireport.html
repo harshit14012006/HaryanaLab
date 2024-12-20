@@ -173,6 +173,17 @@
         white-space: nowrap;
       }
 
+      .report-column2 {
+        border: 1px solid #8b3f3b;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px 0px;
+        color: #8b3f3b;
+        border-radius: 6px;
+        width: 171px;
+      }
+
       .report-column {
         border: 1px solid #8b3f3b;
         text-align: center;
@@ -181,7 +192,7 @@
         padding: 10px 0px;
         color: #8b3f3b;
         border-radius: 6px;
-        width: 99px;
+        width: 120.6px;
       }
 
       .report-column {
@@ -207,7 +218,7 @@
       }
       .Sample {
         position: absolute;
-        left: 23rem;
+        left: 22rem;
         top: -0.4rem;
         transform: translateX(-25%); /* Adjust as needed */
       }
@@ -225,13 +236,13 @@
       }
       .Name {
         position: absolute;
-        left: 4rem;
+        left: 8.5rem;
         top: 2rem;
         transform: translateX(-25%); /* Adjust as needed */
       }
       .City {
         position: absolute;
-        left: 30rem;
+        left: 27.2rem;
         top: 2rem;
         transform: translateX(-25%); /* Adjust as needed */
       }
@@ -261,8 +272,7 @@
         border: none;
         background-color: rgb(255, 255, 255, 0.1);
         text-align: center;
-        padding-left: 50px;
-        padding-right: 50px;
+        width: 250px;
         font-family: Arial, sans-serif; /* Change the font family */
         font-size: 16px; /* Change the font size */
         color: #812929; /* Change the font color */
@@ -289,8 +299,7 @@
         border: none;
         background-color: rgb(255, 255, 255, 0.1);
         text-align: center;
-        padding-left: 40px;
-        padding-right: 40px;
+        width: 310px;
         font-family: Arial, sans-serif; /* Change the font family */
         font-size: 16px; /* Change the font size */
         color: #812929; /* Change the font color */
@@ -299,8 +308,7 @@
         border: none;
         background-color: rgb(255, 255, 255, 0.1);
         text-align: center;
-        padding-left: 23px;
-        padding-right: 23px;
+        width: 246px;
         font-family: Arial, sans-serif; /* Change the font family */
         font-size: 16px; /* Change the font size */
         color: #812929; /* Change the font color */
@@ -309,8 +317,7 @@
         border: none;
         background-color: rgb(255, 255, 255, 0.1);
         text-align: center;
-        padding-left: 53px;
-        padding-right: 53px;
+        width: 420px;
         font-family: Arial, sans-serif; /* Change the font family */
         font-size: 16px; /* Change the font size */
         color: #812929; /* Change the font color */
@@ -319,8 +326,7 @@
         border: none;
         background-color: rgb(255, 255, 255, 0.1);
         text-align: center;
-        padding-left: 53px;
-        padding-right: 53px;
+        width: 420px;
         font-family: Arial, sans-serif; /* Change the font family */
         font-size: 16px; /* Change the font size */
         color: #812929; /* Change the font color */
@@ -449,9 +455,7 @@
           <div class="report-column">Vehicle No.</div>
           <div class="report-column">Bags</div>
           <div class="report-column">Weight</div>
-          <div class="report-column">Oil %</div>
-          <div class="report-column">Moist. %</div>
-          <div class="report-column">FFA %</div>
+          <div class="report-column2">Oil%/Moist.%/FFA%/Others</div>
         </div>
       </div>
 
@@ -496,9 +500,9 @@
             <div class="report-column">${row.Vechileno}</div>
             <div class="report-column">${row.Bags}</div>
             <div class="report-column">${row.Weight}</div>
-            <div class="report-column">${row.Oil}</div>
-            <div class="report-column">${row.Moisture}</div>
-            <div class="report-column">${row.FFA}</div>
+            <div class="report-column2">${row.Oil}/${row.Moisture}/${
+            row.FFA
+          }</div>
           `;
 
           reportRows.appendChild(rowDiv);
@@ -514,9 +518,7 @@
             <div class="report-column">_</div>
             <div class="report-column">_</div>
             <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
-            <div class="report-column">_</div>
+            <div class="report-column2">_</div>
             `;
 
           reportRows.appendChild(rowDiv);
@@ -608,9 +610,7 @@
           <div class="report-column">Vehicle No.</div>
           <div class="report-column">Bags</div>
           <div class="report-column">Weight</div>
-          <div class="report-column">Oil %</div>
-          <div class="report-column">Moist. %</div>
-          <div class="report-column">FFA %</div>
+          <div class="report-column2">Oil%/Moist.%/FFA%/Others</div>
         `;
         reportRows.appendChild(rowdivName);
 
@@ -625,9 +625,9 @@
             <div class="report-column">${row.Vechileno}</div>
             <div class="report-column">${row.Bags}</div>
             <div class="report-column">${row.Weight}</div>
-            <div class="report-column">${row.Oil}</div>
-            <div class="report-column">${row.Moisture}</div>
-            <div class="report-column">${row.FFA}</div>
+            <div class="report-column2">${row.Oil} /${row.Moisture} /${
+            row.FFA
+          } /${row.AnotherValue}</div>
         `;
           reportRows.appendChild(rowDiv);
         });

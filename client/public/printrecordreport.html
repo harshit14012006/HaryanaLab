@@ -307,6 +307,10 @@
     }
       #MainContent{
       margin-bottom: 10mm; /* Adjust padding as needed */
+      border: 1px solid #8b3f3b;
+    padding: 3px;
+    border-radius: 11px;
+    margin-right: 1.5rem;
       }
   `;
         document.head.appendChild(style);
@@ -322,7 +326,7 @@
             pdfContainer.appendChild(cloneContainer); // Append cloned content
           }
           const options = {
-            margin: [7, 5, 0, 0], // [top, right, bottom, left] in mm
+            margin: [7, 3, 0, 0], // [top, right, bottom, left] in mm
             filename: "my-document.pdf",
             image: { type: "png", quality: 0.98 },
             html2canvas: { scale: 2 },
