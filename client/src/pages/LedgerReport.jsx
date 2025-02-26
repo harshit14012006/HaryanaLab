@@ -50,88 +50,87 @@ const LedgerReport = () => {
 
   const handlePartySelect = (event) => {
     const partyName = event.target.value;
-    const party = customer.find((p) => p.Partyname === partyName);
-    console.log(party);
+    const party = customer.find((p) => p.Partyname === partyName) || {};
+
     setSelectedParty(party);
     setPartyName(partyName);
-    party ? fetchData(party.Name) : setReportData("");
 
-    if (!party) {
+    if (!party.Partyname) {
       setFilteredData(data);
-    } else {
-      const sum = data
-        .filter((item) => item.PartyName === partyName)
-        .reduce((acc, item) => acc + Number(item.Debit), 0);
-      const sub = data
-        .filter((item) => item.PartyName === partyName)
-        .reduce((acc, item) => acc + Number(item.Credit), 0);
-
-      console.log(sub);
-      const OpeningBalance =
-        Number(party.Openingbalance) > 0 || Number(party.Openingbalance) < 0
-          ? Number(party.Openingbalance)
-          : 10;
-      console.log(OpeningBalance);
-      const total = sub - sum + OpeningBalance;
-      console.log(total);
-      setValues({
-        Total: sub,
-        Paid: sum,
-        Balance: total,
-        ClosingBalance: sub - sum,
-      });
-      setFilteredData(data.filter((item) => item.PartyName === partyName));
+      return;
     }
+
+    fetchData(party.Name);
+
+    const sum = data
+      .filter((item) => item.PartyName === partyName)
+      .reduce((acc, item) => acc + Number(item.Debit), 0);
+
+    const sub = data
+      .filter((item) => item.PartyName === partyName)
+      .reduce((acc, item) => acc + Number(item.Credit), 0);
+
+    const OpeningBalance = Number(party.Openingbalance) || 0;
+    const total = sub - sum + OpeningBalance;
+
+    setValues({
+      Total: sub,
+      Paid: sum,
+      Balance: total,
+      ClosingBalance: sub - sum,
+    });
+
+    setFilteredData(data.filter((item) => item.PartyName === partyName));
   };
+
 
   const findData = async () => {
+    if (!Dates.fromDate || !Dates.toDate) {
+      console.log("Please select valid dates.");
+      return;
+    }
+
     try {
-      await axios
-        .get(
-          `http://localhost:3001/api/usersDate/${Dates.fromDate}/${Dates.toDate}`
-        )
-        .then((response) => {
-          if (response) {
-            console.log(response.data);
-            const formattedReports = response.data.map((item) => ({
-              ...item, // Spread the original report object
-              Date: formatDate(item.Date), // Format the Date field
-            }));
-            setData(formattedReports);
-            setFilteredData(formattedReports);
+      const response = await axios.get(
+        `http://localhost:3001/api/usersDate/${Dates.fromDate}/${Dates.toDate}`
+      );
 
-            const sum = response.data
-              .filter((item) => Number(item.Amount) > 0)
-              .reduce((acc, total) => acc + Number(total.Amount), 0);
+      if (response.data && response.data.length > 0) {
+        const formattedReports = response.data.map((item) => ({
+          ...item,
+          Date: formatDate(item.Date),
+        }));
 
-            const sub = response.data
-              .filter((item) => Number(item.Amount) < 0)
-              .reduce((acc, total) => acc + Number(total.Amount), 0);
-            const total = sub + sum;
-            console.log(
-              sum,
-              " And ",
-              String(sub).substring(1),
-              " And Total is ",
-              String(total).substring(1)
-            );
+        setData(formattedReports);
+        setFilteredData(formattedReports);
 
-            setValues({
-              Total: String(sub).substring(1),
-              Paid: String(sum),
-              Balance: String(total).substring(1),
-            });
-          } else {
-            console.log("No Data Found");
-            setData([]);
-            setFilteredData([]);
-          }
-        })
-        .catch((err) => console.log(err));
+        const sum = formattedReports
+          .filter((item) => Number(item.Amount) > 0)
+          .reduce((acc, total) => acc + Number(total.Amount), 0);
+
+        const sub = formattedReports
+          .filter((item) => Number(item.Amount) < 0)
+          .reduce((acc, total) => acc + Number(total.Amount), 0);
+
+        const total = sub + sum;
+
+        setValues({
+          Total: Math.abs(sub),
+          Paid: sum,
+          Balance: Math.abs(total),
+        });
+      } else {
+        console.log("No Data Found");
+        setData([]);
+        setFilteredData([]);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching data:", error);
+      setData([]);
+      setFilteredData([]);
     }
   };
+
 
   const generateAndOpenPdf = async () => {
     // Generate the PDF and create a Blob URL
@@ -181,7 +180,7 @@ const LedgerReport = () => {
     <div className="bg-gray-100">
       <div className="flex justify-center min-h-screen">
         <div className="w-full max-w-4xl">
-          <form>
+          <form onSubmit={(e) => e.preventDefault()}>
             <fieldset className="w-full p-3 border border-gray-300 rounded-md">
               <legend className="text-sm">Ledger Report</legend>
               <div className="flex justify-center space-x-14">
@@ -196,8 +195,9 @@ const LedgerReport = () => {
                     required
                     className="h-5 p-2 border border-gray-300"
                     onChange={(e) => {
-                      getDates({ ...Dates, [e.target.name]: e.target.value });
+                      getDates((prev) => ({ ...prev, [e.target.name]: e.target.value }));
                     }}
+
                   />
                 </div>
                 <div className="flex items-center space-x-4">
@@ -218,12 +218,13 @@ const LedgerReport = () => {
               </div>
               <div className="flex justify-end mt-2 mr-24 ">
                 <button
-                  type="submit"
+                  type="button" // Ensure this is "button" instead of "submit"
                   className="h-8 px-4 py-1 bg-gray-400 rounded-md"
                   onClick={findData}
                 >
                   Display
                 </button>
+
               </div>
               <div className="grid grid-cols-2 gap-4 ml-36">
                 <div className="flex items-center space-x-4">

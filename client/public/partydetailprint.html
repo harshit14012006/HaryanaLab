@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complex Design Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #8b3f3b;
+        color: white;
+        padding: 10px 20px;
+        width: 973px;
+        height: 80px;
+        border-radius: 12px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid white;
+        height: 64px;
+      }
+
+      .logo img {
+        width: 70px;
+        height: 50px;
+      }
+
+      .lab-name {
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+        flex-grow: 1;
+      }
+
+      .address {
+        font-size: 20px;
+      }
+
+      .contact {
+        text-align: right;
+        font-size: 14px;
+        background-color: transparent;
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid white;
+      }
+
+      .contact div {
+        display: flex;
+        align-items: center;
+      }
+
+      .contact div img {
+        width: 18px;
+        height: 15px;
+        padding-right: 6px;
+      }
+
+      .reportrecord {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #8b3f3b;
+        padding: 0px 20px;
+        width: 973px;
+        padding-top: 13px;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid #8b3f3b;
+        background-color: white;
+        margin-top: -15px;
+      }
+
+      .reportrecordtext {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        flex-grow: 1;
+        margin-bottom: 4px;
+        position: relative;
+      }
+
+      .partyname {
+        font-size: 16px;
+      }
+
+      .report-columns {
+        display: flex;
+        font-size: 12px;
+        width: 1255px;
+        margin-top: 2px;
+        white-space: nowrap;
+      }
+
+      .report-column {
+        border: 1px solid #8b3f3b;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px 0px;
+        width: 158.5px;
+        color: #8b3f3b;
+        border-radius: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .report-column1 {
+        border: 1px solid #8b3f3b;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px 0px;
+        width: 212.5px;
+        color: #8b3f3b;
+        border-radius: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .report-columnOMF {
+        border: 1px solid #8b3f3b;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px 0px;
+        width: 153.5px;
+        color: #8b3f3b;
+        border-radius: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* Ensuring no wrap for the text */
+      .report-column {
+        white-space: nowrap;
+      }
+      /* Set up the height for landscape mode */
+      @media print {
+        @page {
+          size: landscape;
+        }
+      }
+      .partynameByuser {
+        position: absolute;
+        left: 35%; /* Center horizontally relative to the container */
+        top: 0.8rem; /* Adjust top positioning as needed */
+        transform: translateX(-50%); /* Center-aligns it within the container */
+      }
+      .inpfld {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 150px;
+        padding-right: 150px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+      .stateset {
+        position: absolute;
+        left: 85%; /* Adjust as needed to keep spacing */
+        top: 0.8rem; /* Same top positioning as partynameByuser */
+        transform: translateX(-50%); /* Adjust as needed */
+      }
+      .inpfld1 {
+        border: none;
+        background-color: rgb(255, 255, 255, 0.1);
+        text-align: center;
+        padding-left: 40px;
+        padding-right: 40px;
+        font-family: Arial, sans-serif; /* Change the font family */
+        font-size: 16px; /* Change the font size */
+        color: #812929; /* Change the font color */
+      }
+
+      
+    </style>
+  </head>
+
+  <body>
+    <div id="MainContent">
+      <div class="header" id="content">
+        <div class="logo">
+          <img src="../src/images/lablogo.png" alt="Logo" />
+        </div>
+        <div class="lab-name">
+          HARYANA LABORATORY <br />
+          <span class="address"
+            >Suvidha Marg, Corner Gali No. 3, Aggarsain Colony,
+            SIRSA-125055</span
+          >
+        </div>
+        <div class="contact">
+          <div><img src="whtsapp.png" alt="WhatsApp" />86076-23157</div>
+          <div><img src="call.jpg" alt="Phone" />91833-23157</div>
+          <div><img src="call.jpg" alt="Phone" />94655-37157</div>
+          <div><img src="call.jpg" alt="Phone" />81685-26828</div>
+        </div>
+      </div>
+      <br />
+
+      <!-- First Row of Columns -->
+      <div class="report-columns">
+        <div class="report-column1">Party Name</div>
+        <div class="report-column">State</div>
+        <div class="report-column">City</div>
+        <div class="report-column">Address No.1</div>
+        <div class="report-column">Mobile No.1</div>
+        <div class="report-column">Email No.1</div>
+      </div>
+
+      <!-- Generate rows dynamically -->
+      <div id="reportRows"></div>
+    </div>
+  </body>
+</html>
