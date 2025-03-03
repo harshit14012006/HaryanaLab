@@ -273,3 +273,41 @@ exports.getByCity = async (req, res) => {
       .json({ message: "An error occurred while fetching ledger data" });
   }
 };
+exports.getCustomerByLocation = async (req, res) => {
+  const { state, district, city } = req.body;
+  console.log(state, district, city);
+
+  // Validate input fields
+  if (!state || !district || !city) {
+    return res.status(400).json({
+      message: "State, district, and city are required",
+    });
+  }
+
+  try {
+    const query = `
+      SELECT * FROM customer 
+      WHERE state = ? AND district = ? AND city = ?
+    `;
+
+    // Execute the query
+    db.query(query, [state, district, city], (err, results) => {
+      if (err) {
+        console.error("Error fetching customer data:", err);
+        return res.status(500).json({
+          message: "An error occurred while fetching customer data",
+        });
+      }
+
+      res.json({
+        status: 200,
+        data: results,
+      });
+    });
+  } catch (error) {
+    console.error("Error in API:", error);
+    return res.status(500).json({
+      message: "An unexpected error occurred",
+    });
+  }
+};

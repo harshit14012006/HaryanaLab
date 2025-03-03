@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", {
       "open-lab-report",
       "open-Party-report",
       "open-MultiReport-report",
+      "open-party-detail-report",
     ];
     if (validChannels.includes(channel)) {
       ipcRenderer.send(channel, data);
@@ -17,6 +18,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", {
       "render-lab-report",
       "render-Party-report",
       "render-MultiReport-report",
+      "render-party-detail-report",
     ];
     if (validChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, data) => callback(event, data));

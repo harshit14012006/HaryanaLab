@@ -50,12 +50,12 @@ const createCustomerFormPopup = () => {
   });
 
   // Load the Customer Form page
-  popupWindow.loadURL("http://localhost:3000/#customer-form");
-  // popupWindow.loadURL(
-  //   "file://" +
-  //     path.join(__dirname, "..", "build", "index.html") +
-  //     "#/customer-form"
-  // );
+  // popupWindow.loadURL("http://localhost:3000/#customer-form");
+  popupWindow.loadURL(
+    "file://" +
+      path.join(__dirname, "..", "build", "index.html") +
+      "#/customer-form"
+  );
 
   popupWindow.webContents.on("did-finish-load", () => {
     popupWindow.setTitle("Customer Form");
@@ -268,6 +268,44 @@ ipcMain.on("open-MultiReport-report", (event, reportData) => {
   // Wait for the window to finish loading before sending the data
   labReportWindow.webContents.on("did-finish-load", () => {
     labReportWindow.webContents.send("render-MultiReport-report", reportData);
+  });
+});
+
+ipcMain.on("open-party-detail-report", (event, reportData) => {
+  console.log(reportData);
+  const labReportWindow = new BrowserWindow({
+    width: 1920,
+    height: 1080,
+    title: "Report Print",
+    maximizable: true,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"), // Use the preload file
+      contextIsolation: true, // Keep contextIsolation true for security
+      enableRemoteModule: true,
+      nodeIntegration: true,
+    },
+    autoHideMenuBar: true,
+  });
+
+  // Correctly construct the path to the HTML file in the client/public directory
+  const labReportPath = path.resolve(
+    __dirname,
+    "..",
+    "public",
+    "partydetailprint.html"
+  );
+  // Load the file
+  labReportWindow
+    .loadFile(labReportPath)
+    .then(() => {
+      // Set the title after the file has been loaded
+      labReportWindow.setTitle("Report Print");
+    })
+    .catch((err) => console.log("Failed to load file:", err));
+
+  // Wait for the window to finish loading before sending the data
+  labReportWindow.webContents.on("did-finish-load", () => {
+    labReportWindow.webContents.send("render-party-detail-report", reportData);
   });
 });
 
@@ -510,13 +548,13 @@ const partydetailprintPopup = () => {
   });
 
   // Load the Reports Analysis page
-  reportsAnalysisWindow.loadURL("http://localhost:3000/#party-detail-print");
+  // reportsAnalysisWindow.loadURL("http://localhost:3000/#party-detail-print");
 
-  // reportsAnalysisWindow.loadURL(
-  //   "file://" +
-  //     path.join(__dirname, "..", "build", "index.html") +
-  //     "#party-detail-print"
-  // );
+  reportsAnalysisWindow.loadURL(
+    "file://" +
+      path.join(__dirname, "..", "build", "index.html") +
+      "#party-detail-print"
+  );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Party Detail Print");

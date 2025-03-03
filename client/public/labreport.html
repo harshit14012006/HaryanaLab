@@ -195,7 +195,7 @@
       }
 
       .rightbar {
-        height: 2.2rem; /* Equivalent to h-10 */
+        height: 2.5rem; /* Equivalent to h-10 */
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
         color: white;
         background: linear-gradient(
@@ -258,8 +258,6 @@
         gap: 0.19rem;
         margin-right: 0; /* Aligns the element to the right */
         margin-left: 909px; /* Pushes it to the right */
-        margin-top: -426px; /* Moves it towards the top (adjust value as needed) */
-        width: 20%; /* Adjust width according to your design */
         font-size: 0.9rem;
       }
 
@@ -1061,22 +1059,34 @@
               : Data.Signature === "signature3" && "./Sign3.jpg";
 
           //Putting values of Anothers
-          if (Data.AnotherName !== "NA" && Data.AnotherValue !== "NA") {
-            document.getElementById("Specialcase").style = "display: block";
-            console.log(Data.AnotherName);
-            document.getElementById("spantext").innerHTML = Data.AnotherName;
-            document.getElementById("Val").innerHTML =
-              Data.AnotherValue.replace("%", "").trim() + "%";
-            document.getElementById("imgsidebarnew1").style = "height : 495px";
-            document.getElementById("content1").style = "height : 461px";
-            document.getElementById("rightbar1").style = "margin-top : -462px";
-          } else if (Data.AnotherName !== "NA" && Data.AnotherValue === "NA") {
-            document.getElementById("imptext").style = "display: block";
-            document.getElementById("spantext").innerHTML = Data.AnotherName;
-            document.getElementById("Val").innerHTML = "NA";
-          } else {
-            console.log("Working else");
-          }
+         // Always make Specialcase visible
+document.getElementById("Specialcase").style.display = "block";
+
+// Ensure all elements retain their original size, position, height, and width
+document.getElementById("imgsidebarnew1").style.height = "495px";
+
+document.getElementById("content1").style.height = "461px";
+
+document.getElementById("rightbar1").style.marginTop = "-462px";
+document.getElementById("rightbar1").style.height = "250px"; // Set your preferred width
+
+if (Data.AnotherName !== "NA" && Data.AnotherValue !== "NA") {
+    console.log(Data.AnotherName);
+    document.getElementById("spantext").innerHTML = Data.AnotherName;
+    document.getElementById("Val").innerHTML = Data.AnotherValue.replace("%", "").trim() + "%";
+
+} else if (Data.AnotherName !== "NA" && Data.AnotherValue === "NA") {
+    document.getElementById("imptext").style.display = "block";
+    document.getElementById("spantext").innerHTML = Data.AnotherName;
+    document.getElementById("Val").innerHTML = "NA";
+
+} else {
+    // If AnotherName is "NA", show default values but keep Specialcase visible
+    document.getElementById("spantext").innerHTML = "NA";
+    document.getElementById("Val").innerHTML = "NA";
+    console.log("Working else");
+}
+
 
           const moisture =
             Data.Moisture === "NA"

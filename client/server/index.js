@@ -21,6 +21,7 @@ const {
   deleteUserByCredit,
   deleteUserByDebit,
   getByCity,
+  getCustomerByLocation
 } = require("./controller/userController");
 const cashVoucherController = require("./controller/cashVoucherController");
 const customerController = require("./controller/customerController");
@@ -63,7 +64,7 @@ app.put("/api/users/:id", updateUser);
 app.get("/api/users/:name", getUsersByName);
 app.get("/api/usersDate/:fromDate/:toDate", getUsersByDate);
 app.post("/api/usersFindData", getByCity);
-
+app.post("/api/usersFindDataByCity", getCustomerByLocation);
 //Customer Api's
 app.get("/api/customers", customerController.getAllCustomers);
 app.get("/api/customersPartyName", customerController.getCustomersPartyName);

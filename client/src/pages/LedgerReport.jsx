@@ -49,6 +49,7 @@ const LedgerReport = () => {
   };
 
   const handlePartySelect = (event) => {
+    
     const partyName = event.target.value;
     const party = customer.find((p) => p.Partyname === partyName) || {};
 
@@ -81,10 +82,12 @@ const LedgerReport = () => {
     });
 
     setFilteredData(data.filter((item) => item.PartyName === partyName));
+    findData();
   };
 
 
   const findData = async () => {
+    console.log("simarr");
     if (!Dates.fromDate || !Dates.toDate) {
       console.log("Please select valid dates.");
       return;
@@ -132,42 +135,72 @@ const LedgerReport = () => {
   };
 
 
-  const generateAndOpenPdf = async () => {
-    // Generate the PDF and create a Blob URL
-    console.log(Values.Balance);
-    if (filteredData.length > 0 && Values.Balance) {
-      filteredData.Count = filteredData.filter(
-        (item) => item.Reportno !== "null"
-      ).length;
-      const pdfBlob = await ReactPDF.pdf(
-        <AccountLedger
-          Data={filteredData}
-          Balance={Values.Balance}
-          OpeningBalance={Party.Openingbalance}
-          Date1={formatDate(Dates.fromDate)}
-          Date2={formatDate(Dates.toDate)}
-          PartyName={Party.Partyname}
-          City={Party.City}
-        />
-      ).toBlob();
-      const newBlobUrl = URL.createObjectURL(pdfBlob);
-      console.log("Generated new Blob URL:", newBlobUrl);
-      // Open the new Blob URL in a new tab
-      window.open(newBlobUrl);
+  // const generateAndOpenPdf = async () => {
+  //   // Generate the PDF and create a Blob URL
+  //   console.log(Values.Balance);
+  //   if (filteredData.length > 0 && Values.Balance) {
+  //     filteredData.Count = filteredData.filter(
+  //       (item) => item.Reportno !== "null"
+  //     ).length;
+  //     const pdfBlob = await ReactPDF.pdf(
+  //       <AccountLedger
+  //         Data={filteredData}
+  //         Balance={Values.Balance}
+  //         OpeningBalance={Party.Openingbalance}
+  //         Date1={formatDate(Dates.fromDate)}
+  //         Date2={formatDate(Dates.toDate)}
+  //         PartyName={Party.Partyname}
+  //         City={Party.City}
+  //       />
+  //     ).toBlob();
+  //     const newBlobUrl = URL.createObjectURL(pdfBlob);
+  //     console.log("Generated new Blob URL:", newBlobUrl);
+  //     // Open the new Blob URL in a new tab
+  //     window.open(newBlobUrl);
 
-      // Clean up the previous Blob URL if it exists
-      if (pdfBlobUrl) {
-        console.log("Revoking old Blob URL:", pdfBlobUrl);
-        let text = URL.revokeObjectURL(pdfBlobUrl);
-        console.log(text);
-      }
+  //     // Clean up the previous Blob URL if it exists
+  //     if (pdfBlobUrl) {
+  //       console.log("Revoking old Blob URL:", pdfBlobUrl);
+  //       let text = URL.revokeObjectURL(pdfBlobUrl);
+  //       console.log(text);
+  //     }
 
-      // Update the state with the new Blob URL
+  //     // Update the state with the new Blob URL
 
-      setPdfBlobUrl(newBlobUrl);
+  //     setPdfBlobUrl(newBlobUrl);
+  //   }
+  // };
+
+  const HandleClick = async () => {
+    console.log("Print");
+    data.Count = data.filter((item) => item.Reportno !== "null").length;
+    // console.log(filteredData[0].Date);
+    const pdfBlob = await ReactPDF.pdf(
+      <AccountLedger
+        Data={data}
+        Balance={0}
+        OpeningBalance={0}
+        Date1={data[0].Date}
+        Date2={data[data.length - 1].Date}
+      />
+    ).toBlob();
+    const newBlobUrl = URL.createObjectURL(pdfBlob);
+    console.log("Generated new Blob URL:", newBlobUrl);
+    // Open the new Blob URL in a new tab
+    window.open(newBlobUrl);
+
+    // Clean up the previous Blob URL if it exists
+    if (pdfBlobUrl) {
+      console.log("Revoking old Blob URL:", pdfBlobUrl);
+      let text = URL.revokeObjectURL(pdfBlobUrl);
+      console.log(text);
     }
-  };
 
+    // Update the state with the new Blob URL
+
+    setPdfBlobUrl(newBlobUrl);
+  };
+  
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
     const day = String(date.getDate()).padStart(2, "0"); // Pad with 0 if single digit
@@ -350,7 +383,7 @@ const LedgerReport = () => {
                 <button
                   type="button"
                   className="h-8 px-4 py-1 bg-gray-400 rounded-md"
-                  onClick={generateAndOpenPdf}
+                  onClick={HandleClick}
                 >
                   Print
                 </button>
