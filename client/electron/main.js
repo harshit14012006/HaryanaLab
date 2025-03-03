@@ -548,13 +548,13 @@ const partydetailprintPopup = () => {
   });
 
   // Load the Reports Analysis page
-  // reportsAnalysisWindow.loadURL("http://localhost:3000/#party-detail-print");
+  reportsAnalysisWindow.loadURL("http://localhost:3000/#party-detail-print");
 
-  reportsAnalysisWindow.loadURL(
-    "file://" +
-      path.join(__dirname, "..", "build", "index.html") +
-      "#party-detail-print"
-  );
+  // reportsAnalysisWindow.loadURL(
+  //   "file://" +
+  //     path.join(__dirname, "..", "build", "index.html") +
+  //     "#party-detail-print"
+  // );
 
   reportsAnalysisWindow.webContents.on("did-finish-load", () => {
     reportsAnalysisWindow.setTitle("Party Detail Print");
