@@ -28,7 +28,6 @@
         padding: 10px;
         border-radius: 8px;
         border: 2px solid white;
-        height: 64px;
       }
 
       .logo img {
@@ -64,7 +63,6 @@
       .contact div img {
         width: 18px;
         height: 15px;
-        padding-right: 6px;
       }
 
       .reportrecord {
@@ -330,7 +328,7 @@
           }
           const options = {
             margin: [7, 3, 0, 0], // [top, right, bottom, left] in mm
-            filename: "my-document.pdf",
+            filename: `printrecordreport${Data.PartyName}`,
             image: { type: "png", quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: "mm", format: "letter", orientation: "landscape" },

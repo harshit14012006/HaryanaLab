@@ -145,6 +145,7 @@ const CreateReport = () => {
   }
 
   const handleSaveAndPrint = (e) => {
+    console.log("called");
     e.preventDefault();
     if (isDisabled) return;
     try {
@@ -161,29 +162,29 @@ const CreateReport = () => {
           ipcRenderer.send("open-lab-report", formData);
           // Send the event to the main process
 
-          setFormData({
-            Reportno: 0,
-            Samplename: "NA",
-            Dated: "NA",
-            Selected: "Sealed",
-            From: "NA",
-            Billeddate: "NA",
-            Station: "NA",
-            AnotherName: "NA",
-            AnotherValue: "NA",
-            Moisture: "NA",
-            Oil: "NA",
-            FFA: "NA",
-            Code: "NA",
-            Date: "NA",
-            Vechileno: "NA",
-            Bags: "NA",
-            Weight: "NA",
-            Itemcategory: "Seal Engraved",
-            Remarks: "NA",
-            SealEngraved: "NA",
-            Signature: "NA",
-          });
+          // setFormData({
+          //   Reportno: 0,
+          //   Samplename: "NA",
+          //   Dated: "NA",
+          //   Selected: "Sealed",
+          //   From: "NA",
+          //   Billeddate: "NA",
+          //   Station: "NA",
+          //   AnotherName: "NA",
+          //   AnotherValue: "NA",
+          //   Moisture: "NA",
+          //   Oil: "NA",
+          //   FFA: "NA",
+          //   Code: "NA",
+          //   Date: "NA",
+          //   Vechileno: "NA",
+          //   Bags: "NA",
+          //   Weight: "NA",
+          //   Itemcategory: "Seal Engraved",
+          //   Remarks: "NA",
+          //   SealEngraved: "NA",
+          //   Signature: "NA",
+          // });
           getReportno();
           setCity("");
           setSelectedImage(null);
@@ -203,7 +204,7 @@ const CreateReport = () => {
   return (
     <div className="bg-gray-100">
       <div className="p-1 ">
-        <form onSubmit={handleSaveAndPrint}>
+        <form >
           <fieldset className="p-2 border border-gray-300 rounded">
             <header className="text-sm">Analysis</header>
             <div className="border border-gray-300 ">
@@ -633,7 +634,7 @@ const CreateReport = () => {
               <option value="signature3">Signature 3</option>
             </select> */}
               <div className="flex justify-end">
-                <button type="submit" className="px-2 py-1 bg-gray-400 rounded">
+                <button type="button" className="px-2 py-1 bg-gray-400 rounded" onClick={handleSaveAndPrint}>
                   Save and Print
                 </button>
               </div>

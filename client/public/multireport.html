@@ -9,11 +9,12 @@
       body {
         font-family: Arial, sans-serif;
       }
+
       .box-container {
         border: 2px solid #800000;
         padding: 2px;
         border-radius: 12px;
-        width: 1016px;
+        max-width: 906px;
       }
 
       .reg-number {
@@ -503,7 +504,9 @@
             <div class="report-column">${row.Vechileno}</div>
             <div class="report-column">${row.Bags}</div>
             <div class="report-column">${row.Weight}</div>
-          <div class="report-column2">${row.Oil} / ${row.Moisture} / ${row.FFA} / ${row.AnotherValue}</div>
+            <div class="report-column2">${row.Oil}/${row.Moisture}/${
+            row.FFA
+          }</div>
           `;
 
           reportRows.appendChild(rowDiv);
@@ -554,7 +557,7 @@
           }
           const options = {
             margin: [10, 17, 0, 0], // [top, right, bottom, left] in mm
-            filename: "my-document.pdf",
+            filename: `multireport${Data.Station}`,
             image: { type: "png", quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: "mm", format: "letter", orientation: "landscape" },
