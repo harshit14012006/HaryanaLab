@@ -252,7 +252,7 @@
     const yPosition = (pageHeight - imgHeight) / 2; // Center vertically
 
     doc.addImage(imgData, "PNG", xPosition, yPosition, imgWidth, imgHeight);
-    doc.save("Party_Detail_Report.pdf");
+    doc.save(`PartyDetail${reportData.Partyname}.pdf`);
 
     // Show the download button again after capturing
     button.style.display = "block";
