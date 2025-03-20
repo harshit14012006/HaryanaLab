@@ -140,41 +140,29 @@ function LedgerEntry() {
       console.log(formData);
       return;
     }
-
+  
     try {
       formData.PartyName = selectedParty;
-      // Send POST request to backend
-
+  
       console.log(formData);
       await axios
         .post("http://localhost:3001/api/users/Credit", formData)
         .then((response) => {
           console.log(response);
-          setFormData({
-            Date: "",
-            Reportno: "",
-            PartyName: "",
-            Credit: "",
-            Remarks: "",
-          });
-          setSelectedParty("");
-          setSelectedCity("");
-          setLedgerEntries([]);
-          fetchData();
+          // ❌ Don’t clear fields
+          // ✅ You can optionally show a success message here
+          fetchData(); // Refresh the table data
         })
         .catch((error) => {
           console.log(error);
         });
-
-      // Add new entry to the table
-      // HandleTableData(selectedParty);
-
-      // Reset form fields (commented out to keep fields filled)
+  
     } catch (error) {
       console.error("Error adding user:", error);
       alert("Error adding new entry");
     }
   };
+  
 
   function formatDate2(dateString) {
     const [day, month, year] = dateString.split("-");
@@ -346,7 +334,7 @@ function LedgerEntry() {
             <legend className="mb-4 text-sm font-normal">Control Panel</legend>
             <div className="flex justify-between">
               <button
-                type="button"
+                type="submit"
                 onClick={handleAddNew}
                 className="h-8 p-1 px-4 bg-gray-400 rounded"
               >

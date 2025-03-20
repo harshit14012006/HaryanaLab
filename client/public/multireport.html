@@ -504,9 +504,10 @@
             <div class="report-column">${row.Vechileno}</div>
             <div class="report-column">${row.Bags}</div>
             <div class="report-column">${row.Weight}</div>
-            <div class="report-column2">${row.Oil}/${row.Moisture}/${
-            row.FFA
-          }</div>
+            <div class="report-column2">
+  ${row?.Oil || "-"} / ${row?.Moisture || "-"} / ${row?.FFA || "-"} / ${row?.AnotherValue || "-"}
+</div>
+
           `;
 
           reportRows.appendChild(rowDiv);
@@ -601,10 +602,9 @@
         ).innerHTML = `Date ${DateChange(Data.Billeddate)}`;
         newComponent.querySelector("#Sign").src =
           Data.Signature === "signature1"
-            ? "./Sign1.png"
+            ? "./unclesign.jpg"
             : Data.Signature === "signature2"
-            ? "./Sign2.png"
-            : "./Sign3.jpg";
+             "./sweshguptasign.jpg"
         const rowdivName = document.createElement("div");
         rowdivName.className = "report-columns";
         rowdivName.innerHTML = `

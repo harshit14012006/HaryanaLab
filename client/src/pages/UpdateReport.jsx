@@ -1,8 +1,7 @@
 import React from "react";
 import axios from "axios";
-import call1 from "../images/Sign1.png";
-import call2 from "../images/Sign2.png";
-import call3 from "../images/Sign3.jpg";
+import call1 from "../images/unclesign.jpg";
+import call2 from "../images/sweshguptasign.jpg";
 const { ipcRenderer } = window.require("electron");
 const ReportAnalysis = () => {
   const [Data, getData] = React.useState({});
@@ -17,7 +16,6 @@ const ReportAnalysis = () => {
   const images = [
     { id: 1, src: call1, alt: "Image 1", value: "signature1" },
     { id: 2, src: call2, alt: "Image 2", value: "signature2" },
-    { id: 3, src: call3, alt: "Image 3", value: "signature3" },
   ];
 
   const [selectedImage, setSelectedImage] = React.useState(null);

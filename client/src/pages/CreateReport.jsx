@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import call1 from "../images/Sign1.png";
-import call2 from "../images/Sign2.png";
-import call3 from "../images/Sign3.jpg";
+import call1 from "../images/unclesign.jpg";
+import call2 from "../images/sweshguptasign.jpg";
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 
 const CreateReport = () => {
@@ -47,7 +46,6 @@ const CreateReport = () => {
   const images = [
     { id: 1, src: call1, alt: "Image 1", value: "signature1" },
     { id: 2, src: call2, alt: "Image 2", value: "signature2" },
-    { id: 3, src: call3, alt: "Image 3", value: "signature3" },
   ];
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -604,11 +602,11 @@ const CreateReport = () => {
                   </button>
 
                   {isOpen && (
-                    <div className="absolute bottom-full mb-2 left-0 w-32 bg-white border border-gray-200 rounded-lg shadow-md z-10 overflow-hidden">
+                    <div className="absolute left-0 z-10 w-32 mb-2 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md bottom-full">
                       {images.map((image) => (
                         <div
                           key={image.id}
-                          className="p-2 cursor-pointer hover:bg-gray-100 flex items-center justify-center"
+                          className="flex items-center justify-center p-2 cursor-pointer hover:bg-gray-100"
                           onClick={() => handleSelect(image)}
                         >
                           <img
