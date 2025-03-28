@@ -180,7 +180,7 @@
         display: flex;
         align-items: center;
         padding-left: 0.6rem; /* Equivalent to px-5 */
-        padding-right: 1.0rem; /* Equivalent to px-5 */
+        padding-right: 1rem; /* Equivalent to px-5 */
       }
 
       .imagee {
@@ -234,22 +234,26 @@
 
       .star3 {
         position: absolute;
-        right: -1rem;
+        right: -0.6rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         color: #ffffff; /* Equivalent to text-yellow-400 */
         font-size: 0.75rem; /* Equivalent to text-xs */
+        margin-top: -17px;
       }
 
       .star22 {
         position: absolute;
         left: -1rem;
-        display: flex;
+        display: contents;
         flex-direction: column;
         align-items: center;
-        color: #ffffff; /* Equivalent to text-yellow-400 */
-        font-size: 0.75rem; /* Equivalent to text-xs */
+        color: #ffffff;
+        font-size: 0.75rem;
+      }
+      .star22 > div {
+        margin-top: -19px;
       }
 
       .rightbar1 {
@@ -280,7 +284,7 @@
       }
 
       .top {
-        margin-top:1.2px;
+        margin-top: 1.2px;
         border-top-left-radius: 0.375rem; /* Equivalent to rounded-t-md */
         border-top-right-radius: 0.375rem; /* Equivalent to rounded-t-md */
       }
@@ -361,7 +365,7 @@
         height: 4rem; /* Equivalent to h-20 (20 in Tailwind corresponds to 5rem) */
         width: 150px;
         grid-column: span 1; /* Equivalent to col-span-1 (for grid layout) */
-        padding: 0.1rem 0px;/* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
+        padding: 0.1rem 0px; /* Equivalent to p-2 (2 in Tailwind corresponds to 0.5rem) */
         text-align: center;
         border-top: 2px solid #812929; /* Equivalent to border-t-2 and border-red-950 */
         border-bottom: 2px solid #812929; /* Equivalent to border-b-2 and border-red-950 */
@@ -433,7 +437,6 @@
       }
 
       .imageofsign {
-        
         font-style: italic;
         height: 67px;
       }
@@ -713,7 +716,7 @@
 
       .star1 {
         color: #ffffff; /* Equivalent to text-yellow-400 */
-        font-size: 1.25rem; /* Equivalent to text-lg */
+        font-size: 1rem; /* Equivalent to text-lg */
       }
 
       .star2 {
@@ -729,18 +732,25 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: #fbbf24; /* Equivalent to text-yellow-400 */
+        color: #ffffff; /* Equivalent to text-yellow-400 */
         font-size: 1.25rem; /* Equivalent to text-lg */
+      }
+      .star3 > div {
+        display: contents;
       }
 
       .star22 {
         position: absolute;
-        left: -1.5rem;
+        left: -0.7rem;
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: #fbbf24; /* Equivalent to text-yellow-400 */
-        font-size: 1.25rem; /* Equivalent to text-lg */
+        color: #ffffff; /* Equivalent to text-yellow-400 */
+        font-size: 1rem; /* Equivalent to text-lg */
+        margin-top: -19px;
+      }
+      .star22 > div {
+        display: contents;
       }
 
       .SealName {
@@ -859,10 +869,8 @@
 
                 <div class="textset">
                   <span class="spanblock">
-                    <span class="textdt"
-                    <span class="textdt"
-                      >on dt. ...................................
-                      From
+                    <span class="textdt" <span class="textdt"
+                      >on dt. ................................... From
                       Sh.M/s......................................................................................................................................
                       <span class="dte"
                         ><input
@@ -1017,6 +1025,7 @@
         // Promise-based usage:
         html2pdf().set(options).from(element).save();
       });
+     
       window.addEventListener("DOMContentLoaded", () => {
         window.ipcRenderer.on("render-lab-report", (event, reportData) => {
           console.log("Working");
@@ -1060,34 +1069,32 @@
               : Data.Signature === "signature3" && "./Sign3.jpg";
 
           //Putting values of Anothers
-         // Always make Specialcase visible
-document.getElementById("Specialcase").style.display = "block";
+          // Always make Specialcase visible
+          document.getElementById("Specialcase").style.display = "block";
 
-// Ensure all elements retain their original size, position, height, and width
-document.getElementById("imgsidebarnew1").style.height = "495px";
+          // Ensure all elements retain their original size, position, height, and width
+          document.getElementById("imgsidebarnew1").style.height = "495px";
 
-document.getElementById("content1").style.height = "461px";
+          document.getElementById("content1").style.height = "461px";
 
-document.getElementById("rightbar1").style.marginTop = "-462px";
-document.getElementById("rightbar1").style.height = "250px"; // Set your preferred width
+          document.getElementById("rightbar1").style.marginTop = "-462px";
+          document.getElementById("rightbar1").style.height = "250px"; // Set your preferred width
 
-if (Data.AnotherName !== "NA" && Data.AnotherValue !== "NA") {
-    console.log(Data.AnotherName);
-    document.getElementById("spantext").innerHTML = Data.AnotherName;
-    document.getElementById("Val").innerHTML = Data.AnotherValue.replace("%", "").trim() + "%";
-
-} else if (Data.AnotherName !== "NA" && Data.AnotherValue === "NA") {
-    document.getElementById("imptext").style.display = "block";
-    document.getElementById("spantext").innerHTML = Data.AnotherName;
-    document.getElementById("Val").innerHTML = "NA";
-
-} else {
-    // If AnotherName is "NA", show default values but keep Specialcase visible
-    document.getElementById("spantext").innerHTML = "NA";
-    document.getElementById("Val").innerHTML = "NA";
-    console.log("Working else");
-}
-
+          if (Data.AnotherName !== "NA" && Data.AnotherValue !== "NA") {
+            console.log(Data.AnotherName);
+            document.getElementById("spantext").innerHTML = Data.AnotherName;
+            document.getElementById("Val").innerHTML =
+              Data.AnotherValue.replace("%", "").trim() + "%";
+          } else if (Data.AnotherName !== "NA" && Data.AnotherValue === "NA") {
+            document.getElementById("imptext").style.display = "block";
+            document.getElementById("spantext").innerHTML = Data.AnotherName;
+            document.getElementById("Val").innerHTML = "NA";
+          } else {
+            // If AnotherName is "NA", show default values but keep Specialcase visible
+            document.getElementById("spantext").innerHTML = "NA";
+            document.getElementById("Val").innerHTML = "NA";
+            console.log("Working else");
+          }
 
           const moisture =
             Data.Moisture === "NA"
@@ -1166,8 +1173,8 @@ if (Data.AnotherName !== "NA" && Data.AnotherValue !== "NA") {
             let star2 = document.createElement("div");
             star2.classList.add("star2");
 
-            let star3 = document.createElement("div");
-            star3.classList.add("star3");
+            // let star3 = document.createElement("div");
+            // star3.classList.add("star3");
 
             let star22 = document.createElement("div");
             star22.classList.add("star22");
@@ -1183,10 +1190,10 @@ if (Data.AnotherName !== "NA" && Data.AnotherValue !== "NA") {
             c.forEach((star) => {
               let span = document.createElement("div");
               span.textContent = star;
-              star3.appendChild(span);
+              star22.appendChild(span);
             });
 
-            star2.appendChild(star3);
+            star2.appendChild(star22);
 
             let number = document.createElement("div");
             number.textContent = item;

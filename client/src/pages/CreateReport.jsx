@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import call1 from "../images/unclesign.jpg";
-import call2 from "../images/sweshguptasign.jpg";
+// import call1 from "../images/unclesign.jpg";
+// import call2 from "../images/sweshguptasign.jpg";
 const { ipcRenderer } = window.require("electron"); // Import ipcRenderer
 
 const CreateReport = () => {
@@ -44,8 +44,8 @@ const CreateReport = () => {
   });
 
   const images = [
-    { id: 1, src: call1, alt: "Image 1", value: "signature1" },
-    { id: 2, src: call2, alt: "Image 2", value: "signature2" },
+    { id: 1, src: "", alt: "Image 1", value: "signature1" },
+    { id: 2, src: "", alt: "Image 2", value: "signature2" },
   ];
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -146,59 +146,64 @@ const CreateReport = () => {
     console.log("called");
     e.preventDefault();
     if (isDisabled) return;
+  
     try {
-      // formData.Time = ffaTime && formData.FFA ? ffaTime.toString() : "NA";
-      formData.Reportno = id;
-      formData.Dated = formatDate(formData.Dated);
-      formData.Billeddate = formatDate(formData.Billeddate);
-      console.log(formData);
+      // Update the formData with the current ID and formatted dates
+      const updatedFormData = {
+        ...formData,
+        Reportno: id,
+        Dated: formatDate(formData.Dated),
+        Billeddate: formatDate(formData.Billeddate),
+      };
+  
+      console.log(updatedFormData);
+  
+      // Submit the updated form data
       axios
-        .post("http://localhost:3001/api/analysis", formData)
+        .post("http://localhost:3001/api/analysis", updatedFormData)
         .then((response) => {
           console.log("Data submitted successfully:", response.data);
-
-          ipcRenderer.send("open-lab-report", formData);
-          // Send the event to the main process
-
-          // setFormData({
-          //   Reportno: 0,
-          //   Samplename: "NA",
-          //   Dated: "NA",
-          //   Selected: "Sealed",
-          //   From: "NA",
-          //   Billeddate: "NA",
-          //   Station: "NA",
-          //   AnotherName: "NA",
-          //   AnotherValue: "NA",
-          //   Moisture: "NA",
-          //   Oil: "NA",
-          //   FFA: "NA",
-          //   Code: "NA",
-          //   Date: "NA",
-          //   Vechileno: "NA",
-          //   Bags: "NA",
-          //   Weight: "NA",
-          //   Itemcategory: "Seal Engraved",
-          //   Remarks: "NA",
-          //   SealEngraved: "NA",
-          //   Signature: "NA",
-          // });
+  
+          // Send the event to the main process for printing
+          ipcRenderer.send("open-lab-report", updatedFormData);
+  
+          // Reset only the necessary fields
+          // setFormData((prevFormData) => ({
+          //   ...prevFormData, // Keep the existing form data
+          //   Reportno: 0, // Reset Reportno
+          //   Selected: "Sealed", // Reset Selected
+          //   AnotherName: "NA", // Reset AnotherName
+          //   AnotherValue: "NA", // Reset AnotherValue
+          //   Moisture: "NA", // Reset Moisture
+          //   Oil: "NA", // Reset Oil
+          //   FFA: "NA", // Reset FFA
+          //   Code: "NA", // Reset Code
+          //   Date: "NA", // Reset Date
+          //   Vechileno: "NA", // Reset Vechileno
+          //   Bags: "NA", // Reset Bags
+          //   Weight: "NA", // Reset Weight
+          //   SealEngraved: "NA", // Reset SealEngraved
+          //   Remarks: "NA", // Reset Remarks
+          //   Signature: "NA", // Reset Signature
+          // }));
+  
+          // Fetch the next report number
           getReportno();
-          setCity("");
-          setSelectedImage(null);
+  
+          // Reset other states
+          // setCity("");
+          // setSelectedImage(null);
           setIsOpen(false);
           setTime(null);
-          setIsDisabled(!isDisabled);
+          setIsDisabled(true);
         })
         .catch((error) => {
           console.error("There was an error submitting the data!", error);
         });
-      //Adding Data
     } catch (error) {
       console.log("Error adding data:", error);
     }
   };
-
   return (
     <div className="bg-gray-100">
       <div className="p-1 ">

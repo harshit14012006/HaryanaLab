@@ -194,7 +194,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   </head>
-  <button id="downloadBtn" onclick="downloadPDF()">Download as PDF</button>
+  <button id="downloadBtn" onclick="downloadPDFFinal()">Download as PDF</button>
+  
   <body>
     <div id="MainContent" class="box-container">
       <div class="header" id="content">
@@ -229,10 +230,8 @@
       <!-- Download Button -->
     </div>
 <!-- Download Button -->
-
-
 <script>
-  function downloadPDF() {
+  function downloadPDFFinal() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
 
@@ -257,7 +256,7 @@
     // Show the download button again after capturing
     button.style.display = "block";
   });
-}
+} 
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF("p", "mm", "a4");
@@ -273,14 +272,13 @@
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      doc.save("Party_Detail_Report.pdf");
+      doc.save(`Party_Detail_ReportFinal.pdf`);
 
       // Show the download button again after capturing
       button.style.display = "block";
     });
   
 </script>
-
     <script>
       // Listen for the report data event and populate the report
       window.ipcRenderer.on("render-party-detail-report", (event, reportData) => {
@@ -309,20 +307,28 @@
       });
 
       // Download HTML as PDF
-      function downloadPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF("p", "mm", "a4");
+  //       function downloadPDFFinal() {
+  //   const { jsPDF } = window.jspdf;
+  //   const doc = new jsPDF("p", "mm", "a4");
 
-        html2canvas(document.getElementById("MainContent")).then((canvas) => {
-          const imgData = canvas.toDataURL("image/png");
-          const imgWidth = 205; // A4 width in mm
-          const pageHeight = 297; // A4 height in mm
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  //   html2canvas(document.getElementById("MainContent")).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const imgWidth = 205;
+  //     const pageHeight = 297;
+  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-          doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-          doc.save("Party_Detail_Report.pdf");
-        });
-      }
+  //     doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+  //     // Get city name from the first item (if available)
+  //     const cityName =
+  //       reportData.details && reportData.details.length > 0
+  //         ? reportData.details[0].City || "UnknownCity"
+  //         : "UnknownCity";
+
+  //     doc.save(`Party_Detail_Reporttt_${City}.pdf`);
+  //   });
+  // }
+
     </script>
   </body>
 </html>

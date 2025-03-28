@@ -358,6 +358,7 @@ const ledgerentryPopup = () => {
 
   // Load the Reports Analysis page
   // reportsAnalysisWindow.loadURL("http://localhost:3000/#ledger-entry");
+
   reportsAnalysisWindow.loadURL(
     "file://" +
       path.join(__dirname, "..", "build", "index.html") +
